@@ -1,0 +1,7 @@
+.cache
+log
+rdoc
+ri
+doc/log
+doc/rdoc
+doc/ri
