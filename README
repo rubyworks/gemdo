@@ -1,0 +1,61 @@
+= POM
+
+* http://proutils.rubyforge.org
+* http://protuils.rubyforge.org/pom
+
+
+== DESCRIPTION
+
+Ruby POM stands for Ruby Project Object Model.
+POM provides a metata system for Ruby projects.
+
+
+== FEATURES/ISSUES
+
+* Standardizes common project metadata.
+* Uses meta directory files for properties.
+
+
+== RELEASE NOTES
+
+Please see HISTORY file.
+
+
+== SYNOPSIS
+
+Usage is fairly straight forward. Simply create a Pom::Metadata object
+passing the constructor the root directory of the project.
+
+  metadata = Pom::Metadata.new(rootdir)
+
+Then you can query information from the project via method calls.
+
+  metadata.package  #=> 'mayapp'
+
+Look as the Metadata class to see what specific information is supported.
+
+
+== HOW TO INSTALL
+
+To install with RubyGems simply open a console and type:
+
+  gem install pom
+
+Local installation requires Setup.rb (gem install setup),
+then download the tarball package and type:
+
+  tar -xvzf pom-1.0.0.tgz
+  cd pom-1.0.0.tgz
+  sudo setup.rb all
+
+Windows users use 'ruby setup.rb all'.
+
+
+== LICENSE
+
+Copyright (c) 2009 Thomas Sawyer <transfire@gmail.com>
+
+This program is ditributed unser the terms of the GPL license.
+
+See COPYING file for details.
+

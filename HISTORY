@@ -1,0 +1,23 @@
+= RELEASE HISTORY
+
+== 1.1.0 / 2009-08-14
+
+This release brings some nice improements to Pom, in
+particular the addition of the Project class and it's
+supporting classes History and Manifest, which were
+taken and deprecated from Reap.
+
+* 3 Major Enhancements
+
+    * Metadata is loaded passively as needed.
+    * Metadata fallback is parsed README.
+    * Project class has added, taken from Reap.
+
+== 1.0.0 / 2009-07-22
+
+This is the initial release of POM.
+
+* 1 Major Enhancment
+
+    * Happy Birthday!
+
