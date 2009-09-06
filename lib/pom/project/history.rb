@@ -8,7 +8,7 @@ module POM
     #
     class History
 
-      DEFAULT_FILE = '{History}{,.txt}'
+      DEFAULT_FILE = '{History}{,.*}'
 
       attr :file
 
@@ -27,7 +27,7 @@ module POM
         if @file
           text = File.read(file).strip
           text = text.sub(/\A[=]\s+(.*?)$/,'').strip
-          scan = text.scan(/\=\=(.*?)\n(.*?)(^Changes:.*?|^\*.*?)(?=\=\=|\Z)/m)
+          scan = text.scan(/\=\=(.*?)\n(.*?)(^Changes:.*?)(?=\=\=|\Z)/m)
           scan.each do |header, notes, changes|
             @releases << Release.new(header, notes, changes)
           end
