@@ -1,0 +1,60 @@
+---
+project : projectinfo
+version : '0.6'
+status  : beta
+
+title    : ProjectInfo
+subtitle : The Project Metadata Class
+description : >
+  ProjectInfo is a deluxe project metadata class. ProjectInfo is highly versitile
+  for managing project metadata. It can be converted to a Gem::Specification
+  in a single command (to_gemspec) for building out gems packages, as well as other
+  package management control specifications (deb, rpm, pkgbuild, etc.). ProjectInfo
+  is designed to be the best solution for complementing build tools --it is extensible
+  and can automatically load from a YAML configuration file.
+
+author     : Thomas Sawyer <transfire@gmail.com>
+created    : "2006-08-09"
+homepage   : "http://ratchets.rubyforge.org"
+download   : "https://rubyforge.org/frs/?group_id=2144"
+repository : "http://ratchets.rubyforge.org/src"
+slogan     : Be Aware. Be Very Aware!
+#signiture  : "../_privkey.pem"
+
+pack       : [gem, tgz]
+distribute : [ -dev, -doc ]
+dependency :
+  - [ facets, >= 2.0 ]
+executable : []
+
+digest     : sha1
+manifest   : MANIFEST
+
+
+
+
+#scm:
+#  system     : svn
+#  ignore     : [ doc/api, test/lib ]
+#  changelog  : CHANGELOG
+#  stamp      : VERSION
+
+#rdoc:
+#  template : jamis
+
+#mail:
+#  server   : smtp.gmail.com
+#  account  : transfire@gmail.com
+#  mail_to  : transfire@gmail.com
+
+#rubyforge:
+#  project  : ratchets
+#  username : transami
+#  groupid  : 2144
+#  package  : projectinfo
+
+#host:
+#  domain   : rubyforge.org
+#  user     : transami
+#  root     : '/var/www/gforge-projects/ratchets'
+
