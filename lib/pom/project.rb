@@ -269,17 +269,13 @@ module POM
       def locate_root_at(indicator)
         root = nil
         dir  = Dir.pwd
-        while dir != '/'
+        while !root && dir != '/'
           find = File.join(dir, indicator)
-          file = Dir.glob(find, File::FNM_CASEFOLD).first
-          if file
-            root = Pathname.new(File.dirname(file))
-            break
-          else
-            dir = File.dirname(dir)
-          end
+          root = Dir.glob(find, File::FNM_CASEFOLD).first
+          #break if root
+          dir = File.dirname(dir)
         end
-        return root
+        root ? Pathname.new(root) : nil
       end
 
   end#class Project
