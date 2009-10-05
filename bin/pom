@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'pom'
+require 'optparse'
+
+project = POM::Project.new
+
+case ARGV.first
+when 'about'
+  puts project.about
+when 'show'
+  puts project.metadata.send(ARGV.last)
+when 'dump'
+  puts project.metadata.to_yaml
+end
+
