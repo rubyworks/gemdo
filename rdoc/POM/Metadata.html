@@ -70,13 +70,13 @@
           
           <li><a href="#M000040">::aliases</a></li>
           
-          <li><a href="#M000042">::attr_accessor</a></li>
+          <li><a href="#M000041">::attr_accessor</a></li>
           
           <li><a href="#M000044">::new</a></li>
           
           <li><a href="#M000050">#add_attribute</a></li>
           
-          <li><a href="#M000085">#assert_valid</a></li>
+          <li><a href="#M000082">#assert_valid</a></li>
           
           <li><a href="#M000070">#authors=</a></li>
           
@@ -120,7 +120,7 @@
           
           <li><a href="#M000045">#initialize_metadirectory</a></li>
           
-          <li><a href="#M000089">#list</a></li>
+          <li><a href="#M000086">#list</a></li>
           
           <li><a href="#M000069">#loadpath=</a></li>
           
@@ -128,9 +128,9 @@
           
           <li><a href="#M000047">#metadir</a></li>
           
-          <li><a href="#M000082">#package_name</a></li>
+          <li><a href="#M000079">#package_name</a></li>
           
-          <li><a href="#M000088">#preload</a></li>
+          <li><a href="#M000085">#preload</a></li>
           
           <li><a href="#M000076">#provides=</a></li>
           
@@ -144,25 +144,19 @@
           
           <li><a href="#M000071">#requires=</a></li>
           
-          <li><a href="#M000079">#rubyforge</a></li>
-          
-          <li><a href="#M000081">#rubyforge_groupid</a></li>
-          
-          <li><a href="#M000080">#rubyforge_unixname</a></li>
-          
           <li><a href="#M000078">#sitemap=</a></li>
           
-          <li><a href="#M000083">#stage_name</a></li>
+          <li><a href="#M000080">#stage_name</a></li>
           
           <li><a href="#M000073">#suggests=</a></li>
           
           <li><a href="#M000067">#summary=</a></li>
           
-          <li><a href="#M000086">#to_s</a></li>
+          <li><a href="#M000083">#to_s</a></li>
           
-          <li><a href="#M000087">#to_yaml</a></li>
+          <li><a href="#M000084">#to_yaml</a></li>
           
-          <li><a href="#M000084">#valid?</a></li>
+          <li><a href="#M000081">#valid?</a></li>
           
         </ul>
       </div>
@@ -182,6 +176,8 @@
           <li class="file"><a href="../COPYING.html">COPYING</a></li>
         
           <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../NOTES.html">NOTES</a></li>
         
           <li class="file"><a href="../README.html">README</a></li>
         
@@ -904,7 +900,7 @@ Map project directories and files to publish locations on webserver.
 
     
       <div id="attr-accessor-method" class="method-detail ">
-        <a name="M000042"></a>
+        <a name="M000041"></a>
 
         <div class="method-heading">
         
@@ -997,7 +993,7 @@ New <a href="Metadata.html">Metadata</a> object.
 
     
       <div id="assert-valid-method" class="method-detail ">
-        <a name="M000085"></a>
+        <a name="M000082"></a>
 
         <div class="method-heading">
         
@@ -1683,7 +1679,7 @@ Executables default to the contents of bin/.
 
     
       <div id="package-name-method" class="method-detail ">
-        <a name="M000082"></a>
+        <a name="M000079"></a>
 
         <div class="method-heading">
         
@@ -1729,14 +1725,14 @@ TODO: Improve buildno support ?
 
         
         <div class="aliases">
-          Also aliased as: <a href="Metadata.html#M000083">stage_name</a>
+          Also aliased as: <a href="Metadata.html#M000080">stage_name</a>
         </div>
         
       </div>
 
     
       <div id="preload-method" class="method-detail ">
-        <a name="M000088"></a>
+        <a name="M000085"></a>
 
         <div class="method-heading">
         
@@ -1934,102 +1930,6 @@ TODO: Improve buildno support ?
       </div>
 
     
-      <div id="rubyforge-method" class="method-detail ">
-        <a name="M000079"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">rubyforge</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p class="missing-docs">(Not documented)</p>
-          
-
-          
-          <div class="method-source-code"
-            id="rubyforge-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 473</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rubyforge</span>
-      <span class="ruby-constant">Functor</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">op</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;rubyforge_#{op}&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="rubyforge-groupid-method" class="method-detail ">
-        <a name="M000081"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">rubyforge_groupid</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p class="missing-docs">(Not documented)</p>
-          
-
-          
-          <div class="method-source-code"
-            id="rubyforge-groupid-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 482</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rubyforge_groupid</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="rubyforge-unixname-method" class="method-detail ">
-        <a name="M000080"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">rubyforge_unixname</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p class="missing-docs">(Not documented)</p>
-          
-
-          
-          <div class="method-source-code"
-            id="rubyforge-unixname-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 479</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rubyforge_unixname</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
       <div id="sitemap--method" class="method-detail ">
         <a name="M000078"></a>
 
@@ -2063,7 +1963,7 @@ TODO: Improve buildno support ?
 
     
       <div id="stage-name-method" class="method-detail method-alias">
-        <a name="M000083"></a>
+        <a name="M000080"></a>
 
         <div class="method-heading">
         
@@ -2076,7 +1976,7 @@ TODO: Improve buildno support ?
         <div class="method-description">
           
           <p>
-Alias for <a href="Metadata.html#M000082">package_name</a>
+Alias for <a href="Metadata.html#M000079">package_name</a>
 </p>
           
 
@@ -2154,7 +2054,7 @@ Limit summary to 69 characters.
 
     
       <div id="to-s-method" class="method-detail ">
-        <a name="M000086"></a>
+        <a name="M000083"></a>
 
         <div class="method-heading">
         
@@ -2197,7 +2097,7 @@ Limit summary to 69 characters.
 
     
       <div id="to-yaml-method" class="method-detail ">
-        <a name="M000087"></a>
+        <a name="M000084"></a>
 
         <div class="method-heading">
         
@@ -2230,7 +2130,7 @@ Limit summary to 69 characters.
 
     
       <div id="valid--method" class="method-detail ">
-        <a name="M000084"></a>
+        <a name="M000081"></a>
 
         <div class="method-heading">
         
@@ -2392,7 +2292,7 @@ Load from meta directory.
 
     
       <div id="list-method" class="method-detail ">
-        <a name="M000089"></a>
+        <a name="M000086"></a>
 
         <div class="method-heading">
         

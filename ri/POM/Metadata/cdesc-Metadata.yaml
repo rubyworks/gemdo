@@ -276,12 +276,6 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: requires=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: rubyforge
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: rubyforge_groupid
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: rubyforge_unixname
-- !ruby/object:RDoc::RI::MethodSummary 
   name: sitemap=
 - !ruby/object:RDoc::RI::MethodSummary 
   name: stage_name
