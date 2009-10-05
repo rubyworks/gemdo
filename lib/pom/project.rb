@@ -2,8 +2,8 @@ require 'facets/pathname'
 require 'facets/string/op_div'
 
 require 'pom/metadata'
-require 'pom/project/manifest'
-require 'pom/project/history'
+require 'pom/manifest'
+require 'pom/history'
 
 module POM
 
