@@ -1,0 +1,11 @@
+= Development Notes
+
+== 2009-10-05
+
+Thought about adding rubyforge entries to metadata, eg. unixname, groupid, etc.
+Putting thee difficulty of supporting the use of a rubyforge/ subdirectory in
+the meta/ directory to store this information, I've further decided it's not
+appropriate information for project metadata. It's really build configuration
+and thus should be specified via mechanisms specific to the build tool used,
+such a Syckle configs.
+
