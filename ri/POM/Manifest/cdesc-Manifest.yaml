@@ -1,0 +1,36 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: file
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Manifest file.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Manifest file.
+constants: 
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: DEFAULT_FILE
+  value: "'manifest{,.txt}'"
+full_name: POM::Manifest
+includes: 
+- !ruby/object:RDoc::RI::IncludedModule 
+  name: Enumerable
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: each
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: files
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: list
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: size
+name: Manifest
+superclass: Object

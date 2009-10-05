@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "VALIDATE #"
+full_name: POM::Metadata#valid?
+is_singleton: false
+name: valid?
+params: ()
+visibility: public

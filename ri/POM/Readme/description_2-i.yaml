@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: POM::Readme#description_2
+is_singleton: false
+name: description_2
+params: ()
+visibility: private

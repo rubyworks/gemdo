@@ -1,0 +1,14 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get pathname of given task <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the task directory.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Are task and script different names for the same thing?"
+full_name: POM::Project#task
+is_singleton: false
+name: task
+params: (path=nil)
+visibility: public

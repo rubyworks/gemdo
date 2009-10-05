@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get pathname of given doc <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the doc directory.
+full_name: POM::Project#doc
+is_singleton: false
+name: doc
+params: (path=nil)
+visibility: public

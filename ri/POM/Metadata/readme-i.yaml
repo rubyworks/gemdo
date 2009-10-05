@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get metadata from README.
+full_name: POM::Metadata#readme
+is_singleton: false
+name: readme
+params: ()
+visibility: private

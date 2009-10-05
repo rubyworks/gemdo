@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: POM::Metadata#recommends=
+is_singleton: false
+name: recommends=
+params: (x)
+visibility: public

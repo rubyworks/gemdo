@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Calculated Defaults #"
+full_name: POM::Metadata#default_authors
+is_singleton: false
+name: default_authors
+params: ()
+visibility: public

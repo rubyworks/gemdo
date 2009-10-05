@@ -1,0 +1,10 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: POM::Readme#license
+is_singleton: false
+name: license
+params: ()
+visibility: public

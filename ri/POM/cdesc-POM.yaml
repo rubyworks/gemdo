@@ -1,0 +1,19 @@
+--- !ruby/object:RDoc::RI::ModuleDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: method_missing TODO: extecutables is not right."
+constants: 
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: VERSION
+  value: "\"1.0.0\""
+full_name: POM
+includes: []
+
+instance_methods: []
+
+name: POM

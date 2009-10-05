@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: New Metadata object.
+full_name: POM::Metadata::new
+is_singleton: true
+name: new
+params: (rootdir, options={})
+visibility: public

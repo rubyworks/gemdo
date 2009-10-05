@@ -1,0 +1,38 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: changes
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: header
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: notes
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: History Release Entry
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: History Release Entry
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: History Release Entry
+constants: []
+
+full_name: POM::History::Release
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: to_s
+name: Release
+superclass: Object

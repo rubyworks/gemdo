@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Project release announcement built on README.
+full_name: POM::Project#announcement
+is_singleton: false
+name: announcement
+params: (file=nil, options={})
+visibility: public

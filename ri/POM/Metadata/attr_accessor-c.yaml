@@ -1,0 +1,10 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: POM::Metadata::attr_accessor
+is_singleton: true
+name: attr_accessor
+params: (name)
+visibility: public

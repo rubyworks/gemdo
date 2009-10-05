@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: POM::Metadata#default_distribute
+is_singleton: false
+name: default_distribute
+params: ()
+visibility: public

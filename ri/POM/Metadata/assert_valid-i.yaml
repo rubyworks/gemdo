@@ -1,0 +1,10 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+full_name: POM::Metadata#assert_valid
+is_singleton: false
+name: assert_valid
+params: ()
+visibility: public

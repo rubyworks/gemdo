@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Load from meta directory.
+full_name: POM::Metadata#initialize_metadirectory
+is_singleton: false
+name: initialize_metadirectory
+params: ()
+visibility: private

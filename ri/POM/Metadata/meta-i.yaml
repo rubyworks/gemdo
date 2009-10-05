@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: See if there is not a better way to do this... is lazy loading worth it?"
+full_name: POM::Metadata#meta
+is_singleton: false
+name: meta
+params: (name)
+visibility: private

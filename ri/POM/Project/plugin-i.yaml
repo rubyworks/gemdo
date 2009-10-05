@@ -1,0 +1,13 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: 
+- !ruby/object:RDoc::RI::AliasName 
+  name: plug
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get pathname of given plugin <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the plugin directory.
+full_name: POM::Project#plugin
+is_singleton: false
+name: plugin
+params: (path=nil)
+visibility: public

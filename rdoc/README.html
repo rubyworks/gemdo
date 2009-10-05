@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>File: README [POM]</title>
+
+  <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
+
+  <script src="./js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
+</head>
+
+<body class="file">
+
+  <div class="head">
+    <h1>README</h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="./HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="./README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./POM.html">POM</a></li>
+        
+          <li><a href="./POM/History.html">POM::History</a></li>
+        
+          <li><a href="./POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li><a href="./POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li><a href="./POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li><a href="./POM/Project.html">POM::Project</a></li>
+        
+          <li><a href="./POM/Readme.html">POM::Readme</a></li>
+        
+          <li><a href="./POM/ReleaseNotes.html">POM::ReleaseNotes</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a>.<br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1><a href="POM.html">POM</a></h1>
+<ul>
+<li><a href="http://proutils.rubyforge.org">proutils.rubyforge.org</a>
+
+</li>
+<li><a href="http://protuils.rubyforge.org/pom">protuils.rubyforge.org/pom</a>
+
+</li>
+</ul>
+<h2>DESCRIPTION</h2>
+<p>
+Ruby <a href="POM.html">POM</a> stands for Ruby Project Object Model. <a
+href="POM.html">POM</a> provides a metadata system for Ruby projects.
+</p>
+<h2>FEATURES/ISSUES</h2>
+<ul>
+<li>Standardizes common project metadata.
+
+</li>
+<li>Uses meta directory files for properties.
+
+</li>
+</ul>
+<h2>RELEASE NOTES</h2>
+<p>
+Please see <a href="HISTORY.html">HISTORY</a> file.
+</p>
+<h2>SYNOPSIS</h2>
+<p>
+Usage is fairly straight forward. Simply create a Pom::Metadata object
+passing the constructor the root directory of the project.
+</p>
+<pre>
+  metadata = Pom::Metadata.new(rootdir)
+</pre>
+<p>
+Then you can query information from the project via method calls.
+</p>
+<pre>
+  metadata.package  #=&gt; 'mayapp'
+</pre>
+<p>
+Look as the Metadata class to see what specific information is supported.
+</p>
+<h2>HOW TO INSTALL</h2>
+<p>
+To install with RubyGems simply open a console and type:
+</p>
+<pre>
+  gem install pom
+</pre>
+<p>
+Local installation requires Setup.rb (gem install setup), then download the
+tarball package and type:
+</p>
+<pre>
+  tar -xvzf pom-1.0.0.tgz
+  cd pom-1.0.0.tgz
+  sudo setup.rb all
+</pre>
+<p>
+Windows users use &#8216;ruby setup.rb all&#8217;.
+</p>
+<h2>LICENSE</h2>
+<p>
+Copyright &#169; 2009 Thomas Sawyer <transfire@gmail.com>
+</p>
+<p>
+This program is ditributed unser the terms of the GPL license.
+</p>
+<p>
+See <a href="COPYING.html">COPYING</a> file for details.
+</p>
+
+  </div>
+
+</body>
+
+
+</html>

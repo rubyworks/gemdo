@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get pathname of given cache <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the cache directory.
+full_name: POM::Project#cache
+is_singleton: false
+name: cache
+params: (path=nil)
+visibility: public

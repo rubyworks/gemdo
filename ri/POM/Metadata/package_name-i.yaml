@@ -1,0 +1,15 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: 
+- !ruby/object:RDoc::RI::AliasName 
+  name: stage_name
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Package name is generally in the form of <tt>name-version</tt>, or <tt>name-version-platform</tt> if <tt>platform</tt> is specified.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Improve buildno support ?"
+full_name: POM::Metadata#package_name
+is_singleton: false
+name: package_name
+params: (buildno=nil)
+visibility: public
