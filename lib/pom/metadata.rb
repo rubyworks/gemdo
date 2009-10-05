@@ -470,17 +470,17 @@ module POM
     end
 
 
-    def rubyforge
-      Functor.new do |op, *a|
-        send("rubyforge_#{op}")
-      end
-    end
+    #def rubyforge
+    #  Functor.new do |op, *a|
+    #    send("rubyforge_#{op}")
+    #  end
+    #end
 
-    def rubyforge_unixname
-    end
+    #def rubyforge_unixname
+    #end
 
-    def rubyforge_groupid
-    end
+    #def rubyforge_groupid
+    #end
 
     ###########
     # Aliases #
