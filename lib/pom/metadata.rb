@@ -9,26 +9,37 @@ module POM
 
   # = Metadata
   #
+  # NOTE: It is tricky to get lazy loading and aliases to work together.
+  # The following code is doing the job, but it probably needs to be
+  # reimplemented in a better way.
+  #
   class Metadata
+
+    def self.aliases
+      @aliases ||= Hash.new{|h,k| h[k]=[]}
+    end
 
     def self.attr_accessor(name)
       eval %{
         def #{name}
-          @#{name} ||= meta("#{name}")
+          @data["#{name}"] ||= meta("#{name}")
         end
 
         def #{name}=(x)
-          @#{name} = x
+          @data["#{name}"] = x
         end
       }
     end
 
     def self.alias_accessor(name, orig)
-      alias_method(name, orig)
+      aliases[orig.to_sym] << name.to_sym
+      aliases[name.to_sym] << orig.to_sym
+      attr_accessor(name)
+      #alias_method(name, orig)
       alias_method("#{name}=", "#{orig}=")
     end
 
-    METAFILE = 'meta{,data}{.yaml,.yml}'
+    METADIRS = '{.meta,meta}'
 
     # Project root directory.
     attr :root
@@ -46,67 +57,101 @@ module POM
 
     # New Metadata object.
     #
-    def initialize(rootdir)
+    def initialize(rootdir, options={})
       @root = Pathname.new(rootdir.to_s)
+      @data = {}
 
-      #initialize_defaults
-
-      if file = @root.glob_first(METAFILE, :casefold)
-        @filedata = YAML.load(File.new(file))
-      else
-        @filedata = {}
+      if options[:load]
+        initialize_metadirectory
       end
 
-      readme = @root.glob('{README,README.*}').first
-      @readme = Readme.load(readme) if readme
+      #initialize_defaults
+      #initialize_metafile
 
-      # TODO: apply some code golf
-      #if (rootfolder + '.meta').directory?
-      #  @metafolder = rootfolder + '.meta'
-      #elsif (rootfolder + 'meta').directory?
-      #  @metafolder = rootfolder + 'meta'
-      #end
+      #readme = @root.glob('{README,README.*}').first
+      #@readme = Readme.load(readme) if readme
 
-      #initialize_from_meta_directory
+      #@version_stamp = Version.new(rootfolder)
+    end
+
+    #METAFILE = 'meta{,data}{.yaml,.yml}'
+
+    # Load from meta.yml file, if used.
+    #def initialize_metafile
+    #  if file = @root.glob_first(METAFILE, :casefold)
+    #    data = YAML.load(File.new(file))
+    #    data.each do |k,v|
+    #      if respond_to?("#{k}=")
+    #        __send__("#{k}=", v)
+    #      else
+    #        @data[k] = v
+    #      end
+    #    end
+    #  end
+    #end
+
+    # Load from meta directory.
+    def initialize_metadirectory
+      @root.glob("#{METADIRS}/**/*").each do |file|
+        data = File.read(file)
+        name = file.split('/')[1..-1].sub('/', '_')
+        if respond_to?("#{name}=")
+          __send__("#{name}=", data)
+        else
+          @data[name] = data
+        end
+      end
       #if @metafolder
       #  @metafolder.glob('*').each do |f|
       #    send("#{f.basename}=", f.read.strip) if respond_to?("#{f.basename}=")
       #  end
       #end
-
-      #@version_stamp = Version.new(rootfolder)
     end
 
+    # TODO: See if there is not a better way to do this... is lazy loading worth it?
     #
     def meta(name)
-      return instance_variable_get("@#{name}") if instance_variable_defined?("@#{name}")
+      return @data[name.to_s] if @data.key?(name.to_s)
 
-      val = metafile(name) || metadir(name) || readme(name) || default(name)
+      val = nil
+
+      aliases = [name, *self.class.aliases[name.to_sym]]
+
+      aliases.each do |n|
+        val = metadir(n)
+        break if val
+      end
+
+      aliases.each do |n|
+        val = readme[n]
+        break if val
+      end unless val
+
+      aliases.each do |n|
+        val = default(n)
+        break if val
+      end unless val
 
       if respond_to?("#{name}=")
         send("#{name}=", val)
       else
-        instance_variable_set("@#{name}", val)
+        @data[name.to_s] = val
       end
-    end
-
-    # Get metadata from meta-file.
-    def metafile(name)
-      @filedata[name.to_s]
     end
 
     # Get metadata from meta-directory.
     #
     # TODO: Should +root+ be included as last resort?
     def metadir(name)
-      if file = root.glob("{meta,.meta}/#{name}").first
+      if file = root.glob("#{METADIRS}/#{name}").first
         file.read.strip
       end
     end
 
     # Get metadata from README.
-    def readme(name)
-      @readme[name] if @readme
+    def readme #(name=nil)
+      @readme ||= Readme.new(root)
+      #@readme[name] if name
     end
 
     #
@@ -187,6 +232,7 @@ module POM
     attr_accessor :version
 
     # Current status (stable, beta, alpha, rc1, etc.)
+    # DEPRECATE: (should be indicated by version)
     attr_accessor :status
 
     # Date this version was released.
@@ -268,9 +314,19 @@ module POM
     # Location of central vcs repository.
     attr_accessor :repository
 
+
+    # TODO: Tecnically these next two are not metadata but build
+    # configuration, so ultimately they should go else where.
+    # But where?
+
     # File pattern list of files to distribute in package.
     # This is provided to assist with MANIFEST automation.
     attr_accessor :distribute
+
+    # Map project directories and files to publish locations
+    # on webserver.
+    attr_accessor :sitemap
+
 
   #private # TODO: Would like to make this private except respond_to? in default() wouldn't work.
 
@@ -344,7 +400,7 @@ module POM
 
     # Executables default to the contents of bin/.
     def executables
-      @executables ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
+      @data['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
     end
 
   public
@@ -355,57 +411,75 @@ module POM
 
     # Limit summary to 69 characters.
     def summary=(line)
-      @summery = line[0..69]
+      @data['summary'] = line[0..69]
     end
 
     #
     def released=(date)
-      @released = Time.parse(date.strip)
+      @data['released'] = Time.parse(date.strip) if date
     end
 
     #
     def loadpath=(paths)
-      @loadpath = list(paths)
+      @data['loadpath'] = list(paths)
     end
 
     #
     def authors=(auths)
-      @authors = list(auths)
+      @data['authors'] = list(auths)
     end
 
     #
     def requires=(x)
-      @requires = list(x)
+      @data['requires'] = list(x)
     end
 
     #
     def recommends=(x)
-      @recommends = list(x)
+      @data['recommends'] = list(x)
     end
 
     #
     def suggests=(x)
-      @suggests = list(x)
+      @data['suggests'] = list(x)
     end
 
     #
     def conflicts=(x)
-      @conflict = list(x)
+      @data['conflict'] = list(x)
     end
 
     #
     def replaces=(x)
-      @replaces = list(x) #.to_list
+      @data['replaces'] = list(x) #.to_list
     end
 
     #
     def provides=(x)
-      @provides = list(x) #.to_list
+      @data['provides'] = list(x) #.to_list
     end
 
     #
     def distribute=(x)
-      @distribute = list(x) #.to_list
+      @data['distribute'] = list(x) #.to_list
+    end
+
+    #
+    def sitemap=(x)
+      @data['sitemap'] = YAML.load(x) #.to_list
+    end
+
+
+    def rubyforge
+      Functor.new do |op, *a|
+        send("rubyforge_#{op}")
+      end
+    end
+
+    def rubyforge_unixname
+    end
+
+    def rubyforge_groupid
     end
 
     ###########
@@ -488,7 +562,35 @@ module POM
 
     #
     def to_s
-      to_yaml
+      s = []
+      s << "#{title} v#{version}"
+      s << ""
+      s << "#{description}"
+      s << ""
+      s << "contact    : #{contact}"
+      s << "homepage   : #{homepage}"
+      s << "repository : #{repository}"
+      s << "authors    : #{authors.join(',')}"
+      s << "package    : #{package}-#{version}"
+      s << "requires   : #{requires.join(',')}"
+      s.join("\n")
+    end
+
+    #
+    def to_yaml
+      preload
+      @data.to_yaml #super
+    end
+
+    def preload
+      @_preload ||= (
+        meths = methods.select{ |m| /\w+\=$/ =~ m.to_s }
+        meths = meths.map{ |m| m.to_s.chomp('=') }
+        meths.each do |m|
+          __send__(m)
+        end
+        true
+      )
     end
 
   private

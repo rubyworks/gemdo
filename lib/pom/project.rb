@@ -26,7 +26,7 @@ module POM
 
     #
     def initialize(local=nil)
-      @root   = locate_root(local) || raise("can't locate project root")
+      @root   = locate_root(local) || raise("can't locate project root -- #{local}")
       @source = root
       @cache  = root + '.cache'
       @task   = root + 'task'
@@ -101,9 +101,9 @@ module POM
     # returns the pathname for the package directory.
     def pack(path=nil)
       if path
-        root.glob_first('{pack,pkg}{,s}' / path)
+        root.glob_first('{pack,pkg,package}{,s}' / path)
       else
-        @pack ||= (root.glob_first('{pack,pkg}{,s}') || (root + 'pack'))
+        @pack ||= (root.glob_first('{pack,pkg,package}{,s}') || (root + 'pack'))
       end
       #@pkg ||=(
       #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
@@ -146,6 +146,21 @@ module POM
       else
         @script ||= (root + 'script')
       end
+    end
+
+    # Get pathname of given site +path+. Or without +path+
+    # returns the pathname for the site directory.
+    def site(path=nil)
+      if path
+        root.glob_first('{site,web,website}' / path)
+      else
+        @site ||= (root.glob_first('{site,web,website}') || (root + 'site'))
+      end
+      #@pkg ||=(
+      #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
+      #  dir.mkdir_p unless dir.exist?
+      #  dir
+      #)
     end
 
     # Get pathname of given task +path+. Or without +path+
@@ -193,17 +208,31 @@ module POM
     alias_method :tmpdir, :tmp
 
     # About project notice.
-    def about(parts) #(*parts)
+    def about(*parts)
       if parts.empty?
-        puts
-        puts "  #{metadata.title} #{metadata.version} (#{metadata.released})"
-        puts "  #{metadata.abstract}"
-        puts "  " + metadata.homepage
-        puts
-        puts "  " + metadata.description
-        puts
-        puts "  Copyright #{metadata.copyright}"
-        puts
+        #puts
+        #puts "  #{metadata.title} #{metadata.version} (#{metadata.released})"
+        #puts
+        #puts "  #{metadata.abstract}"
+        #puts "  " + metadata.homepage
+        #puts
+        #puts
+        #puts "  Copyright #{metadata.copyright}"
+        #puts
+        s = []
+        s << "#{metadata.title} v#{metadata.version} (#{metadata.released.strftime('%Y-%m-%d')})"
+        s << ""
+        s << "#{metadata.description}"
+        s << ""
+        s << "  contact    : #{metadata.contact}"
+        s << "  homepage   : #{metadata.homepage}"
+        s << "  repository : #{metadata.repository}"
+        s << "  authors    : #{metadata.authors.join(',')}"
+        s << "  package    : #{metadata.package}-#{metadata.version}"
+        s << "  requires   : #{metadata.requires.join(',')}"
+        s << ""
+        s << "#{metadata.copyright}"
+        s.join("\n")
       else
         parts.each do |field|
           case field
