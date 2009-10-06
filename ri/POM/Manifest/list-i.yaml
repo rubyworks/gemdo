@@ -4,6 +4,8 @@ aliases:
   name: files
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Parses the MANIFEST file and returns it as an array of file names. Blank lines and commented lines (using '#') are ignored.
 full_name: POM::Manifest#list
 is_singleton: false
 name: list

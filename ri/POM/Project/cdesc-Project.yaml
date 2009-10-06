@@ -26,13 +26,15 @@ comment:
   body: The Project class provides the location of specific directories and files in the project, plus access to the projects metadata, etc.
 constants: 
 - !ruby/object:RDoc::RI::Constant 
-  comment: []
-
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Library directory relative to this file (ie <em>DIR</em>).
   name: LIB_DIRECTORY
   value: Pathname.new(File.dirname(File.dirname(__FILE__)))
 - !ruby/object:RDoc::RI::Constant 
-  comment: []
-
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: File glob for matching README file.
   name: README
   value: "\"readme{,.*}\""
 - !ruby/object:RDoc::RI::Constant 

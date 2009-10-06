@@ -189,7 +189,9 @@
       
         <dt><a name="DEFAULT_FILE">DEFAULT_FILE</a></dt>
         
-        <dd class="description missing-docs">(Not documented)</dd>
+        <dd class="description"><p>
+File glob use for locating the MANIFEST file.
+</p></dd>
         
       
       </dl>
@@ -212,7 +214,9 @@
 
         <div class="method-description">
         
-        <p class="missing-docs">(Not documented)</p>
+        <p>
+Stores the path of the amnifest file.
+</p>
         
         </div>
       </div>
@@ -239,14 +243,17 @@
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          <p>
+Instantiate a new <a href="Manifest.html">Manifest</a> object, provided the
+root directory of the project.
+</p>
           
 
           
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 14</span>
+<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 18</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root_directory</span>)
       <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">root_directory</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-identifier">:casefold</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -277,14 +284,16 @@
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          <p>
+Iterate over each file in the manifest.
+</p>
           
 
           
           <div class="method-source-code"
             id="each-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 27</span>
+<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 36</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -334,14 +343,17 @@ Alias for <a href="Manifest.html#M000035">list</a>
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          <p>
+Parses the MANIFEST file and returns it as an array of file names. Blank
+lines and commented lines (using &#8217;#&#8217;) are ignored.
+</p>
           
 
           
           <div class="method-source-code"
             id="list-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 18</span>
+<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 25</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list</span>
       <span class="ruby-ivar">@list</span> <span class="ruby-operator">||=</span> (
         <span class="ruby-identifier">files</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip</span> }
@@ -373,14 +385,16 @@ Alias for <a href="Manifest.html#M000035">list</a>
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          <p>
+Size of the manifest.
+</p>
           
 
           
           <div class="method-source-code"
             id="size-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 31</span>
+<span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 41</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span> ; <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           

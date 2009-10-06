@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Size of the manifest.
 full_name: POM::Manifest#size
 is_singleton: false
 name: size

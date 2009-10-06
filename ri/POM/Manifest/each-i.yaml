@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Iterate over each file in the manifest.
 full_name: POM::Manifest#each
 is_singleton: false
 name: each

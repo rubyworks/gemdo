@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Instantiate a new Manifest object, provided the root directory of the project.
 full_name: POM::Manifest::new
 is_singleton: true
 name: new
