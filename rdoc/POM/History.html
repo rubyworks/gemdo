@@ -72,7 +72,7 @@
         <h3 class="section-header">Namespace</h3>
         <ul class="link-list">
           
-          <li class="type"><a href="History/Release.html">POM::History::Release</a></li>
+          <li class="class"><a href="History/Release.html">POM::History::Release</a></li>
           
         </ul>
       </div>
@@ -84,9 +84,9 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000023">::new</a></li>
+          <li class="method"><a href="#M000024">::new</a></li>
           
-          <li class="method"><a href="#M000025">#read</a></li>
+          <li class="method"><a href="#M000027">#read</a></li>
           
           <li class="method"><a href="#M000028">#release</a></li>
           
@@ -169,11 +169,12 @@
 
       <h1><a href="History.html">History</a> File</h1>
 <p>
-The <a href="History.html">History</a> class parses a HISTOTY files into
-individual release sections. The file is expected to be in RDoc format with
-each section beginning with a secondary header (==) giving <b>version</b>
-and <b>date</b> of release, then a <b>note</b> followed by a point by point
-outline of changes.
+The <a href="History.html">History</a> class parses a <a
+href="../HISTORY.html">HISTORY</a> file into individual release sections.
+The file is expected to be in RDoc format with each section beginning with
+a secondary header (==) giving <b>version</b> and <b>date</b> of release,
+then a <b>note</b> followed by a point by point outline of <b>changes</b>.
+For example:
 </p>
 <pre>
   == 1.0.0 / 2009-10-07
@@ -185,8 +186,8 @@ outline of changes.
   * outline oimportant changelog items
 </pre>
 <p>
-&#8216;Changes:&#8217; ius used a parsing marker, rather than looking for
-an &#8217;*&#8217; do that lists can be used in the release note too.
+<tt>Changes:</tt> is used a parsing marker, rather than looking for an
+&#8217;*&#8217;, so that lists can be used in the release note too.
 </p>
 <p>
 TODO: Allow the format to be more varied.
@@ -202,7 +203,9 @@ TODO: Allow the format to be more varied.
       
         <dt><a name="DEFAULT_FILE">DEFAULT_FILE</a></dt>
         
-        <dd class="description missing-docs">(Not documented)</dd>
+        <dd class="description"><p>
+File glob for finding the <a href="../HISTORY.html">HISTORY</a> file.
+</p></dd>
         
       
       </dl>
@@ -225,7 +228,9 @@ TODO: Allow the format to be more varied.
 
         <div class="method-description">
         
-        <p class="missing-docs">(Not documented)</p>
+        <p>
+Stores the <a href="../HISTORY.html">HISTORY</a> file&#8217;s pathname.
+</p>
         
         </div>
       </div>
@@ -240,7 +245,9 @@ TODO: Allow the format to be more varied.
 
         <div class="method-description">
         
-        <p class="missing-docs">(Not documented)</p>
+        <p>
+List of release entries.
+</p>
         
         </div>
       </div>
@@ -255,7 +262,7 @@ TODO: Allow the format to be more varied.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000023"></a>
+        <a name="M000024"></a>
 
         <div class="method-heading">
         
@@ -276,7 +283,7 @@ New <a href="History.html">History</a>.
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/history.rb, line 35</span>
+<span class="ruby-comment cmt"># File lib/pom/history.rb, line 40</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>)
       <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
       <span class="ruby-ivar">@file</span> = <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-identifier">:casefold</span>).<span class="ruby-identifier">first</span>
@@ -298,7 +305,7 @@ New <a href="History.html">History</a>.
 
     
       <div id="read-method" class="method-detail ">
-        <a name="M000025"></a>
+        <a name="M000027"></a>
 
         <div class="method-heading">
         
@@ -319,7 +326,7 @@ Read and parse the Histoy file.
           <div class="method-source-code"
             id="read-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/history.rb, line 43</span>
+<span class="ruby-comment cmt"># File lib/pom/history.rb, line 48</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@file</span>
         <span class="ruby-identifier">text</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">strip</span>
@@ -360,7 +367,7 @@ Returns first entry in releases list.
           <div class="method-source-code"
             id="release-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/history.rb, line 55</span>
+<span class="ruby-comment cmt"># File lib/pom/history.rb, line 60</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
        <span class="ruby-identifier">releases</span>.<span class="ruby-identifier">first</span>
     <span class="ruby-keyword kw">end</span></pre>
