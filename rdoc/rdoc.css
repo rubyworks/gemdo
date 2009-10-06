@@ -532,12 +532,12 @@ div.method-source-code pre {
 .ruby-value      { color: #7fffd4; background: transparent; }
 
 .ruby-constant   { color: #70004d; background: transparent; }
-.ruby-keyword    { color: #ff0000; background: transparent; }
+.ruby-keyword    { color: #000000; background: transparent; font-weight: bold;}
 .ruby-ivar       { color: #11448e; background: transparent; }
 .ruby-operator   { color: #ff0022; background: transparent; }
 .ruby-identifier { color: #00413d; background: transparent; }
 .ruby-node       { color: #001f71; background: transparent; }
-.ruby-comment    { color: #b22222; background: transparent; font-weight: bold;}
+.ruby-comment    { color: #CCCCCC; background: transparent; }
 .ruby-regexp     { color: #001f71; background: transparent; }
 .ruby-value      { color: #70004d; background: transparent; }
 
