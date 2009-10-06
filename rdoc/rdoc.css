@@ -62,7 +62,7 @@ ul {
 .head {
   width: auto;
   background: #FF226C;
-  background: #ccc;
+  background: #aaa;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border: 1px solid #aaa;
@@ -72,7 +72,7 @@ ul {
 
 .head h1 {
   color: #FF226C;
-  color: #666;
+  color: #111;
   font-weight: bold; 
 }
 
@@ -163,7 +163,6 @@ body.file p {
   padding-left: 20px;
   background: url(images/bullet_black.png) no-repeat left 4px;
   color: #666;
-  font-size: 0.9em;
 }
 
 #metadata li.module {
