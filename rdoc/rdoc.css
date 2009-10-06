@@ -501,13 +501,13 @@ a.source-toggle img {
 }
 
 div.method-source-code {
-    background: #262626;
-    background: #F6F6F6;
-    color: #2f2f2f;
-    margin: 1em;
-    padding: 0.5em;
-    border: 1px dashed #999;
-    overflow: hidden;
+  background: #262626;
+  background: #F6F6F6;
+  color: #2f2f2f;
+  margin: 1em;
+  padding: 0.5em;
+  border: 1px dashed #999;
+  overflow: hidden;
 }
 
 div.method-source-code pre {
@@ -521,15 +521,15 @@ div.method-source-code pre {
 
 .standalone-code { background: #221111; color: #ffdead; overflow: hidden; }
 
-.ruby-constant  { color: #7fffd4; background: transparent; }
-.ruby-keyword { color: #00ffff; background: transparent; }
-.ruby-ivar    { color: #eedd82; background: transparent; }
-.ruby-operator  { color: #00ffee; background: transparent; }
-.ruby-identifier { color: #ffdead; background: transparent; }
-.ruby-node    { color: #ffa07a; background: transparent; }
-.ruby-comment { color: #b22222; font-weight: bold; background: transparent; }
-.ruby-regexp  { color: #ffa07a; background: transparent; }
-.ruby-value   { color: #7fffd4; background: transparent; }
+.ruby-constant   { color: #7f2fd4; background: transparent; }
+.ruby-keyword    { color: #002f2f; background: transparent; }
+.ruby-ivar       { color: #eedd82; background: transparent; }
+.ruby-operator   { color: #002fee; background: transparent; }
+.ruby-identifier { color: #2fdead; background: transparent; }
+.ruby-node       { color: #2fa07a; background: transparent; }
+.ruby-comment    { color: #b22222; background: transparent; font-weight: bold;}
+.ruby-regexp     { color: #2fa07a; background: transparent; }
+.ruby-value      { color: #7f2fd4; background: transparent; }
 
 /* @end */
 /* @end */
