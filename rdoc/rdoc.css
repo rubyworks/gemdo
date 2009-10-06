@@ -71,7 +71,12 @@ ul {
 
 .head h1 {
   color: #FF226C;
-  color: #111;
+  color: #666;
+  font-weight: bold; 
+}
+
+.head h1 a {
+  color: #666;
   font-weight: bold; 
 }
 
