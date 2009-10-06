@@ -58,14 +58,14 @@ p {
 .head {
   width: auto;
   background: #FF226C;
-  background: #ccc;
+  background: #eee;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border: 1px solid #aaa;
-  padding: 5px 20px;
+  padding: 5px 0;
 }
 
-.head h1 { color: #222; font-size: 16px; font-weight: bold; }
+.head h1 { color: #666; font-size: 16px; font-weight: bold; }
 
 /* @group Generic Classes */
 
