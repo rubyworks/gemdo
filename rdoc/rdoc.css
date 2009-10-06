@@ -130,7 +130,8 @@ body.file p {
 }
 */
 
-ul a {
+
+#metadata ul a {
   font-size: 14px;
 }
 
@@ -142,7 +143,7 @@ ul a {
 }
 */
 
-ul {
+#metadata ul {
   list-style: none;
 }
 
@@ -159,20 +160,20 @@ ul {
   background: url(images/bullet_black.png) no-repeat left 4px;
 }
 
-li {
+#metadata li {
 }
 
-li.module {
+#metadata li.module {
   padding-left: 20px;
   background: url(images/package.png) no-repeat left 2px;
 }
 
-li.class {
+#metadata li.class {
   padding-left: 20px;
   background: url(images/ruby.png) no-repeat left 2px;
 }
 
-li.file {
+#metadata li.file {
   padding-left: 20px;
   background: url(images/page_white_text.png) no-repeat left 2px;
 }
@@ -184,7 +185,7 @@ li.file {
 #metadata {
   float: left;
   width: 320px;
-  margin-top: 0;
+  margin-top: 15px;
 }
 
 #documentation {
