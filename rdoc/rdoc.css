@@ -67,7 +67,7 @@ ul {
   -webkit-border-radius: 5px;
   border: 1px solid #aaa;
   padding: 5px 15px;
-  margin: 0 8px 5px 8px;
+  margin: 0 8px 10px 8px;
 }
 
 .head h1 {
@@ -188,11 +188,11 @@ body.file p {
 #metadata {
   float: left;
   width: 320px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 #documentation {
-  margin: 0em 1em 5em 360px;
+  margin: 0 1em 5em 360px;
   min-width: 340px;
 }
 
