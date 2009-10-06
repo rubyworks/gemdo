@@ -58,15 +58,15 @@ p {
 .head {
   width: auto;
   background: #FF226C;
-  background: #ddd;
+  background: #eee;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border: 1px solid #aaa;
+  border: 0px solid #aaa;
   padding: 5px 20px;
   margin: 0 5px;
 }
 
-.head h1 { color: #FF226C; font-size: 16px; font-weight: bold; }
+.head h1 { color: #FF226C; color: #CCC; font-size: 16px; font-weight: bold; }
 
 /* @group Generic Classes */
 
