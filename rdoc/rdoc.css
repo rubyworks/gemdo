@@ -157,6 +157,7 @@ body.file p {
 #metadata li {
   padding-left: 20px;
   background: url(images/bullet_black.png) no-repeat left 4px;
+  color: #ccc;
 }
 
 #metadata li.module {
