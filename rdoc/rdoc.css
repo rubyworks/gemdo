@@ -138,6 +138,9 @@ body.file p {
 }
 */
 
+#metadata ul {
+  font-size: 14px;
+}
 
 #metadata ul a {
   font-size: 14px;
