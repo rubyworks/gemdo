@@ -154,26 +154,25 @@ body.file p {
 }
 */
 
-.indexpage li,
-.file #documentation li {
+#metadata,.head li {
   padding-left: 20px;
   background: url(images/bullet_black.png) no-repeat left 4px;
 }
 
-#metadata li {
+#metadata,.head li {
 }
 
-#metadata li.module {
+#metadata,.head li.module {
   padding-left: 20px;
   background: url(images/package.png) no-repeat left 2px;
 }
 
-#metadata li.class {
+#metadata,.head li.class {
   padding-left: 20px;
   background: url(images/ruby.png) no-repeat left 2px;
 }
 
-#metadata li.file {
+#metadata,.head li.file {
   padding-left: 20px;
   background: url(images/page_white_text.png) no-repeat left 2px;
 }
