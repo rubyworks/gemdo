@@ -513,7 +513,7 @@ div.method-source-code {
 div.method-source-code pre {
 	background: inherit;
 	padding: 0;
-	color: white;
+	color: #222;
 	overflow: hidden;
 }
 
