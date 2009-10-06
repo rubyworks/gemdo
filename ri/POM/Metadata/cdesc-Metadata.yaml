@@ -199,6 +199,8 @@ comment:
 constants: 
 - !ruby/object:RDoc::RI::Constant 
   comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Glob for matching against meta directory names, <tt>.meta/</tt> and <tt>meta/</tt>.
   name: METADIRS
   value: "'{.meta,meta}'"
 full_name: POM::Metadata

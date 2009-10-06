@@ -2,8 +2,9 @@
 aliases: []
 
 block_params: 
-comment: []
-
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Provide a summary text of project's metadata.
 full_name: POM::Metadata#to_s
 is_singleton: false
 name: to_s

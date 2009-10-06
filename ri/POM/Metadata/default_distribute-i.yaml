@@ -2,8 +2,9 @@
 aliases: []
 
 block_params: 
-comment: []
-
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Default distribution list include everything ['*<b>/</b>'].
 full_name: POM::Metadata#default_distribute
 is_singleton: false
 name: default_distribute

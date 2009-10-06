@@ -2,8 +2,9 @@
 aliases: []
 
 block_params: 
-comment: []
-
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Default loadpath inclide <tt>lib</tt>.
 full_name: POM::Metadata#default_loadpath
 is_singleton: false
 name: default_loadpath

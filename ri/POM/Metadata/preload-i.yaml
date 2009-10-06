@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Load all attributes from file system.
 full_name: POM::Metadata#preload
 is_singleton: false
 name: preload

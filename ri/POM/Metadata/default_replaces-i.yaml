@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Default list of replacements is an empty list.
 full_name: POM::Metadata#default_replaces
 is_singleton: false
 name: default_replaces

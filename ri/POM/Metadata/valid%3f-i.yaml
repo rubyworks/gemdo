@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: "VALIDATE #"
+  body: Is the minimal information provided?
 full_name: POM::Metadata#valid?
 is_singleton: false
 name: valid?

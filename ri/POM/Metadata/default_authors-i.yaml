@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: "Calculated Defaults #"
+  body: Default list of authors is an empty list.
 full_name: POM::Metadata#default_authors
 is_singleton: false
 name: default_authors
