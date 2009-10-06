@@ -537,7 +537,7 @@ div.method-source-code pre {
 .ruby-operator   { color: #ff0022; background: transparent; }
 .ruby-identifier { color: #00413d; background: transparent; }
 .ruby-node       { color: #001f71; background: transparent; }
-.ruby-comment    { color: #CCCCCC; background: transparent; }
+.ruby-comment    { color: #bbbbbb; background: transparent; }
 .ruby-regexp     { color: #001f71; background: transparent; }
 .ruby-value      { color: #70004d; background: transparent; }
 
