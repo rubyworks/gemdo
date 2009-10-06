@@ -66,9 +66,9 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li><a href="#M000039">::new</a></li>
+          <li><a href="#M000040">::new</a></li>
           
-          <li><a href="#M000042">#read</a></li>
+          <li><a href="#M000041">#read</a></li>
           
         </ul>
       </div>
@@ -146,7 +146,7 @@
 
     <div id="description">
       <p>
-Release file.
+Release Notes file provides an interface to to the current release message.
 </p>
 <p>
 DEPRECATE: We will use improved <a href="History.html">History</a> file
@@ -231,7 +231,7 @@ instead.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000039"></a>
+        <a name="M000040"></a>
 
         <div class="method-heading">
         
@@ -252,7 +252,7 @@ New <a href="ReleaseNotes.html">ReleaseNotes</a>.
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/release_notes.rb, line 19</span>
+<span class="ruby-comment cmt"># File lib/pom/release_notes.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root_directory</span>)
       <span class="ruby-ivar">@notes</span>   = <span class="ruby-value str">''</span>
       <span class="ruby-ivar">@changes</span> = <span class="ruby-value str">''</span>
@@ -276,7 +276,7 @@ New <a href="ReleaseNotes.html">ReleaseNotes</a>.
 
     
       <div id="read-method" class="method-detail ">
-        <a name="M000042"></a>
+        <a name="M000041"></a>
 
         <div class="method-heading">
         
@@ -295,7 +295,7 @@ New <a href="ReleaseNotes.html">ReleaseNotes</a>.
           <div class="method-source-code"
             id="read-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/release_notes.rb, line 29</span>
+<span class="ruby-comment cmt"># File lib/pom/release_notes.rb, line 30</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@file</span>
         <span class="ruby-identifier">text</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)

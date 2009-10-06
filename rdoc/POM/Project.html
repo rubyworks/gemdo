@@ -68,31 +68,31 @@
           
           <li><a href="#M000001">::new</a></li>
           
-          <li><a href="#M000030">#about</a></li>
+          <li><a href="#M000026">#about</a></li>
           
-          <li><a href="#M000031">#announcement</a></li>
+          <li><a href="#M000030">#announcement</a></li>
           
           <li><a href="#M000016">#cache</a></li>
           
-          <li><a href="#M000025">#config</a></li>
+          <li><a href="#M000022">#config</a></li>
           
           <li><a href="#M000012">#doc</a></li>
           
-          <li><a href="#M000007">#history</a></li>
+          <li><a href="#M000006">#history</a></li>
           
-          <li><a href="#M000034">#locate_root</a></li>
+          <li><a href="#M000032">#locate_root</a></li>
           
-          <li><a href="#M000038">#locate_root_at</a></li>
+          <li><a href="#M000033">#locate_root_at</a></li>
           
           <li><a href="#M000011">#log</a></li>
           
-          <li><a href="#M000006">#manifest</a></li>
+          <li><a href="#M000005">#manifest</a></li>
           
-          <li><a href="#M000009">#manifest_file</a></li>
+          <li><a href="#M000008">#manifest_file</a></li>
           
-          <li><a href="#M000005">#metadata</a></li>
+          <li><a href="#M000004">#metadata</a></li>
           
-          <li><a href="#M000014">#pack</a></li>
+          <li><a href="#M000013">#pack</a></li>
           
           <li><a href="#M000015">#pkg</a></li>
           
@@ -104,11 +104,11 @@
           
           <li><a href="#M000020">#site</a></li>
           
-          <li><a href="#M000023">#task</a></li>
+          <li><a href="#M000021">#task</a></li>
           
-          <li><a href="#M000027">#tmp</a></li>
+          <li><a href="#M000023">#tmp</a></li>
           
-          <li><a href="#M000029">#tmpdir</a></li>
+          <li><a href="#M000025">#tmpdir</a></li>
           
         </ul>
       </div>
@@ -327,7 +327,7 @@ TODO: Support alternate source location in the future (?)
 
     
       <div id="about-method" class="method-detail ">
-        <a name="M000030"></a>
+        <a name="M000026"></a>
 
         <div class="method-heading">
         
@@ -350,6 +350,9 @@ About project notice.
 <pre>
 <span class="ruby-comment cmt"># File lib/pom/project.rb, line 211</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">parts</span>)
+      <span class="ruby-comment cmt"># pre-format data</span>
+      <span class="ruby-identifier">released</span> = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">released</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;(#{metadata.released.strftime('%Y-%m-%d')})&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">empty?</span>
         <span class="ruby-comment cmt">#puts</span>
         <span class="ruby-comment cmt">#puts &quot;  #{metadata.title} #{metadata.version} (#{metadata.released})&quot;</span>
@@ -361,7 +364,7 @@ About project notice.
         <span class="ruby-comment cmt">#puts &quot;  Copyright #{metadata.copyright}&quot;</span>
         <span class="ruby-comment cmt">#puts</span>
         <span class="ruby-identifier">s</span> = []
-        <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.title} v#{metadata.version} (#{metadata.released.strftime('%Y-%m-%d')})&quot;</span>
+        <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.title} v#{metadata.version} #{released}&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.description}&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
@@ -396,7 +399,7 @@ About project notice.
 
     
       <div id="announcement-method" class="method-detail ">
-        <a name="M000031"></a>
+        <a name="M000030"></a>
 
         <div class="method-heading">
         
@@ -418,7 +421,7 @@ href="Project.html#README">README</a>.
           <div class="method-source-code"
             id="announcement-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 252</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 255</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announcement</span>(<span class="ruby-identifier">file</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={})
       <span class="ruby-identifier">header</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:header</span>]
 
@@ -495,7 +498,7 @@ the pathname for the cache directory.
 
     
       <div id="config-method" class="method-detail ">
-        <a name="M000025"></a>
+        <a name="M000022"></a>
 
         <div class="method-heading">
         
@@ -574,7 +577,7 @@ the pathname for the doc directory.
 
     
       <div id="history-method" class="method-detail ">
-        <a name="M000007"></a>
+        <a name="M000006"></a>
 
         <div class="method-heading">
         
@@ -650,7 +653,7 @@ the pathname for the log directory.
 
     
       <div id="manifest-method" class="method-detail ">
-        <a name="M000006"></a>
+        <a name="M000005"></a>
 
         <div class="method-heading">
         
@@ -684,7 +687,7 @@ the pathname for the log directory.
 
     
       <div id="manifest-file-method" class="method-detail ">
-        <a name="M000009"></a>
+        <a name="M000008"></a>
 
         <div class="method-heading">
         
@@ -719,7 +722,7 @@ of using manifest.file ?
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000005"></a>
+        <a name="M000004"></a>
 
         <div class="method-heading">
         
@@ -754,7 +757,7 @@ about the project.
 
     
       <div id="pack-method" class="method-detail ">
-        <a name="M000014"></a>
+        <a name="M000013"></a>
 
         <div class="method-heading">
         
@@ -815,7 +818,7 @@ returns the pathname for the package directory.
         <div class="method-description">
           
           <p>
-Alias for <a href="Project.html#M000014">pack</a>
+Alias for <a href="Project.html#M000013">pack</a>
 </p>
           
 
@@ -978,7 +981,7 @@ the pathname for the site directory.
 
     
       <div id="task-method" class="method-detail ">
-        <a name="M000023"></a>
+        <a name="M000021"></a>
 
         <div class="method-heading">
         
@@ -1020,7 +1023,7 @@ TODO: Are task and script different names for the same thing?
 
     
       <div id="tmp-method" class="method-detail ">
-        <a name="M000027"></a>
+        <a name="M000023"></a>
 
         <div class="method-heading">
         
@@ -1064,14 +1067,14 @@ TODO: Use Dir.tmpdir instead ?
 
         
         <div class="aliases">
-          Also aliased as: <a href="Project.html#M000029">tmpdir</a>
+          Also aliased as: <a href="Project.html#M000025">tmpdir</a>
         </div>
         
       </div>
 
     
       <div id="tmpdir-method" class="method-detail method-alias">
-        <a name="M000029"></a>
+        <a name="M000025"></a>
 
         <div class="method-heading">
         
@@ -1084,7 +1087,7 @@ TODO: Use Dir.tmpdir instead ?
         <div class="method-description">
           
           <p>
-Alias for <a href="Project.html#M000027">tmp</a>
+Alias for <a href="Project.html#M000023">tmp</a>
 </p>
           
 
@@ -1102,7 +1105,7 @@ Alias for <a href="Project.html#M000027">tmp</a>
 
     
       <div id="locate-root-method" class="method-detail ">
-        <a name="M000034"></a>
+        <a name="M000032"></a>
 
         <div class="method-heading">
         
@@ -1125,7 +1128,7 @@ matched. Returns <tt>nil</tt> if not found.
           <div class="method-source-code"
             id="locate-root-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 287</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 290</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locate_root</span>(<span class="ruby-identifier">local</span>=<span class="ruby-keyword kw">nil</span>)
         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">local</span><span class="ruby-operator">||</span><span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>) <span class="ruby-keyword kw">do</span>
           <span class="ruby-identifier">dir</span> = <span class="ruby-keyword kw">nil</span>
@@ -1144,7 +1147,7 @@ matched. Returns <tt>nil</tt> if not found.
 
     
       <div id="locate-root-at-method" class="method-detail ">
-        <a name="M000038"></a>
+        <a name="M000033"></a>
 
         <div class="method-heading">
         
@@ -1163,7 +1166,7 @@ matched. Returns <tt>nil</tt> if not found.
           <div class="method-source-code"
             id="locate-root-at-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 298</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 301</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locate_root_at</span>(<span class="ruby-identifier">indicator</span>)
         <span class="ruby-identifier">root</span> = <span class="ruby-keyword kw">nil</span>
         <span class="ruby-identifier">dir</span>  = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>

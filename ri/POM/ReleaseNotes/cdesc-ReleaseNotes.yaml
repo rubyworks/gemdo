@@ -17,13 +17,13 @@ class_methods:
   name: new
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Release file.
+  body: Release Notes file provides an interface to to the current release message.
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: "DEPRECATE: We will use improved History file instead."
 - !ruby/struct:RDoc::Markup::Flow::RULE 
   width: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Release file.
+  body: Release Notes file provides an interface to to the current release message.
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: "DEPRECATE: We will use improved History file instead."
 constants: 
