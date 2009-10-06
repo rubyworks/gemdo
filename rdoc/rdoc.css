@@ -58,11 +58,11 @@ p {
 .head {
   width: auto;
   background: #FF226C;
-  background: #eee;
+  background: #ddd;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border: 1px solid #aaa;
-  padding: 5px 0;
+  border: 0px solid #aaa;
+  padding: 5px 20px;
 }
 
 .head h1 { color: #666; font-size: 16px; font-weight: bold; }
