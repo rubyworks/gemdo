@@ -142,6 +142,10 @@ ul a {
 }
 */
 
+ul {
+  list-style: none;
+}
+
 /*
 .indexpage ul a,
 .file #documentation ul a {
