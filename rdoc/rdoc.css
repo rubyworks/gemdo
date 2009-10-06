@@ -62,7 +62,7 @@ p {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border: 0px solid #aaa;
-  padding: 5px 20px;
+  padding: 5px 5px;
   margin: 0 5px;
 }
 
@@ -188,7 +188,7 @@ li.file {
 }
 
 #documentation {
-  margin: 1em 1em 5em 360px;
+  margin: 0em 1em 5em 360px;
   min-width: 340px;
 }
 
@@ -270,7 +270,7 @@ ul.link-list .type {
 
 /* @group Project Metadata Section */
 #project-metadata {
-  margin-top: 3em;
+  margin-top: 0em;
 }
 
 /*
