@@ -66,7 +66,7 @@ ul {
   -webkit-border-radius: 5px;
   border: 1px solid #aaa;
   padding: 5px 15px;
-  margin: 0 8px 16px 8px;
+  margin: 0 8px 24px 8px;
 }
 
 .head h1 {
@@ -167,6 +167,11 @@ body.file p {
   padding-left: 20px;
   background: url(images/bullet_black.png) no-repeat left 4px;
   color: #666;
+}
+
+#metadata li.method {
+  padding-left: 20px;
+  background: url(images/brick.png) no-repeat left 2px;
 }
 
 #metadata li.module {
