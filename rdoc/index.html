@@ -18,9 +18,13 @@
   <script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/highlight.js" type="text/javascript" charset="utf-8"></script>
+
   <script>
-    hljs.tabReplace = '    ';
-    hljs.initHighlightingOnLoad();
+    $(document).ready(function() {
+      #('pre').innerWrap('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+    });
   </script>
 
   
@@ -104,7 +108,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Metadata</span>
-              <a href="POM/Metadata.html#M000040">::attr_accessor</a>
+              <a href="POM/Metadata.html#M000042">::attr_accessor</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -119,7 +123,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::ReleaseNotes</span>
-              <a href="POM/ReleaseNotes.html#M000041">::new</a>
+              <a href="POM/ReleaseNotes.html#M000040">::new</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -129,7 +133,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Manifest</span>
-              <a href="POM/Manifest.html#M000034">::new</a>
+              <a href="POM/Manifest.html#M000033">::new</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -149,7 +153,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000027">#about</a>
+              <a href="POM/Project.html#M000028">#about</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -279,7 +283,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Readme</span>
-              <a href="POM/Readme.html#M000010">#description_2</a>
+              <a href="POM/Readme.html#M000009">#description_2</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -309,7 +313,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000006">#history</a>
+              <a href="POM/Project.html#M000007">#history</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -319,7 +323,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Readme</span>
-              <a href="POM/Readme.html#M000007">#license</a>
+              <a href="POM/Readme.html#M000005">#license</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -329,7 +333,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Manifest</span>
-              <a href="POM/Manifest.html#M000035">#list</a>
+              <a href="POM/Manifest.html#M000034">#list</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -349,7 +353,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000033">#locate_root_at</a>
+              <a href="POM/Project.html#M000035">#locate_root_at</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -359,12 +363,12 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000005">#manifest</a>
+              <a href="POM/Project.html#M000006">#manifest</a>
             </li>
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000009">#manifest_file</a>
+              <a href="POM/Project.html#M000010">#manifest_file</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -424,7 +428,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::ReleaseNotes</span>
-              <a href="POM/ReleaseNotes.html#M000042">#read</a>
+              <a href="POM/ReleaseNotes.html#M000041">#read</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -439,7 +443,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::History</span>
-              <a href="POM/History.html#M000028">#release</a>
+              <a href="POM/History.html#M000026">#release</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -504,7 +508,7 @@
           
             <li class="method" style="clear: both;">
               <span style="float: right; font-size: 0.8em;">&nbsp;POM::Project</span>
-              <a href="POM/Project.html#M000026">#tmpdir</a>
+              <a href="POM/Project.html#M000027">#tmpdir</a>
             </li>
           
             <li class="method" style="clear: both;">
@@ -586,17 +590,17 @@
     
       <li><a href="POM/Metadata.html#M000039">::aliases &mdash; POM::Metadata</a></li>
     
-      <li><a href="POM/Metadata.html#M000040">::attr_accessor &mdash; POM::Metadata</a></li>
+      <li><a href="POM/Metadata.html#M000042">::attr_accessor &mdash; POM::Metadata</a></li>
     
       <li><a href="POM/Project.html#M000001">::new &mdash; POM::Project</a></li>
     
       <li><a href="POM/Metadata.html#M000044">::new &mdash; POM::Metadata</a></li>
     
-      <li><a href="POM/ReleaseNotes.html#M000041">::new &mdash; POM::ReleaseNotes</a></li>
+      <li><a href="POM/ReleaseNotes.html#M000040">::new &mdash; POM::ReleaseNotes</a></li>
     
       <li><a href="POM/Readme.html#M000000">::new &mdash; POM::Readme</a></li>
     
-      <li><a href="POM/Manifest.html#M000034">::new &mdash; POM::Manifest</a></li>
+      <li><a href="POM/Manifest.html#M000033">::new &mdash; POM::Manifest</a></li>
     
       <li><a href="POM/History.html#M000023">::new &mdash; POM::History</a></li>
     
@@ -604,7 +608,7 @@
     
       <li><a href="POM/Readme.html#M000002">#[] &mdash; POM::Readme</a></li>
     
-      <li><a href="POM/Project.html#M000027">#about &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000028">#about &mdash; POM::Project</a></li>
     
       <li><a href="POM/Metadata.html#M000050">#add_attribute &mdash; POM::Metadata</a></li>
     
@@ -656,7 +660,7 @@
     
       <li><a href="POM/Readme.html#M000008">#description_1 &mdash; POM::Readme</a></li>
     
-      <li><a href="POM/Readme.html#M000010">#description_2 &mdash; POM::Readme</a></li>
+      <li><a href="POM/Readme.html#M000009">#description_2 &mdash; POM::Readme</a></li>
     
       <li><a href="POM/Metadata.html#M000077">#distribute= &mdash; POM::Metadata</a></li>
     
@@ -668,15 +672,15 @@
     
       <li><a href="POM/Manifest.html#M000036">#files &mdash; POM::Manifest</a></li>
     
-      <li><a href="POM/Project.html#M000006">#history &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000007">#history &mdash; POM::Project</a></li>
     
       <li><a href="POM/Metadata.html#M000045">#initialize_metadirectory &mdash; POM::Metadata</a></li>
     
-      <li><a href="POM/Readme.html#M000007">#license &mdash; POM::Readme</a></li>
+      <li><a href="POM/Readme.html#M000005">#license &mdash; POM::Readme</a></li>
     
       <li><a href="POM/Readme.html#M000012">#license_1 &mdash; POM::Readme</a></li>
     
-      <li><a href="POM/Manifest.html#M000035">#list &mdash; POM::Manifest</a></li>
+      <li><a href="POM/Manifest.html#M000034">#list &mdash; POM::Manifest</a></li>
     
       <li><a href="POM/Metadata.html#M000086">#list &mdash; POM::Metadata</a></li>
     
@@ -684,13 +688,13 @@
     
       <li><a href="POM/Project.html#M000032">#locate_root &mdash; POM::Project</a></li>
     
-      <li><a href="POM/Project.html#M000033">#locate_root_at &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000035">#locate_root_at &mdash; POM::Project</a></li>
     
       <li><a href="POM/Project.html#M000011">#log &mdash; POM::Project</a></li>
     
-      <li><a href="POM/Project.html#M000005">#manifest &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000006">#manifest &mdash; POM::Project</a></li>
     
-      <li><a href="POM/Project.html#M000009">#manifest_file &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000010">#manifest_file &mdash; POM::Project</a></li>
     
       <li><a href="POM/Metadata.html#M000046">#meta &mdash; POM::Metadata</a></li>
     
@@ -714,13 +718,13 @@
     
       <li><a href="POM/History.html#M000025">#read &mdash; POM::History</a></li>
     
-      <li><a href="POM/ReleaseNotes.html#M000042">#read &mdash; POM::ReleaseNotes</a></li>
+      <li><a href="POM/ReleaseNotes.html#M000041">#read &mdash; POM::ReleaseNotes</a></li>
     
       <li><a href="POM/Metadata.html#M000048">#readme &mdash; POM::Metadata</a></li>
     
       <li><a href="POM/Metadata.html#M000072">#recommends= &mdash; POM::Metadata</a></li>
     
-      <li><a href="POM/History.html#M000028">#release &mdash; POM::History</a></li>
+      <li><a href="POM/History.html#M000026">#release &mdash; POM::History</a></li>
     
       <li><a href="POM/Metadata.html#M000068">#released= &mdash; POM::Metadata</a></li>
     
@@ -746,7 +750,7 @@
     
       <li><a href="POM/Project.html#M000024">#tmp &mdash; POM::Project</a></li>
     
-      <li><a href="POM/Project.html#M000026">#tmpdir &mdash; POM::Project</a></li>
+      <li><a href="POM/Project.html#M000027">#tmpdir &mdash; POM::Project</a></li>
     
       <li><a href="POM/Metadata.html#M000083">#to_s &mdash; POM::Metadata</a></li>
     

@@ -174,22 +174,22 @@ body.file p {
 
 #metadata li.method {
   padding-left: 20px;
-  background: url(images/brick.png) no-repeat left 2px;
+  background: url(images/method.png) no-repeat left 2px;
 }
 
 #metadata li.module {
   padding-left: 20px;
-  background: url(images/package.png) no-repeat left 2px;
+  background: url(images/module.png) no-repeat left 2px;
 }
 
 #metadata li.class {
   padding-left: 20px;
-  background: url(images/ruby.png) no-repeat left 2px;
+  background: url(images/class.png) no-repeat left 2px;
 }
 
 #metadata li.file {
   padding-left: 20px;
-  background: url(images/page_white_text.png) no-repeat left 2px;
+  background: url(images/file.png) no-repeat left 2px;
 }
 
 /* @end */
@@ -451,7 +451,7 @@ ul.link-list .type {
 
 #documentation .method-alias .method-heading {
 	color: #666;
-	background: url(images/brick_link.png) no-repeat left bottom;
+	background: url(images/alias.png) no-repeat left bottom;
 }
 
 #documentation .method-description,
