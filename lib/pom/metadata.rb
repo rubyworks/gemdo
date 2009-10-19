@@ -316,6 +316,8 @@ module POM
     # Location of central vcs repository.
     attr_accessor :repository
 
+    # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
+    attr_accessor :copyright
 
     # TODO: Tecnically these next two are not metadata but build
     # configuration, so ultimately they should go else where.
@@ -325,8 +327,7 @@ module POM
     # This is provided to assist with MANIFEST automation.
     attr_accessor :distribute
 
-    # Map project directories and files to publish locations
-    # on webserver.
+    # Map project directories and files to publish locations on webserver.
     attr_accessor :sitemap
 
 
