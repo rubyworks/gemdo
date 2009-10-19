@@ -4,6 +4,7 @@ require 'facets/string/op_div'
 require 'pom/metadata'
 require 'pom/manifest'
 require 'pom/history'
+require 'pom/gemspec'
 
 module POM
 
