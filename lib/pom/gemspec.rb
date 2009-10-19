@@ -2,6 +2,17 @@ module POM
 
   class Project
 
+    # Require RubyGems library.
+    #
+    def require_rubygems
+      begin
+        require 'rubygems/specification'
+        #::Gem::manage_gems
+      rescue LoadError
+        raise LoadError, "RubyGems is not installed."
+      end
+    end
+
     # Create a Gem::Specification
     #
     # NOTE: This would be a method of METADATA except that it needs
@@ -9,14 +20,7 @@ module POM
     # that the Manifest should be a part of the Metadata?
     #
     def to_gemspec(options={})
-
-      # Make sure RubyGems is loaded.
-      begin
-        Kernel.require 'rubygems/specification'
-        ::Gem::manage_gems
-      rescue LoadError
-        raise LoadError, "RubyGems is not installed?"
-      end
+      require_rubygems
 
       # FIXME: this only works b/c of package staging
       #distribute = Dir.glob('**/*')
@@ -96,12 +100,12 @@ module POM
 
         # -- distributed files --
 
-        spec.files = manifest.files
+        spec.files = manifest.files.select{ |f| File.file?(f) }
 
         # -- test files --
 
         # TODO: make test_files configurable (?)
-        spec.test_files = distribute.select do |f|
+        spec.test_files = manifest.files.select do |f|
           File.basename(f) =~ /test/ && File.extname(f) == '.rb'
         end
       end
