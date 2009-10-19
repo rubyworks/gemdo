@@ -14,7 +14,7 @@ module POM
   class Project
 
     # Library directory relative to this file (ie __DIR__).
-    LIB_DIRECTORY   = Pathname.new(File.dirname(File.dirname(__FILE__)))
+    #LIB_DIRECTORY = Pathname.new(File.dirname(File.dirname(__FILE__)))
 
     # Root directory is indicated by the presence of a +meta/+ directory,
     # or +.meta/+ hidden directory.
@@ -22,8 +22,6 @@ module POM
 
     # File glob for matching README file.
     README = "readme{,.*}"
-
-# IDEA: A lazy pathname that contains a glob, and reduces to real when used.
 
     #
     def initialize(local=nil)

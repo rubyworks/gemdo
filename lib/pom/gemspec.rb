@@ -80,7 +80,7 @@ module POM
         if options[:extra_rdoc_files]
           rdocfiles = []
           rdocfiles << readme if readme
-          rdocfiles.concat = options[:extra_rdoc_files]
+          rdocfiles.concat(options[:extra_rdoc_files])
         else
           rdocfiles = []
           rdocfiles << readme if readme
@@ -106,6 +106,39 @@ module POM
         end
       end
 
+    end
+
+    # Build a POM project using a gemspec. This is intended to make it
+    # farily easy to build a set of POM meta/ files if you already have
+    # a gemspec.
+    #
+    # TODO: Since we won't use the gemspec manifest here, this perhaps
+    # should be in Metadata, and then we can if we want have this method
+    # too, but calling on it?
+    #
+    def self.from_gemspec(gemspec, root=Dir.pwd)
+      project = Project.new(root)
+      project.metadata.name         = gemspec.name
+      project.metadata.version      = gemspec.version.to_s
+      project.metadata.summary      = gemspec.summary
+      project.metadata.description  = gemspec.description
+      project.metadata.authors      = gemspec.authors
+      project.metadata.contact      = gemspec.email
+      project.metadata.homepage     = gemspec.homepage
+      project.metadata.loadpath     = gemspec.require_paths
+
+      project.metadata.platform     = gemspec.platform
+
+      project.metadata.extensions   = gemspec.extensions
+
+      requires = []
+      gemspec.dependencies.each do |d|
+        next unless d.type == :runtime
+        requires << "#{d.name} #{d.version_requirements}"
+      end
+      project.metadata.requires = requires
+
+      project
     end
 
   end#class Project
