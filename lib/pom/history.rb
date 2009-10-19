@@ -2,14 +2,38 @@ require 'facets/pathname'
 
 module POM
 
-  # History File
+  # = History File
+  #
+  # The History class parses a HISTORY file into individual
+  # release sections. The file is expected to be in RDoc format
+  # with each section beginning with a secondary header (==)
+  # giving *version* and *date* of release, then a *note*
+  # followed by a point by point outline of *changes*.
+  # For example:
+  #
+  #   == 1.0.0 / 2009-10-07
+  #
+  #   Say something about this version.
+  # 
+  #   Changes:
+  #
+  #   * outline oimportant changelog items
+  #
+  # +Changes:+ is used a parsing marker, rather than looking
+  # for an '*', so that lists can be used in the release note
+  # too.
+  #
+  # TODO: Allow the format to be more varied.
   #
   class History
 
+    # File glob for finding the HISTORY file.
     DEFAULT_FILE = '{History}{,.*}'
 
+    # Stores the HISTORY file's pathname.
     attr :file
 
+    # List of release entries.
     attr :releases
 
     # New History.

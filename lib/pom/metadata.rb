@@ -39,6 +39,8 @@ module POM
       alias_method("#{name}=", "#{orig}=")
     end
 
+    # Glob for matching against meta directory names,
+    # +.meta/+ and +meta/+.
     METADIRS = '{.meta,meta}'
 
     # Project root directory.
@@ -334,20 +336,33 @@ module POM
     # Calculated Defaults #
     #######################
 
+    # Default list of authors is an empty list.
     def default_authors    ; [] ; end
+
+    # Default list requiements is an empty list.
     def default_requires   ; [] ; end
+
+    # Default list recommendations is an empty list.
     def default_recommends ; [] ; end
+
+    # Default list of suggestions is an empty list.
     def default_suggests   ; [] ; end
+
+    # Default list of conflicts is an empty list.
     def default_conflicts  ; [] ; end
+
+    # Default list of replacements is an empty list.
     def default_replaces   ; [] ; end
+
+    # Default list of provisions is an empty list.
     def default_provides   ; [] ; end
 
-    #
+    # Default loadpath inclide +lib+.
     def default_loadpath
       ['lib']
     end
 
-    #
+    # Default distribution list include everything ['**/*'].
     def default_distribute
       ['**/*']
     end
@@ -466,6 +481,7 @@ module POM
 
     #
     def sitemap=(x)
+      return @data['sitemap'] = nil unless x
       @data['sitemap'] = YAML.load(x) #.to_list
     end
 
@@ -538,12 +554,14 @@ module POM
       end
     end
 
+    #
     alias_method :stage_name, :package_name
 
     ############
     # VALIDATE #
     ############
 
+    # Is the minimal information provided?
     def valid?
       return false unless name
       return false unless version
@@ -552,6 +570,7 @@ module POM
       #return false unless homepage
     end
 
+    # Assert that the mininal information if provided.
     def assert_valid
       raise "no name"        unless name
       raise "no version"     unless version
@@ -560,7 +579,7 @@ module POM
       #raise "no homepage"    unless homepage
     end
 
-    #
+    # Provide a summary text of project's metadata.
     def to_s
       s = []
       s << "#{title} v#{version}"
@@ -576,12 +595,13 @@ module POM
       s.join("\n")
     end
 
-    #
+    # Convert to YAML.
     def to_yaml
       preload
       @data.to_yaml #super
     end
 
+    # Load all attributes from file system.
     def preload
       @_preload ||= (
         meths = methods.select{ |m| /\w+\=$/ =~ m.to_s }

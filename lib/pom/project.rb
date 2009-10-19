@@ -12,14 +12,14 @@ module POM
   #
   class Project
 
-    #
+    # Library directory relative to this file (ie __DIR__).
     LIB_DIRECTORY   = Pathname.new(File.dirname(File.dirname(__FILE__)))
 
     # Root directory is indicated by the presence of a +meta/+ directory,
     # or +.meta/+ hidden directory.
     ROOT_INDICATORS = [ '{.meta,meta}/' ]
 
-    #
+    # File glob for matching README file.
     README = "readme{,.*}"
 
 # IDEA: A lazy pathname that contains a glob, and reduces to real when used.
@@ -209,6 +209,9 @@ module POM
 
     # About project notice.
     def about(*parts)
+      # pre-format data
+      released = metadata.released ? "(#{metadata.released.strftime('%Y-%m-%d')})" : nil
+
       if parts.empty?
         #puts
         #puts "  #{metadata.title} #{metadata.version} (#{metadata.released})"
@@ -220,7 +223,7 @@ module POM
         #puts "  Copyright #{metadata.copyright}"
         #puts
         s = []
-        s << "#{metadata.title} v#{metadata.version} (#{metadata.released.strftime('%Y-%m-%d')})"
+        s << "#{metadata.title} v#{metadata.version} #{released}"
         s << ""
         s << "#{metadata.description}"
         s << ""
