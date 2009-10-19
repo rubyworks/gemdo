@@ -2,7 +2,8 @@ require 'facets/pathname'
 
 module POM
 
-  # Release file.
+  # Release Notes file provides an interface to
+  # to the current release message.
   #
   # DEPRECATE: We will use improved History file instead.
   class ReleaseNotes
