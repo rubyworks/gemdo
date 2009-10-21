@@ -1,9 +1,11 @@
 require 'time'
-require 'facets/pathname'
+require 'pom/corext'
 require 'pom/readme'
 
+#--
 # TODO: method_missing
 # TODO: extecutables is not right.
+#++
 
 module POM
 

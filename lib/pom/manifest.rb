@@ -1,4 +1,4 @@
-require 'facets/pathname'
+require 'pom/corext'
 
 module POM
 

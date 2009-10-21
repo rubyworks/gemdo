@@ -1,4 +1,4 @@
-require 'facets/pathname'
+require 'pom/corext'
 
 module POM
 
@@ -30,7 +30,7 @@ module POM
     # File glob for finding the HISTORY file.
     DEFAULT_FILE = '{History}{,.*}'
 
-    # Stores the HISTORY file's pathname.
+    # HISTORY file's pathname.
     attr :file
 
     # List of release entries.
@@ -39,15 +39,15 @@ module POM
     # New History.
     def initialize(root)
       @root = Pathname.new(root)
-      @file = @root.glob(DEFAULT_FILE, :casefold).first
+      @file = @root.first(DEFAULT_FILE, :casefold)
       @releases = []
       read
     end
 
     # Read and parse the Histoy file.
     def read
-      if @file
-        text = File.read(file).strip
+      if file
+        text = file.read.strip
         text = text.sub(/\A[=]\s+(.*?)$/,'').strip
         scan = text.scan(/\=\=(.*?)\n(.*?)(^Changes:.*?)(?=\=\=|\Z)/m)
         scan.each do |header, notes, changes|

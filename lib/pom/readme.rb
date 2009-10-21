@@ -1,3 +1,5 @@
+require 'pom/corext'
+
 module POM
 
   # Readme is designed to parse a README file
@@ -16,7 +18,7 @@ module POM
     def initialize(root)
       if File.directory?(root)
         @root = root
-        @file = root.glob('{README,README.*}').first
+        @file = root.first('{README,README.*}', :casefold)
         @text = File.read(@file) if @file
       elsif File.file?(root)
         @root = File.dirname(root)
@@ -103,3 +105,4 @@ module POM
   end
 
 end
+

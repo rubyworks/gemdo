@@ -1,6 +1,4 @@
-require 'facets/pathname'
-require 'facets/string/op_div'
-
+require 'pom/corext'
 require 'pom/metadata'
 require 'pom/manifest'
 require 'pom/history'
@@ -10,7 +8,7 @@ module POM
 
   # The Project class provides the location of specific directories
   # and files in the project, plus access to the projects metadata, etc.
-  #
+
   class Project
 
     # Library directory relative to this file (ie __DIR__).
@@ -21,19 +19,20 @@ module POM
     ROOT_INDICATORS = [ '{.meta,meta}/' ]
 
     # File glob for matching README file.
-    README = "readme{,.*}"
+    README = "README{,.*}"
 
     #
     def initialize(local=nil)
       @root   = locate_root(local) || raise("can't locate project root -- #{local}")
       @source = root
-      @cache  = root + '.cache'
-      @task   = root + 'task'
-      @script = root + 'script'
-      @log    = root + 'log'
-      @doc    = root + 'doc'
 
-      @config = root.glob_first('{.,}config') || root + '.config'
+      #@cache  = root + '.cache'
+      #@task   = root + 'task'
+      #@script = root + 'script'
+      #@log    = root + 'log'
+      #@doc    = root + 'doc'
+
+      #@config = root.glob_first('{.,}config') || root + '.config'
       #@plug  = root.glob_first('plug{,in,ins'}) || root + 'plug'
       #@pack  = root.glob_first('{pack,pkg}{,s}') || root + 'pack'
 
@@ -58,7 +57,7 @@ module POM
     # Project manifest file.
     # TODO: Deprecate in favor of using manifest.file ?
     def manifest_file
-      root.glob_first('manifest{,.txt}', :casefold)
+      root_path('manifest{,.txt}') #, :casefold)
     end
 
     # Project's root location. By default this is determined by scanning
@@ -75,9 +74,15 @@ module POM
     # returns the pathname for the log directory.
     def log(path=nil)
       if path
-        root.glob_first('log' / path)
+        log + path
       else
-        @log ||= (root + 'log')
+        @log ||= (
+          if (site + 'log').directory?
+            site + log
+          else
+            root + 'log'
+          end
+        )
       end
       #@log ||=(
       #  dir = root.glob_first('{log,doc/log}{,s}') || root + 'doc/log'
@@ -90,9 +95,9 @@ module POM
     # returns the pathname for the doc directory.
     def doc(path=nil)
       if path
-        root.glob_first('doc' / path)
+        doc + path
       else
-        @doc ||= (root + 'doc')
+        @doc ||= root+'doc'
       end
     end
 
@@ -100,9 +105,9 @@ module POM
     # returns the pathname for the package directory.
     def pack(path=nil)
       if path
-        root.glob_first('{pack,pkg,package}{,s}' / path)
+        pack + path
       else
-        @pack ||= (root.glob_first('{pack,pkg,package}{,s}') || (root + 'pack'))
+        @pack ||= root.first('{pack,pkg,package}{,s}') || root+'pack'
       end
       #@pkg ||=(
       #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
@@ -118,32 +123,32 @@ module POM
     # returns the pathname for the cache directory.
     def cache(path=nil)
       if path
-        root.glob_first('.cache' / path)
+        cache + path
       else
-        @cache ||= (root + '.cache')
+        @cache ||= root+'.cache'
       end
     end
 
     # Get pathname of given plugin +path+. Or without +path+
     # returns the pathname for the plugin directory.
-    def plugin(path=nil)
+    def plug(path=nil)
       if path
-        root.glob_first('plug{,in,ins}' / path)
+        plug + path
       else
-        @plug ||= (root.glob_first('plug{,in,ins}') || (root + 'plug'))
+        @plug ||= root.first('plug{,in,ins}') || root+'plug'
       end
     end
 
     # Alias for #plugin.
-    alias_method :plug, :plugin
+    alias_method :plugin, :plug
 
     # Get pathname of given script +path+. Or without +path+
     # returns the pathname for the script directory.
     def script(path=nil)
       if path
-        root.glob_first('script' / path)
+        script + path
       else
-        @script ||= (root + 'script')
+        @script ||= root+'script'
       end
     end
 
@@ -151,9 +156,9 @@ module POM
     # returns the pathname for the site directory.
     def site(path=nil)
       if path
-        root.glob_first('{site,web,website}' / path)
+        site + path
       else
-        @site ||= (root.glob_first('{site,web,website}') || (root + 'site'))
+        @site ||= root.first('{site,web,website}') || root+'site'
       end
       #@pkg ||=(
       #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
@@ -169,38 +174,34 @@ module POM
     #
     def task(path=nil)
       if path
-        root.glob_first('task' / path)
+        task + path
       else
-        @task ||= (root + 'task')
+        @task ||= root+'task'
       end
     end
 
-    # Get pathname of given config +path+. Or without +path+
+    # Pathname of given config +path+. Or without +path+
     # Returns the path to the config directory (either +.config+
     # or +config+).
     def config(path=nil)
       if path
-        root.glob_first('{.,}config' / path)
+        config + path #root.glob_first('{.,}config' / path)
       else
-        @config ||= (root.glob_first('{.,}config') || (root + '.config'))
+        @config ||= root.first('{.,}config') || root+'.config'
       end
     end
 
     # Get pathname of given temporary +path+. Or without +path+
     # returns the pathname to the temporary directory.
-    #
-    # TODO: Use Dir.tmpdir instead ?
+    #--
+    # TODO: Use cache + 'tmp' instead ?
+    #++
     def tmp(path=nil)
       if path
-        cache.glob_first('tmp' / path)
+        tmp + path
       else
-        @tmp ||= (cache + 'tmp')
+        @tmp ||= Pathname.new(Dir.tmpdir) #cache+'tmp'
       end
-      #@tmp ||=(
-      #  dir = root.glob_first('tmp') || cache + 'tmp'
-      #  dir.mkdir_p unless dir.exist?
-      #  dir
-      #)
     end
 
     # Alias for #tmp.
