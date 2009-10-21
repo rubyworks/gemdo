@@ -57,7 +57,7 @@ module POM
     # Project manifest file.
     # TODO: Deprecate in favor of using manifest.file ?
     def manifest_file
-      root_path('manifest{,.txt}') #, :casefold)
+      @manifest_file ||= root.first('manifest{,.txt}', :casefold)
     end
 
     # Project's root location. By default this is determined by scanning
