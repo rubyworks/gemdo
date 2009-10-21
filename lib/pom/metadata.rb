@@ -15,16 +15,19 @@ module POM
   #
   class Metadata
 
-    def self.aliases
-      @aliases ||= Hash.new{|h,k| h[k]=[]}
+    PRIMARY = ['project', 'name', 'version']
+
+    # Like new but reads all metadata into memory.
+    def self.load(root)
+      new(root).load
     end
 
+    #
     def self.attr_accessor(name)
       eval %{
         def #{name}
-          @data["#{name}"] ||= meta("#{name}")
+          load; @data["#{name}"]
         end
-
         def #{name}=(x)
           @data["#{name}"] = x
         end
@@ -32,16 +35,17 @@ module POM
     end
 
     def self.alias_accessor(name, orig)
-      aliases[orig.to_sym] << name.to_sym
-      aliases[name.to_sym] << orig.to_sym
-      attr_accessor(name)
-      #alias_method(name, orig)
+      #aliases[orig.to_sym] << name.to_sym
+      #aliases[name.to_sym] << orig.to_sym
+      #attr_accessor(name)
+      alias_method(name, orig)
       alias_method("#{name}=", "#{orig}=")
     end
 
     # Glob for matching against meta directory names,
     # +.meta/+ and +meta/+.
-    METADIRS = '{.meta,meta}'
+    #METADIRS = '{.meta,meta}'
+    METADIRS = ['.meta', 'meta']
 
     # Project root directory.
     attr :root
@@ -59,19 +63,27 @@ module POM
 
     # New Metadata object.
     #
-    def initialize(rootdir, options={})
-      @root = Pathname.new(rootdir.to_s)
+    def initialize(root)
+      @root = Pathname.new(root.to_s)
       @data = {}
 
-      if options[:load]
-        initialize_metadirectory
+      ['project','name','version'].each do |key|
+        __send__("#{key}=", read(key))
       end
+
+      @data['authors']   = []
+      @data['requires']  = []
+      @data['recommend'] = []
+      @data['suggests']  = []
+      @data['conflicts'] = []
+      @data['replaces']  = []
+      @data['provides']  = []
+
+      @data['loadpath']   = ['lib']
+      @data['distribute'] = ['**/*']
 
       #initialize_defaults
       #initialize_metafile
-
-      #readme = @root.glob('{README,README.*}').first
-      #@readme = Readme.load(readme) if readme
 
       #@version_stamp = Version.new(rootfolder)
     end
@@ -92,24 +104,54 @@ module POM
     #  end
     #end
 
-    # Load from meta directory.
-    def initialize_metadirectory
-      @root.glob("#{METADIRS}/**/*").each do |file|
-        data = File.read(file)
-        name = file.split('/')[1..-1].sub('/', '_')
-        if respond_to?("#{name}=")
-          __send__("#{name}=", data)
-        else
-          @data[name] = data
+    # Load metadata from the meta directory.
+    def load
+      @load ||= (
+        # load meta directory entries
+        METADIRS.reverse.each do |dir|
+          next unless (@root + dir).directory?
+          entries(dir).each do |file|
+            data = File.read(@root + dir + file).strip
+            data = (/\A^---/ =~ data ? YAML.load(data) : data)
+            name = file.sub('/','_')
+            if respond_to?("#{name}=")
+              __send__("#{name}=", data)
+            else
+              #@data[name] = data
+              add_attribute(name, data)
+            end
+          end
         end
-      end
-      #if @metafolder
-      #  @metafolder.glob('*').each do |f|
-      #    send("#{f.basename}=", f.read.strip) if respond_to?("#{f.basename}=")
-      #  end
-      #end
+        #if @meta_dir
+        #  @meta_dir.glob('*').each do |f|
+        #    send("#{f.basename}=", f.read.strip) if respond_to?("#{f.basename}=")
+        #  end
+        #end
+
+        # load readme
+        # TODO: move to ReadMe class?
+        @data['description'] ||= readme.description
+        @data['license']     ||= readme.license
+
+        self
+      )
     end
 
+    # Recurisve entries. Should be a method of Dir.
+    def entries(dir)
+      e = []
+      paths = Dir.entries(dir.to_s) - ['.', '..']
+      paths.each do |f|
+        if File.directory?(File.join(dir, f))
+          e.concat(entries(File.join(dir, f)).map{ |s| File.join(f,s) })
+        else
+          e << f
+        end
+      end
+      e
+    end
+
+=begin
     # TODO: See if there is not a better way to do this... is lazy loading worth it?
     #
     def meta(name)
@@ -140,29 +182,23 @@ module POM
         @data[name.to_s] = val
       end
     end
+=end
 
-    # Get metadata from meta-directory.
-    #
-    # TODO: Should +root+ be included as last resort?
-    def metadir(name)
-      if file = root.glob("#{METADIRS}/#{name}").first
-        file.read.strip
+    # Get metadata entry from meta-directory.
+    def read(name)
+      if file = root.glob("{#{METADIRS.join(',')}}/#{name}").first
+        text = file.read.strip
+        if /\A---/ =~ text
+          YAML.load(text)
+        else
+          text
+        end
       end
     end
 
     # Get metadata from README.
     def readme #(name=nil)
       @readme ||= Readme.new(root)
-      #@readme[name] if name
-    end
-
-    #
-    def default(name)
-      if respond_to?("default_#{name}")
-        send("default_#{name}")
-      else
-        nil
-      end
     end
 
     #
@@ -224,17 +260,21 @@ module POM
     # General Attributes #
     ######################
 
-    # Unixname of this application/library.
-    attr_accessor :package
+    # Project's package name. The entry is required
+    # and must not contain spaces or puncuation.
+    attr :name, :name=
 
-    # Unixname of the project to which this package belongs (defaults to package).
-    attr_accessor :project
+    # Current version of the project. Should be a dot
+    # separated string. Eg. "1.0.0".
+    attr :version, :version=
 
-    # Version number of package.
-    attr_accessor :version
+    # Name of the user-account or master-project to which this project belongs.
+    # The namespace defaults the project name if no entry is given.
+    # TODO: Better term then namespace?
+    attr_accessor :namespace
 
     # Current status (stable, beta, alpha, rc1, etc.)
-    # DEPRECATE: (should be indicated by version)
+    # DEPRECATE: (should be indicated by version number)
     attr_accessor :status
 
     # Date this version was released.
@@ -244,16 +284,16 @@ module POM
     attr_accessor :codename
 
 
-    # Title of package (this defaults to name capitalized).
+    # Title of package (this defaults to project name capitalized).
     attr_accessor :title
 
-    # Platform (nil for unviveral)
+    # Platform (nil for universal)
     attr_accessor :platform
 
     # A one-line brief description.
     attr_accessor :summary
 
-    # Detailed description.
+    # Detailed description. Aliased as #abstract.
     attr_accessor :description
 
     # Maintainer.
@@ -264,6 +304,9 @@ module POM
 
     # List of authors.
     attr_accessor :authors
+
+    # Alias for authors.
+    #alias_accessor :author, :author
 
     # The date the project was started.
     attr_accessor :created
@@ -278,15 +321,16 @@ module POM
     attr_accessor :requires
 
     # What other packages *should* be used with this package.
-    attr_accessor :recommends
+    attr_accessor :recommend
 
     # What other packages *could* be useful with this package.
-    attr_accessor :suggests
+    attr_accessor :suggest
 
     # What other packages does this package conflict.
     attr_accessor :conflicts
 
-    # What other packages does this package replace.
+    # What other packages does this package replace. This is very much like #provides
+    # but expresses a closser relation. For instance "libXML" has been replaced by "libXML2".
     attr_accessor :replaces
 
     # What other package(s) does this package provide the same dependency fulfilment.
@@ -303,7 +347,8 @@ module POM
 
     # List of non-ruby extension configuration scripts.
     # These are used to compile the extensions.
-    attr_accessor :extensions
+    attr_accessor :extensions    # Alias for #released.
+
 
     # Abirtary information, especially about what might be needed
     # to use this package. This is strictly information for the
@@ -312,6 +357,9 @@ module POM
 
     # Homepage
     attr_accessor :homepage
+
+    # Resource to find downloadable packages.
+    attr_accessor :download
 
     # Location of central vcs repository.
     attr_accessor :repository
@@ -330,81 +378,55 @@ module POM
     # Map project directories and files to publish locations on webserver.
     attr_accessor :sitemap
 
+  public
 
-  #private # TODO: Would like to make this private except respond_to? in default() wouldn't work.
+    ######################
+    # Calculated Getters #
+    ######################
 
-    #######################
-    # Calculated Defaults #
-    #######################
-
-    # Default list of authors is an empty list.
-    def default_authors    ; [] ; end
-
-    # Default list requiements is an empty list.
-    def default_requires   ; [] ; end
-
-    # Default list recommendations is an empty list.
-    def default_recommends ; [] ; end
-
-    # Default list of suggestions is an empty list.
-    def default_suggests   ; [] ; end
-
-    # Default list of conflicts is an empty list.
-    def default_conflicts  ; [] ; end
-
-    # Default list of replacements is an empty list.
-    def default_replaces   ; [] ; end
-
-    # Default list of provisions is an empty list.
-    def default_provides   ; [] ; end
-
-    # Default loadpath inclide +lib+.
-    def default_loadpath
-      ['lib']
+    def namespace
+      @data['namespace'] ||= name
     end
 
-    # Default distribution list include everything ['**/*'].
-    def default_distribute
-      ['**/*']
-    end
-
-    # Project name defaults to package name.
-    def default_project
-      package
-    end
-
-    # Title defaults to package name captialized.
-    def default_title
-      package.capitalize
+    # Title defaults to name captialized.
+    def title
+      @data['title'] ||= name.capitalize
     end
 
     # Summary will default to the first sentence or line
     # of the full description.
-    def default_summary
-      if description
-        i = description.index(/(\.|$)/)
-        i = 69 if i > 69
-        description.to_s[0..i]
-      end
+    def summary
+      @data['summary'] ||= (
+        if description
+          i = description.index(/(\.|$)/)
+          i = 69 if i > 69
+          description.to_s[0..i]
+        end
+      )
     end
 
     # Extensions default to ext/**/extconf.rb
-    def default_extensions
-      root.glob('ext/**/extconf.rb')
+    def extensions
+      @data['extensions'] ||= root.glob('ext/**/extconf.rb')
     end
 
     # Executables default to the contents of bin/.
-    #def default_executables
-    #  root.glob('bin/*').collect{ |bin| File.basename(bin) }
+    #def executables
+    #  @executables ||= root.glob('bin/*').map{ |bin| File.basename(bin) }
     #end
 
-    # Contact defaults to the first author.
-    def default_contact
-      authors.first
+    # Executables default to the contents of bin/.
+    def executables
+      @data['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
     end
 
+    # Contact defaults to the first author.
+    #def contact
+    #  @contact ||= authors.first
+    #end
+
     # Contact's email address.
-    def default_email
+    def email
       if md = /<(.*?)>/.match(contact)
         md[1]
       else
@@ -412,18 +434,19 @@ module POM
       end
     end
 
-  public
-
-    # Executables default to the contents of bin/.
-    def executables
-      @data['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
+    #
+    def author
+      authors.first
     end
 
-  public
+    ######################
+    # Calculated Setters #
+    ######################
 
-    #######################
-    # Calculated Setters  #
-    #######################
+    #
+    def author=(name)
+      authors.unshift(name).uniq!
+    end
 
     # Limit summary to 69 characters.
     def summary=(line)
@@ -451,18 +474,18 @@ module POM
     end
 
     #
-    def recommends=(x)
-      @data['recommends'] = list(x)
+    def recommend=(x)
+      @data['recommend'] = list(x)
     end
 
     #
-    def suggests=(x)
-      @data['suggests'] = list(x)
+    def suggest=(x)
+      @data['suggest'] = list(x)
     end
 
     #
     def conflicts=(x)
-      @data['conflict'] = list(x)
+      @data['conflicts'] = list(x)
     end
 
     #
@@ -481,40 +504,39 @@ module POM
     end
 
     #
-    def sitemap=(x)
-      return @data['sitemap'] = nil unless x
-      @data['sitemap'] = YAML.load(x) #.to_list
-    end
-
-
-    #def rubyforge
-    #  Functor.new do |op, *a|
-    #    send("rubyforge_#{op}")
-    #  end
-    #end
-
-    #def rubyforge_unixname
-    #end
-
-    #def rubyforge_groupid
+    #def sitemap=(x)
+    #  return @data['sitemap'] = nil unless x
+    #  @data['sitemap'] = YAML.load(x) #.to_list
     #end
 
     ###########
     # Aliases #
     ###########
 
-    alias_accessor :name       , :package
+    # Alias for #name.
+    alias_accessor :project    , :name
+
+    # In previous versions #project used to mean what #namespace means, patterned after
+    # the way in which Rubyforge organizes projects. Thus #package used to mean what #project
+    # currently does. For the time being we keep an alias until all old usage is resloved.
+    alias_accessor :package    , :name
+
+    # Alias for #released.
     alias_accessor :date       , :released
 
+    # Alias for #summary.
     alias_accessor :brief      , :summary
+
+    # Alias for description.
     alias_accessor :abstract   , :description
 
+    # Singularization of #requires is acceptable.
     alias_accessor :require    , :requires
-    alias_accessor :depend     , :requires  # old terminology
     alias_accessor :dependency , :requires  # old terminology
 
-    alias_accessor :recommend  , :recommends
-    alias_accessor :suggest    , :suggests
+    #alias_accessor :recommends , :recommend
+    #alias_accessor :suggests   , :suggest
+
     alias_accessor :conflict   , :conflicts
     alias_accessor :provide    , :provides
     alias_accessor :replace    , :replaces
@@ -528,12 +550,6 @@ module POM
     #      nil
     #    end
     #  )
-    #end
-
-    #def exclude=(x)
-    #  @exclude = list(x)
-    #  @exclude << 'admin' #unless app.configuration.file?
-    #  @exclude
     #end
 
     # Package name is generally in the form of +name-version+,
@@ -566,18 +582,18 @@ module POM
     def valid?
       return false unless name
       return false unless version
+      return false unless summary
       return false unless contact
-      return false unless description
       #return false unless homepage
     end
 
     # Assert that the mininal information if provided.
     def assert_valid
-      raise "no name"        unless name
-      raise "no version"     unless version
-      raise "no contact"     unless contact
-      raise "no description" unless description
-      #raise "no homepage"    unless homepage
+      raise "no name"    unless name
+      raise "no version" unless version
+      raise "no summary" unless summary
+      raise "no contact" unless contact
+      #raise "no homepage" unless homepage
     end
 
     # Provide a summary text of project's metadata.
@@ -585,7 +601,7 @@ module POM
       s = []
       s << "#{title} v#{version}"
       s << ""
-      s << "#{description}"
+      s << "#{summary}"
       s << ""
       s << "contact    : #{contact}"
       s << "homepage   : #{homepage}"
@@ -598,20 +614,8 @@ module POM
 
     # Convert to YAML.
     def to_yaml
-      preload
+      load
       @data.to_yaml #super
-    end
-
-    # Load all attributes from file system.
-    def preload
-      @_preload ||= (
-        meths = methods.select{ |m| /\w+\=$/ =~ m.to_s }
-        meths = meths.map{ |m| m.to_s.chomp('=') }
-        meths.each do |m|
-          __send__(m)
-        end
-        true
-      )
     end
 
   private
@@ -628,5 +632,4 @@ module POM
 
   end#class Metadata
 
-end#module Reap
-
+end#module POM

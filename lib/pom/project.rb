@@ -224,7 +224,7 @@ module POM
         s = []
         s << "#{metadata.title} v#{metadata.version} #{released}"
         s << ""
-        s << "#{metadata.description}"
+        s << "#{metadata.description || metadata.summary}"
         s << ""
         s << "  contact    : #{metadata.contact}"
         s << "  homepage   : #{metadata.homepage}"
