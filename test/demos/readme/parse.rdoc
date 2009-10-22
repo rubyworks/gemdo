@@ -1,14 +1,19 @@
+== Parse README file
+
 Load the ReadMe library.
 
   require 'pom/readme'
 
 Create a new Readme object from file.
 
-  rm = POM::Readme.load("fixture/README1.txt")
+  rm = POM::Readme.load("fixture/README")
 
-It should be able to parse out the title.
+It should be able to parse out a title and project name.
 
   rm.title.assert == "MyApp"
+
+  rm.name.assert == "myapp"
+  rm.project.assert == "myapp"
 
 It should be able to parse out a description.
 
@@ -17,6 +22,4 @@ It should be able to parse out a description.
 It should parse out the lincese.
 
   rm.license.assert == "GPL"
-
-QED.
 
