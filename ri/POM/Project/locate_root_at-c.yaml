@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Project#locate_root_at
-is_singleton: false
+full_name: POM::Project::locate_root_at
+is_singleton: true
 name: locate_root_at
 params: (indicator)
-visibility: private
+visibility: public

@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: New project with metadata fully loaded.
-full_name: POM::Project::load
-is_singleton: true
-name: load
-params: (*path_opts)
+  body: "Alias for #name"
+full_name: POM::Readme#project
+is_singleton: false
+name: project
+params: ()
 visibility: public

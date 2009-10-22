@@ -14,6 +14,8 @@ attributes:
   rw: R
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: load
+- !ruby/object:RDoc::RI::MethodSummary 
   name: new
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
@@ -42,6 +44,8 @@ instance_methods:
   name: license_1
 - !ruby/object:RDoc::RI::MethodSummary 
   name: name
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: project
 - !ruby/object:RDoc::RI::MethodSummary 
   name: title
 - !ruby/object:RDoc::RI::MethodSummary 

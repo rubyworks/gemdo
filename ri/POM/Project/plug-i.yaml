@@ -5,6 +5,8 @@ aliases:
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
+  body: The <tt>plug/</tt> directory serves the same purpose as the <tt>lib/</tt> directory. It simply provides a place to put plugins separate from the main <tt>lib/</tt> files.
+- !ruby/struct:RDoc::Markup::Flow::P 
   body: Get pathname of given plugin <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the plugin directory.
 full_name: POM::Project#plug
 is_singleton: false

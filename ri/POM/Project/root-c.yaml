@@ -5,8 +5,8 @@ block_params:
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: Locate the project's root directory. This is determined by ascending up the directory tree from the current position until the ROOT_INDICATOR is matched. Returns <tt>nil</tt> if not found.
-full_name: POM::Project#locate_root
-is_singleton: false
-name: locate_root
-params: (local=nil)
-visibility: private
+full_name: POM::Project::root
+is_singleton: true
+name: root
+params: (local=Dir.pwd)
+visibility: public

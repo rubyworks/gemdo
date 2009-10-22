@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Readme::new
+full_name: POM::Readme::load
 is_singleton: true
-name: new
-params: (text)
+name: load
+params: (path)
 visibility: public

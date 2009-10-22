@@ -4,6 +4,8 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
+  body: The <tt>.cache/</tt> directory is used by build tools to store temporary files. For instance, the <tt>pom</tt> command uses it to store backups of metadata entries when overwriting old entries. <tt>.cache/</tt> should be in your SCM's ignore list.
+- !ruby/struct:RDoc::Markup::Flow::P 
   body: Get pathname of given cache <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the cache directory.
 full_name: POM::Project#cache
 is_singleton: false

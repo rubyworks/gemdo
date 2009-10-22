@@ -4,6 +4,8 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
+  body: The <tt>.config/</tt> or <tt>config</tt> directory is a place for build tools to place their configration files.
+- !ruby/struct:RDoc::Markup::Flow::P 
   body: Pathname of given config <tt>path</tt>. Or without <tt>path</tt> Returns the path to the config directory (either <tt>.config</tt> or <tt>config</tt>).
 full_name: POM::Project#config
 is_singleton: false

@@ -5,6 +5,8 @@ block_params:
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: Project release announcement built on README.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Don't use README, or make it an option."
 full_name: POM::Project#announcement
 is_singleton: false
 name: announcement

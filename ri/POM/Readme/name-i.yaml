@@ -1,6 +1,7 @@
 --- !ruby/object:RDoc::RI::MethodDescription 
-aliases: []
-
+aliases: 
+- !ruby/object:RDoc::RI::AliasName 
+  name: project
 block_params: 
 comment: []
 

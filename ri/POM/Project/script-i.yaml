@@ -4,6 +4,8 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
+  body: The <tt>script/</tt> directory is like the <tt>task/</tt> directory but usually holds executables that are made available to the end-installers.
+- !ruby/struct:RDoc::Markup::Flow::P 
   body: Get pathname of given script <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the script directory.
 full_name: POM::Project#script
 is_singleton: false

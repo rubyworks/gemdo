@@ -3,6 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Access to project history.
 full_name: POM::Project#history
 is_singleton: false
 name: history

@@ -16,13 +16,15 @@ attributes:
   rw: R
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: from_gemspec
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: from_readme
-- !ruby/object:RDoc::RI::MethodSummary 
   name: load
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: locate_root_at
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: lookup
+- !ruby/object:RDoc::RI::MethodSummary 
   name: new
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: root
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: The Project class provides the location of specific directories and files in the project, plus access to the projects metadata, etc.
@@ -59,10 +61,6 @@ instance_methods:
   name: doc
 - !ruby/object:RDoc::RI::MethodSummary 
   name: history
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: locate_root
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: locate_root_at
 - !ruby/object:RDoc::RI::MethodSummary 
   name: log
 - !ruby/object:RDoc::RI::MethodSummary 
