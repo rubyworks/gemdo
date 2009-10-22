@@ -80,7 +80,7 @@ module POM
     #   new(root)
     #   new(root, :load=>true)
     #   new(local, :lookup=>true)
-    #
+
     def initialize(*root_opts)
       root = root_opts.shift unless Hash===root_opts.first
       opts = root_opts.last || {}
@@ -116,47 +116,64 @@ module POM
     end
 
     # Metadata provides all the general information about the project.
+
     def metadata
       @metadata ||= Metadata.new(root)
     end
 
     # Project manifest.
+
     def manifest
       @manifest ||= Manifest.new(root)
     end
+
+    # Access to project history.
 
     def history
       @history ||= History.new(root)
     end
 
-    # Project manifest file.
+    # Project manifest file name.
+    #
     # TODO: Deprecate in favor of using manifest.file ?
+
     def manifest_file
       @manifest_file ||= root.first('manifest{,.txt}', :casefold)
     end
 
     # Project's root location. By default this is determined by scanning
     # up from the current working directory in search of the ROOT_INDICATOR.
+
     attr :root
 
     # Location of project source code. Currently, this is always
     # the same as the root.
     #
     # TODO: Support alternate source location in the future (?)
+
     attr :source
 
+    # The <tt>log/</tt> directory stores log output created by 
+    # build tools.
+    #
+    #--
+    # Alternately this can be located in the #site
+    # directory if you wish to publish your logs.
+    #++
+    #
     # Get pathname of given log +path+. Or without +path+
     # returns the pathname for the log directory.
+
     def log(path=nil)
       if path
         log + path
       else
         @log ||= (
-          if (site + 'log').directory?
-            site + log
-          else
+          #if (site + 'log').directory?
+          #  site + log
+          #else
             root + 'log'
-          end
+          #end
         )
       end
       #@log ||=(
@@ -166,8 +183,14 @@ module POM
       #)
     end
 
+    # The doc directory is the place to keep documentation. The directory
+    # is intended to be distributed with a package, but this is not often
+    # done these days since RubyGems generates RDocs on demand, and
+    # documentation is often found online.
+    #
     # Get pathname of given doc +path+. Or without +path+
     # returns the pathname for the doc directory.
+
     def doc(path=nil)
       if path
         doc + path
@@ -178,6 +201,9 @@ module POM
 
     # Get pathname of given plugin +path+. Or without +path+
     # returns the pathname for the package directory.
+    #
+    # This is aliaed as #pkg.
+
     def pack(path=nil)
       if path
         pack + path
@@ -194,8 +220,15 @@ module POM
     # Alias for #pack.
     alias_method :pkg, :pack
 
+    # The <tt>.cache/</tt> directory is used by build tools to
+    # store temporary files. For instance, the +pom+ command uses
+    # it to store backups of metadata entries when overwriting
+    # old entries. <tt>.cache/</tt> should be in your SCM's
+    # ignore list.
+    #
     # Get pathname of given cache +path+. Or without +path+
     # returns the pathname for the cache directory.
+
     def cache(path=nil)
       if path
         cache + path
@@ -204,8 +237,13 @@ module POM
       end
     end
 
+    # The <tt>plug/</tt> directory serves the same purpose as 
+    # the <tt>lib/</tt> directory. It simply provides a place
+    # to put plugins separate from the main <tt>lib/</tt> files.
+    #
     # Get pathname of given plugin +path+. Or without +path+
     # returns the pathname for the plugin directory.
+
     def plug(path=nil)
       if path
         plug + path
@@ -217,8 +255,13 @@ module POM
     # Alias for #plugin.
     alias_method :plugin, :plug
 
+    # The <tt>script/</tt> directory is like the <tt>task/</tt> 
+    # directory but usually holds executables that are made
+    # available to the end-installers.
+    #
     # Get pathname of given script +path+. Or without +path+
     # returns the pathname for the script directory.
+
     def script(path=nil)
       if path
         script + path
@@ -227,8 +270,12 @@ module POM
       end
     end
 
+    # The <tt>site/</tt> directory (also web/ or website/) is
+    # where a project's website is stored.
+    #
     # Get pathname of given site +path+. Or without +path+
     # returns the pathname for the site directory.
+
     def site(path=nil)
       if path
         site + path
@@ -242,22 +289,27 @@ module POM
       #)
     end
 
+    # The <tt>task/</tt> directory is where task scripts are 
+    # stored used by build tools, such as Rake and Syckle.
+    #
     # Get pathname of given task +path+. Or without +path+
     # returns the pathname for the task directory.
-    #
-    # TODO: Are task and script different names for the same thing?
-    #
+
     def task(path=nil)
       if path
         task + path
       else
-        @task ||= root+'task'
+        @task ||= root.first('{task,tasks}') || root+'task'
       end
     end
 
+    # The <tt>.config/</tt> or <tt>config</tt> directory is a place
+    # for build tools to place their configration files.
+    #
     # Pathname of given config +path+. Or without +path+
     # Returns the path to the config directory (either +.config+
     # or +config+).
+
     def config(path=nil)
       if path
         config + path #root.glob_first('{.,}config' / path)
@@ -266,11 +318,14 @@ module POM
       end
     end
 
+    # Not strickly a project directory. THis provides a temporary
+    # system location outside the project directory.
+    # 
     # Get pathname of given temporary +path+. Or without +path+
     # returns the pathname to the temporary directory.
-    #--
-    # TODO: Use cache + 'tmp' instead ?
-    #++
+    #
+    # TODO: Add name to end of path ?
+
     def tmp(path=nil)
       if path
         tmp + path
@@ -280,9 +335,11 @@ module POM
     end
 
     # Alias for #tmp.
+
     alias_method :tmpdir, :tmp
 
     # About project notice.
+
     def about(*parts)
       # pre-format data
       released = metadata.released ? "(#{metadata.released.strftime('%Y-%m-%d')})" : nil
@@ -326,6 +383,8 @@ module POM
     end
 
     # Project release announcement built on README.
+    #
+    # TODO: Don't use README, or make it an option.
     #
     def announcement(file=nil, options={})
       header = options[:header]
