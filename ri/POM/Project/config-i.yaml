@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Get pathname of given config <tt>path</tt>. Or without <tt>path</tt> Returns the path to the config directory (either <tt>.config</tt> or <tt>config</tt>).
+  body: Pathname of given config <tt>path</tt>. Or without <tt>path</tt> Returns the path to the config directory (either <tt>.config</tt> or <tt>config</tt>).
 full_name: POM::Project#config
 is_singleton: false
 name: config

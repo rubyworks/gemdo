@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Build a POM project using a README. This is intended to make it fairly easy to build a set of POM meta/ files if you already have a README.
+full_name: POM::Project::from_readme
+is_singleton: true
+name: from_readme
+params: (readme, root=Dir.pwd)
+visibility: public

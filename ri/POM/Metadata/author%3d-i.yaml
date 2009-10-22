@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Metadata#default
+full_name: POM::Metadata#author=
 is_singleton: false
-name: default
+name: author=
 params: (name)
-visibility: private
+visibility: public

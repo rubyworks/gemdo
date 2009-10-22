@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default list of authors is an empty list.
-full_name: POM::Metadata#default_authors
+  body: Project's package name. The entry is required and must not contain spaces or puncuation.
+full_name: POM::Metadata#name
 is_singleton: false
-name: default_authors
+name: name
 params: ()
 visibility: public

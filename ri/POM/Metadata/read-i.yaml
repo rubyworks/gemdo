@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: "TODO: See if there is not a better way to do this... is lazy loading worth it?"
-full_name: POM::Metadata#meta
+  body: Get metadata entry from meta-directory.
+full_name: POM::Metadata#read
 is_singleton: false
-name: meta
+name: read
 params: (name)
 visibility: private

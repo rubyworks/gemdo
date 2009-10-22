@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Get metadata from README.
-full_name: POM::Metadata#readme
+  body: Require RubyGems library.
+full_name: POM::Project#require_rubygems
 is_singleton: false
-name: readme
+name: require_rubygems
 params: ()
-visibility: private
+visibility: public

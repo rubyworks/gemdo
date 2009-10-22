@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Load from meta directory.
-full_name: POM::Metadata#initialize_metadirectory
+  body: Recurisve entries. Should be a method of Dir.
+full_name: POM::Metadata#entries
 is_singleton: false
-name: initialize_metadirectory
-params: ()
+name: entries
+params: (dir)
 visibility: private

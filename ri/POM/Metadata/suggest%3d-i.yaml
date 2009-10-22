@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Readme#description
+full_name: POM::Metadata#suggest=
 is_singleton: false
-name: description
-params: ()
+name: suggest=
+params: (x)
 visibility: public

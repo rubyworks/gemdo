@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default loadpath inclide <tt>lib</tt>.
-full_name: POM::Metadata#default_loadpath
+  body: Load metadata from the meta directory.
+full_name: POM::Metadata#load
 is_singleton: false
-name: default_loadpath
+name: load
 params: ()
 visibility: public

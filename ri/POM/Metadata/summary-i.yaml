@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Extensions default to ext/**/extconf.rb
-full_name: POM::Metadata#default_extensions
+  body: Summary will default to the first sentence or line of the full description.
+full_name: POM::Metadata#summary
 is_singleton: false
-name: default_extensions
+name: summary
 params: ()
 visibility: public

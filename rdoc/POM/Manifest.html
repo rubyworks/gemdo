@@ -9,13 +9,13 @@
   <title>Class: POM::Manifest</title>
 
   
-    <link rel="SHORTCUT ICON" href="../images/ruby.png">
+    <link rel="SHORTCUT ICON" href="../images/class.png">
   
 
   <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
 
   <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
 
@@ -25,10 +25,10 @@
   <div class="head">
     <h1>
       
-        <img src="../images/ruby.png" height="32px" align="absmiddle">
+        <img src="../images/class.png" align="absmiddle">&nbsp;
       
-      <a href="../index.html">POM</a> -
-      POM::Manifest
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Manifest</a>
     </h1>
   </div>
 
@@ -75,15 +75,15 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000033">::new</a></li>
+          <li class="method"><a href="#M000039">::new</a></li>
           
-          <li class="method"><a href="#M000037">#each</a></li>
+          <li class="method"><a href="#M000042">#each</a></li>
           
-          <li class="method"><a href="#M000036">#files</a></li>
+          <li class="method"><a href="#M000041">#files</a></li>
           
-          <li class="method"><a href="#M000034">#list</a></li>
+          <li class="method"><a href="#M000040">#list</a></li>
           
-          <li class="method"><a href="#M000038">#size</a></li>
+          <li class="method"><a href="#M000043">#size</a></li>
           
         </ul>
       </div>
@@ -154,6 +154,8 @@
           <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
         
           <li class="class"><a href="../POM/ReleaseNotes.html">POM::ReleaseNotes</a></li>
+        
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
         
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -231,7 +233,7 @@ Stores the path of the amnifest file.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000033"></a>
+        <a name="M000039"></a>
 
         <div class="method-heading">
         
@@ -255,7 +257,7 @@ root directory of the project.
 <pre>
 <span class="ruby-comment cmt"># File lib/pom/manifest.rb, line 18</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root_directory</span>)
-      <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">root_directory</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-identifier">:casefold</span>)
+      <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">root_directory</span>.<span class="ruby-identifier">first</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-identifier">:casefold</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -272,7 +274,7 @@ root directory of the project.
 
     
       <div id="each-method" class="method-detail ">
-        <a name="M000037"></a>
+        <a name="M000042"></a>
 
         <div class="method-heading">
         
@@ -306,7 +308,7 @@ Iterate over each file in the manifest.
 
     
       <div id="files-method" class="method-detail method-alias">
-        <a name="M000036"></a>
+        <a name="M000041"></a>
 
         <div class="method-heading">
         
@@ -319,7 +321,7 @@ Iterate over each file in the manifest.
         <div class="method-description">
           
           <p>
-Alias for <a href="Manifest.html#M000034">list</a>
+Alias for <a href="Manifest.html#M000040">list</a>
 </p>
           
 
@@ -331,7 +333,7 @@ Alias for <a href="Manifest.html#M000034">list</a>
 
     
       <div id="list-method" class="method-detail ">
-        <a name="M000034"></a>
+        <a name="M000040"></a>
 
         <div class="method-heading">
         
@@ -366,14 +368,14 @@ lines and commented lines (using &#8217;#&#8217;) are ignored.
 
         
         <div class="aliases">
-          Also aliased as: <a href="Manifest.html#M000036">files</a>
+          Also aliased as: <a href="Manifest.html#M000041">files</a>
         </div>
         
       </div>
 
     
       <div id="size-method" class="method-detail ">
-        <a name="M000038"></a>
+        <a name="M000043"></a>
 
         <div class="method-heading">
         

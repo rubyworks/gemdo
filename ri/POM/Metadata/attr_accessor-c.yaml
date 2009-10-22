@@ -2,7 +2,8 @@
 aliases: []
 
 block_params: 
-comment: 
+comment: []
+
 full_name: POM::Metadata::attr_accessor
 is_singleton: true
 name: attr_accessor

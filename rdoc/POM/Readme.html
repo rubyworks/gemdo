@@ -9,13 +9,13 @@
   <title>Class: POM::Readme</title>
 
   
-    <link rel="SHORTCUT ICON" href="../images/ruby.png">
+    <link rel="SHORTCUT ICON" href="../images/class.png">
   
 
   <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
 
   <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
 
@@ -25,10 +25,10 @@
   <div class="head">
     <h1>
       
-        <img src="../images/ruby.png" height="32px" align="absmiddle">
+        <img src="../images/class.png" align="absmiddle">&nbsp;
       
-      <a href="../index.html">POM</a> -
-      POM::Readme
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Readme</a>
     </h1>
   </div>
 
@@ -75,19 +75,25 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000000">::new</a></li>
+          <li class="method"><a href="#M000009">::new</a></li>
           
-          <li class="method"><a href="#M000002">#[]</a></li>
+          <li class="method"><a href="#M000014">#[]</a></li>
           
-          <li class="method"><a href="#M000003">#description</a></li>
+          <li class="method"><a href="#M000020">#description</a></li>
           
-          <li class="method"><a href="#M000008">#description_1</a></li>
+          <li class="method"><a href="#M000024">#description_1</a></li>
           
-          <li class="method"><a href="#M000009">#description_2</a></li>
+          <li class="method"><a href="#M000027">#description_2</a></li>
           
-          <li class="method"><a href="#M000005">#license</a></li>
+          <li class="method"><a href="#M000021">#license</a></li>
           
-          <li class="method"><a href="#M000012">#license_1</a></li>
+          <li class="method"><a href="#M000029">#license_1</a></li>
+          
+          <li class="method"><a href="#M000017">#name</a></li>
+          
+          <li class="method"><a href="#M000018">#title</a></li>
+          
+          <li class="method"><a href="#M000023">#title_1</a></li>
           
         </ul>
       </div>
@@ -147,6 +153,8 @@
           <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
         
           <li class="class"><a href="../POM/ReleaseNotes.html">POM::ReleaseNotes</a></li>
+        
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
         
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -240,7 +248,7 @@ to descern metadata about a project.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000000"></a>
+        <a name="M000009"></a>
 
         <div class="method-heading">
         
@@ -259,11 +267,12 @@ to descern metadata about a project.
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 16</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 18</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>)
+      <span class="ruby-identifier">root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">root</span>)
         <span class="ruby-ivar">@root</span> = <span class="ruby-identifier">root</span>
-        <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'{README,README.*}'</span>).<span class="ruby-identifier">first</span>
+        <span class="ruby-ivar">@file</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{README,README.*}'</span>, <span class="ruby-identifier">:casefold</span>)
         <span class="ruby-ivar">@text</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@file</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@file</span>
       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">root</span>)
         <span class="ruby-ivar">@root</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">root</span>)
@@ -289,7 +298,7 @@ to descern metadata about a project.
 
     
       <div id="--method" class="method-detail ">
-        <a name="M000002"></a>
+        <a name="M000014"></a>
 
         <div class="method-heading">
         
@@ -308,7 +317,7 @@ to descern metadata about a project.
           <div class="method-source-code"
             id="--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 32</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 35</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">name</span>)
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>)
@@ -326,7 +335,7 @@ to descern metadata about a project.
 
     
       <div id="description-method" class="method-detail ">
-        <a name="M000003"></a>
+        <a name="M000020"></a>
 
         <div class="method-heading">
         
@@ -338,14 +347,14 @@ to descern metadata about a project.
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          
           
 
           
           <div class="method-source-code"
             id="description-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 41</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 59</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">description</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">:description</span>)
         <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">:description</span>]
@@ -362,7 +371,7 @@ to descern metadata about a project.
 
     
       <div id="license-method" class="method-detail ">
-        <a name="M000005"></a>
+        <a name="M000021"></a>
 
         <div class="method-heading">
         
@@ -374,19 +383,87 @@ to descern metadata about a project.
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          
           
 
           
           <div class="method-source-code"
             id="license-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 49</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 68</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">license</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">:license</span>)
         <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">:license</span>]
       <span class="ruby-keyword kw">else</span>
         <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">:license</span>] = <span class="ruby-identifier">license_1</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="name-method" class="method-detail ">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">name</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="name-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">title</span>.<span class="ruby-identifier">downcase</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="title-method" class="method-detail ">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">title</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="title-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 50</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">:title</span>)
+        <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">:title</span>]
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">:title</span>] = <span class="ruby-identifier">title_1</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -404,7 +481,7 @@ to descern metadata about a project.
 
     
       <div id="description--method" class="method-detail ">
-        <a name="M000008"></a>
+        <a name="M000024"></a>
 
         <div class="method-heading">
         
@@ -416,14 +493,14 @@ to descern metadata about a project.
 
         <div class="method-description">
           
-          <p class="missing-docs">(Not documented)</p>
+          
           
 
           
           <div class="method-source-code"
             id="description--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 59</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 86</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">description_1</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/[=#]+\s*(DESCRIPTION|ABSTRACT)[:]*(.*?)[=#]+/</span><span class="ruby-identifier">m</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">text</span>)
         <span class="ruby-identifier">md</span>[<span class="ruby-value">2</span>].<span class="ruby-identifier">strip</span>
@@ -438,7 +515,7 @@ to descern metadata about a project.
 
     
       <div id="description--method" class="method-detail ">
-        <a name="M000009"></a>
+        <a name="M000027"></a>
 
         <div class="method-heading">
         
@@ -457,7 +534,7 @@ to descern metadata about a project.
           <div class="method-source-code"
             id="description--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 66</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 93</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">description_2</span>
       <span class="ruby-identifier">d</span> = []
       <span class="ruby-identifier">o</span> = <span class="ruby-keyword kw">false</span>
@@ -486,7 +563,7 @@ to descern metadata about a project.
 
     
       <div id="license--method" class="method-detail ">
-        <a name="M000012"></a>
+        <a name="M000029"></a>
 
         <div class="method-heading">
         
@@ -505,7 +582,7 @@ to descern metadata about a project.
           <div class="method-source-code"
             id="license--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 87</span>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 114</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">license_1</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/[=]+\s*(LICENSE)/i</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">text</span>)
         <span class="ruby-identifier">section</span> = <span class="ruby-identifier">md</span>.<span class="ruby-identifier">post_match</span>
@@ -519,6 +596,40 @@ to descern metadata about a project.
         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/BSD/</span>
           <span class="ruby-value str">&quot;BSD&quot;</span>
         <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="title--method" class="method-detail ">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">title_1</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="title--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 79</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title_1</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/^[=#]\s*(.*?)$/</span><span class="ruby-identifier">m</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">text</span>)
+        <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">strip</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>

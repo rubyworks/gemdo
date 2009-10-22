@@ -1,0 +1,14 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Build a POM project using a gemspec. This is intended to make it farily easy to build a set of POM meta/ files if you already have a gemspec.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Since we won't use the gemspec manifest here, this perhaps should be in Metadata, and then we can if we want have this method too, but calling on it?"
+full_name: POM::Project::from_gemspec
+is_singleton: true
+name: from_gemspec
+params: (gemspec, root=Dir.pwd)
+visibility: public

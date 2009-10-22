@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Metadata#sitemap=
+full_name: Pathname#glob
 is_singleton: false
-name: sitemap=
-params: (x)
+name: glob
+params: (match, *opts)
 visibility: public

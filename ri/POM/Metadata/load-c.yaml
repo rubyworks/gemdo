@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Load all attributes from file system.
-full_name: POM::Metadata#preload
-is_singleton: false
-name: preload
-params: ()
+  body: Like new but reads all metadata into memory.
+full_name: POM::Metadata::load
+is_singleton: true
+name: load
+params: (root)
 visibility: public

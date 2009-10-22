@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Contact's email address.
-full_name: POM::Metadata#default_email
+  body: backup current metadata files to .cach/pom
+full_name: POM::Metadata#backup!
 is_singleton: false
-name: default_email
+name: backup!
 params: ()
 visibility: public

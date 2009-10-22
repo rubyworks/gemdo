@@ -40,5 +40,11 @@ instance_methods:
   name: license
 - !ruby/object:RDoc::RI::MethodSummary 
   name: license_1
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: name
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: title
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: title_1
 name: Readme
 superclass: Object

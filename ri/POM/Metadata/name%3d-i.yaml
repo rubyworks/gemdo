@@ -2,10 +2,9 @@
 aliases: []
 
 block_params: 
-comment: []
-
-full_name: POM::Readme#description
+comment: 
+full_name: POM::Metadata#name=
 is_singleton: false
-name: description
-params: ()
+name: name=
+params: (v)
 visibility: public

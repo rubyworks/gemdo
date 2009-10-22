@@ -3,8 +3,8 @@ aliases: []
 
 block_params: 
 comment: 
-full_name: POM::Metadata::aliases
-is_singleton: true
-name: aliases
-params: ()
+full_name: POM::Metadata#version=
+is_singleton: false
+name: version=
+params: (v)
 visibility: public

@@ -8,5 +8,5 @@ comment:
 full_name: POM::Metadata::new
 is_singleton: true
 name: new
-params: (rootdir, options={})
+params: (root)
 visibility: public

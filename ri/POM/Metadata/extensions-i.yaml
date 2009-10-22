@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default list of provisions is an empty list.
-full_name: POM::Metadata#default_provides
+  body: Extensions default to ext/**/extconf.rb
+full_name: POM::Metadata#extensions
 is_singleton: false
-name: default_provides
+name: extensions
 params: ()
 visibility: public

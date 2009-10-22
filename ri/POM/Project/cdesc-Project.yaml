@@ -16,6 +16,12 @@ attributes:
   rw: R
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: from_gemspec
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: from_readme
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: load
+- !ruby/object:RDoc::RI::MethodSummary 
   name: new
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
@@ -28,15 +34,9 @@ constants:
 - !ruby/object:RDoc::RI::Constant 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Library directory relative to this file (ie <em>DIR</em>).
-  name: LIB_DIRECTORY
-  value: Pathname.new(File.dirname(File.dirname(__FILE__)))
-- !ruby/object:RDoc::RI::Constant 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
     body: File glob for matching README file.
   name: README
-  value: "\"readme{,.*}\""
+  value: "\"README{,.*}\""
 - !ruby/object:RDoc::RI::Constant 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
@@ -80,6 +80,8 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: plugin
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: require_rubygems
+- !ruby/object:RDoc::RI::MethodSummary 
   name: script
 - !ruby/object:RDoc::RI::MethodSummary 
   name: site
@@ -89,5 +91,7 @@ instance_methods:
   name: tmp
 - !ruby/object:RDoc::RI::MethodSummary 
   name: tmpdir
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: to_gemspec
 name: Project
 superclass: Object

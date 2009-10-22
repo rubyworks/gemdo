@@ -9,13 +9,13 @@
   <title>Class: POM::Project</title>
 
   
-    <link rel="SHORTCUT ICON" href="../images/ruby.png">
+    <link rel="SHORTCUT ICON" href="../images/class.png">
   
 
   <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
 
   <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
   <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
 
@@ -25,10 +25,10 @@
   <div class="head">
     <h1>
       
-        <img src="../images/ruby.png" height="32px" align="absmiddle">
+        <img src="../images/class.png" align="absmiddle">&nbsp;
       
-      <a href="../index.html">POM</a> -
-      POM::Project
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Project</a>
     </h1>
   </div>
 
@@ -42,6 +42,12 @@
           
             <li class="file"><a href="../lib/pom/project_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
               class="thickbox" title="lib/pom/project.rb">lib/pom/project.rb</a></li>
+          
+            <li class="file"><a href="../lib/pom/readme_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/readme.rb">lib/pom/readme.rb</a></li>
+          
+            <li class="file"><a href="../lib/pom/gemspec_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/gemspec.rb">lib/pom/gemspec.rb</a></li>
           
           </ul>
         </div>
@@ -75,49 +81,59 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
+          <li class="method"><a href="#M000060">::from_gemspec</a></li>
+          
+          <li class="method"><a href="#M000030">::from_readme</a></li>
+          
+          <li class="method"><a href="#M000000">::load</a></li>
+          
           <li class="method"><a href="#M000001">::new</a></li>
           
           <li class="method"><a href="#M000028">#about</a></li>
           
           <li class="method"><a href="#M000031">#announcement</a></li>
           
-          <li class="method"><a href="#M000016">#cache</a></li>
+          <li class="method"><a href="#M000011">#cache</a></li>
           
           <li class="method"><a href="#M000022">#config</a></li>
           
-          <li class="method"><a href="#M000013">#doc</a></li>
+          <li class="method"><a href="#M000007">#doc</a></li>
           
-          <li class="method"><a href="#M000007">#history</a></li>
+          <li class="method"><a href="#M000004">#history</a></li>
           
           <li class="method"><a href="#M000032">#locate_root</a></li>
           
-          <li class="method"><a href="#M000035">#locate_root_at</a></li>
+          <li class="method"><a href="#M000033">#locate_root_at</a></li>
           
-          <li class="method"><a href="#M000011">#log</a></li>
+          <li class="method"><a href="#M000006">#log</a></li>
           
-          <li class="method"><a href="#M000006">#manifest</a></li>
+          <li class="method"><a href="#M000003">#manifest</a></li>
           
-          <li class="method"><a href="#M000010">#manifest_file</a></li>
+          <li class="method"><a href="#M000005">#manifest_file</a></li>
           
-          <li class="method"><a href="#M000004">#metadata</a></li>
+          <li class="method"><a href="#M000002">#metadata</a></li>
           
-          <li class="method"><a href="#M000014">#pack</a></li>
+          <li class="method"><a href="#M000008">#pack</a></li>
           
-          <li class="method"><a href="#M000015">#pkg</a></li>
+          <li class="method"><a href="#M000010">#pkg</a></li>
           
-          <li class="method"><a href="#M000018">#plug</a></li>
+          <li class="method"><a href="#M000012">#plug</a></li>
           
-          <li class="method"><a href="#M000017">#plugin</a></li>
+          <li class="method"><a href="#M000013">#plugin</a></li>
           
-          <li class="method"><a href="#M000019">#script</a></li>
+          <li class="method"><a href="#M000051">#require_rubygems</a></li>
           
-          <li class="method"><a href="#M000020">#site</a></li>
+          <li class="method"><a href="#M000015">#script</a></li>
           
-          <li class="method"><a href="#M000021">#task</a></li>
+          <li class="method"><a href="#M000016">#site</a></li>
           
-          <li class="method"><a href="#M000024">#tmp</a></li>
+          <li class="method"><a href="#M000019">#task</a></li>
           
-          <li class="method"><a href="#M000027">#tmpdir</a></li>
+          <li class="method"><a href="#M000025">#tmp</a></li>
+          
+          <li class="method"><a href="#M000026">#tmpdir</a></li>
+          
+          <li class="method"><a href="#M000053">#to_gemspec</a></li>
           
         </ul>
       </div>
@@ -178,6 +194,8 @@
         
           <li class="class"><a href="../POM/ReleaseNotes.html">POM::ReleaseNotes</a></li>
         
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
+        
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
       </div>
@@ -211,13 +229,6 @@ metadata, etc.
     <div id="constants-list" class="section">
       <h3 class="section-header">Constants</h3>
       <dl>
-      
-        <dt><a name="LIB_DIRECTORY">LIB_DIRECTORY</a></dt>
-        
-        <dd class="description"><p>
-Library directory relative to this file (ie <em>DIR</em>).
-</p></dd>
-        
       
         <dt><a name="ROOT_INDICATORS">ROOT_INDICATORS</a></dt>
         
@@ -292,6 +303,151 @@ TODO: Support alternate source location in the future (?)
       <h3 class="section-header">Public Class Methods</h3>
 
     
+      <div id="from-gemspec-method" class="method-detail ">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">from_gemspec</span><span
+            class="method-args">(gemspec, root=Dir.pwd)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Build a <a href="../POM.html">POM</a> project using a gemspec. This is
+intended to make it farily easy to build a set of <a
+href="../POM.html">POM</a> meta/ files if you already have a gemspec.
+</p>
+<p>
+TODO: Since we won&#8217;t use the gemspec manifest here, this perhaps
+should be in <a href="Metadata.html">Metadata</a>, and then we can if we
+want have this method too, but calling on it?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="from-gemspec-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 123</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_gemspec</span>(<span class="ruby-identifier">gemspec</span>, <span class="ruby-identifier">root</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+      <span class="ruby-identifier">project</span> = <span class="ruby-constant">Project</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">root</span>)
+
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">name</span>         = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">version</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">summary</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">summary</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">description</span>  = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">description</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">authors</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">authors</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">contact</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">email</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">homepage</span>     = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">homepage</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">loadpath</span>     = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">require_paths</span>
+
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">platform</span>     = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">platform</span>
+
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">extensions</span>   = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">extensions</span>
+
+      <span class="ruby-identifier">requires</span> = []
+      <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:runtime</span>
+        <span class="ruby-identifier">requires</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{d.name} #{d.version_requirements}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">requires</span> = <span class="ruby-identifier">requires</span>
+
+      <span class="ruby-identifier">project</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="from-readme-method" class="method-detail ">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">from_readme</span><span
+            class="method-args">(readme, root=Dir.pwd)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Build a <a href="../POM.html">POM</a> project using a <a
+href="Project.html#README">README</a>. This is intended to make it fairly
+easy to build a set of <a href="../POM.html">POM</a> meta/ files if you
+already have a <a href="Project.html#README">README</a>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="from-readme-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/readme.rb, line 141</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">from_readme</span>(<span class="ruby-identifier">readme</span>, <span class="ruby-identifier">root</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+      <span class="ruby-identifier">require</span> <span class="ruby-value str">'pom/readme'</span>
+
+      <span class="ruby-identifier">project</span> = <span class="ruby-constant">Project</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">root</span>)
+      <span class="ruby-identifier">readme</span>  = <span class="ruby-constant">Readme</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">description</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">license</span>     = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">license</span>
+
+      <span class="ruby-identifier">project</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="load-method" class="method-detail ">
+        <a name="M000000"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">load</span><span
+            class="method-args">(root)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+New project with metadata fully loaded.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="load-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 15</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">root</span>)
+      <span class="ruby-identifier">project</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">load</span>
+      <span class="ruby-identifier">project</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="new-method" class="method-detail ">
         <a name="M000001"></a>
 
@@ -312,17 +468,18 @@ TODO: Support alternate source location in the future (?)
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 28</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 32</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">local</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-ivar">@root</span>   = <span class="ruby-identifier">locate_root</span>(<span class="ruby-identifier">local</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">raise</span>(<span class="ruby-node">&quot;can't locate project root -- #{local}&quot;</span>)
       <span class="ruby-ivar">@source</span> = <span class="ruby-identifier">root</span>
-      <span class="ruby-ivar">@cache</span>  = <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache'</span>
-      <span class="ruby-ivar">@task</span>   = <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'task'</span>
-      <span class="ruby-ivar">@script</span> = <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'script'</span>
-      <span class="ruby-ivar">@log</span>    = <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>
-      <span class="ruby-ivar">@doc</span>    = <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'doc'</span>
 
-      <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{.,}config'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.config'</span>
+      <span class="ruby-comment cmt">#@cache  = root + '.cache'</span>
+      <span class="ruby-comment cmt">#@task   = root + 'task'</span>
+      <span class="ruby-comment cmt">#@script = root + 'script'</span>
+      <span class="ruby-comment cmt">#@log    = root + 'log'</span>
+      <span class="ruby-comment cmt">#@doc    = root + 'doc'</span>
+
+      <span class="ruby-comment cmt">#@config = root.glob_first('{.,}config') || root + '.config'</span>
       <span class="ruby-comment cmt">#@plug  = root.glob_first('plug{,in,ins'}) || root + 'plug'</span>
       <span class="ruby-comment cmt">#@pack  = root.glob_first('{pack,pkg}{,s}') || root + 'pack'</span>
 
@@ -365,7 +522,7 @@ About project notice.
           <div class="method-source-code"
             id="about-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 211</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 218</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">parts</span>)
       <span class="ruby-comment cmt"># pre-format data</span>
       <span class="ruby-identifier">released</span> = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">released</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;(#{metadata.released.strftime('%Y-%m-%d')})&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
@@ -383,7 +540,7 @@ About project notice.
         <span class="ruby-identifier">s</span> = []
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.title} v#{metadata.version} #{released}&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
-        <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.description}&quot;</span>
+        <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{metadata.description || metadata.summary}&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  contact    : #{metadata.contact}&quot;</span>
         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  homepage   : #{metadata.homepage}&quot;</span>
@@ -438,7 +595,7 @@ href="Project.html#README">README</a>.
           <div class="method-source-code"
             id="announcement-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 255</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 262</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announcement</span>(<span class="ruby-identifier">file</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={})
       <span class="ruby-identifier">header</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:header</span>]
 
@@ -476,7 +633,7 @@ href="Project.html#README">README</a>.
 
     
       <div id="cache-method" class="method-detail ">
-        <a name="M000016"></a>
+        <a name="M000011"></a>
 
         <div class="method-heading">
         
@@ -498,12 +655,12 @@ the pathname for the cache directory.
           <div class="method-source-code"
             id="cache-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 120</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 131</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cache</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'.cache'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">cache</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@cache</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache'</span>)
+        <span class="ruby-ivar">@cache</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'.cache'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -528,9 +685,9 @@ the pathname for the cache directory.
         <div class="method-description">
           
           <p>
-Get pathname of given config <tt>path</tt>. Or without <tt>path</tt>
-Returns the path to the config directory (either <tt>.config</tt> or
-<tt>config</tt>).
+<a href="../Pathname.html">Pathname</a> of given config <tt>path</tt>. Or
+without <tt>path</tt> Returns the path to the config directory (either
+<tt>.config</tt> or <tt>config</tt>).
 </p>
           
 
@@ -538,12 +695,12 @@ Returns the path to the config directory (either <tt>.config</tt> or
           <div class="method-source-code"
             id="config-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 182</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 193</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{.,}config'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">config</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span> <span class="ruby-comment cmt">#root.glob_first('{.,}config' / path)</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{.,}config'</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.config'</span>))
+        <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{.,}config'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'.config'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -555,7 +712,7 @@ Returns the path to the config directory (either <tt>.config</tt> or
 
     
       <div id="doc-method" class="method-detail ">
-        <a name="M000013"></a>
+        <a name="M000007"></a>
 
         <div class="method-heading">
         
@@ -577,12 +734,12 @@ the pathname for the doc directory.
           <div class="method-source-code"
             id="doc-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 92</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 103</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doc</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'doc'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">doc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@doc</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'doc'</span>)
+        <span class="ruby-ivar">@doc</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'doc'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -594,7 +751,7 @@ the pathname for the doc directory.
 
     
       <div id="history-method" class="method-detail ">
-        <a name="M000007"></a>
+        <a name="M000004"></a>
 
         <div class="method-heading">
         
@@ -613,7 +770,7 @@ the pathname for the doc directory.
           <div class="method-source-code"
             id="history-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 55</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 60</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history</span>
       <span class="ruby-ivar">@history</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">History</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -626,7 +783,7 @@ the pathname for the doc directory.
 
     
       <div id="log-method" class="method-detail ">
-        <a name="M000011"></a>
+        <a name="M000006"></a>
 
         <div class="method-heading">
         
@@ -648,12 +805,18 @@ the pathname for the log directory.
           <div class="method-source-code"
             id="log-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 77</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 82</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'log'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">log</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>)
+        <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> (
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">site</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>).<span class="ruby-identifier">directory?</span>
+            <span class="ruby-identifier">site</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">log</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>
+          <span class="ruby-keyword kw">end</span>
+        )
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-comment cmt">#@log ||=(</span>
       <span class="ruby-comment cmt">#  dir = root.glob_first('{log,doc/log}{,s}') || root + 'doc/log'</span>
@@ -670,7 +833,7 @@ the pathname for the log directory.
 
     
       <div id="manifest-method" class="method-detail ">
-        <a name="M000006"></a>
+        <a name="M000003"></a>
 
         <div class="method-heading">
         
@@ -691,7 +854,7 @@ the pathname for the log directory.
           <div class="method-source-code"
             id="manifest-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 51</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 56</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
       <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Manifest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -704,7 +867,7 @@ the pathname for the log directory.
 
     
       <div id="manifest-file-method" class="method-detail ">
-        <a name="M000010"></a>
+        <a name="M000005"></a>
 
         <div class="method-heading">
         
@@ -726,9 +889,9 @@ of using manifest.file ?
           <div class="method-source-code"
             id="manifest-file-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 61</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 66</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest_file</span>
-      <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'manifest{,.txt}'</span>, <span class="ruby-identifier">:casefold</span>)
+      <span class="ruby-ivar">@manifest_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'manifest{,.txt}'</span>, <span class="ruby-identifier">:casefold</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -739,7 +902,7 @@ of using manifest.file ?
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000004"></a>
+        <a name="M000002"></a>
 
         <div class="method-heading">
         
@@ -761,7 +924,7 @@ about the project.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 46</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 51</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
       <span class="ruby-ivar">@metadata</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -774,7 +937,7 @@ about the project.
 
     
       <div id="pack-method" class="method-detail ">
-        <a name="M000014"></a>
+        <a name="M000008"></a>
 
         <div class="method-heading">
         
@@ -796,12 +959,12 @@ returns the pathname for the package directory.
           <div class="method-source-code"
             id="pack-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 102</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 113</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pack</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{pack,pkg,package}{,s}'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">pack</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@pack</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{pack,pkg,package}{,s}'</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'pack'</span>))
+        <span class="ruby-ivar">@pack</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{pack,pkg,package}{,s}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'pack'</span>
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-comment cmt">#@pkg ||=(</span>
       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
@@ -815,14 +978,14 @@ returns the pathname for the package directory.
 
         
         <div class="aliases">
-          Also aliased as: <a href="Project.html#M000015">pkg</a>
+          Also aliased as: <a href="Project.html#M000010">pkg</a>
         </div>
         
       </div>
 
     
       <div id="pkg-method" class="method-detail method-alias">
-        <a name="M000015"></a>
+        <a name="M000010"></a>
 
         <div class="method-heading">
         
@@ -835,7 +998,7 @@ returns the pathname for the package directory.
         <div class="method-description">
           
           <p>
-Alias for <a href="Project.html#M000014">pack</a>
+Alias for <a href="Project.html#M000008">pack</a>
 </p>
           
 
@@ -846,37 +1009,12 @@ Alias for <a href="Project.html#M000014">pack</a>
       </div>
 
     
-      <div id="plug-method" class="method-detail method-alias">
-        <a name="M000018"></a>
+      <div id="plug-method" class="method-detail ">
+        <a name="M000012"></a>
 
         <div class="method-heading">
         
           <span class="method-name">plug</span><span
-            class="method-args">(path=nil)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Alias for <a href="Project.html#M000017">plugin</a>
-</p>
-          
-
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="plugin-method" class="method-detail ">
-        <a name="M000017"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">plugin</span><span
             class="method-args">(path=nil)</span>
           <span class="method-click-advice">click to toggle source</span>
         
@@ -892,14 +1030,14 @@ returns the pathname for the plugin directory.
 
           
           <div class="method-source-code"
-            id="plugin-source">
+            id="plug-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 130</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugin</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 141</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plug</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'plug{,in,ins}'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">plug</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@plug</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'plug{,in,ins}'</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'plug'</span>))
+        <span class="ruby-ivar">@plug</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'plug{,in,ins}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'plug'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -908,14 +1046,78 @@ returns the pathname for the plugin directory.
 
         
         <div class="aliases">
-          Also aliased as: <a href="Project.html#M000018">plug</a>
+          Also aliased as: <a href="Project.html#M000013">plugin</a>
         </div>
         
       </div>
 
     
+      <div id="plugin-method" class="method-detail method-alias">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">plugin</span><span
+            class="method-args">(path=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Alias for <a href="Project.html#M000012">plug</a>
+</p>
+          
+
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="require-rubygems-method" class="method-detail ">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">require_rubygems</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Require RubyGems library.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="require-rubygems-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_rubygems</span>
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">require</span> <span class="ruby-value str">'rubygems/specification'</span>
+        <span class="ruby-comment cmt">#::Gem::manage_gems</span>
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">LoadError</span>, <span class="ruby-value str">&quot;RubyGems is not installed.&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="script-method" class="method-detail ">
-        <a name="M000019"></a>
+        <a name="M000015"></a>
 
         <div class="method-heading">
         
@@ -937,12 +1139,12 @@ returns the pathname for the script directory.
           <div class="method-source-code"
             id="script-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 143</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 154</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">script</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'script'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">script</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@script</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'script'</span>)
+        <span class="ruby-ivar">@script</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'script'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -954,7 +1156,7 @@ returns the pathname for the script directory.
 
     
       <div id="site-method" class="method-detail ">
-        <a name="M000020"></a>
+        <a name="M000016"></a>
 
         <div class="method-heading">
         
@@ -976,12 +1178,12 @@ the pathname for the site directory.
           <div class="method-source-code"
             id="site-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 153</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 164</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">site</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{site,web,website}'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">site</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@site</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'{site,web,website}'</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'site'</span>))
+        <span class="ruby-ivar">@site</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{site,web,website}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'site'</span>
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-comment cmt">#@pkg ||=(</span>
       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
@@ -998,7 +1200,7 @@ the pathname for the site directory.
 
     
       <div id="task-method" class="method-detail ">
-        <a name="M000021"></a>
+        <a name="M000019"></a>
 
         <div class="method-heading">
         
@@ -1023,12 +1225,12 @@ TODO: Are task and script different names for the same thing?
           <div class="method-source-code"
             id="task-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 171</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 182</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">task</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'task'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">task</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@task</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'task'</span>)
+        <span class="ruby-ivar">@task</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'task'</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -1040,7 +1242,7 @@ TODO: Are task and script different names for the same thing?
 
     
       <div id="tmp-method" class="method-detail ">
-        <a name="M000024"></a>
+        <a name="M000025"></a>
 
         <div class="method-heading">
         
@@ -1056,27 +1258,19 @@ TODO: Are task and script different names for the same thing?
 Get pathname of given temporary <tt>path</tt>. Or without <tt>path</tt>
 returns the pathname to the temporary directory.
 </p>
-<p>
-TODO: Use Dir.tmpdir instead ?
-</p>
           
 
           
           <div class="method-source-code"
             id="tmp-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 194</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 206</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tmp</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-        <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">glob_first</span>(<span class="ruby-value str">'tmp'</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">path</span>)
+        <span class="ruby-identifier">tmp</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@tmp</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">cache</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'tmp'</span>)
+        <span class="ruby-ivar">@tmp</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">tmpdir</span>) <span class="ruby-comment cmt">#cache+'tmp'</span>
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-comment cmt">#@tmp ||=(</span>
-      <span class="ruby-comment cmt">#  dir = root.glob_first('tmp') || cache + 'tmp'</span>
-      <span class="ruby-comment cmt">#  dir.mkdir_p unless dir.exist?</span>
-      <span class="ruby-comment cmt">#  dir</span>
-      <span class="ruby-comment cmt">#)</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -1084,14 +1278,14 @@ TODO: Use Dir.tmpdir instead ?
 
         
         <div class="aliases">
-          Also aliased as: <a href="Project.html#M000027">tmpdir</a>
+          Also aliased as: <a href="Project.html#M000026">tmpdir</a>
         </div>
         
       </div>
 
     
       <div id="tmpdir-method" class="method-detail method-alias">
-        <a name="M000027"></a>
+        <a name="M000026"></a>
 
         <div class="method-heading">
         
@@ -1104,10 +1298,139 @@ TODO: Use Dir.tmpdir instead ?
         <div class="method-description">
           
           <p>
-Alias for <a href="Project.html#M000024">tmp</a>
+Alias for <a href="Project.html#M000025">tmp</a>
 </p>
           
 
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-gemspec-method" class="method-detail ">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_gemspec</span><span
+            class="method-args">(options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Create a Gem::Specification
+</p>
+<p>
+NOTE: This would be a method of METADATA except that it needs the manifest
+list, which is in <a href="Project.html">Project</a>. Perhaps this
+indicates that the <a href="Manifest.html">Manifest</a> should be a part of
+the <a href="Metadata.html">Metadata</a>?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="to-gemspec-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 22</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_gemspec</span>(<span class="ruby-identifier">options</span>={})
+      <span class="ruby-identifier">require_rubygems</span>
+
+      <span class="ruby-comment cmt"># FIXME: this only works b/c of package staging</span>
+      <span class="ruby-comment cmt">#distribute = Dir.glob('**/*')</span>
+      <span class="ruby-comment cmt">#distribute = project.filelist</span>
+      <span class="ruby-comment cmt">#distribute = manifest #.files</span>
+
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/(\w+).rubyforge.org/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">homepage</span>)
+        <span class="ruby-identifier">rubyforge_project</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>]
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">rubyforge_project</span> = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">name</span>  <span class="ruby-comment cmt"># b/c it has to be something according to Eric Hodel.</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-operator">::</span><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>          = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span>       = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">version</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">summary</span>       = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">summary</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">description</span>   = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">description</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">authors</span>       = [<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">authors</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">uniq</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">email</span>         = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">contact</span> <span class="ruby-comment cmt">#metadata.email</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">homepage</span>      = <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">homepage</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">require_paths</span> = [<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">loadpath</span>].<span class="ruby-identifier">flatten</span>
+
+        <span class="ruby-comment cmt"># -- platform --</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">platform</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:platform</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">platform</span>  <span class="ruby-comment cmt">#'ruby' ???</span>
+        <span class="ruby-comment cmt">#if metadata.platform != 'ruby'</span>
+        <span class="ruby-comment cmt">#  spec.require_paths.concat(spec.require_paths.collect{ |d| File.join(d, platform) })</span>
+        <span class="ruby-comment cmt">#end</span>
+
+        <span class="ruby-comment cmt"># -- rubyforge project --</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">rubyforge_project</span> = <span class="ruby-identifier">rubyforge_project</span>
+
+        <span class="ruby-comment cmt"># -- compiled extensions --</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">extensions</span> = [<span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">extensions</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+
+        <span class="ruby-comment cmt"># -- dependencies --</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">require</span>
+          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">require</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">d</span>,<span class="ruby-identifier">v</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
+            <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span>(<span class="ruby-operator">*</span>[<span class="ruby-identifier">d</span>,<span class="ruby-identifier">v</span>].<span class="ruby-identifier">compact</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">requirements</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:requirements</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">notes</span>
+
+        <span class="ruby-comment cmt"># -- executables --</span>
+
+        <span class="ruby-comment cmt"># TODO: bin/ is a POM convention, is there are reason to do otherwise?</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">bindir</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:bindir</span>]      <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;bin&quot;</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:executables</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">executables</span>
+
+        <span class="ruby-comment cmt"># -- rdocs (argh!) --</span>
+
+        <span class="ruby-identifier">readme</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'README{,.txt}'</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">has_rdoc</span> = <span class="ruby-keyword kw">true</span>  <span class="ruby-comment cmt"># always true</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:extra_rdoc_files</span>]
+          <span class="ruby-identifier">rdocfiles</span> = []
+          <span class="ruby-identifier">rdocfiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
+          <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:extra_rdoc_files</span>])
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">rdocfiles</span> = []
+          <span class="ruby-identifier">rdocfiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
+          <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-constant">Dir</span>[<span class="ruby-value str">'[A-Z]*'</span>] <span class="ruby-operator">||</span> [])  <span class="ruby-comment cmt"># metadata.document</span>
+          <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">uniq!</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">extra_rdoc_files</span> = <span class="ruby-identifier">rdocfiles</span>
+
+        <span class="ruby-identifier">rdoc_options</span> = [] <span class="ruby-comment cmt">#['--inline-source']</span>
+        <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--title&quot;</span>, <span class="ruby-node">&quot;#{metadata.title} API&quot;</span>] <span class="ruby-comment cmt">#if metadata.title</span>
+        <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--main&quot;</span>, <span class="ruby-identifier">readme</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">rdoc_options</span> = <span class="ruby-identifier">rdoc_options</span>
+
+        <span class="ruby-comment cmt"># -- distributed files --</span>
+
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">f</span>) }
+
+        <span class="ruby-comment cmt"># -- test files --</span>
+
+        <span class="ruby-comment cmt"># TODO: make test_files configurable (?)</span>
+        <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">test_files</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/test/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'.rb'</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
           
         </div>
 
@@ -1145,7 +1468,7 @@ matched. Returns <tt>nil</tt> if not found.
           <div class="method-source-code"
             id="locate-root-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 290</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 297</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locate_root</span>(<span class="ruby-identifier">local</span>=<span class="ruby-keyword kw">nil</span>)
         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">local</span><span class="ruby-operator">||</span><span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>) <span class="ruby-keyword kw">do</span>
           <span class="ruby-identifier">dir</span> = <span class="ruby-keyword kw">nil</span>
@@ -1164,7 +1487,7 @@ matched. Returns <tt>nil</tt> if not found.
 
     
       <div id="locate-root-at-method" class="method-detail ">
-        <a name="M000035"></a>
+        <a name="M000033"></a>
 
         <div class="method-heading">
         
@@ -1183,7 +1506,7 @@ matched. Returns <tt>nil</tt> if not found.
           <div class="method-source-code"
             id="locate-root-at-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/project.rb, line 301</span>
+<span class="ruby-comment cmt"># File lib/pom/project.rb, line 308</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">locate_root_at</span>(<span class="ruby-identifier">indicator</span>)
         <span class="ruby-identifier">root</span> = <span class="ruby-keyword kw">nil</span>
         <span class="ruby-identifier">dir</span>  = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>

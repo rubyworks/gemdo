@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default list of suggestions is an empty list.
-full_name: POM::Metadata#default_suggests
+  body: Contact's email address.
+full_name: POM::Metadata#email
 is_singleton: false
-name: default_suggests
+name: email
 params: ()
 visibility: public

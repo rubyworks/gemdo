@@ -1,10 +1,11 @@
 --- !ruby/object:RDoc::RI::MethodDescription 
-aliases: []
-
+aliases: 
+- !ruby/object:RDoc::RI::AliasName 
+  name: plugin
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: "Alias for #plugin"
+  body: Get pathname of given plugin <tt>path</tt>. Or without <tt>path</tt> returns the pathname for the plugin directory.
 full_name: POM::Project#plug
 is_singleton: false
 name: plug

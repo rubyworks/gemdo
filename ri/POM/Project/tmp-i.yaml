@@ -6,8 +6,6 @@ block_params:
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: Get pathname of given temporary <tt>path</tt>. Or without <tt>path</tt> returns the pathname to the temporary directory.
-- !ruby/struct:RDoc::Markup::Flow::P 
-  body: "TODO: Use Dir.tmpdir instead ?"
 full_name: POM::Project#tmp
 is_singleton: false
 name: tmp

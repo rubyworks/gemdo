@@ -4,8 +4,8 @@ aliases: []
 block_params: 
 comment: []
 
-full_name: POM::Metadata#recommends=
+full_name: Pathname#first
 is_singleton: false
-name: recommends=
-params: (x)
+name: first
+params: (match, *opts)
 visibility: public

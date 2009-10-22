@@ -3,7 +3,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Stores the HISTORY file's pathname.
+    body: HISTORY file's pathname.
   name: file
   rw: R
 - !ruby/object:RDoc::RI::Attribute 

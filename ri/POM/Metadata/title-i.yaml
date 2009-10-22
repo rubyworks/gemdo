@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default list recommendations is an empty list.
-full_name: POM::Metadata#default_recommends
+  body: Title defaults to name captialized.
+full_name: POM::Metadata#title
 is_singleton: false
-name: default_recommends
+name: title
 params: ()
 visibility: public

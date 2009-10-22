@@ -27,7 +27,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Copyright notice.
+    body: Copyright notice. Eg. &quot;Copyright (c) 2009 Thomas Sawyer&quot;
   name: copyright
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -39,7 +39,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Detailed description.
+    body: "Detailed description. Aliased as #abstract."
   name: description
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -47,6 +47,12 @@ attributes:
   - !ruby/struct:RDoc::Markup::Flow::P 
     body: File pattern list of files to distribute in package. This is provided to assist with MANIFEST automation.
   name: distribute
+  rw: RW
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Resource to find downloadable packages.
+  name: download
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
@@ -75,26 +81,20 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
+    body: "Name of the user-account or master-project to which this project belongs. The namespace defaults the project name if no entry is given. TODO: Better term then namespace?"
+  name: namespace
+  rw: RW
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
     body: Abirtary information, especially about what might be needed to use this package. This is strictly information for the end-user to consider. Eg. &quot;Needs a fast graphics card.&quot;
   name: notes
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Unixname of this application/library.
-  name: package
-  rw: RW
-- !ruby/object:RDoc::RI::Attribute 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Platform (nil for unviveral)
+    body: Platform (nil for universal)
   name: platform
-  rw: RW
-- !ruby/object:RDoc::RI::Attribute 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Unixname of the project to which this package belongs (defaults to package).
-  name: project
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
@@ -106,7 +106,7 @@ attributes:
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
     body: What other packages <b>should</b> be used with this package.
-  name: recommends
+  name: recommend
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
@@ -117,7 +117,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: What other packages does this package replace.
+    body: "What other packages does this package replace. This is very much like #provides but expresses a closser relation. For instance &quot;libXML&quot; has been replaced by &quot;libXML2&quot;."
   name: replaces
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -147,14 +147,14 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: "Current status (stable, beta, alpha, rc1, etc.) DEPRECATE: (should be indicated by version)"
+    body: "Current status (stable, beta, alpha, rc1, etc.) DEPRECATE: (should be indicated by version number)"
   name: status
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
     body: What other packages <b>could</b> be useful with this package.
-  name: suggests
+  name: suggest
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
@@ -165,22 +165,16 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Title of package (this defaults to name capitalized).
+    body: Title of package (this defaults to project name capitalized).
   name: title
-  rw: RW
-- !ruby/object:RDoc::RI::Attribute 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Version number of package.
-  name: version
   rw: RW
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
   name: alias_accessor
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: aliases
-- !ruby/object:RDoc::RI::MethodSummary 
   name: attr_accessor
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: load
 - !ruby/object:RDoc::RI::MethodSummary 
   name: new
 comment: 
@@ -199,10 +193,16 @@ comment:
 constants: 
 - !ruby/object:RDoc::RI::Constant 
   comment: 
+  - !ruby/struct:RDoc::Markup::Flow::VERB 
+    body: " Glob for matching against meta directory names,\n <tt>.meta/</tt> and <tt>meta/</tt>.\n"
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Glob for matching against meta directory names, <tt>.meta/</tt> and <tt>meta/</tt>.
+    body: METADIRS = '{.meta,meta}'
   name: METADIRS
-  value: "'{.meta,meta}'"
+  value: "['.meta', 'meta']"
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: PRIMARY
+  value: "['project', 'name', 'version']"
 full_name: POM::Metadata
 includes: []
 
@@ -212,65 +212,45 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: assert_valid
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: author
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: author=
+- !ruby/object:RDoc::RI::MethodSummary 
   name: authors=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: backup!
 - !ruby/object:RDoc::RI::MethodSummary 
   name: conflicts=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: default
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_authors
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_conflicts
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_contact
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_distribute
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_email
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_extensions
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_loadpath
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_project
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_provides
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_recommends
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_replaces
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_requires
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_suggests
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_summary
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: default_title
-- !ruby/object:RDoc::RI::MethodSummary 
   name: distribute=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: email
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: entries
 - !ruby/object:RDoc::RI::MethodSummary 
   name: executables
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: initialize_metadirectory
+  name: extensions
 - !ruby/object:RDoc::RI::MethodSummary 
   name: list
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: load
+- !ruby/object:RDoc::RI::MethodSummary 
   name: loadpath=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: meta
+  name: name
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: metadir
+  name: name=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: namespace
 - !ruby/object:RDoc::RI::MethodSummary 
   name: package_name
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: preload
-- !ruby/object:RDoc::RI::MethodSummary 
   name: provides=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: readme
+  name: read
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: recommends=
+  name: recommend=
 - !ruby/object:RDoc::RI::MethodSummary 
   name: released=
 - !ruby/object:RDoc::RI::MethodSummary 
@@ -278,18 +258,26 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: requires=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: sitemap=
+  name: save
 - !ruby/object:RDoc::RI::MethodSummary 
   name: stage_name
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: suggests=
+  name: suggest=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: summary
 - !ruby/object:RDoc::RI::MethodSummary 
   name: summary=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: title
 - !ruby/object:RDoc::RI::MethodSummary 
   name: to_s
 - !ruby/object:RDoc::RI::MethodSummary 
   name: to_yaml
 - !ruby/object:RDoc::RI::MethodSummary 
   name: valid?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: version
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: version=
 name: Metadata
 superclass: Object

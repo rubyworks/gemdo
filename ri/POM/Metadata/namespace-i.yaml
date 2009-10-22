@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default list of conflicts is an empty list.
-full_name: POM::Metadata#default_conflicts
+  body: "Calculated Getters #"
+full_name: POM::Metadata#namespace
 is_singleton: false
-name: default_conflicts
+name: namespace
 params: ()
 visibility: public

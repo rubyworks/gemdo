@@ -2,7 +2,8 @@
 aliases: []
 
 block_params: 
-comment: 
+comment: []
+
 full_name: POM::Readme#description_1
 is_singleton: false
 name: description_1

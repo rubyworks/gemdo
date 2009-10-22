@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Default distribution list include everything ['*<b>/</b>'].
-full_name: POM::Metadata#default_distribute
+  body: Current version of the project. Should be a dot separated string. Eg. &quot;1.0.0&quot;.
+full_name: POM::Metadata#version
 is_singleton: false
-name: default_distribute
+name: version
 params: ()
 visibility: public
