@@ -31,6 +31,10 @@ optparse = OptionParser.new do |opt|
     options[:verbose] = true
   end
 
+  opt.on("--force", "-f", "override prtected operations") do
+    options[:force] = true
+  end
+
   opt.on_tail("--help", "-h", "disaply this help message") do
     puts opt
     exit
@@ -41,6 +45,12 @@ end
 optparse.parse!
 
 if ARGV.empty?
+
+  exists = Dir.glob('{.,}meta').first
+
+  if exists && !options[:force]
+    puts "#{exists} directory already exists; use --force option to allow overwrites"
+  end
 
   require 'rubygems'
 

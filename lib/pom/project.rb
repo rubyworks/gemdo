@@ -23,6 +23,7 @@ module POM
     # until the ROOT_INDICATOR is matched. Returns +nil+ if not found.
     #
     def self.root(local=Dir.pwd)
+      local ||= Dir.pwd
       Dir.chdir(local) do
         dir = nil
         ROOT_INDICATORS.find do |i|
@@ -81,8 +82,8 @@ module POM
     #   new(local, :lookup=>true)
     #
     def initialize(*root_opts)
-      root = root_opts.shift unless Hash===options.first
-      opts = root_opts.last
+      root = root_opts.shift unless Hash===root_opts.first
+      opts = root_opts.last || {}
 
       if opts[:lookup] || !root
         root = self.class.root(root)
