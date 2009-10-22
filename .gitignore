@@ -2,4 +2,6 @@
 log
 doc/rdoc
 doc/ri
+site/log
+work/sandbox
 MANIFEST
