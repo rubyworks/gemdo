@@ -20,7 +20,7 @@ module POM
     PRIMARY = ['project', 'name', 'version']
 
     # Like new but reads all metadata into memory.
-    def self.load(root)
+    def self.load(root=Dir.pwd)
       new(root).load
     end
 

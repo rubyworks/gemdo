@@ -145,6 +145,7 @@ module POM
       readme   = Readme.new(readme)
 
       metadata.name        = readme.name
+      metadata.title       = readme.title
       metadata.description = readme.description
       metadata.license     = readme.license
 
