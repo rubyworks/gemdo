@@ -69,8 +69,10 @@ module POM
       @root = Pathname.new(root.to_s)
       @data = {}
 
-      ['project','name','version'].each do |key|
-        __send__("#{key}=", read(key))
+      # DEPRECATE package
+      ['package', 'project', 'name', 'version'].each do |key|
+        val = read(key)
+        __send__("#{key}=", val) if val
       end
 
       @data['authors']   = []
@@ -91,6 +93,8 @@ module POM
     end
 
     #METAFILE = 'meta{,data}{.yaml,.yml}'
+
+  public
 
     # Load from meta.yml file, if used.
     #def initialize_metafile
@@ -138,6 +142,8 @@ module POM
         self
       )
     end
+
+  private
 
     # Recurisve entries. Should be a method of Dir.
     def entries(dir)
@@ -188,7 +194,7 @@ module POM
 
     # Get metadata entry from meta-directory.
     def read(name)
-      if file = root.glob("{#{METADIRS.join(',')}}/#{name}").first
+      if file = root.first("{#{METADIRS.join(',')}}/#{name}")
         text = file.read.strip
         if /\A---/ =~ text
           YAML.load(text)
@@ -264,11 +270,23 @@ module POM
 
     # Project's package name. The entry is required
     # and must not contain spaces or puncuation.
-    attr :name, :name=
+    def name
+      @data['name']
+    end
+
+    def name=(v)
+      @data['name']=v
+    end
 
     # Current version of the project. Should be a dot
     # separated string. Eg. "1.0.0".
-    attr :version, :version=
+    def version
+      @data['version']
+    end
+
+    def version=(v)
+      @data['version']=v
+    end
 
     # Name of the user-account or master-project to which this project belongs.
     # The namespace defaults the project name if no entry is given.
@@ -620,6 +638,39 @@ module POM
       @data.to_yaml #super
     end
 
+    #
+    def save
+      backup!
+      dir = root.first('{meta,.meta}') || 'meta'
+      @data.each do |name,value|
+        path = name.sub(/\_+/, '/')
+        file = root.first("{#{METADIRS.join(',')}}/#{path}")
+        if file
+          text  = file.read
+          yaml  = /\A---/ =~ text
+          value = value.to_yaml if yaml
+          if text != value
+            File.open(file, 'w'){ |f| f << value }
+          end
+        else
+          path = dir + path
+          FileUtils.mkdir_p(path.parent)
+          File.open(path, 'w'){ |f| f << value.to_yaml }
+        end
+      end
+    end
+
+    # backup current metadata files to .cach/pom
+    def backup!
+      cache = root + '.cache/pom/'
+      FileUtils.mkdir_p(cache)
+      METADIRS.each do |meta|
+        if (root + meta).directory?
+          FileUtils.cp_r(root + meta, cache)
+        end
+      end
+    end
+
   private
 
     # TODO: Use String#to_list instead (?)
@@ -635,3 +686,4 @@ module POM
   end#class Metadata
 
 end#module POM
+

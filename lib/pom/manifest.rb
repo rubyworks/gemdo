@@ -16,7 +16,7 @@ module POM
     # Instantiate a new Manifest object, provided
     # the root directory of the project.
     def initialize(root_directory)
-      @file = root_directory.glob_first(DEFAULT_FILE, :casefold)
+      @file = root_directory.first(DEFAULT_FILE, :casefold)
     end
 
     # Parses the MANIFEST file and returns it as an array of

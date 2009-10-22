@@ -5,12 +5,39 @@ require 'optparse'
 
 project = POM::Project.new
 
-case ARGV.first
-when 'about'
-  puts project.about
-when 'show'
-  puts project.metadata.send(ARGV.last)
-when 'dump'
-  puts project.metadata.to_yaml
+if ARGV.empty?
+
+  require 'rubygems'
+
+  obj = YAML.load(STDIN.read)
+  case obj
+  when Gem::Specification
+    project = POM::Project.from_gemspec(obj)
+    project.metadata.save
+  else
+    puts "unrecognized file type"
+    # Readme ?
+  end
+
+else
+
+  case ARGV.first
+  when 'about'
+    project.metadata.load
+    puts project.about
+  when 'show'
+    project.metadata.load
+    puts project.metadata.send(ARGV.last)
+  when 'dump'
+    project.metadata.load
+    puts project.metadata.to_yaml
+  when 'gemspec'
+    File.open(project.metadata.name + '.gemspec', 'w') do |f|
+      f << project.to_gemspec.to_yaml
+    end
+  else
+    puts "unknown command -- #{ARGV.first}"
+  end
+
 end
 
