@@ -110,7 +110,7 @@
   <pre class="screen" style="clear: both; float: left; margin-right: 12px;">
   $ pom &lt pom.gemspec
 
-  meta/ generated
+  metadata generated
   </pre>
 
   <pre class="screen" style="margin-left: 12px; float: left;">
@@ -134,20 +134,20 @@
 
     <h1>Metadata</h1>
 
-    <p>POM metadata is stored in a project subdirectory as a set of files. Each file stores a single piece of information. For example, the
-    POM project itself has a meta/ directory:</p>
+    <p>POM metadata is stored in a project subdirectory as a set of files. Each file stores a single piece of information. For example, in the above figures
+    the <code>meta/<code> directory listing of the POM project itself is given.</p>
 
-    <p>The files can be placed in a directory called <code>meta/</code> or <code>.meta/</meta>, depending on you preference and as a basis of separating distributable
-    from non-distributable information.</p>
+    <p>Each metadata file can be placed in a directory called <code>meta/</code> or <code>.meta/</meta>, depending on your preference and as a basis of
+    separating distributable from non-distributable information.</p>
 
-    <p>Each file is read as a single string, unless the file begins with "<code>---</code>", in which case it is parsed via YAML.</p>
+    <p>Each file is read as a simple string, unless the file begins with "<code>---</code>", in which case it is parsed via YAML.</p>
 
-    <p>The use of such a file store will undoubtedly seem extravegant to many at first. After all, why not just use a single, easily
-    editable YAML file? But the file store has distinct advantages that a single file simply cannot provide. Separate files can be easily manipulated and scripted,
-    which is especailly useful for scaffold generators. It can also be lazy loaded, imporving performance when on a single piece of information. And there's no
-    need to be concerned of file layout --a YAML file when rewritten by a script can loose much of it's human readability. Also consider that once a project has
-    settled past the blurry of initial development, most metadata never changes --so there's not need to continuely rewrite the file that contains it for the sake
-    of other information.</p>
+    <p>The use of such a file store might seem extravegant at first. After all, why not just use a single, easily editable YAML file? But the file store has distinct
+    advantages that a single file simply cannot provide. Separate files can be easily manipulated and scripted,
+    which is especailly useful for scaffold generators. They can also be lazy-loaded, improving performance when only select information in needed. And
+    there's no need to be concerned of file layout --a YAML file, when rewritten by a script, can loose much of it's human readability. And, while multiple files
+    may not be as easy to quickly edit in mass, consider that once a project has settled past the flurry of initial development, most metadata entries never change,
+    so there's no need to continuely rewrite the file that contains it for the sake of other information.</p>
 
     <h1>Classes</h1>
 
