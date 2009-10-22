@@ -1,0 +1,29 @@
+= Pom::Metadata
+
+Require metadata library.
+
+  require 'pom/metadata'
+
+Load metadata from fixture.
+
+  metadata = POM::Metadata.new('fixture')
+
+Verify metadata is being read from directory location.
+
+  metadata.contact.assert == "trans <transfire@gmail.com>"
+  metadata.version.assert == "1.0.0"
+
+Verify aliases are providing the same information.
+
+  metadata.name.assert == "demoapp"
+  metadata.project.assert == "demoapp"
+
+  metadata.description.assert == "This is the description for the example."
+  metadata.abstract.assert == "This is the description for the example."
+
+Verify metadata is falling back to defaults.
+
+  metadata.loadpath.assert == ['lib']
+
+QED.
+

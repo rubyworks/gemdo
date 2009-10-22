@@ -2,6 +2,8 @@
 
 * http://some.org
 
+== DESCRIPTION
+
 This is a description of the
 fake project.
 

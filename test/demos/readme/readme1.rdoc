@@ -1,0 +1,22 @@
+Load the ReadMe library.
+
+  require 'pom/readme'
+
+Create a new Readme object from file.
+
+  rm = POM::Readme.load("fixture/README1.txt")
+
+It should be able to parse out the title.
+
+  rm.title.assert == "MyApp"
+
+It should be able to parse out a description.
+
+  rm.description.assert == "This is a description of the\nfake project."
+
+It should parse out the lincese.
+
+  rm.license.assert == "GPL"
+
+QED.
+
