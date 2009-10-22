@@ -34,3 +34,12 @@ class Pathname
 
 end
 
+
+class String
+
+  def path
+    Pathname.new(self)
+  end
+
+end
+

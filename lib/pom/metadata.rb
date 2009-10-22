@@ -65,7 +65,7 @@ module POM
 
     # New Metadata object.
     #
-    def initialize(root)
+    def initialize(root=Dir.pwd)
       @root = Pathname.new(root.to_s)
       @data = {}
 
@@ -116,7 +116,7 @@ module POM
         # load meta directory entries
         METADIRS.reverse.each do |dir|
           next unless (@root + dir).directory?
-          entries(dir).each do |file|
+          entries(@root + dir).each do |file|
             data = File.read(@root + dir + file).strip
             data = (/\A^---/ =~ data ? YAML.load(data) : data)
             name = file.sub('/','_')
@@ -641,8 +641,12 @@ module POM
     #
     def save
       backup!
-      dir = root.first('{meta,.meta}') || 'meta'
+      dir = root.first('{meta,.meta}') || 'meta'.path
       @data.each do |name,value|
+        case value
+        when String, Array, Hash
+          next if value.empty?
+        end
         path = name.sub(/\_+/, '/')
         file = root.first("{#{METADIRS.join(',')}}/#{path}")
         if file
@@ -655,7 +659,12 @@ module POM
         else
           path = dir + path
           FileUtils.mkdir_p(path.parent)
-          File.open(path, 'w'){ |f| f << value.to_yaml }
+          case value
+          when String
+            File.open(path, 'w'){ |f| f << value }
+          else
+            File.open(path, 'w'){ |f| f << value.to_yaml }
+          end
         end
       end
     end

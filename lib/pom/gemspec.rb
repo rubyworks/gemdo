@@ -112,38 +112,38 @@ module POM
 
     end
 
+  end
+
+  class Metadata
+
     # Build a POM project using a gemspec. This is intended to make it
     # farily easy to build a set of POM meta/ files if you already have
     # a gemspec.
     #
-    # TODO: Since we won't use the gemspec manifest here, this perhaps
-    # should be in Metadata, and then we can if we want have this method
-    # too, but calling on it?
-    #
     def self.from_gemspec(gemspec, root=Dir.pwd)
-      project = Project.load(root)
+      metadata = Metadate.load(root)
 
-      project.metadata.name         = gemspec.name
-      project.metadata.version      = gemspec.version.to_s
-      project.metadata.summary      = gemspec.summary
-      project.metadata.description  = gemspec.description
-      project.metadata.authors      = gemspec.authors
-      project.metadata.contact      = gemspec.email
-      project.metadata.homepage     = gemspec.homepage
-      project.metadata.loadpath     = gemspec.require_paths
+      metadata.name         = gemspec.name
+      metadata.version      = gemspec.version.to_s
+      metadata.summary      = gemspec.summary
+      metadata.description  = gemspec.description
+      metadata.authors      = gemspec.authors
+      metadata.contact      = gemspec.email
+      metadata.homepage     = gemspec.homepage
+      metadata.loadpath     = gemspec.require_paths
 
-      project.metadata.platform     = gemspec.platform
+      metadata.platform     = gemspec.platform
 
-      project.metadata.extensions   = gemspec.extensions
+      metadata.extensions   = gemspec.extensions
 
       requires = []
       gemspec.dependencies.each do |d|
         next unless d.type == :runtime
         requires << "#{d.name} #{d.version_requirements}"
       end
-      project.metadata.requires = requires
+      metadata.requires = requires
 
-      project
+      metadata
     end
 
   end#class Project

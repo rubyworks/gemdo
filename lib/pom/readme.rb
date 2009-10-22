@@ -15,19 +15,17 @@ module POM
     attr :text
 
     #
-    def initialize(root)
-      root = Pathname.new(root)
-      if File.directory?(root)
-        @root = root
-        @file = root.first('{README,README.*}', :casefold)
-        @text = File.read(@file) if @file
-      elsif File.file?(root)
-        @root = File.dirname(root)
-        @file = root
-        @text = File.read(@file)
-      else
-        @text = ''
+    def self.load(path)
+      path = Pathname.new(path)
+      if path.directory?
+        path = path.first('{README,README.*}', :casefold)
       end
+      new(path.read)
+    end
+
+    #
+    def initialize(text)
+      @text  = text
       @cache = {}
     end
 
@@ -45,6 +43,8 @@ module POM
     def name
       title.downcase
     end
+
+    alias_method :project, :name
 
     #
     def title
@@ -85,7 +85,7 @@ module POM
     #
     def description_1
       if md = /[=#]+\s*(DESCRIPTION|ABSTRACT)[:]*(.*?)[=#]+/m.match(text)
-        md[2].strip
+        md[2].strip #.sub("\n", ' ')  # unfold instead of sub?
       end
     end
 
@@ -129,9 +129,9 @@ module POM
 
   end
 
-  class Project
+  class Metadata
 
-    # Build a POM project using a README. This is intended to make it
+    # Get POM metadata from a README. This is intended to make it
     # fairly easy to build a set of POM meta/ files if you already have
     # a README.
     #--
@@ -141,14 +141,14 @@ module POM
     def self.from_readme(readme, root=Dir.pwd)
       require 'pom/readme'
 
-      project = Project.load(root)
-      readme  = Readme.new(root)
+      metadata = Metadata.load(root)
+      readme   = Readme.new(readme)
 
-      project.metadata.name        = readme.name
-      project.metadata.description = readme.description
-      project.metadata.license     = readme.license
+      metadata.name        = readme.name
+      metadata.description = readme.description
+      metadata.license     = readme.license
 
-      project
+      metadata
     end
 
   end
