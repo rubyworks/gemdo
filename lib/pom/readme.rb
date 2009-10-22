@@ -16,6 +16,7 @@ module POM
 
     #
     def initialize(root)
+      root = Pathname.new(root)
       if File.directory?(root)
         @root = root
         @file = root.first('{README,README.*}', :casefold)
@@ -40,6 +41,21 @@ module POM
       end
     end
 
+    #
+    def name
+      title.downcase
+    end
+
+    #
+    def title
+      if @cache.key?(:title)
+        @cache[:title]
+      else
+        @cache[:title] = title_1
+      end
+    end
+
+    #
     def description
       if @cache.key?(:description)
         @cache[:description]
@@ -48,6 +64,7 @@ module POM
       end
     end
 
+    #
     def license
       if @cache.key?(:license)
         @cache[:license]
@@ -58,6 +75,14 @@ module POM
 
   private
 
+    #
+    def title_1
+      if md = /^[=#]\s*(.*?)$/m.match(text)
+        md[1].strip
+      end
+    end
+
+    #
     def description_1
       if md = /[=#]+\s*(DESCRIPTION|ABSTRACT)[:]*(.*?)[=#]+/m.match(text)
         md[2].strip
@@ -100,6 +125,30 @@ module POM
           "BSD"
         end
       end
+    end
+
+  end
+
+  class Project
+
+    # Build a POM project using a README. This is intended to make it
+    # fairly easy to build a set of POM meta/ files if you already have
+    # a README.
+    #--
+    # TODO: Perhaps this should be in Metadata, and then we can if we want
+    # have this method too, but calling on it?
+    #++
+    def self.from_readme(readme, root=Dir.pwd)
+      require 'pom/readme'
+
+      project = Project.load(root)
+      readme  = Readme.new(root)
+
+      project.metadata.name        = readme.name
+      project.metadata.description = readme.description
+      project.metadata.license     = readme.license
+
+      project
     end
 
   end

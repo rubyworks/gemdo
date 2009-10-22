@@ -136,8 +136,8 @@ module POM
 
         # load readme
         # TODO: move to ReadMe class?
-        @data['description'] ||= readme.description
-        @data['license']     ||= readme.license
+        #@data['description'] ||= readme.description
+        #@data['license']     ||= readme.license
 
         self
       )
@@ -205,9 +205,9 @@ module POM
     end
 
     # Get metadata from README.
-    def readme #(name=nil)
-      @readme ||= Readme.new(root)
-    end
+    #def readme #(name=nil)
+    #  @readme ||= Readme.new(root)
+    #end
 
     #
     #def method_missing(name, *args)

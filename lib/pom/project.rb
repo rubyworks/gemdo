@@ -11,6 +11,13 @@ module POM
 
   class Project
 
+    # New project with metadata fully loaded.
+    def self.load(root)
+      project = new(root)
+      project.metadata.load
+      project
+    end
+
     # Library directory relative to this file (ie __DIR__).
     #LIB_DIRECTORY = Pathname.new(File.dirname(File.dirname(__FILE__)))
 

@@ -9,14 +9,21 @@ if ARGV.empty?
 
   require 'rubygems'
 
-  obj = YAML.load(STDIN.read)
+  text = STDIN.read.strip
+
+  if /^---/ =~ text
+    obj = YAML.load(text)
+  else
+    obj = text
+  end
+
   case obj
   when Gem::Specification
     project = POM::Project.from_gemspec(obj)
     project.metadata.save
   else
-    puts "unrecognized file type"
-    # Readme ?
+    project = POM::Project.from_readme(obj)
+p project
   end
 
 else

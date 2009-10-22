@@ -121,7 +121,8 @@ module POM
     # too, but calling on it?
     #
     def self.from_gemspec(gemspec, root=Dir.pwd)
-      project = Project.new(root)
+      project = Project.load(root)
+
       project.metadata.name         = gemspec.name
       project.metadata.version      = gemspec.version.to_s
       project.metadata.summary      = gemspec.summary
