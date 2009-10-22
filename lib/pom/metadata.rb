@@ -641,7 +641,7 @@ module POM
     #
     def save
       backup!
-      dir = root.first('{meta,.meta}') || 'meta'.path
+      dir = root.first('{meta,.meta}') || Pathname.new('meta')
       @data.each do |name,value|
         case value
         when String, Array, Hash

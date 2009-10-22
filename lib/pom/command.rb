@@ -55,10 +55,16 @@ if ARGV.empty?
   case obj
   when Gem::Specification
     project = POM::Metadata.from_gemspec(obj)
-    metadata.save
+    if options[:noharm]
+    else
+      metadata.save
+    end
   else
     metadata = POM::Metadata.from_readme(obj)
-    metadata.save
+    if options[:noharm]
+    else
+      metadata.save
+    end
   end
 
 else
