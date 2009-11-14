@@ -3,7 +3,8 @@ require 'pom/root'
 require 'pom/metadata'
 require 'pom/manifest'
 require 'pom/history'
-require 'pom/gemspec'
+require 'pom/release'
+#require 'pom/gemspec'
 
 module POM
 
@@ -54,7 +55,7 @@ module POM
     #   new(root)
     #   new(root, :load=>true)
     #   new(local, :lookup=>true)
-
+    #
     def initialize(*root_opts)
       root = root_opts.shift unless Hash===root_opts.first
       opts = root_opts.last || {}
@@ -74,19 +75,6 @@ module POM
 
       # TODO: Support alternate source directory (?)
       @source = root
-
-      #@cache  = root + '.cache'
-      #@task   = root + 'task'
-      #@script = root + 'script'
-      #@log    = root + 'log'
-      #@doc    = root + 'doc'
-
-      #@config = root.glob_first('{.,}config') || root + '.config'
-      #@plug  = root.glob_first('plug{,in,ins'}) || root + 'plug'
-      #@pack  = root.glob_first('{pack,pkg}{,s}') || root + 'pack'
-
-      #@tmp   = Pathname.new(File.join(Dir.tmpdir, 'reap'))
-      #@tmp   = cache + 'tmp'
     end
 
     # Metadata provides all the general information about the project.
@@ -107,6 +95,13 @@ module POM
       @history ||= History.new(root)
     end
 
+    # Access latest release notes.
+
+    def release
+      @release ||= Release.new(root, history)
+    end
+
+
     # Project manifest file name.
     #
     # TODO: Deprecate in favor of using manifest.file ?
@@ -123,7 +118,7 @@ module POM
     # Location of project source code. Currently, this is always
     # the same as the root.
     #
-    # TODO: Support alternate source location in the future (?)
+    # TODO: Support alternate source location in the future verison?
 
     attr :source
 
@@ -150,11 +145,6 @@ module POM
           #end
         )
       end
-      #@log ||=(
-      #  dir = root.glob_first('{log,doc/log}{,s}') || root + 'doc/log'
-      #  dir.mkdir_p unless dir.exist?
-      #  dir
-      #)
     end
 
     # The doc directory is the place to keep documentation. The directory
@@ -182,7 +172,7 @@ module POM
       if path
         pack + path
       else
-        @pack ||= root.first('{pack,pkg,package}{,s}') || root+'pack'
+        @pack ||= root.first('{pkg,pack,package}{,s}') || root + 'pkg'
       end
       #@pkg ||=(
       #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
@@ -208,6 +198,21 @@ module POM
         cache + path
       else
         @cache ||= root+'.cache'
+      end
+    end
+
+    # The <tt>.config/</tt> or <tt>config</tt> directory is a place
+    # for build tools to place their configration files.
+    #
+    # Pathname of given config +path+. Or without +path+
+    # Returns the path to the config directory (either +.config+
+    # or +config+).
+
+    def config(path=nil)
+      if path
+        config + path #root.glob_first('{.,}config' / path)
+      else
+        @config ||= root.first('{.,}config') || root+'.config'
       end
     end
 
@@ -244,6 +249,20 @@ module POM
       end
     end
 
+    # The <tt>task/</tt> directory is where task scripts are 
+    # stored used by build tools, such as Rake and Syckle.
+    #
+    # Get pathname of given task +path+. Or without +path+
+    # returns the pathname for the task directory.
+
+    def task(path=nil)
+      if path
+        task + path
+      else
+        @task ||= root.first('{task,tasks}') || root+'task'
+      end
+    end
+
     # The <tt>site/</tt> directory (also web/ or website/) is
     # where a project's website is stored.
     #
@@ -261,35 +280,6 @@ module POM
       #  dir.mkdir_p unless dir.exist?
       #  dir
       #)
-    end
-
-    # The <tt>task/</tt> directory is where task scripts are 
-    # stored used by build tools, such as Rake and Syckle.
-    #
-    # Get pathname of given task +path+. Or without +path+
-    # returns the pathname for the task directory.
-
-    def task(path=nil)
-      if path
-        task + path
-      else
-        @task ||= root.first('{task,tasks}') || root+'task'
-      end
-    end
-
-    # The <tt>.config/</tt> or <tt>config</tt> directory is a place
-    # for build tools to place their configration files.
-    #
-    # Pathname of given config +path+. Or without +path+
-    # Returns the path to the config directory (either +.config+
-    # or +config+).
-
-    def config(path=nil)
-      if path
-        config + path #root.glob_first('{.,}config' / path)
-      else
-        @config ||= root.first('{.,}config') || root+'.config'
-      end
     end
 
     # Not strickly a project directory. THis provides a temporary
