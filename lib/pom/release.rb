@@ -1,4 +1,5 @@
-require 'facets/pathname'
+require 'pom/corext'
+require 'pom/history'
 
 module POM
 
@@ -29,7 +30,10 @@ module POM
     attr :changes
 
     # New Release
-    def initialize(root)
+    def initialize(root, history=>nil)
+      @root    = root
+      @history = history
+
       @notes   = ''
       @changes = ''
 
