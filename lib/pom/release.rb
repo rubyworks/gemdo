@@ -30,7 +30,7 @@ module POM
     attr :changes
 
     # New Release
-    def initialize(root, history=>nil)
+    def initialize(root, history=nil)
       @root    = root
       @history = history
 
