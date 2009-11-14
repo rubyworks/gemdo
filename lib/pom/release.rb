@@ -2,42 +2,63 @@ require 'facets/pathname'
 
 module POM
 
-  # Release Notes file provides an interface to
-  # to the current release message.
+  # = Release Notes
   #
-  # DEPRECATE: We will use improved History file instead.
-  class ReleaseNotes
+  # This class provides the latest release notes for a project.
+  # These notes are either extracted from the latest entry in
+  # the +HISTORY+ file or taken from a +RELEASE+ file, if
+  # provided. The +RELEASE+ file can optionally be called +NEWS+,
+  # and have an extension.
+  #
+  # There are two part to release notes, the +notes+ and the
+  # list of +changes+.
+  class Release
 
-    DEFAULT_FILE = '{release,notes,news}{,.txt}'
+    DEFAULT_FILE = '{RELEASE,NEWS}{,.*}'
 
+    # Root directory of project.
+    attr :root
+
+    # Release file, if any.
     attr :file
 
+    # Release notes.
     attr :notes
 
+    # List of changes.
     attr :changes
 
-    # New ReleaseNotes.
-    def initialize(root_directory)
+    # New Release
+    def initialize(root)
       @notes   = ''
       @changes = ''
 
-      @file = root_directory.glob(DEFAULT_FILE, :casefold).first
+      @file = root.glob(DEFAULT_FILE, :casefold).first
 
-      read
+      if @file
+        read(@file)
+      else
+        rel = history.releases[0]
+        @notes   = rel.notes
+        @changes = rel.notes
+      end
     end
 
-    #
-    def read
-      if @file
-        text = File.read(file)
-        index = notes.index(/^(##|==)/m)
-        if index
-          @notes   = notes[0...index]
-          @changes = notes[index..-1]
-        else
-          @notes   = text
-        end
+    # TODO: Improve parsing to RELEASE file.
+    def read(file)
+      text = File.read(file)
+      index = notes.index(/^(##|==)/m)
+      if index
+        @notes   = notes[0...index]
+        @changes = notes[index..-1]
+      else
+        @notes   = text
       end
+    end
+
+    # Access to HISTORY file.
+    def history
+      @history ||= History.new(root)
     end
 
   end #class ReleaseNotes
