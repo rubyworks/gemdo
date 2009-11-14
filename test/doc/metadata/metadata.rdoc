@@ -6,20 +6,19 @@ Require metadata library.
 
 Load metadata from fixture.
 
-  metadata = POM::Metadata.new('fixture')
+  metadata = POM::Metadata.load('fixture')
 
-Verify metadata is being read from directory location.
+Verify contact metadata is being read from directory location.
 
   metadata.contact.assert == "trans <transfire@gmail.com>"
+
+Verify version metadata is being read from directory location.
+
   metadata.version.assert == "1.0.0"
 
-Verify aliases are providing the same information.
-
-  metadata.name.assert == "demoapp"
-  metadata.project.assert == "demoapp"
+Verify description metadata is being read from directory location.
 
   metadata.description.assert == "This is the description for the example."
-  metadata.abstract.assert == "This is the description for the example."
 
 Verify metadata is falling back to defaults.
 

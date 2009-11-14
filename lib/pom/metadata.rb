@@ -1,23 +1,17 @@
 require 'time'
 require 'pom/corext'
+require 'pom/root'
 require 'pom/readme'
 
 #--
-# TODO: method_missing
-# TODO: extecutables is not right.
+# TODO: executables is not right.
 #++
 
 module POM
 
   # = Metadata
   #
-  # NOTE: It is tricky to get lazy loading and aliases to work together.
-  # The following code is doing the job, but it probably needs to be
-  # reimplemented in a better way.
-  #
   class Metadata
-
-    PRIMARY = ['project', 'name', 'version']
 
     # Like new but reads all metadata into memory.
     def self.load(root=Dir.pwd)
@@ -26,20 +20,32 @@ module POM
 
     #
     def self.attr_accessor(name)
-      eval %{
+      code = %{
         def #{name}
-          load; @data["#{name}"]
+          @data["#{name}"]
         end
         def #{name}=(x)
           @data["#{name}"] = x
         end
       }
+      eval code
     end
 
+    #
+    def self.attr_accessor_list(name)
+      code = %{
+        def #{name}
+          @data["#{name}"]
+        end
+        def #{name}=(x)
+          @data["#{name}"] = list(x)
+        end
+      }
+      eval code
+    end
+
+
     def self.alias_accessor(name, orig)
-      #aliases[orig.to_sym] << name.to_sym
-      #aliases[name.to_sym] << orig.to_sym
-      #attr_accessor(name)
       alias_method(name, orig)
       alias_method("#{name}=", "#{orig}=")
     end
@@ -51,12 +57,6 @@ module POM
 
     # Project root directory.
     attr :root
-
-    ### Metadata directory.
-    #attr :metafolder
-
-    ### YAML based metadata file.
-    #attr :metafile
 
     ### Version stamp.
     #attr :version_stamp
@@ -70,10 +70,10 @@ module POM
       @data = {}
 
       # DEPRECATE package
-      ['package', 'project', 'name', 'version'].each do |key|
-        val = read(key)
-        __send__("#{key}=", val) if val
-      end
+      #['package', 'project', 'name', 'version'].each do |key|
+      #  val = read(key)
+      #  __send__("#{key}=", val) if val
+      #end
 
       @data['authors']   = []
       @data['requires']  = []
@@ -96,6 +96,11 @@ module POM
 
   public
 
+    # DEPRECATED: Support for metafile.
+
+    # YAML based metadata file.
+    #attr :metafile
+
     # Load from meta.yml file, if used.
     #def initialize_metafile
     #  if file = @root.glob_first(METAFILE, :casefold)
@@ -110,191 +115,119 @@ module POM
     #  end
     #end
 
-    # Load metadata from the meta directory.
+    # Load metadata from the +.meta+ and/or +meta+ directories.
     def load
-      @load ||= (
-        # load meta directory entries
-        METADIRS.reverse.each do |dir|
-          next unless (@root + dir).directory?
-          entries(@root + dir).each do |file|
-            data = File.read(@root + dir + file).strip
-            data = (/\A^---/ =~ data ? YAML.load(data) : data)
-            name = file.sub('/','_')
-            if respond_to?("#{name}=")
-              __send__("#{name}=", data)
-            else
-              #@data[name] = data
-              add_attribute(name, data)
-            end
-          end
+      load_version_stamp
+      load_metadata_hidden
+      load_metadata
+      #METADIRS.reverse.each do |dir|
+      #  next unless (@root + dir).directory?
+      #  entries(@root + dir).each do |file|
+      #    next if file.index(/[.]/)             # TODO: improve rejection filter
+      #    data = File.read(@root + dir + file).strip
+      #    data = (/\A^---/ =~ data ? YAML.load(data) : data)
+      #    name = file.sub('/','_')
+      #    if respond_to?("#{name}=")
+      #      __send__("#{name}=", data)
+      #    else
+      #      #@data[name] = data
+      #      add_attribute(name, data)
+      #    end
+      #  end
+      #end
+      self
+    end
+
+    def load_metadata
+      metadir = @root + 'meta'
+      return unless metadir.directory?
+      entries(metadir).each do |file|
+        name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_').gsub('/','_')
+        #next if file.to_s.index(/[.]/)  # TODO: improve rejection filter
+        self[name] = read(file)
+      end
+    end
+
+    def load_metadata_hidden
+      metadir = @root + '.meta'
+      return unless metadir.directory?
+      entries(metadir).each do |file|
+        name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_')
+        #next if name.to_s.index(/[.]/)  # TODO: improve rejection filter
+        self[name] = read(file)
+      end
+    end
+
+    # NOTE: I'm not sure this a good idea, as it adds an additional complexity.
+    # Standardizing around meta/version, is probably a much better approach.
+    def load_version_stamp
+      if file = root.glob('{VERSION,Version,version}{,.txt}').first
+        vers = YAML.load(File.new(file))
+        case vers
+        when Hash
+          vers = vers.inject({}){ |h,(k,v)| h[k.to_s.downcase.to_sym] = v }
+          @data['version'] = "#{vers[:major]}.#{vers[:minor]}.#{vers[:patch]}"
+        when Array
+          @data['version'] = vers.join('.')
+        else #String
+          @data['version'] = vers
         end
-        #if @meta_dir
-        #  @meta_dir.glob('*').each do |f|
-        #    send("#{f.basename}=", f.read.strip) if respond_to?("#{f.basename}=")
-        #  end
-        #end
+      end
+    end
 
-        # load readme
-        # TODO: move to ReadMe class?
-        #@data['description'] ||= readme.description
-        #@data['license']     ||= readme.license
-
-        self
-      )
+    #
+    def []=(name, value)
+      if respond_to?("#{name}=")
+        __send__("#{name}=", value)
+      else
+        (class << self; self; end).class_eval do
+          attr_accessor name
+        end
+        __send__("#{name}=", value)
+      end
     end
 
   private
 
     # Recurisve entries. Should be a method of Dir.
     def entries(dir)
-      e = []
-      paths = Dir.entries(dir.to_s) - ['.', '..']
-      paths.each do |f|
-        if File.directory?(File.join(dir, f))
-          e.concat(entries(File.join(dir, f)).map{ |s| File.join(f,s) })
-        else
-          e << f
-        end
-      end
-      e
-    end
-
-=begin
-    # TODO: See if there is not a better way to do this... is lazy loading worth it?
-    #
-    def meta(name)
-      return @data[name.to_s] if @data.key?(name.to_s)
-
-      val = nil
-
-      aliases = [name, *self.class.aliases[name.to_sym]]
-
-      aliases.each do |n|
-        val = metadir(n)
-        break if val
-      end
-
-      aliases.each do |n|
-        val = readme[n]
-        break if val
-      end unless val
-
-      aliases.each do |n|
-        val = default(n)
-        break if val
-      end unless val
-
-      if respond_to?("#{name}=")
-        send("#{name}=", val)
-      else
-        @data[name.to_s] = val
-      end
-    end
-=end
-
-    # Get metadata entry from meta-directory.
-    def read(name)
-      if file = root.first("{#{METADIRS.join(',')}}/#{name}")
-        text = file.read.strip
-        if /\A---/ =~ text
-          YAML.load(text)
-        else
-          text
-        end
-      end
-    end
-
-    # Get metadata from README.
-    #def readme #(name=nil)
-    #  @readme ||= Readme.new(root)
-    #end
-
-    #
-    #def method_missing(name, *args)
-    #  metafile(name) || metadir(name) || readme(name) || default(name) || super
-    #end
-
-    #
-    #def method_missing(name,*a,&b)
-    #  return @meta[name] if @meta.key?(name)
-    #  @meta[name] = meta(name)
-      #if file = (rootfolder.glob("{meta,.meta}/#{name}").first
-      #  @meta[name] = file.read.strip
-      #elsif @default.key?(name)
-      #  @meta[name] = @default[name]
-      #else
-      #  super
+      dir.glob('**/*')
+      #e = []
+      #paths = Dir.entries(dir.to_s) - ['.', '..']
+      #paths.each do |f|
+      #  if File.directory?(File.join(dir, f))
+      #    e.concat(entries(File.join(dir, f)).map{ |s| File.join(f,s) })
+      #  else
+      #   e << f
+      #  end
       #end
-    #end
-
-    #
-    #def method_missing(name, *args)
-    #  name = name.to_s
-    #
-    #  super if block_given?
-    #  super if !args.empty?
-    #  super if !metafolder
-    #
-    #  file = meta + name
-    #  if file.exist?
-    #    add_attribute(name, file.read)
-    #  else
-    #    super
-    #  end
-    #end
-
-  private
-
-    #
-    def add_attribute(name, value)
-      (class << self; self; end).class_eval do
-        attr_accessor name
-      end
-      send("#{name}=", value)
+      #e
     end
 
-    #
-    #def initialize_from_meta_directory
-    #  if dir = (rootfolder / '.meta').directory?
-    #    dir.glob('*').each do |f|
-    #      send("#{f.basename}=", f.read.strip) if respond_to?("#{f.basename}=")
-    #    end
-    #  end
-    #end
+    # Get a metadata +entry+, where entry is a pathname.
+    def read(entry)
+      text = entry.read.strip
+      data = (/\A^---/ =~ text ? YAML.load(text) : text)
+    end
 
   public
 
-    ######################
-    # General Attributes #
-    ######################
+    # A T T R I B U T E S
 
-    # Project's package name. The entry is required
+    # Project's <i>package name</i>. The entry is required
     # and must not contain spaces or puncuation.
-    def name
-      @data['name']
-    end
-
-    def name=(v)
-      @data['name']=v
-    end
+    attr_accessor :name
 
     # Current version of the project. Should be a dot
     # separated string. Eg. "1.0.0".
-    def version
-      @data['version']
-    end
+    attr_accessor :version
 
-    def version=(v)
-      @data['version']=v
-    end
-
-    # Name of the user-account or master-project to which this project belongs.
-    # The namespace defaults the project name if no entry is given.
-    # TODO: Better term then namespace?
-    attr_accessor :namespace
+    #def version=(v)
+    #  @data['version'] = v
+    #end
 
     # Current status (stable, beta, alpha, rc1, etc.)
-    # DEPRECATE: (should be indicated by version number)
+    # DEPRECATE: Should be indicated trailing letter on version number?
     attr_accessor :status
 
     # Date this version was released.
@@ -302,6 +235,11 @@ module POM
 
     # Code name of the release (eg. Woody)
     attr_accessor :codename
+
+    # Name of the user-account or master-project to which this project belongs.
+    # The suite name defaults to the project name if no entry is given.
+    # This is also aliased as #collection.
+    attr_accessor :suite
 
 
     # Title of package (this defaults to project name capitalized).
@@ -367,10 +305,10 @@ module POM
 
     # List of non-ruby extension configuration scripts.
     # These are used to compile the extensions.
-    attr_accessor :extensions    # Alias for #released.
+    attr_accessor :extensions
 
-
-    # Abirtary information, especially about what might be needed
+    # Abirtary information, espeThe entry is required
+    # and must not contain spaces or puncuation.cially about what might be needed
     # to use this package. This is strictly information for the
     # end-user to consider. Eg. "Needs a fast graphics card."
     attr_accessor :notes
@@ -378,14 +316,36 @@ module POM
     # Homepage
     attr_accessor :homepage
 
+    # Resource to development site.
+    attr_accessor :development
+
     # Resource to find downloadable packages.
     attr_accessor :download
 
-    # Location of central vcs repository.
+    # Resource to discussions forum.
+    attr_accessor :forum
+
+    # Resource to mailing list.
+    attr_accessor :mailinglist
+
+    # Resource to wiki wiki.
+    attr_accessor :wiki
+
+    # Resource to blog.
+    attr_accessor :blog
+
+    # Resource to issue tracker.
+    attr_accessor :issues
+
+    # Resource to central SMC *public* repository. Eg.
+    #
+    #   git://github.com/protuils/pom.git
+    #
     attr_accessor :repository
 
     # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
     attr_accessor :copyright
+
 
     # TODO: Tecnically these next two are not metadata but build
     # configuration, so ultimately they should go else where.
@@ -393,24 +353,22 @@ module POM
 
     # File pattern list of files to distribute in package.
     # This is provided to assist with MANIFEST automation.
-    attr_accessor :distribute
+    #attr_accessor :distribute
 
     # Map project directories and files to publish locations on webserver.
-    attr_accessor :sitemap
+    #attr_accessor :sitemap
 
-  public
 
-    ######################
-    # Calculated Getters #
-    ######################
+    # S P E C I A L  G E T T E R S
 
-    def namespace
-      @data['namespace'] ||= name
+    # The +suite+ name defaults to the project's +name+.
+    def suite
+      @data['suite'] ||= name
     end
 
     # Title defaults to name captialized.
     def title
-      @data['title'] ||= name.capitalize
+      @data['title'] ||= name.to_s.capitalize
     end
 
     # Summary will default to the first sentence or line
@@ -431,37 +389,56 @@ module POM
     end
 
     # Executables default to the contents of bin/.
-    #def executables
-    #  @executables ||= root.glob('bin/*').map{ |bin| File.basename(bin) }
-    #end
-
-    # Executables default to the contents of bin/.
     def executables
       @data['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
     end
 
-    # Contact defaults to the first author.
-    #def contact
-    #  @contact ||= authors.first
-    #end
+    RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
     # Contact's email address.
     def email
-      if md = /<(.*?)>/.match(contact)
-        md[1]
+      if md = RE_EMAIL.match(contact)
+        md[0]
       else
         nil
       end
     end
 
-    #
+    # Returns the first entry in the authors list.
     def author
       authors.first
     end
 
-    ######################
-    # Calculated Setters #
-    ######################
+    # Package name is generally in the form of +name-version+,
+    # or +name-version-platform+ if +platform+ is specified.
+    #
+    # TODO: Improve buildno support ?
+    def package_name(buildno=nil)
+      if buildno
+        buildno = Time.now.strftime("%H*60+%M")
+        versnum = "#{version}.#{buildno}"
+      else
+        versnum = version
+      end
+
+      if platform
+        "#{name}-#{versnum}-#{platform}"
+      else
+        "#{name}-#{versnum}"
+      end
+    end
+
+    #
+    alias_method :stage_name, :package_name
+
+
+    # S P E C I A L  S E T T E R S
+
+    # Name assignment. The +entry+ must not contain spaces or puncuation.
+    def name=(entry)
+      raise ValidationError, "invalid name -- #{n}" unless /^[\w-]+$/ =~ entry
+      @data['name'] = entry
+    end
 
     #
     def author=(name)
@@ -510,18 +487,19 @@ module POM
 
     #
     def replaces=(x)
-      @data['replaces'] = list(x) #.to_list
+      @data['replaces'] = list(x)
     end
 
     #
     def provides=(x)
-      @data['provides'] = list(x) #.to_list
+      @data['provides'] = list(x)
     end
 
+
     #
-    def distribute=(x)
-      @data['distribute'] = list(x) #.to_list
-    end
+    #def distribute=(x)
+    #  @data['distribute'] = list(x) #.to_list
+    #end
 
     #
     #def sitemap=(x)
@@ -529,37 +507,13 @@ module POM
     #  @data['sitemap'] = YAML.load(x) #.to_list
     #end
 
-    ###########
-    # Aliases #
-    ###########
 
-    # Alias for #name.
-    alias_accessor :project    , :name
+    # A L I A S E S
 
-    # In previous versions #project used to mean what #namespace means, patterned after
-    # the way in which Rubyforge organizes projects. Thus #package used to mean what #project
-    # currently does. For the time being we keep an alias until all old usage is resloved.
-    alias_accessor :package    , :name
+    #
+    alias_accessor :collection , :suite
 
-    # Alias for #released.
-    alias_accessor :date       , :released
-
-    # Alias for #summary.
-    alias_accessor :brief      , :summary
-
-    # Alias for description.
-    alias_accessor :abstract   , :description
-
-    # Singularization of #requires is acceptable.
-    alias_accessor :require    , :requires
     alias_accessor :dependency , :requires  # old terminology
-
-    #alias_accessor :recommends , :recommend
-    #alias_accessor :suggests   , :suggest
-
-    alias_accessor :conflict   , :conflicts
-    alias_accessor :provide    , :provides
-    alias_accessor :replace    , :replaces
 
     #
     #def platform
@@ -572,31 +526,8 @@ module POM
     #  )
     #end
 
-    # Package name is generally in the form of +name-version+,
-    # or +name-version-platform+ if +platform+ is specified.
-    #
-    # TODO: Improve buildno support ?
-    def package_name(buildno=nil)
-      if buildno
-        buildno = Time.now.strftime("%H*60+%M")
-        versnum = "#{version}.#{buildno}"
-      else
-        versnum = version
-      end
 
-      if platform
-        "#{name}-#{versnum}-#{platform}"
-      else
-        "#{name}-#{versnum}"
-      end
-    end
-
-    #
-    alias_method :stage_name, :package_name
-
-    ############
-    # VALIDATE #
-    ############
+    # V A L I D A T I O N
 
     # Is the minimal information provided?
     def valid?
@@ -609,12 +540,15 @@ module POM
 
     # Assert that the mininal information if provided.
     def assert_valid
-      raise "no name"    unless name
-      raise "no version" unless version
-      raise "no summary" unless summary
-      raise "no contact" unless contact
-      #raise "no homepage" unless homepage
+      raise ValidationError, "no name"    unless name
+      raise ValidationError, "no version" unless version
+      raise ValidationError, "no summary" unless summary
+      raise ValidationError, "no contact" unless contact
+      #raise ValidationError, "no homepage" unless homepage
     end
+
+
+    # C O N V E R S I O N
 
     # Provide a summary text of project's metadata.
     def to_s
@@ -634,9 +568,16 @@ module POM
 
     # Convert to YAML.
     def to_yaml
-      load
       @data.to_yaml #super
     end
+
+    # Return metadata in Hash form.
+    def to_h
+      @data.dup
+    end
+
+
+    # P E R S I S T E N C E
 
     #
     def save
@@ -669,7 +610,7 @@ module POM
       end
     end
 
-    # backup current metadata files to .cach/pom
+    # backup current metadata files to .cache/pom
     def backup!
       cache = root + '.cache/pom/'
       FileUtils.mkdir_p(cache)
@@ -690,6 +631,10 @@ module POM
       else
         [l.to_a].flatten.compact
       end
+    end
+
+    #
+    class ValidationError < ArgumentError  # :nodoc:
     end
 
   end#class Metadata
