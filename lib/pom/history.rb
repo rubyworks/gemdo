@@ -25,6 +25,8 @@ module POM
   #
   # TODO: Allow the format to be more varied.
   #
+  # TODO: Let marker be specified to handle odd formats.
+  #
   class History
 
     # File glob for finding the HISTORY file.
@@ -36,10 +38,14 @@ module POM
     # List of release entries.
     attr :releases
 
+    # Either '=' for RDoc or '#' for Markdown.
+    attr :marker
+
     # New History.
     def initialize(root)
-      @root = Pathname.new(root)
-      @file = @root.first(DEFAULT_FILE, :casefold)
+      @root     = Pathname.new(root)
+      @file     = @root.first(DEFAULT_FILE, :casefold)
+      @marker   = (file && file.extname == '.rdoc') ? '=' : '#'
       @releases = []
       read
     end
@@ -48,10 +54,20 @@ module POM
     def read
       if file
         text = file.read.strip
-        text = text.sub(/\A[=]\s+(.*?)$/,'').strip
-        scan = text.scan(/\=\=(.*?)\n(.*?)(^Changes:.*?)(?=\=\=|\Z)/m)
+
+        @marker = text.index(/^\=/) ? '=' : '#'
+
+        text = text.sub(/\A[#{marker}]\s+(.*?)$/,'').strip
+        scan = text.scan(/#{marker}{2}(.*?)\n(.*?)(^Changes:.*?)(?=#{marker}{2}|\Z)/m)
         scan.each do |header, notes, changes|
           @releases << Release.new(header, notes, changes)
+        end
+
+        if @releases.empty?
+          scan = text.scan(/#{marker}{2}(.*?)\n(.*?)(^[*].*?)(?=#{marker}{2}|\Z)/m)
+          scan.each do |header, notes, changes|
+            @releases << Release.new(header, notes, changes)
+          end
         end
       end
     end
@@ -72,10 +88,11 @@ module POM
         @changes = changes.strip
       end
       def to_s
-        "== #{header}\n\n#{notes}\n\n#{changes}"
+        "#{marker}#{marker} #{header}\n\n#{notes}\n\n#{changes}"
       end
     end
 
   end #class History
 
 end #module POM
+
