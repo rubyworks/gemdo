@@ -1,10 +1,10 @@
-== Generate POM Metadata form README
+== Generate POM Metadata from README
 
 We generate the metadata from the README using the pom command.
 
-  system "pom < fixture/README"
+  system "pom init fixture/README"
 
-Now lets vrify the metadata was extracted as expected.
+Now lets verify the metadata was extracted as expected.
 
   require 'pom/metadata'
 

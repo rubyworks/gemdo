@@ -24,5 +24,3 @@ Verify metadata is falling back to defaults.
 
   metadata.loadpath.assert == ['lib']
 
-QED.
-
