@@ -16,6 +16,21 @@ class Pathname
   end
 
   #
+  def glob_relative(match, *opts)
+    flags = 0
+    opts.each do |opt|
+      case opt when Symbol, String
+        flags += ::File.const_get("FNM_#{opt}".upcase)
+      else
+        flags += opt
+      end
+    end
+    files = Dir.glob(::File.join(self.to_s, match), flags)
+    files = files.map{ |f| f.sub(self.to_s.chomp('/') + '/', '') }
+    files.collect{ |m| self.class.new(m) }
+  end
+
+  # TODO: rename glob_first or deprecate
   def first(match, *opts)
     flags = 0
     opts.each do |opt|

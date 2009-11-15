@@ -37,7 +37,7 @@ module POM
     def run_command
       parse
 
-      job = ARGV.pop
+      job = ARGV.shift
 
       case job
       when 'init'
@@ -45,17 +45,24 @@ module POM
         exit
       end
 
-      project = POM::Project.new
+      project = POM::Project.new(:lookup=>true)
 
       case job
+      when nil
+        #project.metadata.load
+        puts project.about
       when 'about'
-        project.metadata.load
+        #project.metadata.load
         puts project.about
       when 'show'
-        project.metadata.load
-        puts project.metadata.send(ARGV.last)
+        #project.metadata.load
+        if ARGV.last
+          puts project.metadata.send(ARGV.last)
+        else
+          puts project.metadata.keys.join(' ')
+        end
       when 'dump'
-        project.metadata.load
+        #project.metadata.load
         puts project.metadata.to_yaml
       when 'gemspec'
         File.open(project.metadata.name + '.gemspec', 'w') do |f|
@@ -69,8 +76,9 @@ module POM
 
     COMMAND_HELP = <<-HERE
     about                            summary of project
-    show [name]                      show specific metadata entry      
     dump                             output all metadata in YAML format
+    show <name>                      show specific metadata entry
+    init                             create default meta entries
     gemspec                          generate a gemspec
     HERE
 

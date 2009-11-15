@@ -60,8 +60,8 @@ module POM
 
         # -- dependencies --
 
-        if metadata.require
-          metadata.require.each do |d,v|
+        if metadata.requires
+          metadata.requires.each do |d,v|
             d,v = *d.split(/\s+/) unless v
             spec.add_dependency(*[d,v].compact)
           end
@@ -77,20 +77,17 @@ module POM
 
         # -- rdocs (argh!) --
 
-        readme = Dir.glob('README{,.txt}', File::FNM_CASEFOLD).first
+        readme = root.glob_relative('README{,.txt}', File::FNM_CASEFOLD).first
 
         spec.has_rdoc = true  # always true
 
-        if options[:extra_rdoc_files]
-          rdocfiles = []
-          rdocfiles << readme if readme
-          rdocfiles.concat(options[:extra_rdoc_files])
-        else
-          rdocfiles = []
-          rdocfiles << readme if readme
-          rdocfiles.concat(Dir['[A-Z]*'] || [])  # metadata.document
-          rdocfiles.uniq!
-        end
+        extra_rdoc_files = options[:extra_rdoc_files] || (root.glob_relative('[A-Z]*') || []).map{ |path| path.to_s }
+
+        rdocfiles = []
+        rdocfiles << readme.to_s if readme
+        rdocfiles.concat(extra_rdoc_files)
+        rdocfiles.uniq!
+
         spec.extra_rdoc_files = rdocfiles
 
         rdoc_options = [] #['--inline-source']
@@ -100,12 +97,16 @@ module POM
 
         # -- distributed files --
 
-        spec.files = manifest.files.select{ |f| File.file?(f) }
+        if manifest.exist?
+          spec.files = manifest.select{ |f| File.file?(f) }          
+        else
+          spec.files = root.glob_relative("**/*").map{ |f| f.to_s } # metadata.distribute ?
+        end
 
         # -- test files --
 
-        # TODO: make test_files configurable (?)
-        spec.test_files = manifest.files.select do |f|
+        # TODO: Improve. Make test_files configurable (?)
+        spec.test_files = manifest.select do |f|
           File.basename(f) =~ /test/ && File.extname(f) == '.rb'
         end
       end

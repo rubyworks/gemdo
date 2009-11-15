@@ -70,7 +70,7 @@ module POM
       @data['authors']   = []
       @data['requires']  = []
       @data['recommend'] = []
-      @data['suggests']  = []
+      @data['suggest']  = []
       @data['conflicts'] = []
       @data['replaces']  = []
       @data['provides']  = []
@@ -585,6 +585,11 @@ module POM
     # Return metadata in Hash form.
     def to_h
       @data.dup
+    end
+
+    # List of available entries.
+    def keys
+      @data.keys
     end
 
     #

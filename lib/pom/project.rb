@@ -48,12 +48,9 @@ module POM
     #
     # The +:lookup+ option can be used to induce a lookup from a given location.
     #
-    # The +:load+ option can be used to perform a complete metadata load.
-    #
     # call-seq:
     #   new()
     #   new(root)
-    #   new(root, :load=>true)
     #   new(local, :lookup=>true)
     #
     def initialize(*root_opts)
@@ -67,7 +64,7 @@ module POM
 
       @root = Pathname.new(root)
 
-      metadata.load if opts[:load]
+      #metadata.load #if opts[:load]
 
       #if options[:lookup]
       #  @root = locate_root(local) || raise("can't locate project root -- #{local}")
@@ -80,7 +77,7 @@ module POM
     # Metadata provides all the general information about the project.
 
     def metadata
-      @metadata ||= Metadata.new(root)
+      @metadata ||= Metadata.new(root).load
     end
 
     # Project manifest.

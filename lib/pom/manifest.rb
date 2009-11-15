@@ -15,8 +15,9 @@ module POM
 
     # Instantiate a new Manifest object, provided
     # the root directory of the project.
-    def initialize(root_directory)
-      @file = root_directory.first(DEFAULT_FILE, :casefold)
+    def initialize(root)
+      @root = root
+      @file = root.first(DEFAULT_FILE, :casefold)
     end
 
     # Parses the MANIFEST file and returns it as an array of
@@ -24,8 +25,12 @@ module POM
     # are ignored.
     def list
       @list ||= (
-        files = File.readlines(file).map{ |line| line.strip }
-        files.reject{|line| line == '' or line =~ /^[#]/ }
+        if exist?
+          files = File.readlines(file).map{ |line| line.strip }
+          files.reject{|line| line == '' or line =~ /^[#]/ }
+        else
+          []
+        end
       )
     end
 
@@ -35,6 +40,15 @@ module POM
     # Iterate over each file in the manifest.
     def each(&block)
       list.each(&block)
+    end
+
+    def exist?
+      file
+    end
+
+    #
+    def empty?
+      list.empty?
     end
 
     # Size of the manifest.
