@@ -327,7 +327,7 @@ module POM
         s << "  homepage   : #{metadata.homepage}"
         s << "  repository : #{metadata.repository}"
         s << "  authors    : #{metadata.authors.join(',')}"
-        s << "  package    : #{metadata.package}-#{metadata.version}"
+        s << "  package    : #{metadata.name}-#{metadata.version}"
         s << "  requires   : #{metadata.requires.join(',')}"
         s << ""
         s << "#{metadata.copyright}"

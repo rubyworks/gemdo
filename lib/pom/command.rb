@@ -67,10 +67,17 @@ module POM
 
     end
 
+    COMMAND_HELP = <<-HERE
+    about                            summary of project
+    show [name]                      show specific metadata entry      
+    dump                             output all metadata in YAML format
+    gemspec                          generate a gemspec
+    HERE
+
     #
     def parse
       optparse = OptionParser.new do |opt|
-        opt.banner = "pom [OPTIONS] <COMMAND> [FILE1 FILE2 ...]"
+        opt.banner = "pom <COMMAND> [OPTIONS] [ARGS ...]\n\nCOMMANDS:\n" + COMMAND_HELP + "\nOPTIONS:\n"
 
         opt.on("--force", "-f", "override safe-guarded operations") do
           @force = true
@@ -80,16 +87,16 @@ module POM
         #  @verbose = true
         #end
 
-        opt.on("--trial", "trial mode nulls writes to disk") do
+        opt.on("--trial", "run in trial mode, skips disk writes") do
           $TRIAL = true
         end
 
-        opt.on("--debug", "run in debug mode") do
+        opt.on("--debug", "run in debug mode, raises exceptions") do
           $DEBUG   = true
           $VERBOSE = true
         end
 
-        opt.on_tail("--help", "-h", "dispaly this help message") do
+        opt.on_tail("--help", "-h", "display this help message") do
           puts opt
           exit
         end
@@ -105,7 +112,7 @@ module POM
       exists = Dir.glob('{.,}meta').first
 
       if exists && !force?
-        puts "#{exists} directory already exists; use --force option to allow overwrites"
+        $stderr << "A #{exists} directory already exists. Use --force option to allow overwrites.\n"
         return
       end
 
@@ -117,50 +124,29 @@ module POM
       end
       files.compact!
 
-      metadata = POM::Metadata.load
-      metadata.backup! unless trial?
-      metadata.save_init
+      metadata = POM::Metadata.new
+      metadata.load_defaults
 
-      if files.empty?
-        #metadata.save unless trial?
-        #init_metadata_from_nothing
-      else
-        files.each do |file|
-          text = File.read(file)
-          obj  = /^---/.match(text) ? YAML.load(text) : text
-          case obj
-          when ::Gem::Specification
-            init_metadata_from_gemspec(obj)
-          when String
-            init_metadata_from_readme(obj)
-          else
-            puts "Source type #{obj.class} cannot be converted into Metadata."
-          end
+      files.each do |file|
+        text = File.read(file)
+        obj  = /^---/.match(text) ? YAML.load(text) : text
+        case obj
+        when ::Gem::Specification
+          metadata.mesh( POM::Metadata.from_gemspec(obj) )
+        when String
+          metadata.mesh( POM::Metadata.from_readme(obj) )
+        when Hash
+          metadata.mesh( obj )
+        else
+          puts "Skipping #{obj.class} cannot be converted into Metadata."
         end
       end
 
-    end
+      metadata.load
 
-    #
-    #def init_metadata_from_nothing
-    #  metadata.save unless trial?
-    #end
+      metadata.backup! unless trial?
 
-    #
-    def init_metadata_from_gemspec(spec)
-      metadata = POM::Metadata.from_gemspec(spec)
-      metadata.save unless trial?
-    end
-
-    #
-    def init_metadata_from_readme(text)
-      metadata = POM::Metadata.from_readme(text)
-      metadata.save unless trial?
-    end
-
-    #
-    def backup(metadata)
-      @backup ||= metadata.backup!
+      metadata.save! unless trial?
     end
 
   end#class Command

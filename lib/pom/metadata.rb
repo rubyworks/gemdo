@@ -13,6 +13,16 @@ module POM
   #
   class Metadata
 
+    #
+    class ValidationError < ArgumentError  # :nodoc:
+    end
+
+    # Glob for matching against meta directory names,
+    # +.meta/+ and +meta/+.
+    #METADIRS = '{.meta,meta}'
+    METADIRS = ['.meta', 'meta']
+
+
     # Like new but reads all metadata into memory.
     def self.load(root=Dir.pwd)
       new(root).load
@@ -36,11 +46,6 @@ module POM
       alias_method(name, orig)
       alias_method("#{name}=", "#{orig}=")
     end
-
-    # Glob for matching against meta directory names,
-    # +.meta/+ and +meta/+.
-    #METADIRS = '{.meta,meta}'
-    METADIRS = ['.meta', 'meta']
 
     # Project root directory.
     attr :root
@@ -159,6 +164,22 @@ module POM
         else #String
           @data['version'] = vers
         end
+      end
+    end
+
+    # Load initialization values for a new project.
+    # This is used by the 'pom init' command.
+    def load_defaults
+      defaults = init_defaults
+      default_dir = Pathname.new('~/config/pom/defaults')
+      default_entries = default_dir.glob('**/*')
+      default_entries.each do |path|
+        name  = path_to_name(path, default_dir)
+        value = path.read
+        defaults[name] = value
+      end
+      defaults.each do |name, value|
+        self[name] = value
       end
     end
 
@@ -566,15 +587,60 @@ module POM
       @data.dup
     end
 
+    #
+    def update(other)
+      case other
+      when Hash
+        data = other
+      when Metadata
+        data = other.instance_eval{ @data }
+      end
+      data.each do |name, value|
+        @data[name.to_s] = value  
+      end
+    end
+
+    # Like #update but does not update a value if it is *empty*.
+    def mesh(other)
+      case other
+      when Hash
+        data = other
+      when Metadata
+        data = other.instance_eval{ @data }
+      end
+      data.each do |name, value|
+        case value
+        when String, Array, Hash
+          @data[name.to_s] = value unless value.empty?
+        else
+          @data[name.to_s] = value
+        end
+      end
+    end
+
 
     # P E R S I S T E N C E
 
+    # Backup current metadata files to <tt>.cache/pom/</tt>.
+    def backup!
+      cache = root + '.cache/pom/'
+      FileUtils.mkdir_p(cache)
+      METADIRS.each do |meta|
+        if (root + meta).directory?
+          FileUtils.cp_r(root + meta, cache)
+        end
+      end
+      cache
+    end
+
     # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
-    def save
+    def save!
       @data.each do |name,value|
         save_entry(name, value)
       end
     end
+
+    private
 
     # Save meta entry.
     def save_entry(name, value, overwrite=true)
@@ -608,9 +674,14 @@ module POM
       @metadir ||= root.first('{meta,.meta}') || Pathname.new('meta')
     end
 
+
+    # S U P P O R T  M E T H O D S
+
+    private
+
     # Default values used when initializing POM for a project.
     # Change your initialization values in ~/.config/pom/defaults/<name>.
-    def defaults
+    def init_defaults
       { 'name'       => root.basename.to_s,
         'version'    => '0.0.0',
         'requires'   => [],
@@ -620,35 +691,6 @@ module POM
         'repository' => "FIX: master public repo uri"
       }
     end
-
-    # Save initial meta entries for a project.
-    def save_init
-      defaults = defaults()
-      default_dir = Pathname.new('~/config/pom/defaults')
-      default_entries = default_dir.glob('**/*')
-      default_entries.each do |path|
-        name  = path_to_name(path, default_dir)
-        value = path.read
-        defaults[name] = value
-      end
-      defaults.each do |name, value|
-        save_entry(name, value, false)
-      end
-    end
-
-    # Backup current metadata files to <tt>.cache/pom/</tt>.
-    def backup!
-      cache = root + '.cache/pom/'
-      FileUtils.mkdir_p(cache)
-      METADIRS.each do |meta|
-        if (root + meta).directory?
-          FileUtils.cp_r(root + meta, cache)
-        end
-      end
-      cache
-    end
-
-  private
 
     # TODO: Use String#to_list instead (?)
     def list(l)
@@ -665,10 +707,6 @@ module POM
       path = path.to_s
       path = path.sub(prefix.to_s.chomp('/') + '/', '')
       return path.gsub('/', '_')
-    end
-
-    #
-    class ValidationError < ArgumentError  # :nodoc:
     end
 
   end#class Metadata
