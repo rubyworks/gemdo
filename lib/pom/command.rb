@@ -119,9 +119,10 @@ module POM
 
       metadata = POM::Metadata.load
       metadata.backup! unless trial?
+      metadata.save_init
 
       if files.empty?
-        metadata.save unless trial?
+        #metadata.save unless trial?
         #init_metadata_from_nothing
       else
         files.each do |file|

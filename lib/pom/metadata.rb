@@ -32,19 +32,6 @@ module POM
     end
 
     #
-    def self.attr_accessor_list(name)
-      code = %{
-        def #{name}
-          @data["#{name}"]
-        end
-        def #{name}=(x)
-          @data["#{name}"] = list(x)
-        end
-      }
-      eval code
-    end
-
-
     def self.alias_accessor(name, orig)
       alias_method(name, orig)
       alias_method("#{name}=", "#{orig}=")
@@ -564,7 +551,7 @@ module POM
       s << "homepage   : #{homepage}"
       s << "repository : #{repository}"
       s << "authors    : #{authors.join(',')}"
-      s << "package    : #{package}-#{version}"
+      s << "package    : #{name}-#{version}"
       s << "requires   : #{requires.join(',')}"
       s.join("\n")
     end
@@ -584,23 +571,27 @@ module POM
 
     # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
     def save
-      dir = root.first('{meta,.meta}') || Pathname.new('meta')
       @data.each do |name,value|
-        case value
-        when String, Array, Hash
-          next if value.empty?
-        end
-        path = name.sub(/\_+/, '/')
-        file = root.first("{#{METADIRS.join(',')}}/#{path}")
-        if file
+        save_entry(name, value)
+      end
+    end
+
+    # Save meta entry.
+    def save_entry(name, value, overwrite=true)
+      path = name.sub(/\_+/, '/')
+      file = root.first("{#{METADIRS.join(',')}}/#{path}")
+      if file
+        if overwrite
           text  = file.read
           yaml  = /\A---/ =~ text
           value = value.to_yaml if yaml
           if text != value
             File.open(file, 'w'){ |f| f << value }
           end
-        else
-          path = dir + path
+        end
+      else
+        unless value.empty?
+          path = metadir + path
           FileUtils.mkdir_p(path.parent)
           case value
           when String
@@ -609,6 +600,39 @@ module POM
             File.open(path, 'w'){ |f| f << value.to_yaml }
           end
         end
+      end
+    end
+
+    # Fallback meta directory.
+    def metadir
+      @metadir ||= root.first('{meta,.meta}') || Pathname.new('meta')
+    end
+
+    # Default values used when initializing POM for a project.
+    # Change your initialization values in ~/.config/pom/defaults/<name>.
+    def defaults
+      { 'name'       => root.basename.to_s,
+        'version'    => '0.0.0',
+        'requires'   => [],
+        'summary'    => "FIX: brief one line description here",
+        'contact'    => "FIX: name <email> or uri",
+        'authors'    => "FIX: names of authors here",
+        'repository' => "FIX: master public repo uri"
+      }
+    end
+
+    # Save initial meta entries for a project.
+    def save_init
+      defaults = defaults()
+      default_dir = Pathname.new('~/config/pom/defaults')
+      default_entries = default_dir.glob('**/*')
+      default_entries.each do |path|
+        name  = path_to_name(path, default_dir)
+        value = path.read
+        defaults[name] = value
+      end
+      defaults.each do |name, value|
+        save_entry(name, value, false)
       end
     end
 
@@ -634,6 +658,13 @@ module POM
       else
         [l.to_a].flatten.compact
       end
+    end
+
+    #
+    def path_to_name(path, prefix='')
+      path = path.to_s
+      path = path.sub(prefix.to_s.chomp('/') + '/', '')
+      return path.gsub('/', '_')
     end
 
     #
