@@ -1,27 +1,31 @@
 #!/usr/bin/env ruby
 
 require 'pom'
-require 'pom/readme'
-require 'pom/gemspec'
 require 'optparse'
 
 module POM
 
   class Command
 
-    def self.run ; new.run ; end
-
-    def initialize
-      $TRIAL = nil
-      @force = nil
+    #    
+    def self.run
+      require_commands
+      new.run
     end
 
-    def trial? ; $TRIAL ; end
+    #
+    def self.require_commands
+      cmds = Dir.glob(File.join(File.dirname(__FILE__), 'commands', '*.rb'))
+      cmds.each{ |lib| require lib }
+    end
 
-    def debug? ; $DEBUG ; end
+    #
+    def initialize
+      $TRIAL = nil
+      $FORCE = nil
+    end
 
-    def force? ; @force ; end
-
+    #
     def run
       begin
         run_command
@@ -35,127 +39,34 @@ module POM
 
     #
     def run_command
-      parse
+      job = parse_command
+      cmd = POM::Commands.const_get(job.capitalize)
+      cmd.run
+    end
 
-      job = ARGV.shift
+    #
+    def parse_command
+      job = ARGV.shift || 'about'
 
       case job
-      when 'init'
-        init_metadata
+      when 'help', '--help', '-h'
+        puts COMMAND_HELP
         exit
       end
 
-      project = POM::Project.new(:lookup=>true)
-
-      case job
-      when nil
-        #project.metadata.load
-        puts project.about
-      when 'about'
-        #project.metadata.load
-        puts project.about
-      when 'show'
-        #project.metadata.load
-        if ARGV.last
-          puts project.metadata.send(ARGV.last)
-        else
-          puts project.metadata.keys.join(' ')
-        end
-      when 'dump'
-        #project.metadata.load
-        puts project.metadata.to_yaml
-      when 'gemspec'
-        File.open(project.metadata.name + '.gemspec', 'w') do |f|
-          f << project.to_gemspec.to_yaml
-        end
-      else
-        puts "unknown command -- #{ARGV.first}"
-      end
-
+      job
     end
 
-    COMMAND_HELP = <<-HERE
-    about                            summary of project
-    dump                             output all metadata in YAML format
-    show <name>                      show specific metadata entry
-    init                             create default meta entries
-    gemspec                          generate a gemspec
-    HERE
+COMMAND_HELP = <<-END
+pom <COMMAND> [OPTIONS ...]
 
-    #
-    def parse
-      optparse = OptionParser.new do |opt|
-        opt.banner = "pom <COMMAND> [OPTIONS] [ARGS ...]\n\nCOMMANDS:\n" + COMMAND_HELP + "\nOPTIONS:\n"
-
-        opt.on("--force", "-f", "override safe-guarded operations") do
-          @force = true
-        end
-
-        #opt.on("--verbose", "-v", "give extra verbose output") do
-        #  @verbose = true
-        #end
-
-        opt.on("--trial", "run in trial mode, skips disk writes") do
-          $TRIAL = true
-        end
-
-        opt.on("--debug", "run in debug mode, raises exceptions") do
-          $DEBUG   = true
-          $VERBOSE = true
-        end
-
-        opt.on_tail("--help", "-h", "display this help message") do
-          puts opt
-          exit
-        end
-      end
-
-      optparse.parse!
-    end
-
-    #
-    def init_metadata
-      #require 'rubygems'
-
-      exists = Dir.glob('{.,}meta').first
-
-      if exists && !force?
-        $stderr << "A #{exists} directory already exists. Use --force option to allow overwrites.\n"
-        return
-      end
-
-      files = ARGV
-
-      if files.empty?
-        files << Dir.glob('*.gemspec').first
-        files << Dir.glob('README{,.*}').first
-      end
-      files.compact!
-
-      metadata = POM::Metadata.new
-      metadata.load_defaults
-
-      files.each do |file|
-        text = File.read(file)
-        obj  = /^---/.match(text) ? YAML.load(text) : text
-        case obj
-        when ::Gem::Specification
-          metadata.mesh( POM::Metadata.from_gemspec(obj) )
-        when String
-          metadata.mesh( POM::Metadata.from_readme(obj) )
-        when Hash
-          metadata.mesh( obj )
-        else
-          puts "Skipping #{obj.class} cannot be converted into Metadata."
-        end
-      end
-
-      metadata.load
-
-      metadata.backup! unless trial?
-
-      metadata.save! unless trial?
-    end
+COMMANDS:
+  about                            summary of project
+  dump                             output all metadata in YAML format
+  show <name>                      show specific metadata entry
+  init                             create default meta entries
+  gemspec                          generate a gemspec
+END
 
   end#class Command
 

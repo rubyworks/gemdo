@@ -92,7 +92,7 @@ module POM
 
         rdoc_options = [] #['--inline-source']
         rdoc_options.concat ["--title", "#{metadata.title} API"] #if metadata.title
-        rdoc_options.concat ["--main", readme] if readme
+        rdoc_options.concat ["--main", readme.to_s] if readme
         spec.rdoc_options = rdoc_options
 
         # -- distributed files --
