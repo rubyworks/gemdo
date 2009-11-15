@@ -121,7 +121,7 @@ module POM
     # a gemspec.
     #
     def self.from_gemspec(gemspec, root=Dir.pwd)
-      metadata = Metadate.load(root)
+      metadata = Metadata.load(root)
 
       metadata.name         = gemspec.name
       metadata.version      = gemspec.version.to_s

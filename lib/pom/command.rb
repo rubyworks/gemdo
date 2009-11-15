@@ -1,103 +1,168 @@
 #!/usr/bin/env ruby
 
 require 'pom'
+require 'pom/readme'
+require 'pom/gemspec'
 require 'optparse'
 
-options = {}
+module POM
 
-optparse = OptionParser.new do |opt|
+  class Command
 
-  opt.banner = ""
+    def self.run ; new.run ; end
 
-  opt.on("--noharm", "-n", "don't actually write anything to disk") do
-    options[:noharm] = true
-  end
-
-  opt.on("--verbose", "-v", "give extra verbose output") do
-    options[:verbose] = true
-  end
-
-  opt.on("--dryrun", "both --noharm and --verbose") do
-    options[:noharm] = true
-    options[:verbose] = true
-  end
-
-  opt.on("--debug", "run with $DEBUG set to true") do
-    $DEBUG = true
-  end
-
-  opt.on("--trace", "same as --verbose and --debug") do
-    $DEBUG = true
-    options[:verbose] = true
-  end
-
-  opt.on("--force", "-f", "override prtected operations") do
-    options[:force] = true
-  end
-
-  opt.on_tail("--help", "-h", "disaply this help message") do
-    puts opt
-    exit
-  end
-
-end
-
-optparse.parse!
-
-if ARGV.empty?
-
-  exists = Dir.glob('{.,}meta').first
-
-  if exists && !options[:force]
-    puts "#{exists} directory already exists; use --force option to allow overwrites"
-  end
-
-  require 'rubygems'
-
-  text = STDIN.read.strip
-
-  if /^---/ =~ text
-    obj = YAML.load(text)
-  else
-    obj = text
-  end
-
-  case obj
-  when Gem::Specification
-    project = POM::Metadata.from_gemspec(obj)
-    if options[:noharm]
-    else
-      metadata.save
+    def initialize
+      $TRIAL = nil
+      @force = nil
     end
-  else
-    metadata = POM::Metadata.from_readme(obj)
-    if options[:noharm]
-    else
-      metadata.save
+
+    def trial? ; $TRIAL ; end
+
+    def debug? ; $DEBUG ; end
+
+    def force? ; @force ; end
+
+    def run
+      begin
+        run_command
+      rescue => err
+        raise err if $DEBUG
+        puts err.message
+      end
     end
-  end
 
-else
+  private
 
-  project = POM::Project.new
+    #
+    def run_command
+      parse
 
-  case ARGV.first
-  when 'about'
-    project.metadata.load
-    puts project.about
-  when 'show'
-    project.metadata.load
-    puts project.metadata.send(ARGV.last)
-  when 'dump'
-    project.metadata.load
-    puts project.metadata.to_yaml
-  when 'gemspec'
-    File.open(project.metadata.name + '.gemspec', 'w') do |f|
-      f << project.to_gemspec.to_yaml
+      job = ARGV.pop
+
+      case job
+      when 'init'
+        init_metadata
+        exit
+      end
+
+      project = POM::Project.new
+
+      case job
+      when 'about'
+        project.metadata.load
+        puts project.about
+      when 'show'
+        project.metadata.load
+        puts project.metadata.send(ARGV.last)
+      when 'dump'
+        project.metadata.load
+        puts project.metadata.to_yaml
+      when 'gemspec'
+        File.open(project.metadata.name + '.gemspec', 'w') do |f|
+          f << project.to_gemspec.to_yaml
+        end
+      else
+        puts "unknown command -- #{ARGV.first}"
+      end
+
     end
-  else
-    puts "unknown command -- #{ARGV.first}"
-  end
 
-end
+    #
+    def parse
+      optparse = OptionParser.new do |opt|
+        opt.banner = "pom [OPTIONS] <COMMAND> [FILE1 FILE2 ...]"
+
+        opt.on("--force", "-f", "override safe-guarded operations") do
+          @force = true
+        end
+
+        #opt.on("--verbose", "-v", "give extra verbose output") do
+        #  @verbose = true
+        #end
+
+        opt.on("--trial", "trial mode nulls writes to disk") do
+          $TRIAL = true
+        end
+
+        opt.on("--debug", "run in debug mode") do
+          $DEBUG   = true
+          $VERBOSE = true
+        end
+
+        opt.on_tail("--help", "-h", "dispaly this help message") do
+          puts opt
+          exit
+        end
+      end
+
+      optparse.parse!
+    end
+
+    #
+    def init_metadata
+      #require 'rubygems'
+
+      exists = Dir.glob('{.,}meta').first
+
+      if exists && !force?
+        puts "#{exists} directory already exists; use --force option to allow overwrites"
+        return
+      end
+
+      files = ARGV
+
+      if files.empty?
+        files << Dir.glob('*.gemspec').first
+        files << Dir.glob('README{,.*}').first
+      end
+      files.compact!
+
+      metadata = POM::Metadata.load
+      metadata.backup! unless trial?
+
+      if files.empty?
+        metadata.save unless trial?
+        #init_metadata_from_nothing
+      else
+        files.each do |file|
+          text = File.read(file)
+          obj  = /^---/.match(text) ? YAML.load(text) : text
+          case obj
+          when ::Gem::Specification
+            init_metadata_from_gemspec(obj)
+          when String
+            init_metadata_from_readme(obj)
+          else
+            puts "Source type #{obj.class} cannot be converted into Metadata."
+          end
+        end
+      end
+
+    end
+
+    #
+    #def init_metadata_from_nothing
+    #  metadata.save unless trial?
+    #end
+
+    #
+    def init_metadata_from_gemspec(spec)
+      metadata = POM::Metadata.from_gemspec(spec)
+      metadata.save unless trial?
+    end
+
+    #
+    def init_metadata_from_readme(text)
+      metadata = POM::Metadata.from_readme(text)
+      metadata.save unless trial?
+    end
+
+    #
+    def backup(metadata)
+      @backup ||= metadata.backup!
+    end
+
+  end#class Command
+
+end#module POM
 

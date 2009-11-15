@@ -245,7 +245,7 @@ module POM
     # Title of package (this defaults to project name capitalized).
     attr_accessor :title
 
-    # Platform (nil for universal)
+    # Platform (leave +nil+ for universal).
     attr_accessor :platform
 
     # A one-line brief description.
@@ -316,13 +316,16 @@ module POM
     # Homepage
     attr_accessor :homepage
 
-    # Resource to development site.
+    # Resource to development site and/or source code.
     attr_accessor :development
 
-    # Resource to find downloadable packages.
+    # Resource to documentation.
+    attr_accessor :documentation
+
+    # Resource to downloadable packages.
     attr_accessor :download
 
-    # Resource to discussions forum.
+    # Resource to discussion forum.
     attr_accessor :forum
 
     # Resource to mailing list.
@@ -331,7 +334,7 @@ module POM
     # Resource to wiki wiki.
     attr_accessor :wiki
 
-    # Resource to blog.
+    # Resource to project blog.
     attr_accessor :blog
 
     # Resource to issue tracker.
@@ -579,9 +582,8 @@ module POM
 
     # P E R S I S T E N C E
 
-    #
+    # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
     def save
-      backup!
       dir = root.first('{meta,.meta}') || Pathname.new('meta')
       @data.each do |name,value|
         case value
@@ -610,7 +612,7 @@ module POM
       end
     end
 
-    # backup current metadata files to .cache/pom
+    # Backup current metadata files to <tt>.cache/pom/</tt>.
     def backup!
       cache = root + '.cache/pom/'
       FileUtils.mkdir_p(cache)
@@ -619,6 +621,7 @@ module POM
           FileUtils.cp_r(root + meta, cache)
         end
       end
+      cache
     end
 
   private

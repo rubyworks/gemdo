@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-load 'pom/command'
+require  'pom/command'
+POM::Command.run
+
