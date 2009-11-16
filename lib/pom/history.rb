@@ -5,10 +5,11 @@ module POM
   # = History File
   #
   # The History class parses a HISTORY file into individual
-  # release sections. The file is expected to be in RDoc format
-  # with each section beginning with a secondary header (==)
-  # giving *version* and *date* of release, then a *note*
-  # followed by a point by point outline of *changes*.
+  # release sections. The file is expected to be in RDoc or simple
+  # Mardkdown format with each section beginning with a secondary
+  # header (== or ##) giving *version* and *date* of release,
+  # then a *note* followed by a point by point outline of *changes*.
+  #
   # For example:
   #
   #   == 1.0.0 / 2009-10-07

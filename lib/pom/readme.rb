@@ -139,8 +139,6 @@ module POM
     # have this method too, but calling on it?
     #++
     def self.from_readme(readme, root=Dir.pwd)
-      require 'pom/readme'
-
       metadata = Metadata.load(root)
       readme   = Readme.new(readme)
 

@@ -39,7 +39,7 @@ instance, by creating a POM::Metadata object.
 
 Then you can query information from the project via method calls.
 
-  metadata.package  #=> 'mayapp'
+  metadata.name   #=> 'mayapp'
 
 See the RDoc API documentation for further specifics.
 
@@ -48,14 +48,14 @@ See the RDoc API documentation for further specifics.
 
 To install with RubyGems simply open a console and type:
 
-  gem install pom
+  $ gem install pom
 
 Local installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
-  tar -xvzf pom-1.0.0.tgz
-  cd pom-1.0.0.tgz
-  sudo setup.rb all
+  $ tar -xvzf pom-1.0.0.tgz
+  $ cd pom-1.0.0.tgz
+  $ sudo setup.rb all
 
 Windows users use 'ruby setup.rb all'.
 
