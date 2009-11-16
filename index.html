@@ -25,8 +25,8 @@
 
     .header { padding: 0; margin: 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; height: 250px; text-align: center; }
 
-    .menu { margin: 10px 0; text-align: center; }
-    .menu a { font-size: 18px; color: red; }
+    .menu { padding: 12px 0; text-align: center; background: pink; }
+    .menu a { font-size: 14px; color: red; font-weight: bold; }
     .menu a:hover { color: black; }
 
     .title { text-align: center; font-family: times; }
@@ -49,8 +49,8 @@
   <div class="panel">   
     <a href="rdoc/index.html">API DOCS</a> &nbsp;&nbsp;
     <!-- <a href="qedoc/index.html">Overview</a> &nbsp;&nbsp; -->
-    <a href="http://github.com/proutils/pom/wiki">WIKI</a> &nbsp;&nbsp;
     <a href="http://googlegroups.com/group/proutils">MAILING LIST</a> &nbsp;&nbsp;
+    <a href="http://github.com/proutils/pom/wiki">WIKI WIKI</a> &nbsp;&nbsp;
     <a href="http://github.com/proutils/pom">SOURCE CODE</a> &nbsp;&nbsp;
   </div>
 </div>
@@ -88,7 +88,7 @@
   </pre>
 
   <pre class="screen" style="margin-left: 12px; float: left; height: 240px;">
-  $ ls -1 meta/
+  $ pom show
 
   authors
   contact
@@ -98,7 +98,7 @@
   homepage
   license
   package
-  namespace
+  suite
   released
   repository
   resources
@@ -108,9 +108,9 @@
   </pre>
 
   <pre class="screen" style="clear: both; float: left; margin-right: 12px;">
-  $ pom &lt pom.gemspec
+  $ pom show version
 
-  metadata generated
+  1.3
   </pre>
 
   <pre class="screen" style="margin-left: 12px; float: left;">
@@ -122,7 +122,7 @@
 
   <div class="text" style="clear: both;">
 
-    <h1>What</h1>
+    <h1>What is It?</h1>
 
     <p>POM stands for <i>Project Object Model</i>. POM provides a standardize methodology for storing information about a Ruby project.
     The system is easy to understand, easy to use, versitile and extensible.
@@ -137,7 +137,7 @@
     <p>POM metadata is stored in a project subdirectory as a set of files. Each file stores a single piece of information. For example, in the above figures
     the <code>meta/<code> directory listing of the POM project itself is given.</p>
 
-    <p>Each metadata file can be placed in a directory called <code>meta/</code> or <code>.meta/</meta>, depending on your preference and as a basis of
+    <p>Each metadata file can be placed in a directory called <code>meta/</code> or <code>.meta/</code>, depending on your preference and as a basis of
     separating distributable from non-distributable information.</p>
 
     <p>Each file is read as a simple string, unless the file begins with "<code>---</code>", in which case it is parsed via YAML.</p>
@@ -149,12 +149,20 @@
     may not be as easy to quickly edit in mass, consider that once a project has settled past the flurry of initial development, most metadata entries never change,
     so there's no need to continuely rewrite the file that contains it for the sake of other information.</p>
 
-    <h1>Classes</h1>
-
     <p>The <code>POM::Metadata</code> class has the most common project attributes pre-defined, and has set typical defaults.</p>
 
-    <p>The <code>POM::Project</code> class encpsulates the Metadata class and a few other common project objects, such as the Manifest, as well as all the standard project
-    locations as Pathname objects, like <code>doc/</code> and <code>lib/</code>. This makes it very easy to work with a project as a Ruby object.</p>
+
+    <h1>Project Class</h1>
+
+    <p>The <code>POM::Project</code> class encpsulates the Metadata class and a other common project objects, such as the Manifest, and provides easy access
+    to standard project locations as Pathname objects, like <code>doc/</code> and <code>lib/</code>. This makes it very easy to work with a project as a
+    Ruby object.</p>
+
+
+    <h1>Other Classes</h1>
+
+    <p>POM also provides a Manifest class, a History class and a Release class.</p>
+
 
     <h1>Future</h1>
 

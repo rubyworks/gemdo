@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Default values used when initializing POM for a project. Change your initialization values in ~/.config/pom/defaults/&lt;name&gt;.
+full_name: POM::Metadata#init_defaults
+is_singleton: false
+name: init_defaults
+params: ()
+visibility: private

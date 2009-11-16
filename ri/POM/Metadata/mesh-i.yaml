@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Like #update but does not update a value if it is <b>empty</b>."
+full_name: POM::Metadata#mesh
+is_singleton: false
+name: mesh
+params: (other)
+visibility: public

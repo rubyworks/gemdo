@@ -3,8 +3,10 @@ aliases: []
 
 block_params: 
 comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Name assignment. The <tt>entry</tt> must not contain spaces or puncuation.
 full_name: POM::Metadata#name=
 is_singleton: false
 name: name=
-params: (v)
+params: (entry)
 visibility: public

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: List of available entries.
+full_name: POM::Metadata#keys
+is_singleton: false
+name: keys
+params: ()
+visibility: public

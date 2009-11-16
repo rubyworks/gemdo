@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Load metadata from the meta directory.
+  body: Load metadata from the <tt>.meta</tt> and/or <tt>meta</tt> directories.
 full_name: POM::Metadata#load
 is_singleton: false
 name: load

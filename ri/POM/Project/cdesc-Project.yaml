@@ -11,14 +11,12 @@ attributes:
   - !ruby/struct:RDoc::Markup::Flow::P 
     body: Location of project source code. Currently, this is always the same as the root.
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: "TODO: Support alternate source location in the future (?)"
+    body: "TODO: Support alternate source location in the future verison?"
   name: source
   rw: R
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
   name: load
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: locate_root_at
 - !ruby/object:RDoc::RI::MethodSummary 
   name: lookup
 - !ruby/object:RDoc::RI::MethodSummary 
@@ -39,12 +37,6 @@ constants:
     body: File glob for matching README file.
   name: README
   value: "\"README{,.*}\""
-- !ruby/object:RDoc::RI::Constant 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Root directory is indicated by the presence of a <tt>meta/</tt> directory, or <tt>.meta/</tt> hidden directory.
-  name: ROOT_INDICATORS
-  value: "[ '{.meta,meta}/' ]"
 full_name: POM::Project
 includes: []
 
@@ -77,6 +69,8 @@ instance_methods:
   name: plug
 - !ruby/object:RDoc::RI::MethodSummary 
   name: plugin
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: release
 - !ruby/object:RDoc::RI::MethodSummary 
   name: require_rubygems
 - !ruby/object:RDoc::RI::MethodSummary 

@@ -2,8 +2,9 @@
 aliases: []
 
 block_params: 
-comment: []
-
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Returns the first entry in the authors list.
 full_name: POM::Metadata#author
 is_singleton: false
 name: author

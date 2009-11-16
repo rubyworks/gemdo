@@ -14,5 +14,7 @@ instance_methods:
   name: first
 - !ruby/object:RDoc::RI::MethodSummary 
   name: glob
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: glob_relative
 name: Pathname
 superclass: Object

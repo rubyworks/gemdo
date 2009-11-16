@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "NOTE: I'm not sure this a good idea, as it adds an additional complexity. Standardizing around meta/version, is probably a much better approach."
+full_name: POM::Metadata#load_version_stamp
+is_singleton: false
+name: load_version_stamp
+params: ()
+visibility: public

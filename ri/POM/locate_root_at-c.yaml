@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: POM::locate_root_at
+is_singleton: true
+name: locate_root_at
+params: (indicator)
+visibility: public

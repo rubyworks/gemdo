@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Locate the project's root directory. This is determined by ascending up the directory tree from the current position until the ROOT_INDICATOR is matched. Returns <tt>nil</tt> if not found.
+  body: Locate the project's root directory. See POM::root.
 full_name: POM::Project::root
 is_singleton: true
 name: root

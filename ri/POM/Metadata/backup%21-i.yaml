@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: backup current metadata files to .cach/pom
+  body: Backup current metadata files to <tt>.cache/pom/</tt>.
 full_name: POM::Metadata#backup!
 is_singleton: false
 name: backup!

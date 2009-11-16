@@ -8,5 +8,5 @@ comment:
 full_name: POM::Manifest::new
 is_singleton: true
 name: new
-params: (root_directory)
+params: (root)
 visibility: public

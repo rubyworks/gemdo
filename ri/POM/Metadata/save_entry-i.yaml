@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Save meta entry.
+full_name: POM::Metadata#save_entry
+is_singleton: false
+name: save_entry
+params: (name, value, overwrite=true)
+visibility: private

@@ -31,6 +31,10 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: each
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: empty?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: exist?
+- !ruby/object:RDoc::RI::MethodSummary 
   name: files
 - !ruby/object:RDoc::RI::MethodSummary 
   name: list

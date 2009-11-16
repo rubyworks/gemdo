@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Get metadata entry from meta-directory.
+  body: Get a metadata <tt>entry</tt>, where entry is a pathname.
 full_name: POM::Metadata#read
 is_singleton: false
 name: read
-params: (name)
+params: (entry)
 visibility: private
