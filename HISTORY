@@ -4,12 +4,12 @@
 
 Between version 1.1 and the current 1.5, a great deal of polish
 has been applied to the project. There are no longer any metadata
-aliases, save one (collection/suite). A new Release class provide
-encapsualted access to the the current release notes, either from
+aliases, save one (collection/suite). A new Release class provides
+encapsualted access to the current release notes, either from
 a standard file or from the top entry of the HISTORY file. And a
 +pom+ command-line utility now provides a variety of POM releated
 functions from printing out a project summary to generating meta
-entries from a +README+ and/or a +.gemspec+ file.
+entries from a +README+ and/or +.gemspec+ file.
 
 * 4 Major Enhancements
 
@@ -18,10 +18,11 @@ entries from a +README+ and/or a +.gemspec+ file.
   * Removed all metadata aliases (save one).
   * Metadata is no longer lazy-loaded.
 
-* 2 Minor Enhancements
+* 3 Minor Enhancements
 
   * Can generate meta entries from +README+ and/or +.gemspec+ file.
   * Polished code, removing vestages of old code.
+  * Separated cli commands into separate classes.
 
 
 == 1.1.0 / 2009-08-14

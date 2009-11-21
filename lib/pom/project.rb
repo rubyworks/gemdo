@@ -156,7 +156,7 @@ module POM
       if path
         doc + path
       else
-        @doc ||= root+'doc'
+        @doc ||= root + 'doc'
       end
     end
 
@@ -165,11 +165,11 @@ module POM
     #
     # This is aliaed as #pkg.
 
-    def pack(path=nil)
+    def pkg(path=nil)
       if path
-        pack + path
+        pkg + path
       else
-        @pack ||= root.first('{pkg,pack,package}{,s}') || root + 'pkg'
+        @pkg ||= root.first('{pkg,pack,package}{,s}') || root + 'pkg'
       end
       #@pkg ||=(
       #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
@@ -178,8 +178,8 @@ module POM
       #)
     end
 
-    # Alias for #pack.
-    alias_method :pkg, :pack
+    # Alias for #pkg.
+    alias_method :pack, :pkg
 
     # The <tt>.cache/</tt> directory is used by build tools to
     # store temporary files. For instance, the +pom+ command uses
@@ -194,7 +194,7 @@ module POM
       if path
         cache + path
       else
-        @cache ||= root+'.cache'
+        @cache ||= root + '.cache'
       end
     end
 
@@ -209,7 +209,7 @@ module POM
       if path
         config + path #root.glob_first('{.,}config' / path)
       else
-        @config ||= root.first('{.,}config') || root+'.config'
+        @config ||= root.first('{.,}config') || root + '.config'
       end
     end
 
@@ -219,17 +219,26 @@ module POM
     #
     # Get pathname of given plugin +path+. Or without +path+
     # returns the pathname for the plugin directory.
+    #
+    # TODO: This assumes lib/ is in the load path, and is
+    # used to house plugin/. This is of course typical. However
+    # it is possible to alter the load path. So it may not always
+    # be the case. In the future, it must be decided if we should
+    # standardize aroung the lib/ convention (though you could still
+    # add to the load path) or allow it to be complete free form.
+    # As I did for bin/, I prefer the former, but have not yet firmly
+    # decided.
 
-    def plug(path=nil)
+    def plugin(path=nil)
       if path
-        plug + path
+        plugin + path
       else
-        @plug ||= root.first('plug{,in,ins}') || root+'plug'
+        @plugin ||= root.first('lib/plugin') || root + 'lib/plugin'
       end
     end
 
-    # Alias for #plugin.
-    alias_method :plugin, :plug
+    # DEPRECATE: Alias for #plugin.
+    alias_method :plug, :plugin
 
     # The <tt>script/</tt> directory is like the <tt>task/</tt> 
     # directory but usually holds executables that are made
@@ -242,7 +251,7 @@ module POM
       if path
         script + path
       else
-        @script ||= root+'script'
+        @script ||= root + 'script'
       end
     end
 
