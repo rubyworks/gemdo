@@ -1,7 +1,6 @@
 require 'time'
-require 'pom/corext'
-require 'pom/root'
-require 'pom/readme'
+require 'pom/metastore'
+#require 'pom/readme'
 
 #--
 # TODO: executables is not right.
@@ -11,80 +10,36 @@ module POM
 
   # = Metadata
   #
-  class Metadata
+  class Metadata < Metastore
 
     #
-    class ValidationError < ArgumentError  # :nodoc:
-    end
-
-    # Glob for matching against meta directory names,
-    # +.meta/+ and +meta/+.
-    #METADIRS = '{.meta,meta}'
     METADIRS = ['.meta', 'meta']
 
-
-    # Like new but reads all metadata into memory.
-    def self.load(root=Dir.pwd)
-      new(root).load
-    end
-
     #
-    def self.attr_accessor(name)
-      code = %{
-        def #{name}
-          @data["#{name}"]
-        end
-        def #{name}=(x)
-          @data["#{name}"] = x
-        end
-      }
-      eval code
-    end
-
-    #
-    def self.alias_accessor(name, orig)
-      alias_method(name, orig)
-      alias_method("#{name}=", "#{orig}=")
-    end
-
-    # Project root directory.
-    attr :root
-
-    ### Version stamp.
-    #attr :version_stamp
+    STORE_DIRECTORY = 'meta'
 
   private
 
-    # New Metadata object.
     #
-    def initialize(root=Dir.pwd)
-      @root = Pathname.new(root.to_s)
+    def initialize_defaults
       @data = {}
 
-      # DEPRECATE package
-      #['package', 'project', 'name', 'version'].each do |key|
-      #  val = read(key)
-      #  __send__("#{key}=", val) if val
-      #end
-
-      @data['authors']   = []
-      @data['requires']  = []
-      @data['recommend'] = []
-      @data['suggest']  = []
-      @data['conflicts'] = []
-      @data['replaces']  = []
-      @data['provides']  = []
+      @data['authors']    = []
+      @data['requires']   = []
+      @data['recommend']  = []
+      @data['suggest']    = []
+      @data['conflicts']  = []
+      @data['replaces']   = []
+      @data['provides']   = []
 
       @data['loadpath']   = ['lib']
       @data['distribute'] = ['**/*']
-
-      #initialize_defaults
-      #initialize_metafile
-
-      #@version_stamp = Version.new(rootfolder)
     end
 
-    #METAFILE = 'meta{,data}{.yaml,.yml}'
+    #
+    def store
+      STORE_DIRECTORY
+    end
 
   public
 
@@ -110,8 +65,9 @@ module POM
     # Load metadata from the +.meta+ and/or +meta+ directories.
     def load
       load_version_stamp
-      load_metadata_hidden
-      load_metadata
+      super
+      #load_metadata_hidden
+      #load_metadata
       #METADIRS.reverse.each do |dir|
       #  next unless (@root + dir).directory?
       #  entries(@root + dir).each do |file|
@@ -130,25 +86,25 @@ module POM
       self
     end
 
-    def load_metadata
-      metadir = @root + 'meta'
-      return unless metadir.directory?
-      entries(metadir).each do |file|
-        name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_').gsub('/','_')
-        #next if file.to_s.index(/[.]/)  # TODO: improve rejection filter
-        self[name] = read(file)
-      end
-    end
+    #def load_metadata
+    #  metadir = @root + 'meta'
+    #  return unless metadir.directory?
+    #  entries(metadir).each do |file|
+    #    name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_').gsub('/','_')
+    #    #next if file.to_s.index(/[.]/)  # TODO: improve rejection filter
+    #    self[name] = read(file)
+    #  end
+    #end
 
-    def load_metadata_hidden
-      metadir = @root + '.meta'
-      return unless metadir.directory?
-      entries(metadir).each do |file|
-        name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_')
-        #next if name.to_s.index(/[.]/)  # TODO: improve rejection filter
-        self[name] = read(file)
-      end
-    end
+    #def load_metadata_hidden
+    #  metadir = @root + '.meta'
+    #  return unless metadir.directory?
+    #  entries(metadir).each do |file|
+    #    name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_')
+    #    #next if name.to_s.index(/[.]/)  # TODO: improve rejection filter
+    #    self[name] = read(file)
+    #  end
+    #end
 
     # NOTE: I'm not sure this a good idea, as it adds an additional complexity.
     # Standardizing around meta/version, is probably a much better approach.
@@ -165,57 +121,6 @@ module POM
           @data['version'] = vers
         end
       end
-    end
-
-    # Load initialization values for a new project.
-    # This is used by the 'pom init' command.
-    def load_defaults
-      defaults = init_defaults
-      default_dir = Pathname.new('~/config/pom/defaults')
-      default_entries = default_dir.glob('**/*')
-      default_entries.each do |path|
-        name  = path_to_name(path, default_dir)
-        value = path.read
-        defaults[name] = value
-      end
-      defaults.each do |name, value|
-        self[name] = value
-      end
-    end
-
-    #
-    def []=(name, value)
-      if respond_to?("#{name}=")
-        __send__("#{name}=", value)
-      else
-        (class << self; self; end).class_eval do
-          attr_accessor name
-        end
-        __send__("#{name}=", value)
-      end
-    end
-
-  private
-
-    # Recurisve entries. Should be a method of Dir.
-    def entries(dir)
-      dir.glob('**/*')
-      #e = []
-      #paths = Dir.entries(dir.to_s) - ['.', '..']
-      #paths.each do |f|
-      #  if File.directory?(File.join(dir, f))
-      #    e.concat(entries(File.join(dir, f)).map{ |s| File.join(f,s) })
-      #  else
-      #   e << f
-      #  end
-      #end
-      #e
-    end
-
-    # Get a metadata +entry+, where entry is a pathname.
-    def read(entry)
-      text = entry.read.strip
-      data = (/\A^---/ =~ text ? YAML.load(text) : text)
     end
 
   public
@@ -358,18 +263,6 @@ module POM
     attr_accessor :copyright
 
 
-    # TODO: Tecnically these next two are not metadata but build
-    # configuration, so ultimately they should go else where.
-    # But where?
-
-    # File pattern list of files to distribute in package.
-    # This is provided to assist with MANIFEST automation.
-    #attr_accessor :distribute
-
-    # Map project directories and files to publish locations on webserver.
-    #attr_accessor :sitemap
-
-
     # S P E C I A L  G E T T E R S
 
     # The +suite+ name defaults to the project's +name+.
@@ -507,18 +400,6 @@ module POM
     end
 
 
-    #
-    #def distribute=(x)
-    #  @data['distribute'] = list(x) #.to_list
-    #end
-
-    #
-    #def sitemap=(x)
-    #  return @data['sitemap'] = nil unless x
-    #  @data['sitemap'] = YAML.load(x) #.to_list
-    #end
-
-
     # A L I A S E S
 
     #
@@ -577,115 +458,13 @@ module POM
       s.join("\n")
     end
 
-    # Convert to YAML.
-    def to_yaml
-      @data.to_yaml #super
-    end
-
-    # Return metadata in Hash form.
-    def to_h
-      @data.dup
-    end
-
-    # List of available entries.
-    def keys
-      @data.keys
-    end
-
-    #
-    def update(other)
-      case other
-      when Hash
-        data = other
-      when Metadata
-        data = other.instance_eval{ @data }
-      end
-      data.each do |name, value|
-        @data[name.to_s] = value  
-      end
-    end
-
-    # Like #update but does not update a value if it is *empty*.
-    def mesh(other)
-      case other
-      when Hash
-        data = other
-      when Metadata
-        data = other.instance_eval{ @data }
-      end
-      data.each do |name, value|
-        case value
-        when String, Array, Hash
-          @data[name.to_s] = value unless value.empty?
-        else
-          @data[name.to_s] = value
-        end
-      end
-    end
-
-
-    # P E R S I S T E N C E
-
-    # Backup current metadata files to <tt>.cache/pom/</tt>.
-    def backup!
-      cache = root + '.cache/pom/'
-      FileUtils.mkdir_p(cache)
-      METADIRS.each do |meta|
-        if (root + meta).directory?
-          FileUtils.cp_r(root + meta, cache)
-        end
-      end
-      cache
-    end
-
-    # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
-    def save!
-      @data.each do |name,value|
-        save_entry(name, value)
-      end
-    end
-
-    private
-
-    # Save meta entry.
-    def save_entry(name, value, overwrite=true)
-      path = name.sub(/\_+/, '/')
-      file = root.first("{#{METADIRS.join(',')}}/#{path}")
-      if file
-        if overwrite
-          text  = file.read
-          yaml  = /\A---/ =~ text
-          value = value.to_yaml if yaml
-          if text != value
-            File.open(file, 'w'){ |f| f << value }
-          end
-        end
-      else
-        unless value.empty?
-          path = metadir + path
-          FileUtils.mkdir_p(path.parent)
-          case value
-          when String
-            File.open(path, 'w'){ |f| f << value }
-          else
-            File.open(path, 'w'){ |f| f << value.to_yaml }
-          end
-        end
-      end
-    end
-
-    # Fallback meta directory.
-    def metadir
-      @metadir ||= root.first('{meta,.meta}') || Pathname.new('meta')
-    end
-
 
     # S U P P O R T  M E T H O D S
 
     private
 
     # Default values used when initializing POM for a project.
-    # Change your initialization values in ~/.config/pom/defaults/<name>.
+    # Change your initialization values in ~/.config/pom/meta/<name>.
     def init_defaults
       { 'name'       => root.basename.to_s,
         'version'    => '0.0.0',
@@ -695,23 +474,6 @@ module POM
         'authors'    => "FIX: names of authors here",
         'repository' => "FIX: master public repo uri"
       }
-    end
-
-    # TODO: Use String#to_list instead (?)
-    def list(l)
-      case l
-      when String
-        l.split(/[:;\n]/)
-      else
-        [l.to_a].flatten.compact
-      end
-    end
-
-    #
-    def path_to_name(path, prefix='')
-      path = path.to_s
-      path = path.sub(prefix.to_s.chomp('/') + '/', '')
-      return path.gsub('/', '_')
     end
 
   end#class Metadata

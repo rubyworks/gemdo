@@ -1,6 +1,7 @@
 require 'pom/corext'
 require 'pom/root'
 require 'pom/metadata'
+require 'pom/metabuild'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/release'
@@ -78,6 +79,12 @@ module POM
 
     def metadata
       @metadata ||= Metadata.new(root).load
+    end
+
+    # Build provides build-related configuration data.
+
+    def metabuild
+      @metabuild ||= Metabuild.new(root).load
     end
 
     # Project manifest.
