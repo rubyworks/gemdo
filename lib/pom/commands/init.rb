@@ -9,10 +9,12 @@ module POM::Commands
     #
     def initialize
       #@project = POM::Project.new(:lookup=>true)
+      @options = {}
     end
 
     #
     attr :resources
+    attr :options
 
     #
     def run
@@ -24,6 +26,10 @@ module POM::Commands
     def parse
       parser = OptionParser.new do |opt|
         opt.banner = "pom init [RESOURCE ...]"
+
+        opt.on("--replace", "-r", "replace any pre-existing entries") do
+          options[:replace] = true
+        end
 
         opt.on("--force", "-f", "override safe-guarded operations") do
           $FORCE = true
@@ -51,6 +57,8 @@ module POM::Commands
 
     #
     def execute
+      require_rubygems
+
       require 'pom/metadata'
       require 'pom/readme'
       require 'pom/models/gemspec'
@@ -58,7 +66,7 @@ module POM::Commands
       exists = Dir.glob('{.,}meta').first
 
       if exists and not $FORCE
-        $stderr << "A #{exists} directory already exists. Use --force option to allow overwrites.\n"
+        $stderr << "A #{exists} directory already exists. Use --force option to allow overwrite.\n"
         return
       end
 
@@ -70,31 +78,41 @@ module POM::Commands
       end
       files.compact!
 
-      metadata = POM::Metadata.new
-      metadata.load_defaults
+      metadata = POM::Metadata.new(Dir.pwd)
+      metadata.new_project
 
       files.each do |file|
         text = File.read(file)
         obj  = /^---/.match(text) ? YAML.load(text) : text
         case obj
         when ::Gem::Specification
-          metadata.mesh( POM::Metadata.from_gemspec(obj) )
+          metadata.mesh(POM::Metadata.from_gemspec(obj))
         when String
-          metadata.mesh( POM::Metadata.from_readme(obj) )
+          metadata.mesh(POM::Metadata.from_readme(obj))
         when Hash
-          metadata.mesh( obj )
+          metadata.mesh(obj)
         else
           puts "Skipping #{obj.class} cannot be converted into Metadata."
         end
       end
 
-      metadata.load    # load any meta entries that may alread exist
+      # load any meta entries that may already exist
+      metadata.reload unless options[:replace]
 
       metadata.backup! unless $TRIAL
       metadata.save!   unless $TRIAL
     end
 
+    #
+    def require_rubygems
+      begin
+        require 'rubygems'
+        #::Gem::manage_gems
+      rescue LoadError
+        raise LoadError, "RubyGems is not installed."
+      end
+    end
+
   end
 
 end
-
