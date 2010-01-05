@@ -1,9 +1,8 @@
 require 'time'
 require 'pom/metastore'
-#require 'pom/readme'
 
 #--
-# TODO: executables is not right.
+# TODO: executables is not right ?
 #++
 
 module POM
@@ -13,17 +12,17 @@ module POM
   class Metadata < Metastore
 
     #
-    METADIRS = ['.meta', 'meta']
+    STORES = ['meta', '.meta']
 
     #
-    STORE_DIRECTORY = 'meta'
+    def stores
+      STORES
+    end
 
   private
 
     #
     def initialize_defaults
-      @data = {}
-
       @data['authors']    = []
       @data['requires']   = []
       @data['recommend']  = []
@@ -34,11 +33,6 @@ module POM
 
       @data['loadpath']   = ['lib']
       @data['distribute'] = ['**/*']
-    end
-
-    #
-    def store
-      STORE_DIRECTORY
     end
 
   public
@@ -63,7 +57,7 @@ module POM
     #end
 
     # Load metadata from the +.meta+ and/or +meta+ directories.
-    def load
+    def reload
       load_version_stamp
       super
       #load_metadata_hidden
@@ -208,6 +202,11 @@ module POM
     # For example, a package 'bar-plus' might fulfill the same dependency criteria
     # as package 'bar', so 'bar-plus' is said to provide 'bar'.
     attr_accessor :provides
+
+    # Build requirements. Technically this is build metadata, as opposed to library 
+    # metadata, but it's the only piece of information that can't be tied to
+    # a specific tool, so it is included here.
+    attr_accessor :buildreqs
 
     # Load path(s) (used by Ruby's own site loading and RubyGems).
     # The default is 'lib/', which is usually correct.
@@ -428,6 +427,7 @@ module POM
       return false unless summary
       return false unless contact
       #return false unless homepage
+      true
     end
 
     # Assert that the mininal information if provided.
@@ -465,7 +465,7 @@ module POM
 
     # Default values used when initializing POM for a project.
     # Change your initialization values in ~/.config/pom/meta/<name>.
-    def init_defaults
+    def new_project_defaults
       { 'name'       => root.basename.to_s,
         'version'    => '0.0.0',
         'requires'   => [],
