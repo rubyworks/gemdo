@@ -8,14 +8,12 @@ module POM
   #
   class Metabuild < Metastore
 
-    #DIRS = ['.config/build', 'config/build']
+    #
+    STORES = ['config/build', '.config/build']
 
     #
-    STORE_DIRECTORY = 'config/build'
-
-    #
-    def store
-      STORE_DIRECTORY
+    def stores
+      STORES
     end
 
   private
@@ -40,8 +38,8 @@ module POM
     # on the webserver.
     attr_accessor :sitemap
 
-    # Build dependencies --list of libraries that
-    # are required for build tasks.
+    # Build dependencies, list of libraries that are
+    # required for build tasks.
     attr_accessor :dependencies
 
 
