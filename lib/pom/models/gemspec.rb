@@ -6,7 +6,7 @@ module POM
     #
     def require_rubygems
       begin
-        require 'rubygems/specification'
+        require 'rubygems' #/specification'
         #::Gem::manage_gems
       rescue LoadError
         raise LoadError, "RubyGems is not installed."
