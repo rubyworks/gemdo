@@ -12,7 +12,7 @@ module POM
 
     # Like new but reads all metadata into memory.
     def self.load(root=Dir.pwd)
-      new(root).load
+      new(root) #.load
     end
 
     #
@@ -37,52 +37,74 @@ module POM
     # Project root directory.
     attr :root
 
+    # Change the root location if +dir+.
+    def root=(dir) 
+      @root = Pathname.new(dir) if dir
+    end
+
     # I N I T I A L I Z E
 
     # New Metastore object.
     #
     def initialize(root=nil)
-      @root = Pathname.new(root || Dir.pwd)
+      @root = Pathname.new(root) if root
+      @data = {}
+
       initialize_defaults
-      #load  # TODO: Should we load on #new ?
+
+      reload
     end
 
     #
-    def load
-      load_data("." + store)
-      load_data(store)
+    def reload
+      if root
+        stores.each do |store|
+          load_data(root + store)
+        end
+      end
       self
     end
 
+    private
+
     #
-    def load_data(dir)
-      datadir = @root + dir
+    def load_data(path)
+      datadir = Pathname.new(path) #@root + dir
       return unless datadir.directory?
       datadir.glob('**/*').each do |file|
-        name = file.to_s.sub(datadir.to_s + '/', '').gsub('/','_') #.gsub('/','_')
+        #name = file.to_s.sub(datadir.to_s + '/', '').gsub('/','_') #.gsub('/','_')
+        name  = path_to_name(file, datadir)
         #next if file.to_s.index(/[.]/)  # TODO: improve rejection filter
         self[name] = read(file)
       end
     end
 
+    public
+
     # Load initialization values for a new project.
     # This is used by the 'pom init' command.
-    def load_defaults
-      defaults = init_defaults
-      default_dir = Pathname.new(File.join('~/.config/pom/', store))  # TODO: Use XDG
-      default_entries = default_dir.glob('**/*')
-      default_entries.each do |path|
-        name  = path_to_name(path, default_dir)
-        value = path.read
-        defaults[name] = value
-      end
-      defaults.each do |name, value|
+    def new_project
+      new_project_defaults.each do |name, value|
         self[name] = value
       end
+      home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
+      store = stores.find{ |s| s[0,1] != '.' }  # not hidden
+      path  = Pathname.new(File.join(home_config, 'pom', store))
+      load_data(path)
+
+      #default_entries = default_dir.glob('**/*')
+      #default_entries.each do |path|
+      #  name  = path_to_name(path, default_dir)
+      #  #value = path.read
+      #  defaults[name] = read(path)
+      #end
+      #defaults.each do |name, value|
+      #  self[name] = value
+      #end
     end
 
     # Subclasses can override this. It is used by #load_defaults.
-    def init_defaults
+    def new_project_defaults
       {}
     end
 
@@ -97,9 +119,10 @@ module POM
     public
 
     # Backup current metadata files to <tt>.cache/pom/</tt>.
-    def backup!
+    def backup!(chroot=nil)
+      self.root = chroot
       cache = root + '.cache/pom/'
-      FileUtils.mkdir_p(cache)
+      FileUtils.mkdir_p(cache) unless File.exist?(cache)
       stores.each do |dir|
         if (root + dir).directory?
           FileUtils.cp_r(root + dir, cache)
@@ -109,20 +132,16 @@ module POM
     end
 
     # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
-    def save!
+    def save!(chroot=nil)
+      self.root = chroot
       @data.each do |name,value|
         save_entry(name, value)
       end
     end
 
-    #
-    def stores
-      [store, "." + store]
-    end
-
     # Fallback store.
-    def existent_store
-      @existent_store ||= root.glob('{'+stores+'}').first || Pathname.new(store)
+    def fallback_store
+      @fallback_store ||= root.glob('{'+stores+'}').last || Pathname.new(stores.last)
     end
 
     private
@@ -142,8 +161,8 @@ module POM
         end
       else
         unless value.empty?
-          path = existent_store + path
-          FileUtils.mkdir_p(path.parent)
+          path = fallback_store + path
+          FileUtils.mkdir_p(path.parent) unless path.parent.exist?
           case value
           when String
             File.open(path, 'w'){ |f| f << value }
@@ -236,7 +255,8 @@ module POM
     def path_to_name(path, prefix='')
       path = path.to_s
       path = path.sub(prefix.to_s.chomp('/') + '/', '')
-      return path.gsub('/', '_')
+      path = path.gsub('/', '_')
+      path
     end
 
   end
@@ -246,3 +266,4 @@ module POM
   end
 
 end
+
