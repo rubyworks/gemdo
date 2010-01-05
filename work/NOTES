@@ -1,9 +1,23 @@
 = Development Notes
 
-== 2009-10-05
+== 2009-01-05 / trans
+
+Considered adding a separate class for build metadata. However, I could
+not think of a good place to store this information. The best bet
+seemes to to be meta/build/, though that likely means making a special
+exlusion in one's package configs, since build data is not needed in
+packages but the rest of meta/ is.
+
+On the other hand, it occurs to me that almost all build data would be used
+by specific build tools, so it's just as well that each tool handle it's
+own configuration needs. The only exception I've thought of is the "build
+requirements". So, I've decided to add that field to Metadata itself,
+and forego supporting any other build data, at least for the time being.
+
+== 2009-10-05 / trans
 
 Thought about adding rubyforge entries to metadata, eg. unixname, groupid, etc.
-Putting thee difficulty of supporting the use of a rubyforge/ subdirectory in
+Putting the difficulty of supporting the use of a rubyforge/ subdirectory in
 the meta/ directory to store this information, I've further decided it's not
 appropriate information for project metadata. It's really build configuration
 and thus should be specified via mechanisms specific to the build tool used,
