@@ -191,7 +191,7 @@ module POM
     # What other packages *could* be useful with this package.
     attr_accessor :suggest
 
-    # What other packages does this package conflict.
+    # With what other packages does this package conflict.
     attr_accessor :conflicts
 
     # What other packages does this package replace. This is very much like #provides
@@ -203,10 +203,8 @@ module POM
     # as package 'bar', so 'bar-plus' is said to provide 'bar'.
     attr_accessor :provides
 
-    # Build requirements. Technically this is build metadata, as opposed to library 
-    # metadata, but it's the only piece of information that can't be tied to
-    # a specific tool, so it is included here.
-    attr_accessor :buildreqs
+    # What other packages this project requires to build.
+    attr_accessor :prerequisites
 
     # Load path(s) (used by Ruby's own site loading and RubyGems).
     # The default is 'lib/', which is usually correct.
@@ -219,10 +217,10 @@ module POM
     # These are used to compile the extensions.
     attr_accessor :extensions
 
-    # Abirtary information, espeThe entry is required
-    # and must not contain spaces or puncuation.cially about what might be needed
-    # to use this package. This is strictly information for the
-    # end-user to consider. Eg. "Needs a fast graphics card."
+    # Abirtary information, especially about what might be needed
+    # to use or build this package that does not fit under reuquires
+    # or prerequisites. This is strictly information for the end-user
+    # to consider, eg. "gcc 4.4+" or "fast graphics card".
     attr_accessor :notes
 
     # Homepage

@@ -1,7 +1,6 @@
 require 'pom/corext'
 require 'pom/root'
 require 'pom/metadata'
-require 'pom/metabuild'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/release'
@@ -78,13 +77,7 @@ module POM
     # Metadata provides all the general information about the project.
 
     def metadata
-      @metadata ||= Metadata.new(root).load
-    end
-
-    # Build provides build-related configuration data.
-
-    def metabuild
-      @metabuild ||= Metabuild.new(root).load
+      @metadata ||= Metadata.new(root)
     end
 
     # Project manifest.
@@ -232,7 +225,7 @@ module POM
     # it is possible to alter the load path. So it may not always
     # be the case. In the future, it must be decided if we should
     # standardize aroung the lib/ convention (though you could still
-    # add to the load path) or allow it to be complete free form.
+    # add others to the load path) or allow it to be complete free form.
     # As I did for bin/, I prefer the former, but have not yet firmly
     # decided.
 
