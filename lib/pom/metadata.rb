@@ -1,5 +1,6 @@
 require 'time'
-require 'pom/metastore'
+require 'pom/root'
+require 'pom/filestore'
 
 #--
 # TODO: executables is not right ?
@@ -9,17 +10,40 @@ module POM
 
   # = Metadata
   #
-  class Metadata < Metastore
+  class Metadata < FileStore
 
-    #
-    STORES = ['meta', '.meta']
-
-    #
-    def stores
-      STORES
+    def self.path
+      'meta'
     end
 
+    # Like new but reads all metadata into memory.
+    #--
+    # TODO: search for root ?
+    #++
+    def self.load(root=Dir.pwd)
+      new(root) #.load
+    end
+
+    #
+    #STORES = ['meta', '.meta']
+
+    #
+    #def stores
+    #  STORES
+    #end
+
   private
+
+    #
+    def initialize(root=nil)
+      if root
+        @root = Pathname.new(root)
+        super(@root + 'meta')
+      else
+        super()
+      end
+      reload
+    end
 
     #
     def initialize_defaults
@@ -36,6 +60,18 @@ module POM
     end
 
   public
+
+    # Project root directory.
+    attr :root
+
+    # Change the root location if +dir+.
+    def root=(dir) 
+      if dir
+        @root = Pathname.new(dir)
+        @directory = @root + 'meta'
+        @hidden    = nil
+      end
+    end
 
     # DEPRECATED: Support for metafile.
 
@@ -59,25 +95,8 @@ module POM
     # Load metadata from the +.meta+ and/or +meta+ directories.
     def reload
       load_version_stamp
-      super
-      #load_metadata_hidden
-      #load_metadata
-      #METADIRS.reverse.each do |dir|
-      #  next unless (@root + dir).directory?
-      #  entries(@root + dir).each do |file|
-      #    next if file.index(/[.]/)             # TODO: improve rejection filter
-      #    data = File.read(@root + dir + file).strip
-      #    data = (/\A^---/ =~ data ? YAML.load(data) : data)
-      #    name = file.sub('/','_')
-      #    if respond_to?("#{name}=")
-      #      __send__("#{name}=", data)
-      #    else
-      #      #@data[name] = data
-      #      add_attribute(name, data)
-      #    end
-      #  end
-      #end
-      self
+      load! if root
+      return self
     end
 
     #def load_metadata
@@ -147,7 +166,6 @@ module POM
     # The suite name defaults to the project name if no entry is given.
     # This is also aliased as #collection.
     attr_accessor :suite
-
 
     # Title of package (this defaults to project name capitalized).
     attr_accessor :title
@@ -358,42 +376,42 @@ module POM
 
     #
     def loadpath=(paths)
-      @data['loadpath'] = list(paths)
+      @data['loadpath'] = paths.to_list
     end
 
     #
     def authors=(auths)
-      @data['authors'] = list(auths)
+      @data['authors'] = auths.to_list
     end
 
     #
     def requires=(x)
-      @data['requires'] = list(x)
+      @data['requires'] = x.to_list
     end
 
     #
     def recommend=(x)
-      @data['recommend'] = list(x)
+      @data['recommend'] = x.to_list
     end
 
     #
     def suggest=(x)
-      @data['suggest'] = list(x)
+      @data['suggest'] = x.to_list
     end
 
     #
     def conflicts=(x)
-      @data['conflicts'] = list(x)
+      @data['conflicts'] = x.to_list
     end
 
     #
     def replaces=(x)
-      @data['replaces'] = list(x)
+      @data['replaces'] = x.to_list
     end
 
     #
     def provides=(x)
-      @data['provides'] = list(x)
+      @data['provides'] = x.to_list
     end
 
 
@@ -472,6 +490,55 @@ module POM
         'authors'    => "FIX: names of authors here",
         'repository' => "FIX: master public repo uri"
       }
+    end
+
+    public
+
+    # Load initialization values for a new project.
+    # This is used by the 'pom init' command.
+    def new_project
+      new_project_defaults.each do |name, value|
+        self[name] = value
+      end
+      home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
+      store = stores.find{ |s| s[0,1] != '.' }  # not hidden
+      path  = Pathname.new(File.join(home_config, 'pom', store))
+      load!(path) if path.exist?
+
+      #default_entries = default_dir.glob('**/*')
+      #default_entries.each do |path|
+      #  name  = path_to_name(path, default_dir)
+      #  #value = path.read
+      #  defaults[name] = read(path)
+      #end
+      #defaults.each do |name, value|
+      #  self[name] = value
+      #end
+    end
+
+    # P E R S I S T E N C E
+
+    # Backup directory.
+
+    def cache
+      root + '.cache/pom'
+    end
+
+    # Backup current metadata files to <tt>.cache/pom/</tt>.
+
+    def backup!(chroot=nil)
+      self.root = chroot if chroot
+      FileUtils.mkdir_p(cache) unless File.exist?(cache)
+      FileUtils.cp_r(hidden, cache)
+      FileUtils.cp_r(directory, cache)
+      return cache
+    end
+
+    # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
+
+    def save!(chroot=nil)
+      self.root = chroot if chroot
+      super
     end
 
   end#class Metadata
