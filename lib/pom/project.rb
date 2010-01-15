@@ -1,4 +1,4 @@
-require 'pom/corext'
+require 'pom/core_ext'
 require 'pom/root'
 require 'pom/metadata'
 require 'pom/manifest'

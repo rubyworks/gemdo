@@ -2,7 +2,7 @@
 
 We generate the metadata from the README using the pom command.
 
-  system "pom init fixture/README"
+  `pom init fixture/README`
 
 Now lets verify the metadata was extracted as expected.
 
@@ -18,5 +18,4 @@ Clean-up the generated directory.
 
   FileUtils.rm_r('meta')
   FileUtils.rm_r('.cache') if File.exist?('.cache')
-
 

@@ -1,4 +1,4 @@
-require 'pom/corext'
+require 'pom/core_ext'
 require 'pom/history'
 
 module POM

@@ -78,27 +78,26 @@ module POM
         # -- rdocs (argh!) --
 
         readme = root.glob_relative('README{,.txt}', File::FNM_CASEFOLD).first
-
-        spec.has_rdoc = true  # always true
-
-        extra_rdoc_files = options[:extra_rdoc_files] || (root.glob_relative('[A-Z]*') || []).map{ |path| path.to_s }
+        extra  = options[:extra_rdoc_files] || []
 
         rdocfiles = []
         rdocfiles << readme.to_s if readme
-        rdocfiles.concat(extra_rdoc_files)
+        rdocfiles.concat(extra)
         rdocfiles.uniq!
-
-        spec.extra_rdoc_files = rdocfiles
 
         rdoc_options = [] #['--inline-source']
         rdoc_options.concat ["--title", "#{metadata.title} API"] #if metadata.title
         rdoc_options.concat ["--main", readme.to_s] if readme
-        spec.rdoc_options = rdoc_options
+
+        spec.has_rdoc         = true  # always true
+        spec.extra_rdoc_files = rdocfiles
+        spec.rdoc_options     = rdoc_options
 
         # -- distributed files --
 
         if manifest.exist?
-          spec.files = manifest.select{ |f| File.file?(f) }          
+          filelist = manifest.select{ |f| File.file?(f) }
+          spec.files = filelist
         else
           spec.files = root.glob_relative("**/*").map{ |f| f.to_s } # metadata.distribute ?
         end

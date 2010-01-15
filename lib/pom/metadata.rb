@@ -12,25 +12,31 @@ module POM
   #
   class Metadata < FileStore
 
-    def self.path
-      'meta'
+    #
+    def self.require_plugins
+      #require 'pom/metadata/build'
+      require 'pom/metadata/rubyforge'
     end
+
+    #
+    #def self.path
+    #  'meta'
+    #end
 
     # Like new but reads all metadata into memory.
     #--
     # TODO: search for root ?
     #++
     def self.load(root=Dir.pwd)
-      new(root) #.load
+      o = new(root)
+      o.load!
+      o
     end
 
-    #
-    #STORES = ['meta', '.meta']
+    # Storage locations for metadata. POM supports
+    # the use of +meta+ and the hidden +.meta+.
 
-    #
-    #def stores
-    #  STORES
-    #end
+    STORES = ['meta', '.meta']
 
   private
 
@@ -38,39 +44,65 @@ module POM
     def initialize(root=nil)
       if root
         @root = Pathname.new(root)
-        super(@root + 'meta')
+        #super(nil, @root + 'meta', @root + '.meta')
+        super(@root, *stores)
       else
-        super()
+        super(nil, *stores)
       end
-      reload
+      initialize_preload
+      #load!
     end
 
     #
-    def initialize_defaults
-      @data['authors']    = []
-      @data['requires']   = []
-      @data['recommend']  = []
-      @data['suggest']    = []
-      @data['conflicts']  = []
-      @data['replaces']   = []
-      @data['provides']   = []
-
-      @data['loadpath']   = ['lib']
-      @data['distribute'] = ['**/*']
+    def initialize_preload
+      if root
+        load_version_stamp
+        name     # preload name
+        version  # preload version
+      end
     end
+
+    #
+    #def initialize_defaults
+    #  @data['authors']    = []
+    #  @data['requires']   = []
+    #  @data['recommend']  = []
+    #  @data['suggest']    = []
+    #  @data['conflicts']  = []
+    #  @data['replaces']   = []
+    #  @data['provides']   = []
+    #  @data['loadpath']   = ['lib']
+    #  @data['distribute'] = ['**/*']
+    #end
+
+    default_value :authors,    []
+    default_value :requires,   []
+    default_value :recommend,  []
+    default_value :suggest,    []
+    default_value :conflicts,  []
+    default_value :replaces,   []
+    default_value :provides,   []
+    default_value :loadpath,   ['lib']
+    default_value :distribute, ['**/*']
 
   public
 
+    # Storage locations for metadata. POM supports
+    # the use of +meta+ and the hidden +.meta+.
+
+    def stores
+      STORES
+    end
+
     # Project root directory.
-    attr :root
+    def root
+      @root
+    end
 
     # Change the root location if +dir+.
     def root=(dir) 
-      if dir
-        @root = Pathname.new(dir)
-        @directory = @root + 'meta'
-        @hidden    = nil
-      end
+      @root = Pathname.new(dir)
+      #@paths = [@root + 'meta', @root + '.meta']
     end
 
     # DEPRECATED: Support for metafile.
@@ -93,31 +125,17 @@ module POM
     #end
 
     # Load metadata from the +.meta+ and/or +meta+ directories.
-    def reload
-      load_version_stamp
-      load! if root
-      return self
+    def load!(path=nil)
+      if path
+        super(path)
+      else
+        if root
+          load_version_stamp
+          super
+        end
+      end
+      self
     end
-
-    #def load_metadata
-    #  metadir = @root + 'meta'
-    #  return unless metadir.directory?
-    #  entries(metadir).each do |file|
-    #    name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_').gsub('/','_')
-    #    #next if file.to_s.index(/[.]/)  # TODO: improve rejection filter
-    #    self[name] = read(file)
-    #  end
-    #end
-
-    #def load_metadata_hidden
-    #  metadir = @root + '.meta'
-    #  return unless metadir.directory?
-    #  entries(metadir).each do |file|
-    #    name = file.to_s.sub(metadir.to_s + '/', '').gsub('/','_')
-    #    #next if name.to_s.index(/[.]/)  # TODO: improve rejection filter
-    #    self[name] = read(file)
-    #  end
-    #end
 
     # NOTE: I'm not sure this a good idea, as it adds an additional complexity.
     # Standardizing around meta/version, is probably a much better approach.
@@ -148,12 +166,8 @@ module POM
     # separated string. Eg. "1.0.0".
     attr_accessor :version
 
-    #def version=(v)
-    #  @data['version'] = v
-    #end
-
     # Current status (stable, beta, alpha, rc1, etc.)
-    # DEPRECATE: Should be indicated trailing letter on version number?
+    # DEPRECATE: Should be indicated by trailing letter on version number?
     attr_accessor :status
 
     # Date this version was released.
@@ -201,6 +215,7 @@ module POM
     attr_accessor :license
 
     # What other packages *must* this package have in order to function.
+    # This includes any requirements neccessary for installation.
     attr_accessor :requires
 
     # What other packages *should* be used with this package.
@@ -220,9 +235,6 @@ module POM
     # For example, a package 'bar-plus' might fulfill the same dependency criteria
     # as package 'bar', so 'bar-plus' is said to provide 'bar'.
     attr_accessor :provides
-
-    # What other packages this project requires to build.
-    attr_accessor :prerequisites
 
     # Load path(s) (used by Ruby's own site loading and RubyGems).
     # The default is 'lib/', which is usually correct.
@@ -496,6 +508,7 @@ module POM
 
     # Load initialization values for a new project.
     # This is used by the 'pom init' command.
+
     def new_project
       new_project_defaults.each do |name, value|
         self[name] = value
@@ -528,9 +541,13 @@ module POM
 
     def backup!(chroot=nil)
       self.root = chroot if chroot
+      return unless stores.any?{ |dir| File.exist?(dir) }
       FileUtils.mkdir_p(cache) unless File.exist?(cache)
-      FileUtils.cp_r(hidden, cache)
-      FileUtils.cp_r(directory, cache)
+      stores.each do |store|
+        temp, $DEBUG = $DEBUG, false
+        FileUtils.cp_r(store, cache) if File.exist?(store)
+        $DEBUG = temp
+      end
       return cache
     end
 
@@ -540,6 +557,9 @@ module POM
       self.root = chroot if chroot
       super
     end
+
+    # load metadata plugins
+    require_plugins
 
   end#class Metadata
 

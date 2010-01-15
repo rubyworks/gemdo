@@ -1,4 +1,4 @@
-require 'pom/corext'
+require 'pom/core_ext'
 
 module POM
 

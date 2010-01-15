@@ -1,4 +1,4 @@
-require 'pom/corext'
+require 'pom/core_ext'
 
 module POM
 
@@ -17,7 +17,7 @@ module POM
     # the root directory of the project.
     def initialize(root)
       @root = root
-      @file = root.first(DEFAULT_FILE, :casefold)
+      @file = root.glob(DEFAULT_FILE, :casefold).first
     end
 
     # Parses the MANIFEST file and returns it as an array of
