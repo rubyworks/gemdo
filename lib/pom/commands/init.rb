@@ -101,6 +101,18 @@ module POM::Commands
 
       metadata.backup! unless $TRIAL
       metadata.save!   unless $TRIAL
+
+      fixes = []
+      pwd = Pathname.new(Dir.pwd)
+      metadata.paths.each do |path|
+        path.glob('*').each do |file|
+          File.readlines(file).each{ |l| l.grep(/FIX:/).each{ |r| fixes << file.relative_path_from(pwd) } }
+        end
+      end
+      if !fixes.empty?
+        puts "The following files require editing:\n"
+        puts "  " + fixes.join("\n  ")
+      end
     end
 
     #

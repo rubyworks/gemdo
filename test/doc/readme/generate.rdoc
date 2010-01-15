@@ -17,4 +17,6 @@ Now lets verify the metadata was extracted as expected.
 Clean-up the generated directory.
 
   FileUtils.rm_r('meta')
+  FileUtils.rm_r('.cache') if File.exist?('.cache')
+
 
