@@ -1,6 +1,7 @@
 module POM
 
-  class Build < FileStore
+  # NOT YET USED. MIGHT NEVER BE USED B/C YAGNI.
+  class Build < FileStore # :nodoc:
 
     # What other packages this project requires to build, ie. build requirements.
     attr_accessor :requires    #:dependencies
