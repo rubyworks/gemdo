@@ -14,55 +14,60 @@
       margin: 0; padding: 0; 
     }
     div { margin: 0; padding: 0; }
-    pre { text-align: left; font-family: monospace; padding: 10px 15px 5px 10px; color: #FEE; font-weight: bold; background: black; margin: 5px; font-size: 10px; }
+    pre { text-align: left; font-family: monospace; padding: 10px 15px 5px 10px; color: #FEE; font-weight: bold; background: black; margin: 5px; font-size: 11px; }
     a  { text-decoration: none; font-size: 10pt; }
     ul { margin: 0 auto; list-style-type: none; width: 300px; }
     li { float: left; padding: 10px; text-align: center; }
 
-    .doc { padding: 20px; position: relative; background: pink; }
+    .doc { padding: 20px; position: relative; background: white; }
 
-    .panel  { width: 880px; padding: 0; margin: 0 auto; }
+    .panel  { width: 780px; padding: 0; margin: 0 auto; }
 
-    .header { padding: 0; margin: 0; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; height: 250px; text-align: center; }
+    .header { padding: 0; margin: 0; border-top: 1px solid #ccc; border-bottom: 0px solid #ccc; height: 250px; text-align: center; }
+
+    .nav a { font-size: 32pt; color: black; font-weight: bold; letter-spacing: -5px; }
+    .nav a:hover { color: #555; }
 
     .menu { padding: 12px 0; text-align: center; background: pink; }
     .menu a { font-size: 14px; color: red; font-weight: bold; }
     .menu a:hover { color: black; }
 
-    .title { text-align: center; font-family: times; }
+    .title { text-align: left; margin: 0; padding: 0; width: 300px; }
     .title h1 { font-size: 100px; margin: 20px 0 0 0; color: red; }
     .title h2 { margin: 0 0 30px 0; font-size: 25px; color: #ff8888; }
 
     .text { clear: both; padding: 20px 30px; }
-    .text p { text-align: justify; font-weight: bold; color: #222; line-height: 150%; }
+    .text p { text-align: justify; font-weight: normal; color: #222; line-height: 150%; }
     .text h1 { font-size: 20px; color: #555; margin-top: 25px; }
 
-    .screens { clear: both; padding: 0 40px; }
-    .screen { width: 350px; background: black; vertical-align: top; border: 1px solid #ccc; -moz-border-radius: 5px; }
+    .screens { clear: both; padding: 0 0; float: right; width: 415px; height: 300px; overflow: auto; }
+    .screen { width: 360px; background: black; vertical-align: top; border: 1px solid #ccc; -moz-border-radius: 5px; }
 
     .footer { margin: 40px 0; text-align: center; font-weight: bold; color: #555; padding-right: 10px; }
   </style>
 </HEAD>
 <BODY>
 
+<!--
 <div class="menu"> 
   <div class="panel">   
     <a href="rdoc/index.html">API DOCS</a> &nbsp;&nbsp;
-    <!-- <a href="qedoc/index.html">Overview</a> &nbsp;&nbsp; -->
+    <a href="qedoc/index.html">Overview</a> &nbsp;&nbsp;
     <a href="http://googlegroups.com/group/proutils">MAILING LIST</a> &nbsp;&nbsp;
     <a href="http://wiki.github.com/proutils/pom/">WIKI WIKI</a> &nbsp;&nbsp;
     <a href="http://github.com/proutils/pom">SOURCE CODE</a> &nbsp;&nbsp;
   </div>
 </div>
+-->
 
 <div class="header">
   <div class="panel">
     <div class="logo" style="margin: -15px 0 0 0; float: right;">
-      <img src="assets/images/logo.jpg" style="height: 245px; width: 400px; margin-right: 40px;"/>
+      <img src="assets/images/logo.jpg" style="height: 245px; width: 400px; margin-right: 20px;"/>
     </div>
     <div class="title">
       <h1>POM</h1>
-      <h2>Object Model<br/>for Ruby Projects</h2>
+      <h2 style="padding-left: 10px;">An Object Model<br/>for Ruby Projects</h2>
     </div>
   </div>
 </div>
@@ -71,7 +76,7 @@
 <div class="panel">
 
   <div class="screens">
-  <pre class="screen" style="margin-right: 12px; float: left; height: 240px;">
+  <pre class="screen">
   $ pom about
 
   POM v1.3 (2009-07-22)
@@ -85,9 +90,8 @@
   package    : pom-1.3
 
   Copyright (c) 2009 Thomas Sawyer
-  </pre>
 
-  <pre class="screen" style="margin-left: 12px; float: left; height: 240px;">
+
   $ pom show
 
   authors
@@ -105,72 +109,28 @@
   sitemap
   title
   version
-  </pre>
 
-  <pre class="screen" style="clear: both; float: left; margin-right: 12px;">
+
   $ pom show version
 
   1.3
-  </pre>
 
-  <pre class="screen" style="margin-left: 12px; float: left;">
+
   $ pom gemspec
 
   pom.gemspec created
   </pre>
   </div>
 
-  <div class="text" style="clear: both;">
-
-    <h1>What is It?</h1>
-
-    <p>POM stands for <i>Project Object Model</i>. POM provides a standardize methodology for storing information about a Ruby project.
-    The system is easy to understand, easy to use, versitile and extensible.
-    </p>
-
-    <p>The name, <i>POM</i>, was blantently co-opted from Maven. And though it serves much the same purpose for Ruby projects as Maven's POM does for Java
-    projects, it is quite a bit eaiser to comprehend, doesn't use XML and certainly does not double as a build scripting language (a la Jelly). POM is simply
-    the objectification of the common Ruby project, and no more.</p>
-
-    <h1>Metadata</h1>
-
-    <p>POM metadata is stored in a project subdirectory as a set of files. Each file stores a single piece of information. For example, in the above figures
-    the <code>meta/<code> directory listing of the POM project itself is given.</p>
-
-    <p>Each metadata file can be placed in a directory called <code>meta/</code> or <code>.meta/</code>, depending on your preference and as a basis of
-    separating distributable from non-distributable information.</p>
-
-    <p>Each file is read as a simple string, unless the file begins with "<code>---</code>", in which case it is parsed via YAML.</p>
-
-    <p>The use of such a file store might seem extravegant at first. After all, why not just use a single, easily editable YAML file? But the file store has distinct
-    advantages that a single file simply cannot provide. Separate files can be easily manipulated and scripted,
-    which is especailly useful for scaffold generators. They can also be lazy-loaded, improving performance when only select information in needed. And
-    there's no need to be concerned of file layout --a YAML file, when rewritten by a script, can loose much of it's human readability. And, while multiple files
-    may not be as easy to quickly edit in mass, consider that once a project has settled past the flurry of initial development, most metadata entries never change,
-    so there's no need to continuely rewrite the file that contains it for the sake of other information.</p>
-
-    <p>The <code>POM::Metadata</code> class has the most common project attributes pre-defined, and has set typical defaults.</p>
-
-
-    <h1>Project Class</h1>
-
-    <p>The <code>POM::Project</code> class encpsulates the Metadata class and a other common project objects, such as the Manifest, and provides easy access
-    to standard project locations as Pathname objects, like <code>doc/</code> and <code>lib/</code>. This makes it very easy to work with a project as a
-    Ruby object.</p>
-
-
-    <h1>Other Classes</h1>
-
-    <p>POM also provides a Manifest class, a History class and a Release class.</p>
-
-
-    <h1>Future</h1>
-
-    <p>POM is still evolving, but it has now been through enough prelimary usage to be a viable tool for the wider Ruby eco-system.</p>
-  </div>
+  <div class="nav">
+    <a href="http://wiki.github.com/proutils/pom">Documentation</a><br/>
+    <a href="http://github.com/proutils/pom">Development</a>
+  </di>
 
 </div>
 </div>
+
+<div style="clear: both;"></div>
 
 <div class="footer">
   <script type="text/javascript"><!--
