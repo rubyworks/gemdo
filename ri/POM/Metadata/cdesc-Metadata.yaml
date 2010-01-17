@@ -21,7 +21,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: What other packages does this package conflict.
+    body: With what other packages does this package conflict.
   name: conflicts
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -33,7 +33,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Copyright notice.
+    body: Copyright notice. Eg. &quot;Copyright (c) 2009 Thomas Sawyer&quot;
   name: copyright
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -117,7 +117,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Abirtary information, espeThe entry is required and must not contain spaces or puncuation.cially about what might be needed to use this package. This is strictly information for the end-user to consider. Eg. &quot;Needs a fast graphics card.&quot;
+    body: Abirtary information, especially about what might be needed to use or build this package that does not fit under reuquires or prerequisites. This is strictly information for the end-user to consider, eg. &quot;gcc 4.4+&quot; or &quot;fast graphics card&quot;.
   name: notes
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -161,19 +161,13 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: What other packages <b>must</b> this package have in order to function.
+    body: What other packages <b>must</b> this package have in order to function. This includes any requirements neccessary for installation.
   name: requires
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Project root directory.
-  name: root
-  rw: R
-- !ruby/object:RDoc::RI::Attribute 
-  comment: 
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: "Current status (stable, beta, alpha, rc1, etc.) DEPRECATE: Should be indicated trailing letter on version number?"
+    body: "Current status (stable, beta, alpha, rc1, etc.) DEPRECATE: Should be indicated by trailing letter on version number?"
   name: status
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -214,10 +208,6 @@ attributes:
   rw: RW
 class_methods: 
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: alias_accessor
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: attr_accessor
-- !ruby/object:RDoc::RI::MethodSummary 
   name: from_gemspec
 - !ruby/object:RDoc::RI::MethodSummary 
   name: from_readme
@@ -225,6 +215,8 @@ class_methods:
   name: load
 - !ruby/object:RDoc::RI::MethodSummary 
   name: new
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: require_plugins
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::H 
   level: 1
@@ -237,22 +229,18 @@ comment:
 constants: 
 - !ruby/object:RDoc::RI::Constant 
   comment: 
-  - !ruby/struct:RDoc::Markup::Flow::VERB 
-    body: " Glob for matching against meta directory names,\n <tt>.meta/</tt> and <tt>meta/</tt>.\n"
-  - !ruby/struct:RDoc::Markup::Flow::P 
-    body: METADIRS = '{.meta,meta}'
-  name: METADIRS
-  value: "['.meta', 'meta']"
-- !ruby/object:RDoc::RI::Constant 
-  comment: 
   name: RE_EMAIL
   value: /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Storage locations for metadata. POM supports the use of <tt>meta</tt> and the hidden <tt>.meta</tt>.
+  name: STORES
+  value: "['meta', '.meta']"
 full_name: POM::Metadata
 includes: []
 
 instance_methods: 
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: "[]="
 - !ruby/object:RDoc::RI::MethodSummary 
   name: assert_valid
 - !ruby/object:RDoc::RI::MethodSummary 
@@ -264,47 +252,33 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: backup!
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: cache
+- !ruby/object:RDoc::RI::MethodSummary 
   name: conflicts=
 - !ruby/object:RDoc::RI::MethodSummary 
   name: email
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: entries
 - !ruby/object:RDoc::RI::MethodSummary 
   name: executables
 - !ruby/object:RDoc::RI::MethodSummary 
   name: extensions
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: init_defaults
+  name: initialize_preload
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: keys
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: list
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: load
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: load_defaults
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: load_metadata
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: load_metadata_hidden
+  name: load!
 - !ruby/object:RDoc::RI::MethodSummary 
   name: load_version_stamp
 - !ruby/object:RDoc::RI::MethodSummary 
   name: loadpath=
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: mesh
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: metadir
-- !ruby/object:RDoc::RI::MethodSummary 
   name: name=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new_project
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new_project_defaults
 - !ruby/object:RDoc::RI::MethodSummary 
   name: package_name
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: path_to_name
-- !ruby/object:RDoc::RI::MethodSummary 
   name: provides=
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: read
 - !ruby/object:RDoc::RI::MethodSummary 
   name: recommend=
 - !ruby/object:RDoc::RI::MethodSummary 
@@ -314,11 +288,17 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: requires=
 - !ruby/object:RDoc::RI::MethodSummary 
+  name: root
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: root=
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: rubyforge
+- !ruby/object:RDoc::RI::MethodSummary 
   name: save!
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: save_entry
-- !ruby/object:RDoc::RI::MethodSummary 
   name: stage_name
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: stores
 - !ruby/object:RDoc::RI::MethodSummary 
   name: suggest=
 - !ruby/object:RDoc::RI::MethodSummary 
@@ -330,14 +310,8 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: title
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: to_h
-- !ruby/object:RDoc::RI::MethodSummary 
   name: to_s
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: to_yaml
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: update
 - !ruby/object:RDoc::RI::MethodSummary 
   name: valid?
 name: Metadata
-superclass: Object
+superclass: FileStore

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get a metadata <tt>entry</tt>, where entry is a pathname. If it is a directory, will create a new FileStore object.
+full_name: POM::FileStore#read!
+is_singleton: false
+name: read!
+params: (entry)
+visibility: private

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Load attribute values from file system.
+full_name: POM::FileStore#load!
+is_singleton: false
+name: load!
+params: (path=nil)
+visibility: public

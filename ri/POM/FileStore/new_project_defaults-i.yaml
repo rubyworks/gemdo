@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Subclasses can override this.
+full_name: POM::FileStore#new_project_defaults
+is_singleton: false
+name: new_project_defaults
+params: ()
+visibility: private

@@ -1,0 +1,70 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Parent store, or root pathname. The topmost store should set this to the root pathname. All substores use this to reference their parent store (akin to parent directory).
+  name: parent
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: alias_accessor
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: attr_accessor
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: default_value
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: FileStore serves as the base class for the Metadata class. It connects the file system to the POM model.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: FileStore serves as the base class for the Metadata class. It connects the file system to the POM model.
+constants: []
+
+full_name: POM::FileStore
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]"
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]="
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: entries
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: initialize_attributes
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: inspect
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: load!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: load_soft!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: mesh
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: method_missing
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new_project_defaults
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: path_to_name
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: paths
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: read!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: root
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: save!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: to_h
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: update
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: write!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: write_raw!
+name: FileStore
+superclass: Object

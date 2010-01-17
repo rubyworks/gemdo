@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Load initialization values for a new project. This is used by the 'pom init' command.
+full_name: POM::Metadata#new_project
+is_singleton: false
+name: new_project
+params: ()
+visibility: public

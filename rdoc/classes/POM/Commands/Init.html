@@ -39,7 +39,7 @@
       
         <img src="../../../assets/icon/class.png" align="absmiddle">&nbsp;
       
-      <a href="../../../index.html">POM</a>&nbsp;
+      <a href="../../../index.html">Pom</a>&nbsp;
       <a href="/">POM::Commands::Init</a>
     </h1>
   </div>
@@ -90,27 +90,32 @@
           
             
             <li class="singleton">
-              <a href="#M000076">::new</a>
+              <a href="#M000105">::new</a>
             </li>
           
             
             <li class="singleton">
-              <a href="#M000075">::run</a>
+              <a href="#M000104">::run</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000080">#execute</a>
+              <a href="#M000113">#execute</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000079">#parse</a>
+              <a href="#M000107">#parse</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000078">#run</a>
+              <a href="#M000118">#require_rubygems</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#M000106">#run</a>
             </li>
           
         </ul>
@@ -130,9 +135,11 @@
         
           <li class="file"><a href="../../../files/HISTORY.html">HISTORY</a></li>
         
-          <li class="file"><a href="../../../files/COPYING.html">COPYING</a></li>
+          <li class="file"><a href="../../../files/LICENSE.html">LICENSE</a></li>
         
           <li class="file"><a href="../../../files/README.html">README</a></li>
+        
+          <li class="file"><a href="../../../files/DIARY.html">DIARY</a></li>
         
         </ul>
       </div>
@@ -172,6 +179,8 @@
         
           <li class="class"><a href="../../../classes/POM/DebCtrl.html">POM::DebCtrl</a></li>
         
+          <li class="class"><a href="../../../classes/POM/FileStore.html">POM::FileStore</a></li>
+        
           <li class="class"><a href="../../../classes/POM/History.html">POM::History</a></li>
         
           <li class="class"><a href="../../../classes/POM/History/Release.html">POM::History::Release</a></li>
@@ -180,13 +189,19 @@
         
           <li class="class"><a href="../../../classes/POM/Metadata.html">POM::Metadata</a></li>
         
+          <li class="class"><a href="../../../classes/POM/Metadata/Rubyforge.html">POM::Metadata::Rubyforge</a></li>
+        
           <li class="class"><a href="../../../classes/POM/Project.html">POM::Project</a></li>
         
           <li class="class"><a href="../../../classes/POM/Readme.html">POM::Readme</a></li>
         
           <li class="class"><a href="../../../classes/POM/Release.html">POM::Release</a></li>
         
+          <li class="module"><a href="../../../classes/Enumerable.html">Enumerable</a></li>
+        
           <li class="class"><a href="../../../classes/Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="../../../classes/String.html">String</a></li>
         
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
@@ -198,7 +213,7 @@
       <div style="float: right; margin-right: 5px;">
         <a href="http://validator.w3.org/check/referer"><img src="../../../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
       </div>
-      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.0.0
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.1
       <br/><br/>
     </div>
   </div>
@@ -237,6 +252,21 @@
         </div>
       </div>
       
+      <div id="options-attribute-method" class="method-detail">
+        <a name="options"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">options</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p class="missing-docs">(Not documented)</p>
+        
+        </div>
+      </div>
+      
     </div>
     
 
@@ -247,7 +277,7 @@
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000076"></a>
+        <a name="M000105"></a>
 
         <div class="method-heading">
         
@@ -269,6 +299,7 @@
 <span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 10</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
       <span class="ruby-comment cmt">#@project = POM::Project.new(:lookup=&gt;true)</span>
+      <span class="ruby-ivar">@options</span> = {}
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -279,7 +310,7 @@
 
     
       <div id="run-method" class="method-detail ">
-        <a name="M000075"></a>
+        <a name="M000104"></a>
 
         <div class="method-heading">
         
@@ -317,7 +348,7 @@
 
     
       <div id="execute-method" class="method-detail ">
-        <a name="M000080"></a>
+        <a name="M000113"></a>
 
         <div class="method-heading">
         
@@ -336,8 +367,10 @@
           <div class="method-source-code"
             id="execute-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 53</span>
+<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 59</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>
+      <span class="ruby-identifier">require_rubygems</span>
+
       <span class="ruby-identifier">require</span> <span class="ruby-value str">'pom/metadata'</span>
       <span class="ruby-identifier">require</span> <span class="ruby-value str">'pom/readme'</span>
       <span class="ruby-identifier">require</span> <span class="ruby-value str">'pom/models/gemspec'</span>
@@ -345,7 +378,7 @@
       <span class="ruby-identifier">exists</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'{.,}meta'</span>).<span class="ruby-identifier">first</span>
 
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exists</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">$FORCE</span>
-        <span class="ruby-identifier">$stderr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;A #{exists} directory already exists. Use --force option to allow overwrites.\n&quot;</span>
+        <span class="ruby-identifier">$stderr</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;A #{exists} directory already exists. Use --force option to allow overwrite.\n&quot;</span>
         <span class="ruby-keyword kw">return</span>
       <span class="ruby-keyword kw">end</span>
 
@@ -357,28 +390,41 @@
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">compact!</span>
 
-      <span class="ruby-identifier">metadata</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>
-      <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">load_defaults</span>
+      <span class="ruby-identifier">metadata</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+      <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">new_project</span>
 
       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">text</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">obj</span>  = <span class="ruby-regexp re">/^---/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">text</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">text</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">text</span>
         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">obj</span>
         <span class="ruby-keyword kw">when</span> <span class="ruby-operator">::</span><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>
-          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>( <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">from_gemspec</span>(<span class="ruby-identifier">obj</span>) )
+          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>(<span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">from_gemspec</span>(<span class="ruby-identifier">obj</span>))
         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
-          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>( <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">from_readme</span>(<span class="ruby-identifier">obj</span>) )
+          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>(<span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">from_readme</span>(<span class="ruby-identifier">obj</span>))
         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
-          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>( <span class="ruby-identifier">obj</span> )
+          <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">mesh</span>(<span class="ruby-identifier">obj</span>)
         <span class="ruby-keyword kw">else</span>
           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Skipping #{obj.class} cannot be converted into Metadata.&quot;</span>
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
 
-      <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">load</span>    <span class="ruby-comment cmt"># load any meta entries that may alread exist</span>
+      <span class="ruby-comment cmt"># load any meta entries that may already exist</span>
+      <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">reload</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:replace</span>]
 
       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">backup!</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$TRIAL</span>
       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">save!</span>   <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$TRIAL</span>
+
+      <span class="ruby-identifier">fixes</span> = []
+      <span class="ruby-identifier">pwd</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+      <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">path</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'*'</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">l</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-regexp re">/FIX:/</span>).<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fixes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">pwd</span>) } }
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fixes</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;The following files require editing:\n&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;  &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fixes</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n  &quot;</span>)
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -389,7 +435,7 @@
 
     
       <div id="parse-method" class="method-detail ">
-        <a name="M000079"></a>
+        <a name="M000107"></a>
 
         <div class="method-heading">
         
@@ -408,10 +454,14 @@
           <div class="method-source-code"
             id="parse-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 24</span>
+<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 26</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>
       <span class="ruby-identifier">parser</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;pom init [RESOURCE ...]&quot;</span>
+
+        <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--replace&quot;</span>, <span class="ruby-value str">&quot;-r&quot;</span>, <span class="ruby-value str">&quot;replace any pre-existing entries&quot;</span>) <span class="ruby-keyword kw">do</span>
+          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:replace</span>] = <span class="ruby-keyword kw">true</span>
+        <span class="ruby-keyword kw">end</span>
 
         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--force&quot;</span>, <span class="ruby-value str">&quot;-f&quot;</span>, <span class="ruby-value str">&quot;override safe-guarded operations&quot;</span>) <span class="ruby-keyword kw">do</span>
           <span class="ruby-identifier">$FORCE</span> = <span class="ruby-keyword kw">true</span>
@@ -444,8 +494,45 @@
       </div>
 
     
+      <div id="require-rubygems-method" class="method-detail ">
+        <a name="M000118"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">require_rubygems</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="require-rubygems-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 119</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_rubygems</span>
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">require</span> <span class="ruby-value str">'rubygems'</span>
+        <span class="ruby-comment cmt">#::Gem::manage_gems</span>
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">LoadError</span>, <span class="ruby-value str">&quot;RubyGems is not installed.&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="run-method" class="method-detail ">
-        <a name="M000078"></a>
+        <a name="M000106"></a>
 
         <div class="method-heading">
         
@@ -464,7 +551,7 @@
           <div class="method-source-code"
             id="run-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 18</span>
+<span class="ruby-comment cmt"># File lib/pom/commands/init.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
       <span class="ruby-identifier">parse</span>
       <span class="ruby-identifier">execute</span>

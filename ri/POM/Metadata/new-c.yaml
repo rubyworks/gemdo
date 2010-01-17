@@ -2,11 +2,10 @@
 aliases: []
 
 block_params: 
-comment: 
-- !ruby/struct:RDoc::Markup::Flow::P 
-  body: New Metadata object.
+comment: []
+
 full_name: POM::Metadata::new
 is_singleton: true
 name: new
-params: (root=Dir.pwd)
+params: (root=nil)
 visibility: public

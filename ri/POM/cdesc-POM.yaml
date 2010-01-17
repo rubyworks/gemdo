@@ -21,7 +21,7 @@ constants:
 - !ruby/object:RDoc::RI::Constant 
   comment: 
   name: VERSION
-  value: "\"1.5\""
+  value: "\"1.6.0\""
 full_name: POM
 includes: []
 

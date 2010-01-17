@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Storage locations for metadata. POM supports the use of <tt>meta</tt> and the hidden <tt>.meta</tt>.
+full_name: POM::Metadata#stores
+is_singleton: false
+name: stores
+params: ()
+visibility: public

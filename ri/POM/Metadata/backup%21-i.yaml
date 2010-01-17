@@ -8,5 +8,5 @@ comment:
 full_name: POM::Metadata#backup!
 is_singleton: false
 name: backup!
-params: ()
+params: (chroot=nil)
 visibility: public

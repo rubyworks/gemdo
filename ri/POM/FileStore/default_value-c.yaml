@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: POM::FileStore::default_value
+is_singleton: true
+name: default_value
+params: (name, value=nil, &block)
+visibility: public
