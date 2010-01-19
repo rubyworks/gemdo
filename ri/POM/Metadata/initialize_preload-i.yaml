@@ -8,4 +8,4 @@ full_name: POM::Metadata#initialize_preload
 is_singleton: false
 name: initialize_preload
 params: ()
-visibility: public
+visibility: private

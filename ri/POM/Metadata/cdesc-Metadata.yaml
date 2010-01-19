@@ -117,7 +117,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Abirtary information, especially about what might be needed to use or build this package that does not fit under reuquires or prerequisites. This is strictly information for the end-user to consider, eg. &quot;gcc 4.4+&quot; or &quot;fast graphics card&quot;.
+    body: Abirtary information, especially about what might be needed to use or build or use this package that does not fit under <tt>requires</tt>. This is strictly information for the end-user to consider, eg. &quot;Needs gcc 4.4+&quot; or &quot;Needs fast graphics card&quot;.
   name: notes
   rw: RW
 - !ruby/object:RDoc::RI::Attribute 
@@ -153,7 +153,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Resource to central SMC <b>public</b> repository. Eg.
+    body: Resource to central <b>public</b> repository. Eg.
   - !ruby/struct:RDoc::Markup::Flow::VERB 
     body: "  git://github.com/protuils/pom.git\n"
   name: repository

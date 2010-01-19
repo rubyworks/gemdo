@@ -118,17 +118,17 @@
           
             
             <li class="singleton">
-              <a href="#M000122">::load</a>
+              <a href="#M000120">::load</a>
             </li>
           
             
             <li class="singleton">
-              <a href="#M000123">::new</a>
+              <a href="#M000122">::new</a>
             </li>
           
             
             <li class="singleton">
-              <a href="#M000121">::require_plugins</a>
+              <a href="#M000118">::require_plugins</a>
             </li>
           
             
@@ -183,17 +183,17 @@
           
             
             <li class="method">
-              <a href="#M000125">#initialize_preload</a>
+              <a href="#M000124">#initialize_preload</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000130">#load!</a>
+              <a href="#M000128">#load!</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000131">#load_version_stamp</a>
+              <a href="#M000129">#load_version_stamp</a>
             </li>
           
             
@@ -248,17 +248,17 @@
           
             
             <li class="method">
-              <a href="#M000128">#root</a>
+              <a href="#M000126">#root</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000129">#root=</a>
+              <a href="#M000127">#root=</a>
             </li>
           
             
             <li class="method">
-              <a href="#M000124">#rubyforge</a>
+              <a href="#M000130">#rubyforge</a>
             </li>
           
             
@@ -273,7 +273,7 @@
           
             
             <li class="method">
-              <a href="#M000127">#stores</a>
+              <a href="#M000125">#stores</a>
             </li>
           
             
@@ -714,7 +714,7 @@ The date the project was started.
         <div class="method-description">
         
         <p>
-Copyright notice.
+Copyright notice. Eg. &#8220;Copyright &#169; 2009 Thomas Sawyer&#8220;
 </p>
         
         </div>
@@ -914,9 +914,9 @@ the extensions.
         
         <p>
 Abirtary information, especially about what might be needed to use or build
-this package that does not fit under reuquires or prerequisites. This is
-strictly information for the end-user to consider, eg. &#8220;gcc
-4.4+&#8221; or &#8220;fast graphics card&#8221;.
+or use this package that does not fit under <tt>requires</tt>. This is
+strictly information for the end-user to consider, eg. &#8220;Needs gcc
+4.4+&#8221; or &#8220;Needs fast graphics card&#8221;.
 </p>
         
         </div>
@@ -1106,30 +1106,11 @@ Resource to issue tracker.
         <div class="method-description">
         
         <p>
-Resource to central SMC <b>public</b> repository. Eg.
+Resource to central <b>public</b> repository. Eg.
 </p>
 <pre>
   git://github.com/protuils/pom.git
 </pre>
-        
-        </div>
-      </div>
-      
-      <div id="copyright-attribute-method" class="method-detail">
-        <a name="copyright"></a>
-        
-        <a name="copyright="></a>
-        
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">copyright</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        <p>
-Copyright notice. Eg. &#8220;Copyright &#169; 2009 Thomas Sawyer&#8220;
-</p>
         
         </div>
       </div>
@@ -1247,7 +1228,7 @@ you already have a <a href="../../files/README.html">README</a>.
 
     
       <div id="load-method" class="method-detail ">
-        <a name="M000122"></a>
+        <a name="M000120"></a>
 
         <div class="method-heading">
         
@@ -1283,7 +1264,7 @@ Like new but reads all metadata into memory.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000123"></a>
+        <a name="M000122"></a>
 
         <div class="method-heading">
         
@@ -1323,7 +1304,7 @@ Like new but reads all metadata into memory.
 
     
       <div id="require-plugins-method" class="method-detail ">
-        <a name="M000121"></a>
+        <a name="M000118"></a>
 
         <div class="method-heading">
         
@@ -1383,7 +1364,7 @@ Assert that the mininal information if provided.
           <div class="method-source-code"
             id="assert-valid-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 462</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 459</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_valid</span>
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-value str">&quot;no name&quot;</span>    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span>
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-value str">&quot;no version&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>
@@ -1421,7 +1402,7 @@ Returns the first entry in the authors list.
           <div class="method-source-code"
             id="author-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 339</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 336</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>
       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">first</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1453,7 +1434,7 @@ Returns the first entry in the authors list.
           <div class="method-source-code"
             id="author--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 375</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 372</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author=</span>(<span class="ruby-identifier">name</span>)
       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">name</span>).<span class="ruby-identifier">uniq!</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1485,7 +1466,7 @@ Returns the first entry in the authors list.
           <div class="method-source-code"
             id="authors--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 395</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 392</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authors=</span>(<span class="ruby-identifier">auths</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'authors'</span>] = <span class="ruby-identifier">auths</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1519,7 +1500,7 @@ Backup current metadata files to <tt>.cache/pom/</tt>.
           <div class="method-source-code"
             id="backup--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 542</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 539</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backup!</span>(<span class="ruby-identifier">chroot</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span> = <span class="ruby-identifier">chroot</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chroot</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">stores</span>.<span class="ruby-identifier">any?</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dir</span>) }
@@ -1561,7 +1542,7 @@ Backup directory.
           <div class="method-source-code"
             id="cache-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 536</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 533</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cache</span>
       <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache/pom'</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1593,7 +1574,7 @@ Backup directory.
           <div class="method-source-code"
             id="conflicts--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 415</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 412</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conflicts=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'conflicts'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1627,7 +1608,7 @@ Contact&#8217;s email address.
           <div class="method-source-code"
             id="email-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 330</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 327</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">email</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-constant">RE_EMAIL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">contact</span>)
         <span class="ruby-identifier">md</span>[<span class="ruby-value">0</span>]
@@ -1665,7 +1646,7 @@ Executables default to the contents of bin/.
           <div class="method-source-code"
             id="executables-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 323</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 320</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">executables</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'executables'</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'bin/*'</span>).<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">bin</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">bin</span>) }
     <span class="ruby-keyword kw">end</span></pre>
@@ -1699,7 +1680,7 @@ Extensions default to ext/**/extconf.rb
           <div class="method-source-code"
             id="extensions-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 318</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 315</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extensions</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'extensions'</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'ext/**/extconf.rb'</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -1712,7 +1693,7 @@ Extensions default to ext/**/extconf.rb
 
     
       <div id="load--method" class="method-detail ">
-        <a name="M000130"></a>
+        <a name="M000128"></a>
 
         <div class="method-heading">
         
@@ -1754,7 +1735,7 @@ Load metadata from the <tt>.meta</tt> and/or <tt>meta</tt> directories.
 
     
       <div id="load-version-stamp-method" class="method-detail ">
-        <a name="M000131"></a>
+        <a name="M000129"></a>
 
         <div class="method-heading">
         
@@ -1820,7 +1801,7 @@ approach.
           <div class="method-source-code"
             id="loadpath--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 390</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 387</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">loadpath=</span>(<span class="ruby-identifier">paths</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'loadpath'</span>] = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -1854,7 +1835,7 @@ Name assignment. The <tt>entry</tt> must not contain spaces or puncuation.
           <div class="method-source-code"
             id="name--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 369</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 366</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name=</span>(<span class="ruby-identifier">entry</span>)
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-node">&quot;invalid name -- #{n}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-regexp re">/^[\w-]+$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">entry</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'name'</span>] = <span class="ruby-identifier">entry</span>
@@ -1890,7 +1871,7 @@ Load initialization values for a new project. This is used by the
           <div class="method-source-code"
             id="new-project-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 512</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 509</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_project</span>
       <span class="ruby-identifier">new_project_defaults</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
         <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">value</span>
@@ -1944,7 +1925,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="package-name-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 347</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 344</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package_name</span>(<span class="ruby-identifier">buildno</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buildno</span>
         <span class="ruby-identifier">buildno</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%H*60+%M&quot;</span>)
@@ -1991,7 +1972,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="provides--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 425</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 422</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">provides=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'provides'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2023,7 +2004,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="recommend--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 405</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 402</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recommend=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'recommend'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2055,7 +2036,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="released--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 385</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 382</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">released=</span>(<span class="ruby-identifier">date</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'released'</span>] = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">date</span>.<span class="ruby-identifier">strip</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">date</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2087,7 +2068,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="replaces--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 420</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 417</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replaces=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'replaces'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2119,7 +2100,7 @@ TODO: Improve buildno support ?
           <div class="method-source-code"
             id="requires--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 400</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 397</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">requires=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'requires'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2132,7 +2113,7 @@ TODO: Improve buildno support ?
 
     
       <div id="root-method" class="method-detail ">
-        <a name="M000128"></a>
+        <a name="M000126"></a>
 
         <div class="method-heading">
         
@@ -2166,7 +2147,7 @@ TODO: Improve buildno support ?
 
     
       <div id="root--method" class="method-detail ">
-        <a name="M000129"></a>
+        <a name="M000127"></a>
 
         <div class="method-heading">
         
@@ -2200,6 +2181,38 @@ Change the root location if <tt>dir</tt>.
       </div>
 
     
+      <div id="rubyforge-method" class="method-detail ">
+        <a name="M000130"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">rubyforge</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="rubyforge-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/pom/metadata/rubyforge.rb, line 3</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rubyforge</span>
+    <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'rubyforge'</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Rubyforge</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-value str">'rubyforge'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="save--method" class="method-detail ">
         <a name="M000160"></a>
 
@@ -2223,7 +2236,7 @@ found).
           <div class="method-source-code"
             id="save--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 556</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 553</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save!</span>(<span class="ruby-identifier">chroot</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span> = <span class="ruby-identifier">chroot</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chroot</span>
       <span class="ruby-keyword kw">super</span>
@@ -2262,7 +2275,7 @@ Alias for <a href="Metadata.html#M000139">package_name</a>
 
     
       <div id="stores-method" class="method-detail ">
-        <a name="M000127"></a>
+        <a name="M000125"></a>
 
         <div class="method-heading">
         
@@ -2316,7 +2329,7 @@ use of <tt>meta</tt> and the hidden <tt>.meta</tt>.
           <div class="method-source-code"
             id="suggest--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 410</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 407</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">suggest=</span>(<span class="ruby-identifier">x</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'suggest'</span>] = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_list</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2350,7 +2363,7 @@ The <tt>suite</tt> name defaults to the project&#8217;s <tt>name</tt>.
           <div class="method-source-code"
             id="suite-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 296</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 293</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">suite</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'suite'</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2384,7 +2397,7 @@ Summary will default to the first sentence or line of the full description.
           <div class="method-source-code"
             id="summary-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 307</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 304</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">summary</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'summary'</span>] <span class="ruby-operator">||=</span> (
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">description</span>
@@ -2424,7 +2437,7 @@ Limit summary to 69 characters.
           <div class="method-source-code"
             id="summary--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 380</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 377</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">summary=</span>(<span class="ruby-identifier">line</span>)
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'summary'</span>] = <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">69</span>]
     <span class="ruby-keyword kw">end</span></pre>
@@ -2458,7 +2471,7 @@ Title defaults to name captialized.
           <div class="method-source-code"
             id="title-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 301</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 298</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>
       <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'title'</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">capitalize</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -2492,7 +2505,7 @@ Provide a summary text of project&#8217;s metadata.
           <div class="method-source-code"
             id="to-s-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 474</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 471</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
       <span class="ruby-identifier">s</span> = []
       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{title} v#{version}&quot;</span>
@@ -2537,7 +2550,7 @@ Is the minimal information provided?
           <div class="method-source-code"
             id="valid--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 452</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 449</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid?</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>
@@ -2561,7 +2574,7 @@ Is the minimal information provided?
 
     
       <div id="initialize-preload-method" class="method-detail ">
-        <a name="M000125"></a>
+        <a name="M000124"></a>
 
         <div class="method-heading">
         
@@ -2619,7 +2632,7 @@ project. Change your initialization values in ~/.config/pom/meta/<name>.
           <div class="method-source-code"
             id="new-project-defaults-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 496</span>
+<span class="ruby-comment cmt"># File lib/pom/metadata.rb, line 493</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_project_defaults</span>
       { <span class="ruby-value str">'name'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">basename</span>.<span class="ruby-identifier">to_s</span>,
         <span class="ruby-value str">'version'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'0.0.0'</span>,
@@ -2630,38 +2643,6 @@ project. Change your initialization values in ~/.config/pom/meta/<name>.
         <span class="ruby-value str">'repository'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FIX: master public repo uri&quot;</span>
       }
     <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="rubyforge-method" class="method-detail ">
-        <a name="M000124"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">rubyforge</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p class="missing-docs">(Not documented)</p>
-          
-
-          
-          <div class="method-source-code"
-            id="rubyforge-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/pom/metadata/rubyforge.rb, line 3</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rubyforge</span>
-    <span class="ruby-ivar">@data</span>[<span class="ruby-value str">'rubyforge'</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Rubyforge</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-value str">'rubyforge'</span>)
-  <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
