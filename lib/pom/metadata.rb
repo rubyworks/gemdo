@@ -208,7 +208,7 @@ module POM
     # The date the project was started.
     attr_accessor :created
 
-    # Copyright notice.
+    # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
     attr_accessor :copyright
 
     # License.
@@ -248,9 +248,9 @@ module POM
     attr_accessor :extensions
 
     # Abirtary information, especially about what might be needed
-    # to use or build this package that does not fit under reuquires
-    # or prerequisites. This is strictly information for the end-user
-    # to consider, eg. "gcc 4.4+" or "fast graphics card".
+    # to use or build or use this package that does not fit under
+    # +requires+. This is strictly information for the end-user
+    # to consider, eg. "Needs gcc 4.4+" or "Needs fast graphics card".
     attr_accessor :notes
 
     # Homepage
@@ -280,14 +280,11 @@ module POM
     # Resource to issue tracker.
     attr_accessor :issues
 
-    # Resource to central SMC *public* repository. Eg.
+    # Resource to central *public* repository. Eg.
     #
     #   git://github.com/protuils/pom.git
     #
     attr_accessor :repository
-
-    # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
-    attr_accessor :copyright
 
 
     # S P E C I A L  G E T T E R S
