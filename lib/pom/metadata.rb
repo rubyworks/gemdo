@@ -193,11 +193,15 @@ module POM
     # Detailed description. Aliased as #abstract.
     attr_accessor :description
 
-    # Maintainer.
+    # Contact can be any sort of resource that is intended
+    # to be the end-users initial point of contact. It could
+    # be the url to a mailing list, or a url to a forum, or the
+    # email address of the maintainer, etc.
     attr_accessor :contact
 
-    # Maintainer's Email (defaults to contact <...>).
-    #attr_accessor :email
+    # Maintainer. This is the package maintainers name and
+    # optionally their email addresses, eg. "Trans <trans@foo.com>".
+    attr_accessor :maintainer
 
     # List of authors.
     attr_accessor :authors
@@ -323,9 +327,9 @@ module POM
 
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
-    # Contact's email address.
+    # Maintainers's email address.
     def email
-      if md = RE_EMAIL.match(contact)
+      if md = RE_EMAIL.match(maintainer.to_s)
         md[0]
       else
         nil
