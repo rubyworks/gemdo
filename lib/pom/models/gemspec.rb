@@ -39,7 +39,7 @@ module POM
         spec.summary       = metadata.summary
         spec.description   = metadata.description
         spec.authors       = [metadata.authors].flatten.compact.uniq
-        spec.email         = metadata.contact #metadata.email
+        spec.email         = metadata.email
         spec.homepage      = metadata.homepage
         spec.require_paths = [metadata.loadpath].flatten
 

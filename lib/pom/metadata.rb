@@ -295,18 +295,18 @@ module POM
 
     # The +suite+ name defaults to the project's +name+.
     def suite
-      @data['suite'] ||= name
+      self['suite'] ||= name
     end
 
     # Title defaults to name captialized.
     def title
-      @data['title'] ||= name.to_s.capitalize
+      self['title'] ||= name.to_s.capitalize
     end
 
     # Summary will default to the first sentence or line
     # of the full description.
     def summary
-      @data['summary'] ||= (
+      self['summary'] ||= (
         if description
           i = description.index(/(\.|$)/)
           i = 69 if i > 69
@@ -317,12 +317,12 @@ module POM
 
     # Extensions default to ext/**/extconf.rb
     def extensions
-      @data['extensions'] ||= root.glob('ext/**/extconf.rb')
+      self['extensions'] ||= root.glob('ext/**/extconf.rb')
     end
 
     # Executables default to the contents of bin/.
     def executables
-      @data['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
+      self['executables'] ||= root.glob('bin/*').collect{ |bin| File.basename(bin) }
     end
 
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
