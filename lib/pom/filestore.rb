@@ -61,7 +61,7 @@ module POM
     #
     def initialize(parent, *dirs)
       @parent = parent
-      @_dirs   = dirs.map{ |dir| Pathname.new(dir) }
+      @_dirs  = dirs.map{ |dir| Pathname.new(dir) }
       @_keys  = []
       @data   = {}
       initialize_attributes
@@ -106,7 +106,7 @@ module POM
 
     attr :parent
 
-    # Return +root+ pathname. The roo pathname is the topmost
+    # Return +root+ pathname. The root pathname is the topmost
     # point of entry of this metadata set, and is (almost
     # certainly) the project root directory.
 
@@ -141,8 +141,8 @@ module POM
         self[name] = read!(dir + name)
       elsif respond_to?("default_#{name}")
         self[name] = __send__("default_#{name}")
-      else
-        self[name] = nil
+      #else
+      #  self[name] = nil
       end
       @data[name]
     end
@@ -295,13 +295,14 @@ module POM
     def entries
       @_keys
     end
+    alias_method :keys, :entries
 
     # Convert to YAML.
     #  FIXME
 
-    #def to_yaml
-    #  @data.to_yaml
-    #end
+    def to_yaml
+      to_h.to_yaml
+    end
 
     # Return metadata in Hash form.
 

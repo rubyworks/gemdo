@@ -40,16 +40,18 @@ module POM
     #
     def run_command
       job = parse_command
-      cmd = POM::Commands.const_get(job.capitalize)
+      begin
+        cmd = POM::Commands.const_get(job.capitalize)
+      rescue NameError
+        puts "Unrecognized command -- #{job}"
+        exit 1
+      end
       cmd.run
     end
 
     #
     def parse_command
-      job = ARGV.find{ |a| a !~ /^\-/ } || 'about'
-      if i = ARGV.index(job)
-        ARGV.delete_at(i)
-      end
+      job = ARGV.shift
 
       case job
       when 'help', '--help', '-h'
