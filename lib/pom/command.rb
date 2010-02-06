@@ -68,9 +68,15 @@ pom <COMMAND> [OPTIONS ...]
 COMMANDS:
   about                            summary of project
   dump                             output all metadata in YAML format
-  show <name>                      show specific metadata entry
+  show [name]                      show specific metadata entry
   init                             create default meta entries
-  gemspec                          generate a gemspec
+  gemspec                          generate a gemspec file
+  help                             show this help message
+
+COMMON OPTIONS:
+  --debug                          activate debug mode
+
+Use 'pom <COMMAND> --help' for command options.
 END
 
   end#class Command
