@@ -78,8 +78,18 @@ module POM::Commands
       end
       files.compact!
 
-      metadata = POM::Metadata.new(Dir.pwd)
-      metadata.new_project
+      prime = { 
+        'name'       => File.basename(Dir.pwd),
+        'version'    => '0.0.0',
+        'requires'   => [],
+        'summary'    => "FIX: brief one line description here",
+        'contact'    => "FIX: name <email> or uri",
+        'authors'    => "FIX: names of authors here",
+        'repository' => "FIX: master public repo uri"
+      }
+
+      metadata = POM::Metadata.new(Dir.pwd, prime)
+      #metadata.new_project
 
       files.each do |file|
         text = File.read(file)
@@ -95,6 +105,9 @@ module POM::Commands
           puts "Skipping #{obj.class} cannot be converted into Metadata."
         end
       end
+
+      #
+      metadata.root = Dir.pwd
 
       # load any meta entries that may already exist
       metadata.reload unless options[:replace]

@@ -12,6 +12,11 @@ module POM
   #
   class Metadata < FileStore
 
+    # Storage locations for metadata. POM supports
+    # the use of +meta+ and the hidden +.meta+.
+
+    STORES = ['meta', '.meta']
+
     #
     def self.require_plugins
       #require 'pom/metadata/build'
@@ -33,23 +38,52 @@ module POM
       o
     end
 
-    # Storage locations for metadata. POM supports
-    # the use of +meta+ and the hidden +.meta+.
+    # If creating new metata from scratch, use this to prefill
+    # entries to new project defaults.
 
-    STORES = ['meta', '.meta']
+    def self.new_project(root=Dir.pwd)
+      prime = { 
+        'name'       => File.basename(root),
+        'version'    => '0.0.0',
+        'requires'   => [],
+        'summary'    => "FIX: brief one line description here",
+        'contact'    => "FIX: name <email> or uri",
+        'authors'    => "FIX: names of authors here",
+        'repository' => "FIX: master public repo uri"
+      }
+      o = new(root, prime)
+      if path = new_project_config
+        o.load!(path)
+      end
+      return o
+    end
+
+    # Load per-user config values for a new project.
+    # This is used by the 'pom init' command.
+
+    def self.new_project_config
+      new_project_defaults.each do |name, value|
+        self[name] = value
+      end
+      home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
+      store = stores.find{ |s| s[0,1] != '.' }  # not hidden
+      path  = Pathname.new(File.join(home_config, 'pom', store))
+       path.exist? ? path : nil
+    end
 
   private
 
     #
-    def initialize(root=nil)
+    def initialize(root=nil, prime={})
       if root
         @root = Pathname.new(root)
-        #super(nil, @root + 'meta', @root + '.meta')
         super(@root, *stores)
+        #super(nil, @root + 'meta', @root + '.meta')
+        @data = prime
+        initialize_preload
       else
         super(nil, *stores)
       end
-      initialize_preload
       #load!
     end
 
@@ -490,45 +524,43 @@ module POM
 
     # S U P P O R T  M E T H O D S
 
-    private
-
+    #private
     # Default values used when initializing POM for a project.
     # Change your initialization values in ~/.config/pom/meta/<name>.
-    def new_project_defaults
-      { 'name'       => root.basename.to_s,
-        'version'    => '0.0.0',
-        'requires'   => [],
-        'summary'    => "FIX: brief one line description here",
-        'contact'    => "FIX: name <email> or uri",
-        'authors'    => "FIX: names of authors here",
-        'repository' => "FIX: master public repo uri"
-      }
-    end
+    #def new_project_defaults
+    #  { 'name'       => root.basename.to_s,
+    #    'version'    => '0.0.0',
+    #    'requires'   => [],
+    #    'summary'    => "FIX: brief one line description here",
+    #    'contact'    => "FIX: name <email> or uri",
+    #    'authors'    => "FIX: names of authors here",
+    #    'repository' => "FIX: master public repo uri"
+    #  }
+    #end
 
     public
 
-    # Load initialization values for a new project.
-    # This is used by the 'pom init' command.
-
-    def new_project
-      new_project_defaults.each do |name, value|
-        self[name] = value
-      end
-      home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
-      store = stores.find{ |s| s[0,1] != '.' }  # not hidden
-      path  = Pathname.new(File.join(home_config, 'pom', store))
-      load!(path) if path.exist?
-
-      #default_entries = default_dir.glob('**/*')
-      #default_entries.each do |path|
-      #  name  = path_to_name(path, default_dir)
-      #  #value = path.read
-      #  defaults[name] = read(path)
-      #end
-      #defaults.each do |name, value|
-      #  self[name] = value
-      #end
-    end
+    ## Load initialization values for a new project.
+    ## This is used by the 'pom init' command.
+    #def new_project
+    #  new_project_defaults.each do |name, value|
+    #    self[name] = value
+    #  end
+    #  home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
+    #  store = stores.find{ |s| s[0,1] != '.' }  # not hidden
+    #  path  = Pathname.new(File.join(home_config, 'pom', store))
+    #  load!(path) if path.exist?
+    #
+    #  #default_entries = default_dir.glob('**/*')
+    #  #default_entries.each do |path|
+    #  #  name  = path_to_name(path, default_dir)
+    #  #  #value = path.read
+    #  #  defaults[name] = read(path)
+    #  #end
+    #  #defaults.each do |name, value|
+    #  #  self[name] = value
+    #  #end
+    #end
 
     # P E R S I S T E N C E
 

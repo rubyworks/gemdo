@@ -1,10 +1,32 @@
 = RELEASE HISTORY
 
+== 1.7 / 2010-02-06
+
+This release introduced Metadata extensions, which can be defined
+to augment the primary metadata via a meta/ subdirectory. Currently
+only a RubyForge extension is built-in. Also, the +Metabuild+ class
+introduced in the last version has been deprecated --it may be
+replaced by a Metadata extension in the furture, but for now it has
+been determined that it is not a vital need. In addition a new
++maintianer+ field has been added to complement the +contact+ 
+field. Finally this release fixes a major bug that prevented certain
+metadata fields from being accessed properly.
+
+Changes:
+
+* New Metadata extension system.
+* Deprecated Metabuild class.
+* Add maintainer field to Metadata.
+* Fix special reader bug.
+
+
 == 1.6 / 2009-12-07
 
 This release introduce the Metabuild class, which is like the
 Metadata class but supports general build configuration
 information.
+
+Changes:
 
 * Major Enhancements
 
