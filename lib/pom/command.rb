@@ -46,7 +46,10 @@ module POM
 
     #
     def parse_command
-      job = ARGV.shift || 'about'
+      job = ARGV.find{ |a| a !~ /^\-/ } || 'about'
+      if i = ARGV.index(job)
+        ARGV.delete_at(i)
+      end
 
       case job
       when 'help', '--help', '-h'
