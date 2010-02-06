@@ -138,12 +138,13 @@ module POM
       return @data[name] if @data.key?(name)
       dir = paths.find{ |path| (path + name).exist? }
       if dir
-        @data[name] = read!(dir + name)
+        self[name] = read!(dir + name)
       elsif respond_to?("default_#{name}")
-        @data[name] = __send__("default_#{name}")
+        self[name] = __send__("default_#{name}")
       else
-        @data[name] = nil
+        self[name] = nil
       end
+      @data[name]
     end
 
     #
