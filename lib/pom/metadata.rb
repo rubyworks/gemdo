@@ -171,14 +171,18 @@ module POM
       self
     end
 
-    # NOTE: I'm not sure this a good idea, as it adds an additional complexity.
-    # Standardizing around meta/version, is probably a much better approach.
+    # NOTE: I'm not sure this a good idea, as it adds an additional
+    # complexity. Standardizing around meta/version, is probably
+    # a much better approach.
+    #--
+    # TODO: get name from this file too?
+    #++
     def load_version_stamp
       if file = root.glob('{VERSION,Version,version}{,.txt}').first
         vers = YAML.load(File.new(file))
         case vers
         when Hash
-          vers = vers.inject({}){ |h,(k,v)| h[k.to_s.downcase.to_sym] = v }
+          vers = vers.inject({}){ |h,(k,v)| h[k.to_s.downcase.to_sym] = v; h }
           @data['version'] = "#{vers[:major]}.#{vers[:minor]}.#{vers[:patch]}"
         when Array
           @data['version'] = vers.join('.')

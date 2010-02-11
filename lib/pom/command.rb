@@ -71,6 +71,7 @@ COMMANDS:
   show [name]                      show specific metadata entry
   init                             create default meta entries
   gemspec                          generate a gemspec file
+  ver                              show/bump version
   help                             show this help message
 
 COMMON OPTIONS:
