@@ -13,7 +13,7 @@ module POM
   class Metadata < FileStore
 
     # Storage locations for metadata. POM supports
-    # the use of +meta+ and the hidden +.meta+.
+    # the use of +meta/+ or the hidden +.meta/+.
 
     STORES = ['meta', '.meta']
 
@@ -417,7 +417,7 @@ module POM
 
     # Limit summary to 69 characters.
     def summary=(line)
-      @data['summary'] = line[0..69]
+      @data['summary'] = line.to_s[0..69]
     end
 
     #
@@ -492,7 +492,7 @@ module POM
       return false unless name
       return false unless version
       return false unless summary
-      return false unless contact
+      #return false unless maintainer
       #return false unless homepage
       true
     end
@@ -502,8 +502,8 @@ module POM
       raise ValidationError, "no name"    unless name
       raise ValidationError, "no version" unless version
       raise ValidationError, "no summary" unless summary
-      raise ValidationError, "no contact" unless contact
-      #raise ValidationError, "no homepage" unless homepage
+      #raise ValidationError, "no maintainer" unless maintainer
+      #raise ValidationError, "no homepage"   unless homepage
     end
 
 
