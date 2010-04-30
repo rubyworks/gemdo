@@ -76,8 +76,10 @@ module POM
           next unless name
           @_keys << name
           if not respond_to?(name)
-            (class << self; self; end).class_eval do
-              attr_accessor name
+            if /\W/ !~ name  # only files that are all word letters
+              (class << self; self; end).class_eval do
+                attr_accessor name
+              end
             end
           end
         end
