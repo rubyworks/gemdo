@@ -1,7 +1,7 @@
 class POM::Metadata
 
-  def resources
-    @data['resources'] ||= Resources.new(self, 'resources')
+  def resource
+    @data['resource'] ||= Resources.new(self, 'resources')
   end
 
   #
