@@ -1,5 +1,6 @@
 require 'pom/core_ext'
 require 'pom/root'
+require 'pom/build'
 require 'pom/metadata'
 require 'pom/manifest'
 require 'pom/history'
@@ -85,6 +86,12 @@ module POM
 
     def metadata
       @metadata ||= Metadata.new(root)
+    end
+
+    # Build metadata.
+
+    def build
+      @build ||= Build.new(root, '.build')
     end
 
     # Project manifest.
