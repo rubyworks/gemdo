@@ -20,6 +20,7 @@ module POM
     #
     def self.require_plugins
       #require 'pom/metadata/build'
+      require 'pom/metadata/resources'
       require 'pom/metadata/rubyforge'
     end
 
@@ -242,12 +243,6 @@ module POM
     # optionally their email addresses, eg. "Trans <trans@foo.com>".
     attr_accessor :maintainer
 
-    # List of authors.
-    attr_accessor :authors
-
-    # Alias for authors.
-    #alias_accessor :author, :author
-
     # The date the project was started.
     attr_accessor :created
 
@@ -257,36 +252,60 @@ module POM
     # License.
     attr_accessor :license
 
+    ##
+    # List of authors.
+    # :attr_accessor: authors
+    attr_list :authors
+
+    ##
     # What other packages *must* this package have in order to function.
     # This includes any requirements neccessary for installation.
-    attr_accessor :requires
+    # :attr_accessor: requries
+    attr_list :requires
 
+    ##
+    # External requirements, outside of the normal packaging system.
+    # :attr_accessor: externals
+    attr_list :externals
+
+    ##
     # What other packages *should* be used with this package.
-    attr_accessor :recommend
+    # :attr_accessor: recommend
+    attr_list :recommend
 
+    ##
     # What other packages *could* be useful with this package.
-    attr_accessor :suggest
+    # :attr_accessor: suggest
+    attr_list :suggest
 
+    ##
     # With what other packages does this package conflict.
-    attr_accessor :conflicts
+    # :attr_accessor: conflicts
+    attr_list :conflicts
 
+    ##
     # What other packages does this package replace. This is very much like #provides
     # but expresses a closser relation. For instance "libXML" has been replaced by "libXML2".
-    attr_accessor :replaces
+    # :attr_accessor: replaces
+    attr_list :replaces
 
+    ##
     # What other package(s) does this package provide the same dependency fulfilment.
     # For example, a package 'bar-plus' might fulfill the same dependency criteria
     # as package 'bar', so 'bar-plus' is said to provide 'bar'.
-    attr_accessor :provides
+    # :attr_accessor: provides
+    attr_list :provides
 
+    ##
     # Load path(s) (used by Ruby's own site loading and RubyGems).
     # The default is 'lib/', which is usually correct.
-    attr_accessor :loadpath
+    # :attr_accessor: loadpath
+    attr_list :loadpath
 
     # Will always be bin/*.
     #attr_accessor :executables
 
-    # List of non-ruby extension configuration scripts.
+    # List of extension configuration scripts.
     # These are used to compile the extensions.
     attr_accessor :extensions
 
@@ -296,41 +315,51 @@ module POM
     # to consider, eg. "Needs gcc 4.4+" or "Needs fast graphics card".
     attr_accessor :notes
 
-    # Homepage
+
+    # Web address for project's official homepage.
     attr_accessor :homepage
 
-    # Resource to development site and/or source code.
-    attr_accessor :development
-
-    # Resource to documentation.
-    attr_accessor :documentation
-
-    # Resource to downloadable packages.
-    attr_accessor :download
-
-    # Resource to discussion forum.
-    attr_accessor :forum
-
-    # Resource to mailing list.
-    attr_accessor :mailinglist
-
-    # Resource to wiki wiki.
-    attr_accessor :wiki
-
-    # Resource to project blog.
-    attr_accessor :blog
-
-    # Resource to issue tracker.
-    attr_accessor :issues
-
-    # Resource to central *public* repository. Eg.
-    #
+    # Resource to central *public* repository, e.g.
     #   git://github.com/protuils/pom.git
-    #
     attr_accessor :repository
 
 
+    # Resource to mailing list.
+    #attr_accessor :mailinglist
+
+    # Resource to development site and/or source code.
+    #attr_accessor :development
+
+    # Resource to documentation.
+    #attr_accessor :documentation
+
+    # Resource to downloadable packages.
+    #attr_accessor :download
+
+    # Resource to discussion forum.
+    #attr_accessor :forum
+
+    # Resource to wiki wiki.
+    #attr_accessor :wiki
+
+    # Resource to project blog.
+    #attr_accessor :blog
+
+    # Resource to issue tracker.
+    #attr_accessor :issues
+
+
     # S P E C I A L  G E T T E R S
+
+    # Check resources if not given directly.
+    def homepage
+      self['homepage'] ||= resources.homepage
+    end
+
+    # Check resources if not given directly.
+    def repository
+      self['repository'] ||= resources.repository
+    end
 
     # The +suite+ name defaults to the project's +name+.
     def suite
@@ -427,44 +456,44 @@ module POM
     end
 
     #
-    def loadpath=(paths)
-      @data['loadpath'] = paths.to_list
-    end
+    #def loadpath=(paths)
+    #  @data['loadpath'] = paths.to_list
+    #end
 
     #
-    def authors=(auths)
-      @data['authors'] = auths.to_list
-    end
+    #def authors=(auths)
+    #  @data['authors'] = auths.to_list
+    #end
 
     #
-    def requires=(x)
-      @data['requires'] = x.to_list
-    end
+    #def requires=(x)
+    #  @data['requires'] = x.to_list
+    #end
 
     #
-    def recommend=(x)
-      @data['recommend'] = x.to_list
-    end
+    #def recommend=(x)
+    #  @data['recommend'] = x.to_list
+    #end
 
     #
-    def suggest=(x)
-      @data['suggest'] = x.to_list
-    end
+    #def suggest=(x)
+    #  @data['suggest'] = x.to_list
+    #end
 
     #
-    def conflicts=(x)
-      @data['conflicts'] = x.to_list
-    end
+    #def conflicts=(x)
+    #  @data['conflicts'] = x.to_list
+    #end
 
     #
-    def replaces=(x)
-      @data['replaces'] = x.to_list
-    end
+    #def replaces=(x)
+    #  @data['replaces'] = x.to_list
+    #end
 
     #
-    def provides=(x)
-      @data['provides'] = x.to_list
-    end
+    #def provides=(x)
+    #  @data['provides'] = x.to_list
+    #end
 
 
     # A L I A S E S

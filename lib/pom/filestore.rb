@@ -32,11 +32,31 @@ module POM
     #  end
     #end
 
-    #
-    def self.attr_accessor(name)
+    # FileStore uses uniquely defined accessors.
+    #--
+    # TODO: Use +opts+ in future when RDoc can handle correctly.
+    #++
+    def self.attr_accessor(name) #, opts={})
       code = %{
-        def #{name}     ; self["#{name}"]     ; end
-        def #{name}=(x) ; @data["#{name}"] = x ; end
+        def #{name}
+          self["#{name}"]
+        end
+        def #{name}=(x)
+          @data["#{name}"] = x
+        end
+      }
+      eval code
+    end
+
+    #
+    def self.attr_list(name)
+      code = %{
+        def #{name}
+          self["#{name}"]
+        end
+        def #{name}=(x)
+          @data["#{name}"] = x.to_list
+        end
       }
       eval code
     end

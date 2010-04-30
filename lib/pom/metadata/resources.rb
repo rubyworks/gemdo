@@ -16,8 +16,8 @@ class POM::Metadata
     # Location of development site.
     attr_accessor :development
 
-    # Public repository.
-    attr_accessor :repository
+    # Downloadable packages.
+    attr_accessor :download
 
     # Browse source code.
     attr_accessor :source
@@ -33,6 +33,15 @@ class POM::Metadata
 
     # Location of issue tracker.
     attr_accessor :issues
+
+    # Resource to project blog.
+    attr_accessor :blog
+
+    # Resource to central *public* repository, e.g.
+    #
+    #   git://github.com/protuils/pom.git
+    #
+    attr_accessor :repository
 
 
     # D E F A U L T S
