@@ -38,7 +38,7 @@ module POM
       o
     end
 
-    # If creating new metata from scratch, use this to prefill
+    # If creating new metadata from scratch, use this to prefill
     # entries to new project defaults.
 
     def self.new_project(root=Dir.pwd)
@@ -76,8 +76,9 @@ module POM
     #
     def initialize(root=nil, prime={})
       if root
-        @root = Pathname.new(root)
-        super(@root, *stores)
+        @root  = Pathname.new(root)
+        @store = STORES.find{ |dir| (@root + dir).directory? }
+        super(@root, @store)
         #super(nil, @root + 'meta', @root + '.meta')
         @data = prime
         initialize_preload
@@ -121,16 +122,16 @@ module POM
 
   public
 
-    # Storage locations for metadata. POM supports
-    # the use of +meta+ and the hidden +.meta+.
-
-    def stores
-      STORES
-    end
-
     # Project root directory.
     def root
       @root
+    end
+
+    # Storage locations for metadata. POM supports
+    # the use of +meta+ and the hidden +.meta+.
+
+    def store
+      @store
     end
 
     # Change the root location if +dir+.

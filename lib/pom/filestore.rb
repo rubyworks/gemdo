@@ -56,35 +56,45 @@ module POM
       end
     end
 
+    # Path in which to lookup data entries.
+    attr :path
+
   private
 
     #
-    def initialize(parent, *dirs)
+    def initialize(parent, directory)
       @parent = parent
-      @_dirs  = dirs.map{ |dir| Pathname.new(dir) }
       @_keys  = []
       @data   = {}
+
+      @path = (
+        case parent
+        when Pathname
+          parent + directory
+        when FileStore
+          parent.path + directory
+        else
+          Pathname.new(directory)
+        end
+      )
+
       initialize_attributes
       #load!
     end
 
     #
-    def initialize_attributes(path=nil)
-      if path
-        path.glob('*').each do |file|
-          name = path_to_name(file, path)
-          next unless name
-          @_keys << name
-          if not respond_to?(name)
-            if /\W/ !~ name  # only files that are all word letters
-              (class << self; self; end).class_eval do
-                attr_accessor name
-              end
+    def initialize_attributes
+      path.glob('*').each do |file|
+        name = path_to_name(file, path)
+        next unless name
+        @_keys << name
+        if not respond_to?(name)
+          if /\W/ !~ name  # only files that are all word letters
+            (class << self; self; end).class_eval do
+              attr_accessor name
             end
           end
         end
-      else
-        paths.each{ |path| initialize_attributes(path) }
       end
     end
 
@@ -120,32 +130,23 @@ module POM
       end
     end
 
-    # Paths in which to lookup data entries.
-
-    def paths
-      case parent
-      when Pathname
-        @_dirs.map{ |dir| parent + dir }
-      when FileStore
-        parent.paths.map{ |path| @_dirs.map{ |dir| path + dir } }.flatten.uniq
-      else
-        @_dirs
-      end
-    end
-
-    #
+    # Get filestore value. If not yet in the data cache,
+    # looks for the value on disk.
 
     def [](name)
       name = name.to_s
+
       return @data[name] if @data.key?(name)
-      dir = paths.find{ |path| (path + name).exist? }
-      if dir
-        self[name] = read!(dir + name)
+
+      file = path + name
+      if file.exist?
+        self[name] = read!(file)
       elsif respond_to?("default_#{name}")
         self[name] = __send__("default_#{name}")
       #else
       #  self[name] = nil
       end
+
       @data[name]
     end
 
@@ -169,38 +170,31 @@ module POM
 
     # Load attribute values from file system.
 
-    def load!(path=nil)
-      if path
-        path.glob('*').each do |file|
-          #next if file.to_s.index(/[.]/)  # TODO: rejection filter
-          name = path_to_name(file, path)
-          self[name] = read!(file)
-        end
-      else
-        paths.each{ |path| load!(path) }
+    def load!(alt_path=nil)
+      path = alt_path ? Pathname.new(alt_path) : path()
+      path.glob('*').each do |file|
+        #next if file.to_s.index(/[.]/)  # TODO: rejection filter
+        name = path_to_name(file, path)
+        self[name] = read!(file)
       end
     end
 
     # Load attribute values from file system, if and only if
     # the attribute is not currently set.
 
-    def load_soft!(path=nil)
-      if path
-        path.glob('*').each do |file|
-          #next if file.to_s.index(/[.]/)  # TODO: rejection filter
-          name = path_to_name(file, path)
-          self[name] = read!(file) unless @data.key?(name)
-        end
-      else
-        paths.each{ |path| load_soft!(path) }
+    def load_soft!
+      path.glob('*').each do |file|
+        #next if file.to_s.index(/[.]/)  # TODO: rejection filter
+        name = path_to_name(file, path)
+        self[name] = read!(file) unless @data.key?(name)
       end
     end
 
     #
 
     def save!(path=nil)
-      self.paths = [Pathname.new(path)] if path
-      raise if paths.empty?
+      @path = Pathname.new(path) if path
+
       @data.each do |name, value|
         write!(name, value)
       end
@@ -238,14 +232,13 @@ module POM
 
     # Write entry to file system.
     #--
-    # TODO: escape filename for file system if needed
+    # TODO: escape filename for file system as needed
     #++
 
     def write!(name, value, overwrite=true)
-      filename = name # TODO
-      dir = paths.find{ |dir| (dir + filename).exist? }
-      if dir
-        file = dir + filename
+      fname = name # TODO
+      file  = path + fname
+      if file
         if overwrite
           text  = file.read
           yaml  = /\A---/ =~ text
@@ -264,7 +257,6 @@ module POM
         else
           out = value.to_yaml
         end
-        file = paths.first + filename
         write_raw!(file, out)
       end
     end
@@ -297,6 +289,7 @@ module POM
     def entries
       @_keys
     end
+
     alias_method :keys, :entries
 
     # Convert to YAML.
