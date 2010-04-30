@@ -74,6 +74,13 @@ module POM
       @source = root
     end
 
+    # POM configuration settings. These are found under <tt>.config/pom/</tt>.
+    # POM configuration is a file store like Metadata.
+
+    def settings
+      @settings ||= FileStore.new(root, '.config/pom')
+    end
+
     # Metadata provides all the general information about the project.
 
     def metadata
@@ -98,6 +105,17 @@ module POM
       @release ||= Release.new(root, history)
     end
 
+    # Shorcut to +metadata.name+.
+
+    def name
+      metadata.name
+    end
+
+    # Shorcut to +metadata.version+.
+
+    def version
+      metadata.version
+    end
 
     # Project manifest file name.
     #
