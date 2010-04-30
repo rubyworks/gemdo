@@ -1,6 +1,6 @@
 require 'pom/project'
 
 module POM
-  VERSION="1.6.0" # :till: VERSION="<%= version %>"
+  VERSION = File.read(File.dirname(__FILE__) + '/pom/meta/version').strip
 end
 
