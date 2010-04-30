@@ -27,6 +27,7 @@ module POM
     def initialize(text)
       @text  = text
       @cache = {}
+      parse
     end
 
     #
@@ -40,91 +41,150 @@ module POM
     end
 
     #
-    def name
-      title.downcase
-    end
+    def name ; @cache[:name] ; end
 
+    # DEPRECATE
     alias_method :project, :name
 
     #
-    def title
-      if @cache.key?(:title)
-        @cache[:title]
-      else
-        @cache[:title] = title_1
-      end
-    end
+    def title ; @cache[:title] ; end
 
     #
-    def description
-      if @cache.key?(:description)
-        @cache[:description]
-      else
-        @cache[:description] = description_1
-      end
-    end
+    def description ; @cache[:description] ; end
 
     #
-    def license
-      if @cache.key?(:license)
-        @cache[:license]
-      else
-        @cache[:license] = license_1
-      end
-    end
+    def license ; @cache[:license] ; end
+
+    #
+    def copyright ; @cache[:copyright] ; end
+
+    #
+    def authors ; @cache[:authors] ; end
+
+    #
+    def homepage ; @cache[:homepage] ; end
+
+    #
+    def wiki ; @cache[:wiki] ; end
+
+    #
+    def issues ; @cache[:issues] ; end
 
   private
 
     #
-    def title_1
+    def parse
+      parse_title
+      parse_description
+      parse_license
+      parse_copyright
+      parse_resources
+    end
+
+    #
+    def parse_title
       if md = /^[=#]\s*(.*?)$/m.match(text)
-        md[1].strip
+        title = md[1].strip
+        @cache[:title] = title
+        @cache[:name]  = title.downcase.gsub(/\s+/, '_')
       end
     end
 
     #
-    def description_1
+    def parse_description
       if md = /[=#]+\s*(DESCRIPTION|ABSTRACT)[:]*(.*?)[=#]+/m.match(text)
-        md[2].strip #.sub("\n", ' ')  # unfold instead of sub?
-      end
-    end
-
-    #
-    def description_2
-      d = []
-      o = false
-      text.split("\n").each do |line|
-        if o
-          if /^(\w|\s*$)/ !~ line
-            break d
+        @cache[:description] = md[2].strip #.sub("\n", ' ')  # unfold instead of sub?
+      else
+        d = []
+        o = false
+        text.split("\n").each do |line|
+          if o
+            if /^(\w|\s*$)/ !~ line
+              break d
+            else
+              d << line
+            end
           else
-            d << line
-          end
-        else
-          if /^\w/ =~ line
-            d << line
-            o = true
+            if /^\w/ =~ line
+              d << line
+              o = true
+            end
           end
         end
+        @cache[:description] = d.join(' ').strip
       end
-      return d.join(' ').strip
     end
 
     #
-    def license_1
+    def parse_license
       if md = /[=]+\s*(LICENSE)/i.match(text)
         section = md.post_match
-        case section
-        when /LGPL/
-          "LGPL"
-        when /GPL/
-          "GPL"
-        when /MIT/
-          "MIT"
-        when /BSD/
-          "BSD"
+        @cache[:license] = (
+          case section
+          when /LGPL/
+            "LGPL"
+          when /GPL/
+            "GPL"
+          when /MIT/
+            "MIT"
+          when /BSD/
+            "BSD"
+          end
+        )
+      end
+    end
+
+    #
+    def parse_copyright
+      md = /Copyright.*?\d(.*?)$/.match(text)
+      if md
+        @cache[:copyright] = md[0]
+        @cache[:authors]   = md[1].split(/(and|\&|\,)/).map{|a|a.strip}
+      end
+    end
+
+    #
+    def parse_resources
+      scan_for_github
+    end
+
+    # TODO: Imporve URL Regexp matching.
+    def scan_for_github
+      text.scan(/http:.*?github\.com.*?[">\s]/) do |m|
+        case m
+        when /wiki/
+          @cache[:wiki] = m[0...-1]
+        when /issues/
+          @cache[:issues] = m[0...-1]
+        else
+          @cache[:homepage] = m[0...-1]
         end
       end
+    end
+
+    # TODO
+    def scan_for_googlegroups
+      
+    end
+
+  public
+
+    #
+    def to_metadata(root=nil)
+      metadata = Metadata.new(root)
+      metadata.load! if root  # TODO: is there really any reason for the meta/ entries not to take precedence?
+
+      metadata.name        = self.name
+      metadata.title       = self.title
+      metadata.description = self.description
+      metadata.license     = self.license
+      metadata.copyright   = self.copyright
+      metadata.authors     = self.authors
+      metadata.homepage    = self.homepage
+      metadata.wiki        = self.wiki
+      metadata.issues      = self.issues
+
+      metadata
     end
 
   end
@@ -134,10 +194,9 @@ module POM
     # Get POM metadata from a README. This is intended to make it
     # fairly easy to build a set of POM meta/ files if you already have
     # a README.
-    #--
-    # TODO: Perhaps this should be in Metadata, and then we can if we want
-    # have this method too, but calling on it?
-    #++
+    #
+    # TODO: Use ReadMe#to_metadata
+    #
     def self.from_readme(readme, root=Dir.pwd)
       metadata = Metadata.load(root)
       readme   = Readme.new(readme)
@@ -146,6 +205,11 @@ module POM
       metadata.title       = readme.title
       metadata.description = readme.description
       metadata.license     = readme.license
+      metadata.copyright   = readme.copyright
+      metadata.authors     = readme.authors
+      metadata.homepage    = readme.homepage
+      metadata.wiki        = readme.wiki
+      metadata.issues      = readme.issues
 
       metadata
     end
