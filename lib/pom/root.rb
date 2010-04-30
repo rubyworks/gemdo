@@ -1,9 +1,9 @@
 module POM
 
-  # Root directory is indicated by the presence of either <tt>.config/pom/</tt>
-  # or a <tt>meta/</tt> directory or <tt>.meta/</tt> hidden directory.
+  # Root directory is indicated by the presence of either a <tt>meta/</tt>
+  # directory or hidden <tt>.meta/</tt> directory.
 
-  ROOT_INDICATORS = [ '{.config/pom,.meta,meta}/' ]
+  ROOT_INDICATORS = [ '{.meta,meta}/' ]
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position
