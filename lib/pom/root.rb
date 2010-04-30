@@ -1,9 +1,9 @@
 module POM
 
-  # Root directory is indicated by the presence of a +meta/+ directory,
-  # or +.meta/+ hidden directory.
+  # Root directory is indicated by the presence of either <tt>.config/pom/</tt>
+  # or a <tt>meta/</tt> directory or <tt>.meta/</tt> hidden directory.
 
-  ROOT_INDICATORS = [ '{.meta,meta}/' ]
+  ROOT_INDICATORS = [ '{.config/pom,.meta,meta}/' ]
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position
@@ -16,7 +16,7 @@ module POM
       ROOT_INDICATORS.find do |i|
         dir = locate_root_at(i)
       end
-      dir ? Pathname.new(File.dirname(dir)) : nil
+      dir ? Pathname.new(dir) : nil
     end
   end
 
@@ -26,8 +26,8 @@ module POM
     dir  = Dir.pwd
     while !root && dir != '/'
       find = File.join(dir, indicator)
-      root = Dir.glob(find, File::FNM_CASEFOLD).first
-      #break if root
+      mark = Dir.glob(find, File::FNM_CASEFOLD).first
+      root = dir if mark
       dir = File.dirname(dir)
     end
     root ? Pathname.new(root) : nil
