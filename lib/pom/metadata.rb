@@ -20,7 +20,7 @@ module POM
     #
     def self.require_plugins
       #require 'pom/metadata/build'
-      require 'pom/metadata/resources'
+      require 'pom/metadata/sites'
       require 'pom/metadata/rubyforge'
     end
 
@@ -353,12 +353,12 @@ module POM
 
     # Check resources if not given directly.
     def homepage
-      self['homepage'] ||= resources.homepage
+      self['homepage'] ||= sites.homepage
     end
 
     # Check resources if not given directly.
     def repository
-      self['repository'] ||= resources.repository
+      self['repository'] ||= sites.repository
     end
 
     # The +suite+ name defaults to the project's +name+.
