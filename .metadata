@@ -1,0 +1,22 @@
+title:     POM
+contact:   protuils@googlegroups.com
+suite:     proutils
+copyright: Copyright (c) 2009 Thomas Sawyer
+license:   MIT
+created:   2009-07-22 15:21:34
+summary:   Project metadata system geared toward Ruby projects.
+
+description:
+  Ruby POM stands for Ruby Project Object Model.
+  POM provides a metadata system for Ruby projects.
+
+authors:
+  - Thomas Sawyer <transfire@gmail.com>
+
+resources:
+  homepage:      http://proutils.github.com/pom
+  repository:    git://github.com/proutils/pom.git
+  reference:     http://proutils.github.com/pom/rdoc
+  documentation: http://wiki.github.com/proutils/pom
+  wiki:          http://wiki.github.com/proutils/pom
+
