@@ -8,12 +8,9 @@ module POM::Commands
 
     attr :project
 
-    attr :tuple
-
     #
     def initialize
       @project = POM::Project.new(:lookup=>true)
-      @tuple   = @project.metadata.version.split(/\W/)
     end
 
     #
@@ -24,19 +21,34 @@ module POM::Commands
 
     #
     def parse
+      slot  = nil
+      state = nil
+
       parser = OptionParser.new do |opt|
         opt.banner = "pom show [ENTRY]"
 
         opt.on("--major", "-M", "bump major version number") do
-          bump(0)
+          slot = :major
         end
 
         opt.on("--minor", "-m", "bump minor version number") do
-          bump(1)
+          slot = :minor
         end
 
         opt.on("--patch", "-p", "bump patch version number") do
-          bump(2)
+          slot = :patch
+        end
+
+        opt.on("--build", "-b", "bump build version number") do
+          slot = :build
+        end
+
+        opt.on("--state", "-s [TERM]", "specify a state") do |term|
+          state = term
+        end
+
+        opt.on("--no-write", "-n", "do not write version change") do
+          $DRYRUN = true
         end
 
         opt.on("--debug", "run in debug mode") do
@@ -52,16 +64,63 @@ module POM::Commands
 
       parser.parse!
 
+      @slot  = slot
+      @state = state
       @entry = ARGV.last
     end
 
     #
     def execute
-      puts tuple.join('.')
+      if @slot or @state or @entry
+        if @slot
+          __send__("bump_#{@slot}")
+        elsif @entry
+          # TODO: fail is new version is less then old version
+          project.version = @entry
+        end
+
+        if @state
+          project.verfile.state = @state
+          project.verfile.build = 1 unless project.verfile.build
+        end
+
+        project.verfile.save! unless $DRYRUN
+      end
+      puts(project.version) 
     end
 
   private
 
+    #
+    def bump_major
+      project.verfile.major = project.verfile.major.succ
+      project.verfile.minor = 0 if project.verfile.minor
+      project.verfile.patch = 0 if project.verfile.patch
+      project.verfile.state = nil
+      project.verfile.build = nil
+    end
+
+    #
+    def bump_minor
+      project.verfile.minor = project.verfile.minor.succ
+      project.verfile.patch = 0 if project.verfile.patch
+      project.verfile.state = nil
+      project.verfile.build = nil
+    end
+
+    #
+    def bump_patch
+      project.verfile.patch = project.verfile.patch.succ
+      project.verfile.state = nil
+      project.verfile.build = nil
+    end
+
+    #
+    def bump_build
+      project.verfile.build = project.verfile.build.succ
+    end
+
+=begin
     # Bump given version index.
     def bump(index)
       tuple[index] = bump_entry(tuple[index])
@@ -97,6 +156,7 @@ module POM::Commands
         entry
       end
     end
+=end
 
   end
 

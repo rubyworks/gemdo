@@ -5,143 +5,109 @@ module POM
 
   # FileStore serves as the base class for the Metadata
   # class. It connects the file system to the POM model.
-
   class FileStore
-
-    #def self.registry
-    #  @@registry ||= {}
-    #end
-
-    #
-    #def self.inherited(base)
-    #  registry[base.path.to_s] = base # FIXME: #path will not be defined yet, will it?
-    #end
-
-    #
-    #def self.path
-    #  name.split('::').last.downcase
-    #end
-
-    #
-    #def self.factory(parent, path)
-    #  name = File.basename(path)
-    #  if registry.key?(name)
-    #    registry[name].new(parent, path)
-    #  else
-    #    new(parent, path)
-    #  end
-    #end
-
-    # FileStore uses uniquely defined accessors.
-    #--
-    # TODO: Use +opts+ in future when RDoc can handle correctly.
-    #++
-    def self.attr_accessor(name) #, opts={})
-      code = %{
-        def #{name}
-          self["#{name}"]
-        end
-        def #{name}=(x)
-          @data["#{name}"] = x
-        end
-      }
-      eval code
-    end
-
-    #
-    def self.attr_list(name)
-      code = %{
-        def #{name}
-          self["#{name}"]
-        end
-        def #{name}=(x)
-          @data["#{name}"] = x.to_list
-        end
-      }
-      eval code
-    end
-
-    #
-    def self.alias_accessor(name, orig)
-      alias_method(name, orig)
-      alias_method("#{name}=", "#{orig}=")
-    end
-
-    #
-    def self.default_value(name, value=nil, &block)
-      if block_given?
-        define_method("default_#{name}", &block)
-      else
-        define_method("default_#{name}"){ value }
-      end
-    end
-
-    # Path in which to lookup data entries.
-    attr :path
-
-  private
-
-    #
-    def initialize(parent, directory)
-      @parent = parent
-      @_keys  = []
-      @data   = {}
-
-      @path = (
-        case parent
-        when Pathname
-          parent + directory
-        when FileStore
-          parent.path + directory
-        else
-          Pathname.new(directory)
-        end
-      )
-
-      initialize_attributes
-      #load!
-    end
-
-    #
-    def initialize_attributes
-      path.glob('*').each do |file|
-        name = path_to_name(file, path)
-        next unless name
-        @_keys << name
-        if not respond_to?(name)
-          if /\W/ !~ name  # only files that are all word letters
-            (class << self; self; end).class_eval do
-              attr_accessor name
-            end
-          end
-        end
-      end
-    end
-
-    # Subclasses can override this.
-    def new_project_defaults
-      {}
-    end
-
-  public
-
-    #
-
-    def inspect
-      "#<#{self.class} #{@data.inspect}>"
-    end
 
     # Parent store, or root pathname. The topmost store
     # should set this to the root pathname. All substores
     # use this to reference their parent store (akin to
     # parent directory).
-
     attr :parent
+
+    # Filesystem path fopr the file store.
+    attr :pathname
+
+    # New file store. The +parent+ is either the parent
+    # Pathname or FileStore and +directory+ is the name
+    # of the subdirectory with in it. If this is a toplevel
+    # FileStore then set +parent+ to +nil+.
+    def initialize(parent, directory)
+      @parent   = parent
+      @data     = {}
+      @pathname = (
+        case parent
+        when Pathname
+          parent + directory
+        when FileStore
+          parent.pathname + directory
+        else
+          Pathname.new(directory)
+        end
+      )
+    end
+
+    #
+    def method_missing(sym, *args)
+      name = sym.to_s
+      case name
+      when /=$/
+        super(sym, *args) unless args.size == 1
+        self[name] = args.first
+      else
+        super(sym, *args) unless args.empty?
+        self[name]
+      end
+    end
+
+    # Get value from store by name. The value will
+    # be cached so the file system is only hit once.
+    def [](name)
+      name = name.to_s
+      if @data.key?(name)
+        @data[name]
+      else
+        @data[name] = get!(name)
+      end
+    end
+
+    # Set value.
+    def []=(name, value)
+      @data[name.to_s] = value
+    end
+
+    # Get a metadata +entry+, where entry is a pathname.
+    # If it is a directory, will create a new FileStore object.
+    def get!(name)
+      name = name.to_s
+      case name
+      when String, Symbol
+        path = @pathname + name #.to_s
+      else
+        path = name
+      end
+
+      if path.directory?
+        data = FileStore.new(self, path.basename)
+      elsif path.file?
+        text = path.read.strip
+        data = (/\A^---/ =~ text ? YAML.load(text) : text)
+        data = data.to_list if self.class.listings[name]
+      else
+        data = self.class.defaults[name]
+        data = instance_eval(&data) if Proc === data
+      end
+      data
+    end
+
+    # List of available entries.
+    def entries
+      pathname.glob('*').map{ |path| File.basename(path) }
+    end
+
+    alias_method :keys, :entries
+
+    # Has a value been loaded from the file system?
+    def key?(name)
+      @data.key?(name.to_s)
+    end
+
+    #
+    def ignore
+      []
+    end
 
     # Return +root+ pathname. The root pathname is the topmost
     # point of entry of this metadata set, and is (almost
     # certainly) the project root directory.
-
     def root
       case parent
       when Pathname  then parent
@@ -150,105 +116,64 @@ module POM
       end
     end
 
-    # Get filestore value. If not yet in the data cache,
-    # looks for the value on disk.
-
-    def [](name)
-      name = name.to_s
-
-      return @data[name] if @data.key?(name)
-
-      file = path + name
-      if file.exist?
-        self[name] = read!(file)
-      elsif respond_to?("default_#{name}")
-        self[name] = __send__("default_#{name}")
-      #else
-      #  self[name] = nil
-      end
-
-      @data[name]
+    #
+    def inspect
+      "#<#{self.class} #{@data.inspect}>"
     end
 
-    #
-    #def []=(name, value)
-    #  @data[name.to_s] = value
+    ##
+    #def initialize_attributes
+    #  path.glob('*').each do |file|
+    #    name = path_to_name(file, path)
+    #    next unless name
+    #    @_keys << name
+    #    if not respond_to?(name)
+    #      if /\W/ !~ name  # only files that are all word letters
+    #        (class << self; self; end).class_eval do
+    #          attr_accessor name
+    #        end
+    #      end
+    #    end
+    #  end
     #end
 
-    #
-
-    def []=(name, value)
-      if respond_to?("#{name}=")
-        __send__("#{name}=", value)
-      else
-        (class << self; self; end).class_eval do
-          attr_accessor name
-        end
-        __send__("#{name}=", value)
-      end
+    # Subclasses can override this.
+    def new_project_defaults
+      {}
     end
 
     # Load attribute values from file system.
-
     def load!(alt_path=nil)
-      path = alt_path ? Pathname.new(alt_path) : path()
+      path = alt_path ? Pathname.new(alt_path) : pathname()
       path.glob('*').each do |file|
         #next if file.to_s.index(/[.]/)  # TODO: rejection filter
         name = path_to_name(file, path)
-        self[name] = read!(file)
+        self[name] = get!(file)
       end
+      self
     end
 
-    # Load attribute values from file system, if and only if
+    # Load attribute values from file system, but only if
     # the attribute is not currently set.
-
-    def load_soft!
+    def read!
+      path = pathname
       path.glob('*').each do |file|
         #next if file.to_s.index(/[.]/)  # TODO: rejection filter
         name = path_to_name(file, path)
-        self[name] = read!(file) unless @data.key?(name)
+        self[name] = get!(file) unless key?(name)
       end
+      self
     end
 
     #
-
     def save!(path=nil)
-      @path = Pathname.new(path) if path
-
+      @pathname = Pathname.new(path) if path
       @data.each do |name, value|
         write!(name, value)
       end
     end
 
   private
-
-    # If a method is missing ... ?
-    #--
-    # TODO: setting makes sense, but is the getter needed ?
-    #++
-
-    def method_missing(s, *a)
-      name = s.to_s.chomp('=')
-      case s.to_s
-      when /\=$/
-        self[name] = a.first
-      else
-        self[name]
-      end
-    end
-
-    # Get a metadata +entry+, where entry is a pathname.
-    # If it is a directory, will create a new FileStore object.
-
-    def read!(entry)
-      if entry.directory?
-        data = FileStore.new(self, entry.basename)
-      else
-        text = entry.read.strip
-        data = (/\A^---/ =~ text ? YAML.load(text) : text)
-      end
-      data
-    end
 
     # Write entry to file system.
     #--
@@ -257,7 +182,7 @@ module POM
 
     def write!(name, value, overwrite=true)
       fname = name # TODO
-      file  = path + fname
+      file  = @pathname + fname
       if file
         if overwrite
           text  = file.read
@@ -304,23 +229,15 @@ module POM
 
     # C O N V E R S I O N
 
-    # List of available entries.
-
-    def entries
-      @_keys
-    end
-
-    alias_method :keys, :entries
-
     # Convert to YAML.
-    #  FIXME
-
+    #--
+    # TODO: This might not be the best way to convert to YAML.
+    #++
     def to_yaml
       to_h.to_yaml
     end
 
     # Return metadata in Hash form.
-
     def to_h
       load_soft!
       @data.dup
@@ -329,8 +246,7 @@ module POM
     # M O D I F I C A T I O N
 
     # Update underlying data table.
-
-    def update(other)
+    def merge!(other)
       case other
       when Hash
         data = other
@@ -342,9 +258,8 @@ module POM
       end
     end
 
-    # Like #update but does not update a value if it is *empty*.
-
-    def mesh(other)
+    # Like #merge! but does not update a value if it is *empty*.
+    def mesh!(other)
       case other
       when Hash
         data = other
@@ -360,6 +275,39 @@ module POM
         end
       end
     end
+
+    # C L A S S  M E T H O D S
+
+    # FileStore uses uniquely defined accessors.
+    def self.attr_accessor(name, options={})
+      defaults[name.to_s] = options[:default] if options[:default]
+      listings[name.to_s] = true if options[:default] == []
+      code = %{
+        def #{name}
+          self["#{name}"]
+        end
+        def #{name}=(x)
+          self["#{name}"] = x
+        end
+      }
+      eval code
+    end
+
+    # Stores default values for attributes.
+    def self.defaults
+      @defaults ||= {}
+    end
+
+    #What attributes are listings.
+    def self.listings
+      @listings ||= {}
+    end
+
+    ##
+    #def self.alias_accessor(name, orig)
+    #  alias_method(name, orig)
+    #  alias_method("#{name}=", "#{orig}=")
+    #end
 
   end
 

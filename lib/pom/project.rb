@@ -1,17 +1,19 @@
 require 'pom/core_ext'
 require 'pom/root'
-require 'pom/build'
 require 'pom/metadata'
+require 'pom/profile'
+require 'pom/verfile'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/release'
+require 'pom/requirements'
+#require 'pom/build'
 #require 'pom/gemspec'
 
 module POM
 
   # The Project class provides the location of specific directories
   # and files in the project, plus access to the projects metadata, etc.
-
   class Project
 
     # File glob for matching README file.
@@ -71,9 +73,19 @@ module POM
       #  @root = locate_root(local) || raise("can't locate project root -- #{local}")
       #end
 
-      # TODO: Support alternate source directory (?)
       @source = root
     end
+
+    # Project's root location. By default this is determined by scanning
+    # up from the current working directory in search of the ROOT_INDICATOR.
+    attr :root
+
+    # Location of project source code. Currently, this is always
+    # the same as the root.
+    #--
+    # TODO: Support alternate source location in the future verison?
+    #++
+    attr :source
 
     ## POM configuration settings. These are found under <tt>.config/pom/</tt>.
     ## POM settings are a file store like Metadata.
@@ -82,67 +94,74 @@ module POM
     #  @settings ||= FileStore.new(root, '.config/pom')
     #end
 
-    # Metadata provides all the general information about the project.
-
+    # DEPRECATED. Provides access to both profile and verfile information
+    # through a single interface.
     def metadata
-      @metadata ||= Metadata.new(root)
+      profile #@metadata ||= Metadata.new(root)
     end
 
-    # Build metadata.
-
-    def build
-      @build ||= Build.new(root, '.build')
+    #
+    def profile
+      @profile ||= Profile.new(root)
     end
+
+    #
+    def verfile
+      @verfile ||= Verfile.new(root)
+    end
+
+    # Project name.
+    def name
+      verfile.name || profile.name || raise(ArgumentError, "name is requried")
+    end
+
+    # Version number string representation, e.g. "1.0.0".
+    def version
+      verfile.to_s
+    end
+
+    #
+    def version=(vers)
+      verfile.version = vers
+    end
+
+    def loadpath
+      verfile.loadpath
+    end
+
+    # Requirement sets.
+    def requirements
+      @requirements ||= Requirements.new(root)
+    end
+
+    ## Build metadata.
+    #
+    #def build
+    #  @build ||= Build.new(root, '.build')
+    #end
 
     # Project manifest.
-
     def manifest
       @manifest ||= Manifest.new(root)
     end
 
-    # Access to project history.
+    ## Project manifest file name.
+    ##
+    ## TODO: Deprecate in favor of using manifest.file
+    #
+    #def manifest_file
+    #  @manifest_file ||= root.first('manifest{,.txt}', :casefold)
+    #end
 
+    # Access to project history.
     def history
       @history ||= History.new(root)
     end
 
     # Access latest release notes.
-
     def release
       @release ||= Release.new(root, history)
     end
-
-    # Shorcut to +metadata.name+.
-
-    def name
-      metadata.name
-    end
-
-    # Shorcut to +metadata.version+.
-
-    def version
-      metadata.version
-    end
-
-    # Project manifest file name.
-    #
-    # TODO: Deprecate in favor of using manifest.file ?
-
-    def manifest_file
-      @manifest_file ||= root.first('manifest{,.txt}', :casefold)
-    end
-
-    # Project's root location. By default this is determined by scanning
-    # up from the current working directory in search of the ROOT_INDICATOR.
-
-    attr :root
-
-    # Location of project source code. Currently, this is always
-    # the same as the root.
-    #
-    # TODO: Support alternate source location in the future verison?
-
-    attr :source
 
     # The <tt>log/</tt> directory stores log output created by 
     # build tools.
@@ -154,7 +173,6 @@ module POM
     #
     # Get pathname of given log +path+. Or without +path+
     # returns the pathname for the log directory.
-
     def log(path=nil)
       if path
         log + path
@@ -176,7 +194,6 @@ module POM
     #
     # Get pathname of given doc +path+. Or without +path+
     # returns the pathname for the doc directory.
-
     def doc(path=nil)
       if path
         doc + path
@@ -185,11 +202,8 @@ module POM
       end
     end
 
-    # Get pathname of given plugin +path+. Or without +path+
-    # returns the pathname for the package directory.
-    #
-    # This is aliaed as #pkg.
-
+    # Returns the pathname for the package directory.
+    # With +path+ returns the pathname within the pacakge path.
     def pkg(path=nil)
       if path
         pkg + path
@@ -214,7 +228,6 @@ module POM
     #
     # Get pathname of given cache +path+. Or without +path+
     # returns the pathname for the cache directory.
-
     def cache(path=nil)
       if path
         cache + path
@@ -229,7 +242,6 @@ module POM
     # Pathname of given config +path+. Or without +path+
     # Returns the path to the config directory (either +.config+
     # or +config+).
-
     def config(path=nil)
       if path
         config + path #root.glob_first('{.,}config' / path)
@@ -245,25 +257,23 @@ module POM
     # Get pathname of given plugin +path+. Or without +path+
     # returns the pathname for the plugin directory.
     #
-    # TODO: This assumes lib/ is in the load path, and is
-    # used to house plugin/. This is of course typical. However
-    # it is possible to alter the load path. So it may not always
-    # be the case. In the future, it must be decided if we should
-    # standardize aroung the lib/ convention (though you could still
-    # add others to the load path) or allow it to be complete free form.
-    # As I did for bin/, I prefer the former, but have not yet firmly
-    # decided.
-
+    # TODO: This assumes lib/ is in the load path, and is used
+    # to house plugin/. This is of course typical. However it is
+    # possible to alter the load path. So it may not always be the
+    # case. In the future, it must be decided if we should standardize
+    # around the lib/ convention (though you could still add others to
+    # the load path) or allow it to be complete free form. As I did for
+    # bin/, I prefer the former, but have not yet firmly decided.
     def plugin(path=nil)
       if path
         plugin + path
       else
-        @plugin ||= root.first('lib/plugin') || root + 'lib/plugin'
+        @plugin ||= root.first('lib/plugins') || root + 'lib/plugins'
       end
     end
 
-    # DEPRECATE: Alias for #plugin.
-    alias_method :plug, :plugin
+    #
+    alias_method :plugins, :plugin
 
     # The <tt>script/</tt> directory is like the <tt>task/</tt> 
     # directory but usually holds executables that are made
@@ -271,7 +281,6 @@ module POM
     #
     # Get pathname of given script +path+. Or without +path+
     # returns the pathname for the script directory.
-
     def script(path=nil)
       if path
         script + path
@@ -285,7 +294,6 @@ module POM
     #
     # Get pathname of given task +path+. Or without +path+
     # returns the pathname for the task directory.
-
     def task(path=nil)
       if path
         task + path
@@ -299,7 +307,6 @@ module POM
     #
     # Get pathname of given site +path+. Or without +path+
     # returns the pathname for the site directory.
-
     def site(path=nil)
       if path
         site + path
@@ -318,9 +325,9 @@ module POM
     # 
     # Get pathname of given temporary +path+. Or without +path+
     # returns the pathname to the temporary directory.
-    #
+    #--
     # TODO: Add name to end of path ?
-
+    #++
     def tmp(path=nil)
       if path
         tmp + path
@@ -330,65 +337,59 @@ module POM
     end
 
     # Alias for #tmp.
-
     alias_method :tmpdir, :tmp
 
-    # About project notice.
+    # Returns list of executable files in bin/.
+    def executables
+      root.glob('bin/*').select{ |bin| bin.executable? }.map{ |bin| File.basename(bin) }
+    end
 
+    # List of extension configuration scripts.
+    # These are used to compile the extensions.
+    def extensions
+      root.glob('ext/**/extconf.rb')
+    end
+
+    # About project notice.
     def about(*parts)
       # pre-format data
-      released = metadata.released ? "(#{metadata.released.strftime('%Y-%m-%d')})" : nil
+      released = verfile.date ? "(#{verfile.date.strftime('%Y-%m-%d')})" : nil
 
       if parts.empty?
-        #puts
-        #puts "  #{metadata.title} #{metadata.version} (#{metadata.released})"
-        #puts
-        #puts "  #{metadata.abstract}"
-        #puts "  " + metadata.homepage
-        #puts
-        #puts
-        #puts "  Copyright #{metadata.copyright}"
-        #puts
         s = []
-        s << "#{metadata.title} v#{metadata.version} #{released}"
+        s << "#{profile.title} v#{verfile.version} #{released} (#{verfile.name}-#{verfile.version})"
         s << ""
-        s << "#{metadata.description || metadata.summary}"
+        s << "#{profile.description || profile.summary}"
         s << ""
-        s << "  contact    : #{metadata.contact}"
-        s << "  homepage   : #{metadata.homepage}"
-        s << "  repository : #{metadata.repository}"
-        s << "  authors    : #{metadata.authors.join(',')}"
-        s << "  package    : #{metadata.name}-#{metadata.version}"
-        s << "  requires   : #{metadata.requires.join(',')}"
+        s << "* #{profile.homepage}" if profile.hompage
+        s << "* #{profile.repository}" if profile.repository
         s << ""
-        s << "#{metadata.copyright}"
-        s.join("\n")
+        s << "#{profile.copyright}"
+        s.join("\n").gsub("\n\n\n", "\n\n")
       else
         parts.each do |field|
           case field
           #when 'settings'
-          #  y settings
-          when 'metadata'
-            y metadata
+          #  puts settings.to_yaml
+          when 'profile'
+            puts profile.to_yaml
           else
-            puts metadata.send(field)
+            puts profile.__send__(field)
           end
         end
       end
     end
 
     # Project release announcement built on README.
-    #
+    #--
     # TODO: Don't use README, or make it an option.
-    #
+    #++
     def announcement(file=nil, options={})
       header = options[:header]
-
       if file = Dir.glob(file, File::FNM_CASEFOLD).first
         ann = File.read(file)
       else
         release = history.release.to_s
-
         ann = []
         if file = Dir.glob(README, File::FNM_CASEFOLD).first
           readme  = File.read(file).strip
@@ -396,11 +397,11 @@ module POM
           ann << readme
         else
           if header
-            ann << "#{metadata.title} #{metadata.version} has been released."
+            ann << "#{profile.title} #{self.version} has been released."
             ann << ''
-            ann << "* #{metadata.homepage}"
+            ann << "* #{profile.resources.homepage}"
             ann << ''
-            ann << "#{metadata.description}"
+            ann << "#{profile.description}"
             ann << ''
           end
           ann << release

@@ -55,7 +55,9 @@ module POM::Commands
       @resources = ARGV
     end
 
-    #
+    #--
+    # TODO: How to handle options[:replace] ?
+    #++
     def execute
       require_rubygems
 
@@ -63,66 +65,104 @@ module POM::Commands
       require 'pom/readme'
       require 'pom/models/gemspec'
 
-      exists = Dir.glob('{.,}meta').first
+      #prime = { 
+      #  'name'       => File.basename(Dir.pwd),
+      #  'version'    => '0.0.0',
+      #  'requires'   => [],
+      #  'summary'    => "FIX: brief one line description here",
+      #  'contact'    => "FIX: name <email> or uri",
+      #  'authors'    => "FIX: names of authors here",
+      #  'repository' => "FIX: master public repo uri"
+      #}
 
-      if exists and not $FORCE
-        $stderr << "A #{exists} directory already exists. Use --force option to allow overwrite.\n"
+      project = POM::Project.new(Dir.pwd)
+
+      #exists = Dir.glob('{.,}meta').first
+
+      if project.profile.file and not $FORCE
+        $stderr << "Profile already exists. Use --force option to allow overwrite.\n"
         return
       end
 
-      files = resources()
+      if project.verfile.file and not $FORCE
+        $stderr << "Version file already exists. Use --force option to allow overwrite.\n"
+        return
+      end
 
+      # prime
+      project.verfile.name     = File.basename(Dir.pwd)
+      project.verfile.version  = '0.0.0'
+      project.verfile.code     = 'FIXME: A version code name is optional'
+
+      project.profile.summary = "FIXME: brief one line description here"
+      project.profile.contact = "FIXME: name <email> or uri"
+      project.profile.authors << "FIXME: list of author's names here"
+
+      project.profile.resources.homepage   = "FIXME: main website address"
+      project.profile.resources.repository = "FIXME: master public repo uri"
+
+      #metadata.new_project
+
+      files = resources()
       if files.empty?
         files << Dir.glob('*.gemspec').first
         files << Dir.glob('README{,.*}').first
       end
       files.compact!
 
-      prime = { 
-        'name'       => File.basename(Dir.pwd),
-        'version'    => '0.0.0',
-        'requires'   => [],
-        'summary'    => "FIX: brief one line description here",
-        'contact'    => "FIX: name <email> or uri",
-        'authors'    => "FIX: names of authors here",
-        'repository' => "FIX: master public repo uri"
-      }
-
-      metadata = POM::Metadata.new(Dir.pwd, prime)
-      #metadata.new_project
-
       files.each do |file|
-        text = File.read(file)
-        obj  = /^---/.match(text) ? YAML.load(text) : text
-        case obj
-        when ::Gem::Specification
-          metadata.mesh(POM::Metadata.from_gemspec(obj))
-        when String
-          metadata.mesh(POM::Metadata.from_readme(obj))
-        when Hash
-          metadata.mesh(obj)
+        case file
+        when /\.gemspec$/
+          text = File.read(file)
+          gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
+          project.import_gemspec(gemspec)
+        when /^README/i
+          readme = POM::Readme.load(file)
+          project.import_readme(readme)
         else
-          puts "Skipping #{obj.class} cannot be converted into Metadata."
+          text = File.read(file)
+          obj  = /^---/.match(text) ? YAML.load(text) : text
+          case obj
+          when ::Gem::Specification
+            project.import_gemspec(obj)
+          when String
+            project_import_readme(obj)
+          #when Hash
+            #metadata.mesh(obj)
+          else
+            puts "Cannot convert #{file} (skipped)"
+          end
         end
       end
 
-      #
-      metadata.root = Dir.pwd
+      #project.root = Dir.pwd
 
       # load any meta entries that may already exist
-      metadata.reload unless options[:replace]
+      #project.reload unless options[:replace]
 
-      metadata.backup! unless $TRIAL
-      metadata.save!   unless $TRIAL
+      unless $TRIAL
+        project.verfile.backup!
+        project.verfile.save!
 
+        project.profile.backup!
+        project.profile.save!
+      end
+
+      print_fixes
+    end
+
+    #
+    def print_fixes
       fixes = []
       pwd = Pathname.new(Dir.pwd)
-      metadata.paths.each do |path|
-        path.glob('*').each do |file|
-          File.readlines(file).each{ |l| l.grep(/FIX:/).each{ |r| fixes << file.relative_path_from(pwd) } }
+      paths = POM::Verfile.filename + POM::Profile.filename
+      paths.each do |path|
+        pwd.glob(path).each do |file|
+          File.readlines(file).each{ |l| l.grep(/FIXME:/).each{ |r| fixes << file.relative_path_from(pwd) } }
         end
       end
-      if !fixes.empty?
+      fixes.uniq!
+      unless fixes.empty?
         puts "The following files require editing:\n"
         puts "  " + fixes.join("\n  ")
       end

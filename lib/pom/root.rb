@@ -3,7 +3,7 @@ module POM
   # Root directory is indicated by the presence of either a <tt>meta/</tt>
   # directory or hidden <tt>.meta/</tt> directory.
 
-  ROOT_INDICATORS = [ '{.meta,meta}/' ]
+  ROOT_INDICATORS = [ '{VERSION,.version,PROFILE,.profile,POMfile,Pomfile}' ] #.meta,meta}' ]
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position

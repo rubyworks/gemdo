@@ -48,7 +48,7 @@ module POM::Commands
     #
     def execute
       if File.exist?(file) and not $FORCE
-        stderr << "Gemspec already exists. Use --force to overwrite."
+        $stderr << "Gemspec already exists. Use --force to overwrite.\n"
       else
         yaml = project.to_gemspec.to_yaml
         File.open(file, 'w') do |f|

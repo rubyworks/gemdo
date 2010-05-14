@@ -3,7 +3,6 @@ module POM
   class Project
 
     # Require RubyGems library.
-    #
     def require_rubygems
       begin
         require 'rubygems' #/specification'
@@ -14,66 +13,54 @@ module POM
     end
 
     # Create a Gem::Specification
-    #
-    # NOTE: This would be a method of METADATA except that it needs
-    # the manifest list, which is in Project. Perhaps this indicates
-    # that the Manifest should be a part of the Metadata?
-    #
     def to_gemspec(options={})
       require_rubygems
 
-      # FIXME: this only works b/c of package staging
-      #distribute = Dir.glob('**/*')
-      #distribute = project.filelist
-      #distribute = manifest #.files
-
-      if md = /(\w+).rubyforge.org/.match(metadata.homepage)
+      if md = /(\w+).rubyforge.org/.match(profile.homepage)
         rubyforge_project = md[1]
       else
         rubyforge_project = metadata.name  # b/c it has to be something according to Eric Hodel.
       end
 
       ::Gem::Specification.new do |spec|
-        spec.name          = metadata.name
-        spec.version       = metadata.version
-        spec.summary       = metadata.summary
-        spec.description   = metadata.description
-        spec.authors       = [metadata.authors].flatten.compact.uniq
-        spec.email         = metadata.email
-        spec.homepage      = metadata.homepage
-        spec.require_paths = [metadata.loadpath].flatten
+        spec.name          = self.name
+        spec.version       = self.version
+
+        spec.summary       = profile.summary
+        spec.description   = profile.description
+        spec.authors       = profile.authors
+        spec.email         = profile.email
+        spec.homepage      = profile.homepage
+
+        spec.require_paths = self.loadpath
 
         # -- platform --
 
-        spec.platform = options[:platform] || metadata.platform  #'ruby' ???
+        spec.platform = options[:platform] || verfile.platform  #'ruby' ???
         #if metadata.platform != 'ruby'
         #  spec.require_paths.concat(spec.require_paths.collect{ |d| File.join(d, platform) })
         #end
 
         # -- rubyforge project --
-
         spec.rubyforge_project = rubyforge_project
 
         # -- compiled extensions --
-
-        spec.extensions = [metadata.extensions].flatten.compact
+        spec.extensions = options[:extensions] || self.extensions
 
         # -- dependencies --
-
-        if metadata.requires
-          metadata.requires.each do |d,v|
+        if requirements.production
+          self.requirements.production.each do |d,v|
             d,v = *d.split(/\s+/) unless v
             spec.add_dependency(*[d,v].compact)
           end
         end
 
-        spec.requirements = options[:requirements] || metadata.notes
+        spec.requirements = options[:requirements] || requirements.consider
 
         # -- executables --
-
         # TODO: bin/ is a POM convention, is there are reason to do otherwise?
         spec.bindir      = options[:bindir]      || "bin"
-        spec.executables = options[:executables] || metadata.executables
+        spec.executables = options[:executables] || self.executables
 
         # -- rdocs (argh!) --
 
@@ -112,38 +99,29 @@ module POM
 
     end
 
-  end
-
-  class Metadata
-
     # Build a POM project using a gemspec. This is intended to make it
     # farily easy to build a set of POM meta/ files if you already have
     # a gemspec.
-    #
-    def self.from_gemspec(gemspec, root=Dir.pwd)
-      metadata = Metadata.load(root)
+    def import_gemspec(gemspec=nil)
+      gemspec = gemspec || self.gemspec
 
-      metadata.name         = gemspec.name
-      metadata.version      = gemspec.version.to_s
-      metadata.summary      = gemspec.summary
-      metadata.description  = gemspec.description
-      metadata.authors      = gemspec.authors
-      metadata.contact      = gemspec.email
-      metadata.homepage     = gemspec.homepage
-      metadata.loadpath     = gemspec.require_paths
+      verfile.name         = gemspec.name
+      verfile.version      = gemspec.version.to_s
+      verfile.paths        = gemspec.require_paths
+      verfile.arch         = gemspec.platform         # ?
 
-      metadata.platform     = gemspec.platform
+      profile.summary      = gemspec.summary
+      profile.description  = gemspec.description
+      profile.authors      = gemspec.authors
+      profile.contact      = gemspec.email
+      profile.homepage     = gemspec.homepage
 
-      metadata.extensions   = gemspec.extensions
+      #metadata.extensions   = gemspec.extensions
 
-      requires = []
       gemspec.dependencies.each do |d|
         next unless d.type == :runtime
-        requires << "#{d.name} #{d.version_requirements}"
+        requirements << "#{d.name} #{d.version_requirements}"
       end
-      metadata.requires = requires
-
-      metadata
     end
 
   end#class Project

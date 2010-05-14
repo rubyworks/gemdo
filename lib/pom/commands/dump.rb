@@ -39,7 +39,8 @@ module POM::Commands
 
     #
     def execute
-      puts project.metadata.to_yaml
+      puts project.profile.to_yaml
+      puts project.verfile.to_yaml
     end
 
   end

@@ -9,60 +9,38 @@ module POM
     # What packages this project requires for development,
     # sometimes called 'build requirements'.
     # :attr_accessor: requires
-    attr_list :requires
+    attr_accessor :requires, :default => []
 
     ##
     # External requirements, outside of the normal packaging system.
     # :attr_accessor: externals
-    attr_list :externals
+    attr_accessor :externals, :default => []
 
     ##
     # File pattern list of files to distribute in package.
     # This could, for instance, be used to assist with MANIFEST
     # generation.
     # :attr_accessor: distribute
-    attr_list :distribute
+    attr_accessor :distribute, :default => ['**/*']
 
     # Map project directories and files to publish locations on
     # the webserver. This entry might be used to publish a project
     # website.
-    attr_accessor :sitemap
-
-
-    # D E F A U L T S
-
-    #
-    def initialize_defaults
-      @data = {}
-      @data['dependencies'] = []
-      @data['distribute']   = ['**/*']
-
-      webdir = root.glob('site,website,web').first || 'site'
-      @data['sitemap'] = { webdir => '.' }
-    end
+    attr_accessor :sitemap, :default => lambda{ {webdir => '.'} }
 
     # S P E C I A L  S E T T E R S
 
     #
-    #def requires=(x)
-    #  @data['requires'] = x.to_list
-    #end
-
-    #
-    #def externals=(x)
-    #  @data['externals'] = x.to_list
-    #end
-
-    #
-    #def distribute=(x)
-    #  @data['distribute'] = x.to_list
-    #end
-
-    #
     def sitemap=(x)
-      return @data['sitemap'] = nil unless x
-      @data['sitemap'] = YAML.load(x) #.to_list
+      return self['sitemap'] = nil unless x
+      self['sitemap'] = YAML.load(x) #.to_list
     end
+
+    private
+
+      def webdir
+        root.glob('site,website,web').first || 'site'
+      end
 
   end
 

@@ -167,51 +167,27 @@ module POM
       
     end
 
-  public
-
-    #
-    def to_metadata(root=nil)
-      metadata = Metadata.new(root)
-      metadata.load! if root  # TODO: is there really any reason for the meta/ entries not to take precedence?
-
-      metadata.name        = self.name
-      metadata.title       = self.title
-      metadata.description = self.description
-      metadata.license     = self.license
-      metadata.copyright   = self.copyright
-      metadata.authors     = self.authors
-      metadata.homepage    = self.homepage
-      metadata.wiki        = self.wiki
-      metadata.issues      = self.issues
-
-      metadata
-    end
-
   end
 
-  class Metadata
+  class Project
 
     # Get POM metadata from a README. This is intended to make it
-    # fairly easy to build a set of POM meta/ files if you already have
-    # a README.
-    #
-    # TODO: Use ReadMe#to_metadata
-    #
-    def self.from_readme(readme, root=Dir.pwd)
-      metadata = Metadata.load(root)
-      readme   = Readme.new(readme)
+    # fairly easy to build a set of POM's metadata files if you
+    # already have a README.
+    def import_readme(readme=nil)
+      readme = readme || self.readme
 
-      metadata.name        = readme.name
-      metadata.title       = readme.title
-      metadata.description = readme.description
-      metadata.license     = readme.license
-      metadata.copyright   = readme.copyright
-      metadata.authors     = readme.authors
-      metadata.homepage    = readme.homepage
-      metadata.wiki        = readme.wiki
-      metadata.issues      = readme.issues
+      verfile.name        = readme.name         if readme.name
 
-      metadata
+      profile.title       = readme.title        if readme.title
+      profile.description = readme.description  if readme.description
+      profile.license     = readme.license      if readme.license
+      profile.copyright   = readme.copyright    if readme.copyright
+      profile.authors     = readme.authors      if readme.authors
+
+      profile.resources.homepage = readme.homepage  if readme.homepage
+      profile.resources.wiki     = readme.wiki      if readme.wiki
+      profile.resources.issues   = readme.issues    if readme.issues
     end
 
   end
