@@ -6,19 +6,16 @@
 
 == DESCRIPTION
 
-Ruby POM stands for Ruby Project Object Model.
-POM provides a metadata system for Ruby projects.
-
-
-== FEATURES/ISSUES
-
-* Standardizes common project metadata.
-* Uses meta directory files for properties.
+POM stands for Project Object Model, a term co-opted from Java/Maven world.
+Ruby's POM provides a standardized layout and a class model for working
+with Ruby projects. POM largely supports the most common practices of the
+Ruby community. In a few areas it goes a step further a defines some
+practices of its own in order to expand it's capabilites.
 
 
 == RELEASE NOTES
 
-Please see HISTORY file.
+Please see HISTORY.rdoc file.
 
 
 == SYNOPSIS
@@ -26,29 +23,22 @@ Please see HISTORY file.
 Usage is fairly straight forward. The broadest use is to create a
 Project object  passing the constructor the root directory of the project.
 
-  project = POM::Project.new(root_dir)
+  project = POM::Project.new(directory)
 
-The Project class ties into the rest of the system. Eg.
+The Project class ties into the rest of the system. e.g.
 
-  project.metadata
+  project.profile
 
-Alternately you can utilize only specific parts of the system. For
-instance, by creating a POM::Metadata object.
-
-  metadata = POM::Metadata.new(root_dir)
-
-Then you can query information from the project via method calls.
-
-  metadata.name   #=> 'mayapp'
-
-See the RDoc API documentation for further specifics.
+See the Wiki[http://wiki.github.com/proutils/pom] and
+API[http://proutils.github.com/pom/rdoc] documentation for further
+details.
 
 
 == HOW TO INSTALL
 
 To install with RubyGems simply open a console and type:
 
-  $ gem install pom
+  $ sudo gem install pom
 
 Local installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
@@ -64,7 +54,7 @@ Windows users use 'ruby setup.rb all'.
 
 (MIT License)
 
-Copyright (c) 2009 Thomas Sawyer <transfire@gmail.com>
+Copyright (c) 2009 Thomas Sawyer
 
 This program is ditributed under the terms of the MIT license.
 
@@ -77,4 +67,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 See LICENSE file for more details.
-
