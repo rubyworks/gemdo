@@ -72,6 +72,7 @@ COMMANDS:
   init                             create default meta entries
   gemspec                          generate a gemspec file
   ver                              show/bump version
+  upgrade                          Upgrade old meta directory to files
   help                             show this help message
 
 COMMON OPTIONS:
