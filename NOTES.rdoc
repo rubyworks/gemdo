@@ -24,14 +24,14 @@ uses a small number of files, separating metadata according the needs mentioned
 above. While I am not 100% on the exact names of the files, I have worked out 
 taht this alternative would have two files:
 
-* <tt>.package</tt> for name, version, release date, status, and also internal load path.
-* <tt>.require</tt> for dependencies, devided into environment sections.
+* <tt>.version</tt> for name, version, release date, status, and also internal load path.
+* <tt>.package</tt> for dependencies, with suitable distinction for platforms.
 * <tt>.profile</tt> for all other metadata such as description, summary, authors, etc.
 
 This system would work just as well as the per file system as far as the
-separation of important concerns --the .package file would be updated regulalry
-while the .profile file would change only rarely. I am tempted to support this
-design, but I am a littel hestitant to break backward compatability and concerned
+separation of important concerns --the .version file would be updated regularly
+while the .profile file would rarely ever change. I am tempted to support this
+design, but I am a little hestitant to break backward compatability and concerned
 that future needs might prove this division of information more fragile than it
 presently seems. That's one of the big advantages of the file store design
 actually, adding new stuff to it has essentially no ramifications on the design.

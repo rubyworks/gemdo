@@ -6,10 +6,10 @@
 
 == DESCRIPTION
 
-POM stands for Project Object Model, a term co-opted from Java/Maven world.
+POM stands for Project Object Model (yes, a term co-opted from Java/Maven world).
 Ruby's POM provides a standardized layout and a class model for working
 with Ruby projects. POM largely supports the most common practices of the
-Ruby community. In a few areas it goes a step further a defines some
+Ruby community. In a few areas it goes a step further to define some
 practices of its own in order to expand it's capabilites.
 
 
@@ -20,12 +20,12 @@ Please see HISTORY.rdoc file.
 
 == SYNOPSIS
 
-Usage is fairly straight forward. The broadest use is to create a
-Project object  passing the constructor the root directory of the project.
+Typical usage is to create a Project object passing the constructor
+the root directory of the project.
 
-  project = POM::Project.new(directory)
+  project = POM::Project.new(root_directory)
 
-The Project class ties into the rest of the system. e.g.
+The project object then ties into all the rest of available metadata, e.g.
 
   project.profile
 
@@ -40,7 +40,7 @@ To install with RubyGems simply open a console and type:
 
   $ sudo gem install pom
 
-Local installation requires Setup.rb (gem install setup),
+Site installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
   $ tar -xvzf pom-1.0.0.tgz
