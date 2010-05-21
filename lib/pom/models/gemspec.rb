@@ -25,6 +25,7 @@ module POM
       ::Gem::Specification.new do |spec|
         spec.name          = self.name
         spec.version       = self.version
+        spec.require_paths = self.loadpath
 
         spec.summary       = profile.summary
         spec.description   = profile.description
@@ -32,9 +33,8 @@ module POM
         spec.email         = profile.email
         spec.homepage      = profile.homepage
 
-        spec.require_paths = self.loadpath
-
         # -- platform --
+
         # TODO: how to handle multiple platforms?
         spec.platform = options[:platform] #|| verfile.platform  #'ruby' ???
         #if metadata.platform != 'ruby'
@@ -42,18 +42,21 @@ module POM
         #end
 
         # -- rubyforge project --
+
         spec.rubyforge_project = rubyforge_project
 
         # -- compiled extensions --
+
         spec.extensions = options[:extensions] || self.extensions
 
         # -- dependencies --
-        if package.dependencies.each do |dep|
+
+        package.dependencies.each do |dep|
           next if dep.optional?
           if dep.development?
-            spec.add_development_dependency(*[dep.name,dep.constraint].compact)
+            spec.add_development_dependency( *[dep.name, dep.constraint].compact )
           else
-            spec.add_runtime_dependency(*[dep.name,dep.constraint].compact)
+            spec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
           end
         end
 
@@ -61,13 +64,14 @@ module POM
         #spec.requirements = options[:requirements] || package.consider
 
         # -- executables --
+
         # TODO: bin/ is a POM convention, is there are reason to do otherwise?
         spec.bindir      = options[:bindir]      || "bin"
         spec.executables = options[:executables] || self.executables
 
         # -- rdocs (argh!) --
 
-        readme = root.glob_relative('README{,.txt}', File::FNM_CASEFOLD).first
+        readme = root.glob_relative('README{,.*}', File::FNM_CASEFOLD).first
         extra  = options[:extra_rdoc_files] || []
 
         rdocfiles = []
@@ -123,7 +127,7 @@ module POM
 
       gemspec.dependencies.each do |d|
         next unless d.type == :runtime
-        requirements << "#{d.name} #{d.version_requirements}"
+        package << "#{d.name} #{d.version_requirements}"
       end
     end
 

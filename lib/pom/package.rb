@@ -60,6 +60,14 @@ module POM
       deps
     end
 
+    #
+    def <<(entry)
+      if String===entry
+        entry = {'package'=> entry}
+      end
+      @dependencies << Dependency.new(entry)
+    end
+
     # Parse dependency configuration file.
     def parse(file)
       data  = YAML.load(File.new(file))
@@ -113,7 +121,7 @@ module POM
     def package=(package)
       parts = package.strip.split(/\s+/)
       @name    = parts.shift
-      @version = parts.join(' ')
+      @version = parts.empty? ? nil : parts.join(' ')
     end
 
     #

@@ -89,6 +89,23 @@ module POM
       resources.repository
     end
 
+    #
+    RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
+
+    # Contact's email address.
+    def email
+      if md = RE_EMAIL.match(contact.to_s)
+        md[0]
+      else
+        nil
+      end
+    end
+
+    # Returns the first entry in the authors list.
+    def author
+      authors.first
+    end
+
   end
 
 end

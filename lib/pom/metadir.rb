@@ -311,9 +311,9 @@ module POM
     #
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
-    # Maintainers's email address.
+    # Contact's email address.
     def email
-      if md = RE_EMAIL.match(maintainer.to_s)
+      if md = RE_EMAIL.match(contact.to_s)
         md[0]
       else
         nil

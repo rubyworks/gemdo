@@ -70,12 +70,33 @@ module POM
       end
     end
 
+    # Package name is generally in the form of +name-version+,
+    # or +name-version-platform+ if +platform+ is specified.
+    def package_name(options={})
+      if options[:stamp]
+        stamp = Time.now.strftime("%H*60+%M")
+        versnum = "#{version}.#{stamp}"
+      else
+        versnum = version
+      end
+
+      if platform = options[:platform]
+        "#{name}-#{versnum}-#{platform}"
+      else
+        "#{name}-#{versnum}"
+      end
+    end
+
+    #
+    alias_method :stage_name, :package_name
+
     # Current version of the project. Will be a dot separated
     # string, e.g. "1.0.0".
     def to_s
       to_a.join('.')
     end
 
+    #
     def to_a
       [major, minor, patch, state, build].compact
     end
