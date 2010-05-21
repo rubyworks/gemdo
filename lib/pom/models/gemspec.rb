@@ -48,14 +48,17 @@ module POM
         spec.extensions = options[:extensions] || self.extensions
 
         # -- dependencies --
-        if requirements.production
-          self.requirements.production.each do |d,v|
-            d,v = *d.split(/\s+/) unless v
-            spec.add_dependency(*[d,v].compact)
+        if package.dependencies.each do |dep|
+          next if dep.optional?
+          if dep.development?
+            spec.add_development_dependency(*[dep.name,dep.version].compact)
+          else
+            spec.add_runtime_dependency(*[dep.name,dep.version].compact)
           end
         end
 
-        spec.requirements = options[:requirements] || requirements.consider
+        # TODO: considerations?
+        #spec.requirements = options[:requirements] || package.consider
 
         # -- executables --
         # TODO: bin/ is a POM convention, is there are reason to do otherwise?
