@@ -1,0 +1,15 @@
+--- 
+title: Demoapp
+summary: Demo summary
+license: MIT
+contact: trans <transfire@gmail.com>
+suite: demos
+copyright: Copyright (c) 2010 Thomas Sawyer
+created: 2010-10-10
+
+authors: 
+  - Thomas Sawyer
+
+description:
+  This is the description for the example.
+

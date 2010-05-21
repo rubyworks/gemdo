@@ -2,20 +2,23 @@
 
 We generate the metadata from the README using the pom command.
 
-  `pom init fixture/README`
+  `cd fixture; pom init README`
 
 Now lets verify the metadata was extracted as expected.
 
-  require 'pom/metadata'
+  require 'pom/project'
 
-  metadata = POM::Metadata.load
+  project = POM::Project.new('fixture')
 
-  metadata.title.assert == "MyApp"
-  metadata.description.assert == "This is a description of the\nfake project."
-  metadata.license.assert == "GPL"
+The values should have been picked up from VERSION and PROFILE files.
 
-Clean-up the generated directory.
+  project.metadata.title.assert == "MyApp"
+  project.metadata.description.assert == "This is a description of the\nfake project."
+  project.metadata.license.assert == "GPL"
 
-  FileUtils.rm_r('meta')
-  FileUtils.rm_r('.cache') if File.exist?('.cache')
+Clean-up the generated files.
+
+  FileUtils.rm_r('fixture/VERSION')
+  FileUtils.rm_r('fixture/PROFILE')
+  FileUtils.rm_r('fixture/.cache') if File.exist?('fixture/.cache')
 

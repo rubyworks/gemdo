@@ -6,7 +6,7 @@ Require metadata library.
 
 Load metadata from fixture.
 
-  metadata = POM::Metadata.load('fixture')
+  metadata = POM::Metadata.new('fixture')
 
 Verify contact metadata is being read from directory location.
 
