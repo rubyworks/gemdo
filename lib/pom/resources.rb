@@ -63,6 +63,22 @@ module POM
       end     
     end
 
+    #
+    def method_missing(sym, *args)
+      meth = sym.to_s
+      name = meth.chomp('=')
+      case meth
+      when /=$/
+        (class << self; self; end).class_eval do
+          attr_accessor name
+        end
+        instance_variable_set("@#{name}", args.first)
+      else
+        super(sym, *args) if block_given? or args.size > 0
+        nil
+      end
+    end
+
   end
 
 end
