@@ -52,6 +52,16 @@ module POM
     end
 
     #
+    def date=(val)
+      case val
+      when Date, Time, DateTime
+        @date = val
+      else
+        @date = Date.parse(val) if val
+      end
+    end
+
+    #
     def version=(string)
       @major, @minor, @patch, @state, @build = *string.split('.')
       unless /[A-Za-z]/ =~ state 
@@ -87,8 +97,8 @@ module POM
         f.puts "patch: #{patch}" if patch
         f.puts "state: #{state}" if state
         f.puts "build: #{build}" if build
-        f.puts "date : #{date.strftime('%y-%m-%d')}" if date
-        f.puts "paths: #{paths.inspect}" if paths
+        f.puts "date : #{date.strftime('%Y-%m-%d')}" if date
+        f.puts "paths: #{paths.inspect}" if paths && paths != ["lib"]
         f.puts "arch : #{arch.inspect}"  if arch
       end
     end
