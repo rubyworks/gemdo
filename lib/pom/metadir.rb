@@ -62,7 +62,7 @@ module POM
       home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
       store = stores.find{ |s| s[0,1] != '.' }  # not hidden
       path  = Pathname.new(File.join(home_config, 'pom', store))
-       path.exist? ? path : nil
+      path.exist? ? path : nil
     end
 
   private
@@ -116,7 +116,7 @@ module POM
         super(path)
       else
         if root
-          load_version_stamp
+          #load_version_stamp
           super
         end
       end
@@ -477,6 +477,30 @@ module POM
     def save!(chroot=nil)
       self.root = chroot if chroot
       super
+    end
+
+    def to_verfile
+      verfile = Verfile.new(root)
+      verfile.name    = name
+      verfile.version = version
+      verfile.date    = released
+      verfile.paths   = loadpath
+      #verfile.state   = status
+      verfile
+    end
+
+    OMIT = %w{status released codename loadpath}
+
+    def to_profile
+      #load!
+      profile = Profile.new(root)
+      to_h.each do |k,v|
+        next if OMIT.include?(k.to_s)
+        profile.__send__("#{k}=", v)
+      end
+      profile.resources.homepage = homepage
+      profile.resources.repository = repository
+      profile
     end
 
   end#class Metadata

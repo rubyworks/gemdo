@@ -67,7 +67,6 @@ module POM
     # Get a metadata +entry+, where entry is a pathname.
     # If it is a directory, will create a new FileStore object.
     def get!(name)
-      name = name.to_s
       case name
       when String, Symbol
         path = @pathname + name #.to_s
@@ -147,7 +146,7 @@ module POM
       path = alt_path ? Pathname.new(alt_path) : pathname()
       path.glob('*').each do |file|
         #next if file.to_s.index(/[.]/)  # TODO: rejection filter
-        name = path_to_name(file, path)
+        name = file.basename #path_to_name(file, path)
         self[name] = get!(file)
       end
       self
@@ -159,7 +158,7 @@ module POM
       path = pathname
       path.glob('*').each do |file|
         #next if file.to_s.index(/[.]/)  # TODO: rejection filter
-        name = path_to_name(file, path)
+        name = file.basename #path_to_name(file, path)
         self[name] = get!(file) unless key?(name)
       end
       self
@@ -239,7 +238,7 @@ module POM
 
     # Return metadata in Hash form.
     def to_h
-      load_soft!
+      read!
       @data.dup
     end
 
