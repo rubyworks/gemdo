@@ -171,6 +171,11 @@ module POM
 
   class Project
 
+   #
+    def readme
+      @readme ||= Readme.load(root)
+    end
+
     # Get POM metadata from a README. This is intended to make it
     # fairly easy to build a set of POM's metadata files if you
     # already have a README.
