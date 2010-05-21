@@ -35,8 +35,8 @@ module POM
         spec.require_paths = self.loadpath
 
         # -- platform --
-
-        spec.platform = options[:platform] || verfile.platform  #'ruby' ???
+        # TODO: how to handle multiple platforms?
+        spec.platform = options[:platform] #|| verfile.platform  #'ruby' ???
         #if metadata.platform != 'ruby'
         #  spec.require_paths.concat(spec.require_paths.collect{ |d| File.join(d, platform) })
         #end
@@ -51,9 +51,9 @@ module POM
         if package.dependencies.each do |dep|
           next if dep.optional?
           if dep.development?
-            spec.add_development_dependency(*[dep.name,dep.version].compact)
+            spec.add_development_dependency(*[dep.name,dep.constraint].compact)
           else
-            spec.add_runtime_dependency(*[dep.name,dep.version].compact)
+            spec.add_runtime_dependency(*[dep.name,dep.constraint].compact)
           end
         end
 

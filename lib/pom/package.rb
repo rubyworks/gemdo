@@ -105,8 +105,13 @@ module POM
     end
 
     #
+    def package
+      "#{name} #{version}"
+    end
+
+    #
     def package=(package)
-      parts = package.split(/\s+/)
+      parts = package.strip.split(/\s+/)
       @name    = parts.shift
       @version = parts.join(' ')
     end
@@ -137,6 +142,20 @@ module POM
     #
     def development?
       group.include?('dev') || group.include?('development')
+    end
+
+    # Converts the version into a constraint recognizable by RubyGems.
+    def constraint
+      case version
+      when /^(.*?)\~$/
+        "~> #{$1}"
+      when /^(.*?)\+$/
+        ">= #{$1}"
+      when /^(.*?)\-$/
+        "< #{$1}"
+      else
+        version
+      end
     end
 
   protected
