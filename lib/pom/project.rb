@@ -6,7 +6,7 @@ require 'pom/verfile'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/release'
-require 'pom/requirements'
+require 'pom/package'
 #require 'pom/build'
 #require 'pom/gemspec'
 
@@ -95,9 +95,9 @@ module POM
     #end
 
     # DEPRECATED. Provides access to both profile and verfile information
-    # through a single interface.
+    # through a single interface. This will probably be removed from API.
     def metadata
-      profile #@metadata ||= Metadata.new(root)
+      @metadata ||= Metadata.new(root, profile, verfile)
     end
 
     #
@@ -129,9 +129,9 @@ module POM
       verfile.loadpath
     end
 
-    # Requirement sets.
-    def requirements
-      @requirements ||= Requirements.new(root)
+    # Package Configuration.
+    def package
+      @package ||= Package.new(root)
     end
 
     ## Build metadata.
@@ -140,18 +140,10 @@ module POM
     #  @build ||= Build.new(root, '.build')
     #end
 
-    # Project manifest.
+    # Project manifest. For manifest file use <tt>manifest.file</tt>.
     def manifest
       @manifest ||= Manifest.new(root)
     end
-
-    ## Project manifest file name.
-    ##
-    ## TODO: Deprecate in favor of using manifest.file
-    #
-    #def manifest_file
-    #  @manifest_file ||= root.first('manifest{,.txt}', :casefold)
-    #end
 
     # Access to project history.
     def history

@@ -10,24 +10,32 @@ module POM
   #
   class Metadata
 
+    # Metadata sources.
+    attr :sources
+
     #
-    def initialize(root)
+    def initialize(root, profile=nil, verfile=nil)
       root = Pathname.new(root)
 
-      @sources = []
-
-      if Verfile.find(root)
-        @verfile = Verfile.new(root)
+      if profile
+        @profile = profile
+      elsif Profile.find(root)
+        @profile = Profile.new(root)
       end
 
-      if Profile.find(root)
-        @profile = Profile.new(root)
+      if verfile
+        @verfile = verfile
+      elsif Verfile.find(root)
+        @verfile = Verfile.new(root)
       end
 
       ## previous "confectionery" system (ahead of it's time, I'm afraid)
       #if Metadir.find(root)
       #  @metadir = Metadir.new(root)
       #end
+
+      # TODO: Add profile.resources to lookup ?
+      @sources = [@verfile, @profile].compact #@metadir].compact
     end
 
     # Profile provides all the general information about the project.
@@ -47,23 +55,16 @@ module POM
 
     #
     def save!
-      each do |source|
+      sources.each do |source|
         source.save!
       end
     end
 
     #
     def backup!
-      each do |source|
+      sources.each do |source|
         source.backup!
       end
-    end
-
-    #--
-    # TODO: Add profile.resources to lookup ?
-    #++
-    def sources
-      [verfile, profile, metadir]
     end
 
     #
