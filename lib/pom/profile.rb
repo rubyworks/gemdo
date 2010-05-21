@@ -6,9 +6,9 @@ module POM
   #
   class Profile < YAMLStore
 
-    # TODO: Need to narrow this selection down.
+    #
     def self.filename
-      ['PROFILE', '.profile', 'POMfile', 'Pomfile']
+      ['PROFILE', 'Profile', '.profile']
     end
 
     # Project's <i>package name</i>. The entry is required
@@ -84,7 +84,11 @@ module POM
       resources.homepage
     end
 
+    #
+    def repository
+      resources.repository
+    end
+
   end
 
 end
-
