@@ -1,6 +1,6 @@
 require 'time'
 require 'pom/root'
-require 'pom/filestore'
+require 'pom/metastore'
 
 #--
 # TODO: executables is not right ?
@@ -10,7 +10,7 @@ module POM
 
   # = Metadata
   #
-  class Metadir < FileStore
+  class Metadir < MetaStore
 
     # Storage locations for metadata. POM supports
     # the use of +meta/+ or the hidden +.meta/+.

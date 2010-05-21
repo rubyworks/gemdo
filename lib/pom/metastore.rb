@@ -3,9 +3,9 @@ require 'pom/errors'
 
 module POM
 
-  # FileStore serves as the base class for the Metadata
+  # MetaStore serves as the base class for the Metadata
   # class. It connects the file system to the POM model.
-  class FileStore
+  class MetaStore
 
     # Parent store, or root pathname. The topmost store
     # should set this to the root pathname. All substores
