@@ -1,3 +1,6 @@
-group: development
-syckle
-qed
+development:
+  - syckle
+
+development/test:
+  - qed
+

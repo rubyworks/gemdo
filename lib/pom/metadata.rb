@@ -2,6 +2,7 @@ require 'time'
 require 'pom/root'
 require 'pom/profile'
 require 'pom/verfile'
+require 'pom/reqfile'
 require 'pom/metadir'
 
 module POM
