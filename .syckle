@@ -15,10 +15,8 @@ email:
 
 box:
   service: Box
+  types  : [ gem ]
   active : true
-  types  : [ gem, gz ]
-  include: [ bin, doc, lib, meta, test, "[A-Z]*" ]
-  exclude: [ doc/rdoc, doc/ri, NOTES ]
 
 rdoc:
   service  : RDoc

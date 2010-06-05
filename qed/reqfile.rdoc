@@ -1,0 +1,36 @@
+= Reqfile
+
+The requirements configuration file provides information
+on what dependencies a project has on other projects.
+The Reqfile class provides an interface to this information.
+
+  require 'pom/reqfile'
+
+The initializer takes the root directory for the project
+and looks for a file called +REQUIRE+ or +.require+.
+
+  req = POM::Reqfile.new('sample')
+
+The dependencies list for our sample project is fairly large.
+
+  deps = req.dependencies
+  deps.size.assert == 16
+
+But a few of these dependencies are purely optional.
+
+  reqs = req.requirements
+  reqs.size.assert == 13
+
+Two of those are development dependencies.
+
+  devs = req.development
+  devs.size.assert == 2
+
+Since Reqfile is Enumerable we can filter dependencies using
+fine grain criteria as well.
+
+  test = req.select { |dep| dep.test? }
+  test.size.assert == 1
+
+We see that we have a single dependecy for testing.
+

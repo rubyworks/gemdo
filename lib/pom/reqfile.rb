@@ -1,9 +1,8 @@
 require 'pom/core_ext/pathname'
-require 'pom/core_ext/try_dup'
+#require 'pom/core_ext/try_dup'
 
 module POM
 
-  # NOTE: This API of the Reqfile is still in flux.
   #
   class Reqfile
     include Enumerable
@@ -18,6 +17,9 @@ module POM
       pattern = '{' + filename.join(',') + '}{,.cfg}'
       root.glob(pattern).first
     end
+
+    #
+    attr :file
 
     #
     attr :dependencies
@@ -39,20 +41,18 @@ module POM
       @root = Pathname.new(root)
       @file = self.class.find(@root)
 
-      @stack = []
-      @set   = nil
-      @share = {}
+      @dependencies = []
 
-      @dependencies  = []
-
-      @replaces  = []
-      @provides  = []
-      @conflicts = []
-      @optional  = []
+      #@production  = []
 
       if @file && @file.exist?
-        text  = File.read(@file)
-        parse(text)
+        data = YAML.load(File.new(@file))
+        data.each do |group, deps|
+          deps.each do |pkg|
+            dep = Dependency.new(pkg, group)
+            @dependencies << dep
+          end
+        end
       end
     end
 
@@ -67,11 +67,20 @@ module POM
     end
 
     #
-    def requires
+    def requirements
       dependencies.reject{ |dep| dep.optional? }
     end
-    alias_method :requirements, :requires
 
+    #
+    def development
+      dependencies.select{ |dep| dep.development? }
+    end
+
+    # TODO: Regfile needs a specialized to_yaml
+
+    # TODO: What about production vs. runtime?
+
+=begin
     # Returns an Array of Dependency filtered by group.
     def group(name)
       dependencies.select{ |dep| dep.groups.include?(name) }
@@ -80,193 +89,6 @@ module POM
     # List of groups.
     def groups
       map{ |dep| dep.groups }.flatten(1).compact.uniq
-    end
-
-    # List of platforms.
-    def platforms
-      map{ |dep| dep.platforms }.flatten(1).compact.uniq
-    end
-
-    # List of engines.
-    def engines
-      eng = []
-      each{ |dep| dep.engines.each{ |e| eng << e.name } }
-      eng.compact.uniq
-    end
-
-    # Returns a mapping of dependencies cross-indexed by engine and platform.
-    def renditions
-      deps = {}
-      each do |dep|
-        deps[[dep.engine,dep.platform]] ||= []
-        deps[[dep.engine,dep.platform]] << self
-      end
-      deps
-    end
-
-    #
-    def parse(text)
-      share = {}
-      lines = text.lines.to_a
-      lines.each do |line|
-        line = line.sub(/\#.*?$/,'').strip
-        next if line.empty?
-
-        options  = {}
-        options[:optional] = true if line.chomp!('*')
-
-        segments = line.strip.split(/\s{2,}/)
-        package  = segments.shift
-
-        if package.index(': ')
-          share = parse_options(package)
-          next
-        end
-
-        options.merge!(share)
-        options.merge!(parse_options(segments))
-
-        @dependencies << Dependency.new(package, options)
-      end
-    end
-
-    private
-
-    def parse_options(segments)
-      options = {}
-      segments.each do |option|
-        key, value = option.split(': ')
-        options[key] = value
-      end
-      options
-    end
-
-=begin
-      case data
-      when Array
-        data.each do |entry|
-          parse(entry)
-        end
-      when Hash
-        data.each do |entry, opts|
-          parse_entry(entry, opts || {})
-        end
-      when String
-        parse_entry(data, opts)
-      end
-    end
-=end
-
-  private
-
-=begin
-    #
-    def parse_entry(entry, opts=nil)
-      words = entry.split(/\s+/)
-      type  = words.first
-      spec  = words[1..-1].join(' ')
-      case type
-      when 'general'
-        parse(opts)
-      when 'package', 'gem'
-        parse_package(spec, opts)
-      when 'group'
-        parse_group(spec, opts)
-      when 'optional'
-        parse_optional(spec, opts)
-      when 'engine'
-        parse_engine(spec, opts)
-      when 'platform'
-        parse_platform(spec, opts)
-      when 'source'
-        parse_source(spec, opts)
-      else
-        if opts
-          parse_group(type, opts)
-        else
-          parse_package((type + ' ' + spec).strip)
-        end
-      end
-    end
-
-    def parse_source(url, opts={})
-      @share[:source] = url
-    end
-
-    def parse_group(name, cont)
-      shared do
-        @share[:group] ||= []
-        @share[:group] << name
-        parse(cont)
-      end
-    end
-
-    # Optional group
-    def parse_optional(name, cont)
-      shared do
-        @optional << name
-        @share[:group] ||=[]
-        @share[:group] << name
-        @share[:optional] = true
-        parse(cont)
-      end
-    end
-
-    def parse_platform(platform, cont)
-      shared do
-        @share[:platform] = platform
-        parse(cont)
-      end
-    end
-
-    def parse_engine(engine, cont)
-      shared do
-        @share[:engine] = engine
-        parse(cont)
-      end
-    end
-
-    def parse_package(package, opts={})
-      options = @share.merge(opts || {})
-      options[:package] = package
-      case @set
-      when :conflicts
-        @conflicts << Dependency.new(options)
-      when :replaces
-        @replaces << Dependency.new(options)
-      else
-        @dependencies << Dependency.new(options)
-      end
-    end
-    #alias_method :gem, :package
-    #alias_method :pkg, :package
-
-
-    def shared(&block)
-      @stack << @share.inject({}){|h,(k,v)| h[k] = v.try_dup; h}
-      yield
-      @share = @stack.pop
-    end
-=end
-
-=begin
-    #
-    def parse_provides(*names)
-      @provides.concat(names)
-    end
-
-    def parse_conflicts(cont)
-      raise if @set  # single depth only
-      @set = :conflicts
-      parse(cont)
-      @set = nil
-    end
-
-    def parse_replaces(cont)
-      raise if @set  # single depth
-      @set = :replaces
-      parse(cont)
-      @set = nil
     end
 =end
 
@@ -279,31 +101,26 @@ module POM
 
     attr :group
 
-    attr :engine
+    attr :environment
 
-    attr :platform
-
-    attr_accessor :source
-
-    attr_accessor :vendor #path ?
-
-    attr_accessor :optional
+    attr :subset
 
     #
-    def initialize(package, settings={})
+    def initialize(package, group)
       self.package = package
-      @groups    = []
-      @engines   = []
-      @platforms = []
-      @optional  = false
-      settings.each do |k,v|
-        __send__("#{k}=", v.try_dup)
-      end
+      self.group   = group
     end
 
     #
     def package=(package)
+      @package = package
       @vname = VName.new(package)
+    end
+
+    #
+    def group=(group)
+      @group = group
+      @environment, @subset = group.split(/\//)
     end
 
     #
@@ -317,50 +134,63 @@ module POM
     end
 
     #
-    def engine=(engine)
-      @engine = engine
-      list(engine).each do |e|
-        @engines << VName.new(e)
-      end
-    end
-
-    attr_reader :engines
-
-    #
-    def platform=(platform)
-      @platform  = platform
-      @platforms = list(platform)
-    end
-
-    attr_reader :platforms
-
-    #
-    def group=(group)
-      @group = group
-      @groups = list(group)
-    end
-
-    #
-    attr_reader :groups
-
-    #
     def inspect
       "#{name} #{version}".strip
     end
- 
+
+    #
+    def runtime?
+      environment == 'runtime'
+    end
+
     #
     def optional?
-      @optional
+      development? || runtime? && subset == 'optional'
     end
 
     #
     def required?
-      !@optional
+      !(optional? || alternate?)
     end
 
     #
     def development?
-      group.include?('dev') || group.include?('development')
+      environment == 'development' #or environment == 'dev'
+    end
+
+    #
+    def test?
+      development? && subset == 'test'
+    end
+
+    #
+    def document?
+      development? && subset == 'document'
+    end
+
+    #
+    def vendored?
+      subset == 'vendor'
+    end
+
+    #
+    def alternate?
+      environment == 'alternate'
+    end
+
+    #
+    def provision?
+      alternate? && subset == 'provision'
+    end
+
+    #
+    def replacement?
+      alternate? && subset == 'replacement'
+    end
+
+    #
+    def conflict?
+      alternate? && subset == 'conflict'
     end
 
     # Converts the version into a constraint recognizable by RubyGems.
@@ -378,16 +208,6 @@ module POM
     end
 
   protected
-
-    def list(value)
-      case value
-      when String
-        value.split(/\s*\,\s*/)
-      else
-        value
-      end
-    end
-
 
     # VName encapsulates a name-verison pair.
     class VName
