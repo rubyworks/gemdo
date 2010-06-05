@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: POM::Command</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../assets/icon/class.png">
+  
+
+  <link type="text/css" rel="stylesheet" href="../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../assets/highlight/styles/github.css" title="GitHub" />
+
+  <script type="text/javascript" charset="utf-8" src="../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
+</head>
+<body class="class">
+<div id="main">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../assets/icon/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Command</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/pom/command_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/command.rb">lib/pom/command.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <!-- why was this class="link" ? -->
+          <li class="class"><a href="../Object.html">Object</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-require_commands">::require_commands</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-parse_command">#parse_command</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-run_command">#run_command</a>
+            </li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
+        <ul>
+        
+          <li class="file"><a href="../PROFILE.html">PROFILE</a></li>
+        
+          <li class="file"><a href="../HISTORY_rdoc.html">HISTORY.rdoc</a></li>
+        
+          <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
+        
+          <li class="file"><a href="../VERSION.html">VERSION</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
+        
+          <li class="file"><a href="../NOTES_rdoc.html">NOTES.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../POM.html">POM</a></li>
+        
+          <li class="class"><a href="../POM/Command.html">POM::Command</a></li>
+        
+          <li class="module"><a href="../POM/Commands.html">POM::Commands</a></li>
+        
+          <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Init.html">POM::Commands::Init</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
+        
+          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
+        
+          <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
+        
+          <li class="class"><a href="../POM/Dependency/VName.html">POM::Dependency::VName</a></li>
+        
+          <li class="class"><a href="../POM/History.html">POM::History</a></li>
+        
+          <li class="class"><a href="../POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li class="class"><a href="../POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li class="class"><a href="../POM/MetaStore.html">POM::MetaStore</a></li>
+        
+          <li class="class"><a href="../POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
+        
+          <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
+        
+          <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
+        
+          <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
+        
+          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
+        
+          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+        
+          <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
+        
+          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+        
+          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+        
+          <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
+        
+          <li class="class"><a href="../FalseClass.html">FalseClass</a></li>
+        
+          <li class="class"><a href="../NilClass.html">NilClass</a></li>
+        
+          <li class="class"><a href="../Numeric.html">Numeric</a></li>
+        
+          <li class="class"><a href="../Object.html">Object</a></li>
+        
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+          <li class="class"><a href="../Symbol.html">Symbol</a></li>
+        
+          <li class="class"><a href="../TrueClass.html">TrueClass</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+    </div>
+
+    <div id="validator-badges">
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Command</h1>
+      
+
+      
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="COMMAND_HELP">COMMAND_HELP</a></dt>
+        
+        <dd class="description"></dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="method-c-new"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 23</span>
+23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+24:       <span class="ruby-identifier">$TRIAL</span> = <span class="ruby-keyword kw">nil</span>
+25:       <span class="ruby-identifier">$FORCE</span> = <span class="ruby-keyword kw">nil</span>
+26:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="require-commands-method" class="method-detail ">
+        <a name="method-c-require_commands"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">require_commands</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="require-commands-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 17</span>
+17:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">require_commands</span>
+18:       <span class="ruby-identifier">cmds</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>), <span class="ruby-value str">'commands'</span>, <span class="ruby-value str">'*.rb'</span>))
+19:       <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">lib</span><span class="ruby-operator">|</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">lib</span> }
+20:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="run-method" class="method-detail ">
+        <a name="method-c-run"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">run</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="run-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 11</span>
+11:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run</span>
+12:       <span class="ruby-identifier">require_commands</span>
+13:       <span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+14:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="run-method" class="method-detail ">
+        <a name="method-i-run"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">run</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="run-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 29</span>
+29:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
+30:       <span class="ruby-keyword kw">begin</span>
+31:         <span class="ruby-identifier">run_command</span>
+32:       <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
+33:         <span class="ruby-identifier">raise</span> <span class="ruby-identifier">err</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$DEBUG</span>
+34:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">err</span>.<span class="ruby-identifier">message</span>
+35:       <span class="ruby-keyword kw">end</span>
+36:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="private-instance-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="parse-command-method" class="method-detail ">
+        <a name="method-i-parse_command"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">parse_command</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="parse-command-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 53</span>
+53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_command</span>
+54:       <span class="ruby-identifier">job</span> = <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">shift</span>
+55: 
+56:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">job</span>
+57:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'help'</span>, <span class="ruby-value str">'--help'</span>, <span class="ruby-value str">'-h'</span>
+58:         <span class="ruby-identifier">puts</span> <span class="ruby-constant">COMMAND_HELP</span>
+59:         <span class="ruby-identifier">exit</span>
+60:       <span class="ruby-keyword kw">end</span>
+61: 
+62:       <span class="ruby-identifier">job</span>
+63:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="run-command-method" class="method-detail ">
+        <a name="method-i-run_command"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">run_command</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="run-command-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/command.rb, line 41</span>
+41:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_command</span>
+42:       <span class="ruby-identifier">job</span> = <span class="ruby-identifier">parse_command</span>
+43:       <span class="ruby-keyword kw">begin</span>
+44:         <span class="ruby-identifier">cmd</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Commands</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">job</span>.<span class="ruby-identifier">capitalize</span>)
+45:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+46:         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Unrecognized command -- #{job}&quot;</span>
+47:         <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
+48:       <span class="ruby-keyword kw">end</span>
+49:       <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">run</span>
+50:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</main>
+</body>
+</html>
+

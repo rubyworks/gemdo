@@ -1,0 +1,60 @@
+= Development Notes
+
+== FIXME
+
+=== file://lib/pom/gemspec.rb
+
+* FIXME: this only works b/c of package staging
+distribute = Dir.glob('**/*')
+distribute = project.filelist
+distribute = manifest #.files (25)
+
+== DEPRECATE
+
+=== file://lib/pom/release_notes.rb
+
+* DEPRECATE: We will use improved History file instead. (8)
+
+=== file://lib/pom/metadata.rb
+
+* DEPRECATE package (72)
+* DEPRECATE: (should be indicated by version number) (297)
+
+== TODO
+
+=== file://lib/pom/gemspec.rb
+
+* TODO: bin/ is a POM convention, is there are reason to do otherwise? (74)
+* TODO: make test_files configurable (?) (107)
+
+=== file://lib/pom/history.rb
+
+* TODO: Allow the format to be more varied. (26)
+
+=== file://lib/pom/metadata.rb
+
+* TODO: method_missing (6)
+* TODO: extecutables is not right. (7)
+* TODO: move to ReadMe class?
+@data['description'] ||= readme.description
+@data['license']     ||= readme.license (138)
+* TODO: See if there is not a better way to do this... is lazy loading worth it? (163)
+* TODO: Better term then namespace? (293)
+* TODO: Tecnically these next two are not metadata but build
+configuration, so ultimately they should go else where.
+But where? (390)
+* TODO: Improve buildno support ? (578)
+* TODO: Use String#to_list instead (?) (685)
+
+=== file://lib/pom/readme.rb
+
+* TODO: Perhaps this should be in Metadata, and then we can if we want
+have this method too, but calling on it? (138)
+
+=== file://lib/pom/project.rb
+
+* TODO: Support alternate source directory (?) (101)
+* TODO: Deprecate in favor of using manifest.file ? (138)
+* TODO: Support alternate source location in the future (?) (152)
+* TODO: Add name to end of path ? (327)
+* TODO: Don't use README, or make it an option. (387)

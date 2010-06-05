@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>Developer's Notes</title>
+  <style>
+    body { margin: 0; padding: 0; }
+    .main {
+      width: 800px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 0 20px 20px 20px;
+    }
+    h1 { margin: 25px 0; }
+    h2,h3,h4 { margin: 5px 0; padding: 0; color: 880044; }
+    h3 { color: 004488; }
+    h4 { color: 888844; }
+    ul { margin: 0; padding: 0; text-align: left; }
+    li { margin: 0; padding: 0; text-align: left; }
+  </style>
+</head>
+<body>
+<div class="main">
+
+<h1>Developer's Notes</h1>
+
+<div class="notes">
+<h2>FIXME</h2>
+<ol class="set fixme">
+<li><h3><a href="lib/pom/gemspec.rb">lib/pom/gemspec.rb</a></h3><ol class="file" href="lib/pom/gemspec.rb">
+<li class="note fixme" ref="25">FIXME: this only works b/c of package staging
+distribute = Dir.glob(&apos;**/*&apos;)
+distribute = project.filelist
+distribute = manifest #.files <sup>25</sup></li>
+</ol></li>
+</ol>
+<h2>DEPRECATE</h2>
+<ol class="set deprecate">
+<li><h3><a href="lib/pom/release_notes.rb">lib/pom/release_notes.rb</a></h3><ol class="file" href="lib/pom/release_notes.rb">
+<li class="note deprecate" ref="8">DEPRECATE: We will use improved History file instead. <sup>8</sup></li>
+</ol></li>
+<li><h3><a href="lib/pom/metadata.rb">lib/pom/metadata.rb</a></h3><ol class="file" href="lib/pom/metadata.rb">
+<li class="note deprecate" ref="72">DEPRECATE package <sup>72</sup></li>
+<li class="note deprecate" ref="297">DEPRECATE: (should be indicated by version number) <sup>297</sup></li>
+</ol></li>
+</ol>
+<h2>TODO</h2>
+<ol class="set todo">
+<li><h3><a href="lib/pom/gemspec.rb">lib/pom/gemspec.rb</a></h3><ol class="file" href="lib/pom/gemspec.rb">
+<li class="note todo" ref="74">TODO: bin/ is a POM convention, is there are reason to do otherwise? <sup>74</sup></li>
+<li class="note todo" ref="107">TODO: make test_files configurable (?) <sup>107</sup></li>
+</ol></li>
+<li><h3><a href="lib/pom/history.rb">lib/pom/history.rb</a></h3><ol class="file" href="lib/pom/history.rb">
+<li class="note todo" ref="26">TODO: Allow the format to be more varied. <sup>26</sup></li>
+</ol></li>
+<li><h3><a href="lib/pom/metadata.rb">lib/pom/metadata.rb</a></h3><ol class="file" href="lib/pom/metadata.rb">
+<li class="note todo" ref="6">TODO: method_missing <sup>6</sup></li>
+<li class="note todo" ref="7">TODO: extecutables is not right. <sup>7</sup></li>
+<li class="note todo" ref="138">TODO: move to ReadMe class?
+@data[&apos;description&apos;] ||= readme.description
+@data[&apos;license&apos;]     ||= readme.license <sup>138</sup></li>
+<li class="note todo" ref="163">TODO: See if there is not a better way to do this... is lazy loading worth it? <sup>163</sup></li>
+<li class="note todo" ref="293">TODO: Better term then namespace? <sup>293</sup></li>
+<li class="note todo" ref="390">TODO: Tecnically these next two are not metadata but build
+configuration, so ultimately they should go else where.
+But where? <sup>390</sup></li>
+<li class="note todo" ref="578">TODO: Improve buildno support ? <sup>578</sup></li>
+<li class="note todo" ref="685">TODO: Use String#to_list instead (?) <sup>685</sup></li>
+</ol></li>
+<li><h3><a href="lib/pom/readme.rb">lib/pom/readme.rb</a></h3><ol class="file" href="lib/pom/readme.rb">
+<li class="note todo" ref="138">TODO: Perhaps this should be in Metadata, and then we can if we want
+have this method too, but calling on it? <sup>138</sup></li>
+</ol></li>
+<li><h3><a href="lib/pom/project.rb">lib/pom/project.rb</a></h3><ol class="file" href="lib/pom/project.rb">
+<li class="note todo" ref="101">TODO: Support alternate source directory (?) <sup>101</sup></li>
+<li class="note todo" ref="138">TODO: Deprecate in favor of using manifest.file ? <sup>138</sup></li>
+<li class="note todo" ref="152">TODO: Support alternate source location in the future (?) <sup>152</sup></li>
+<li class="note todo" ref="327">TODO: Add name to end of path ? <sup>327</sup></li>
+<li class="note todo" ref="387">TODO: Don&apos;t use README, or make it an option. <sup>387</sup></li>
+</ol></li>
+</ol>
+</div>
+
+</div>
+</boby>
+</html>
+

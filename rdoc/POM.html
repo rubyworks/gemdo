@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Module: POM</title>
+
+  
+    <link rel="SHORTCUT ICON" href="./assets/icon/module.png">
+  
+
+  <link type="text/css" rel="stylesheet" href="./assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="./assets/highlight/styles/github.css" title="GitHub" />
+
+  <script type="text/javascript" charset="utf-8" src="./assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="./assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
+</head>
+<body class="module">
+<div id="main">
+
+  <div class="head">
+    <h1>
+      
+        <img src="./assets/icon/module.png" align="absmiddle">&nbsp;
+      
+      <a href="./index.html">POM</a>&nbsp;
+      <a href="/">POM</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="./lib/pom/release_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/release.rb">lib/pom/release.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/metadir_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/metadir.rb">lib/pom/metadir.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/profile_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/profile.rb">lib/pom/profile.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/verfile_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/verfile.rb">lib/pom/verfile.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/command_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/command.rb">lib/pom/command.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/project_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/project.rb">lib/pom/project.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/readme_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/readme.rb">lib/pom/readme.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/history_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/history.rb">lib/pom/history.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/manifest_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/manifest.rb">lib/pom/manifest.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/resources_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/resources.rb">lib/pom/resources.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/yamlstore_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/yamlstore.rb">lib/pom/yamlstore.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/models/gemspec_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/models/gemspec.rb">lib/pom/models/gemspec.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/models/debctrl_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/models/debctrl.rb">lib/pom/models/debctrl.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/root_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/root.rb">lib/pom/root.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/metadata_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/metadata.rb">lib/pom/metadata.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/metastore_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/metastore.rb">lib/pom/metastore.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/errors_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/errors.rb">lib/pom/errors.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom/reqfile_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/reqfile.rb">lib/pom/reqfile.rb</a></li>
+          
+            <li class="file"><a href="./lib/pom_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom.rb">lib/pom.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+
+      <!-- Namespace Contents -->
+      
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li class="module"><a href="POM/Commands.html">POM::Commands</a></li>
+          
+          <li class="class"><a href="POM/Command.html">POM::Command</a></li>
+          
+          <li class="class"><a href="POM/DebCtrl.html">POM::DebCtrl</a></li>
+          
+          <li class="class"><a href="POM/Dependency.html">POM::Dependency</a></li>
+          
+          <li class="class"><a href="POM/History.html">POM::History</a></li>
+          
+          <li class="class"><a href="POM/Manifest.html">POM::Manifest</a></li>
+          
+          <li class="class"><a href="POM/MetaStore.html">POM::MetaStore</a></li>
+          
+          <li class="class"><a href="POM/Metadata.html">POM::Metadata</a></li>
+          
+          <li class="class"><a href="POM/Metadir.html">POM::Metadir</a></li>
+          
+          <li class="class"><a href="POM/Profile.html">POM::Profile</a></li>
+          
+          <li class="class"><a href="POM/Project.html">POM::Project</a></li>
+          
+          <li class="class"><a href="POM/Readme.html">POM::Readme</a></li>
+          
+          <li class="class"><a href="POM/Release.html">POM::Release</a></li>
+          
+          <li class="class"><a href="POM/Reqfile.html">POM::Reqfile</a></li>
+          
+          <li class="class"><a href="POM/Resources.html">POM::Resources</a></li>
+          
+          <li class="class"><a href="POM/ValidationError.html">POM::ValidationError</a></li>
+          
+          <li class="class"><a href="POM/Verfile.html">POM::Verfile</a></li>
+          
+          <li class="class"><a href="POM/YAMLStore.html">POM::YAMLStore</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+            
+            <li class="singleton">
+              <a href="#method-c-const_missing">::const_missing</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-locate_root_at">::locate_root_at</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-root">::root</a>
+            </li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
+        <ul>
+        
+          <li class="file"><a href="./PROFILE.html">PROFILE</a></li>
+        
+          <li class="file"><a href="./HISTORY_rdoc.html">HISTORY.rdoc</a></li>
+        
+          <li class="file"><a href="./LICENSE.html">LICENSE</a></li>
+        
+          <li class="file"><a href="./VERSION.html">VERSION</a></li>
+        
+          <li class="file"><a href="./README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="./REQUIRE.html">REQUIRE</a></li>
+        
+          <li class="file"><a href="./NOTES_rdoc.html">NOTES.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="./assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="./POM.html">POM</a></li>
+        
+          <li class="class"><a href="./POM/Command.html">POM::Command</a></li>
+        
+          <li class="module"><a href="./POM/Commands.html">POM::Commands</a></li>
+        
+          <li class="class"><a href="./POM/Commands/About.html">POM::Commands::About</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Dump.html">POM::Commands::Dump</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Init.html">POM::Commands::Init</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Show.html">POM::Commands::Show</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
+        
+          <li class="class"><a href="./POM/Commands/Ver.html">POM::Commands::Ver</a></li>
+        
+          <li class="class"><a href="./POM/DebCtrl.html">POM::DebCtrl</a></li>
+        
+          <li class="class"><a href="./POM/Dependency.html">POM::Dependency</a></li>
+        
+          <li class="class"><a href="./POM/Dependency/VName.html">POM::Dependency::VName</a></li>
+        
+          <li class="class"><a href="./POM/History.html">POM::History</a></li>
+        
+          <li class="class"><a href="./POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li class="class"><a href="./POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li class="class"><a href="./POM/MetaStore.html">POM::MetaStore</a></li>
+        
+          <li class="class"><a href="./POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li class="class"><a href="./POM/Metadir.html">POM::Metadir</a></li>
+        
+          <li class="class"><a href="./POM/Profile.html">POM::Profile</a></li>
+        
+          <li class="class"><a href="./POM/Project.html">POM::Project</a></li>
+        
+          <li class="class"><a href="./POM/Readme.html">POM::Readme</a></li>
+        
+          <li class="class"><a href="./POM/Release.html">POM::Release</a></li>
+        
+          <li class="class"><a href="./POM/Reqfile.html">POM::Reqfile</a></li>
+        
+          <li class="class"><a href="./POM/Resources.html">POM::Resources</a></li>
+        
+          <li class="class"><a href="./POM/Verfile.html">POM::Verfile</a></li>
+        
+          <li class="class"><a href="./POM/YAMLStore.html">POM::YAMLStore</a></li>
+        
+          <li class="module"><a href="./Enumerable.html">Enumerable</a></li>
+        
+          <li class="class"><a href="./FalseClass.html">FalseClass</a></li>
+        
+          <li class="class"><a href="./NilClass.html">NilClass</a></li>
+        
+          <li class="class"><a href="./Numeric.html">Numeric</a></li>
+        
+          <li class="class"><a href="./Object.html">Object</a></li>
+        
+          <li class="class"><a href="./Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="./String.html">String</a></li>
+        
+          <li class="class"><a href="./Symbol.html">Symbol</a></li>
+        
+          <li class="class"><a href="./TrueClass.html">TrueClass</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+    </div>
+
+    <div id="validator-badges">
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="./assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>POM</h1>
+      
+
+      <p>
+require &#8216;pom/build&#8217; require &#8216;pom/gemspec&#8216;
+</p>
+<hr style="height: 1px"></hr><p>
+require &#8216;pom/core_ext/try_dup&#8216;
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="ROOT_INDICATORS">ROOT_INDICATORS</a></dt>
+        
+        <dd class="description"><p>
+Root directory is indicated by the presence of either a <tt>meta/</tt>
+directory or hidden <tt>.meta/</tt> directory.
+</p></dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="const-missing-method" class="method-detail ">
+        <a name="method-c-const_missing"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">const_missing</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Raw access to project metedata, e.g. <a href="VERSION.html">VERSION</a>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="const-missing-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom.rb, line 6</span>
+ 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">const_missing</span>(<span class="ruby-identifier">name</span>)
+ 7:     <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-node">&quot;/pom/meta/#{name.to_s.downcase}&quot;</span>
+ 8:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
+ 9:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">strip</span>
+10:     <span class="ruby-keyword kw">else</span>
+11:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>)
+12:     <span class="ruby-keyword kw">end</span>
+13:   <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="locate-root-at-method" class="method-detail ">
+        <a name="method-c-locate_root_at"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">locate_root_at</span><span
+            class="method-args">(indicator)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="locate-root-at-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/root.rb, line 24</span>
+24:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">locate_root_at</span>(<span class="ruby-identifier">indicator</span>)
+25:     <span class="ruby-identifier">root</span> = <span class="ruby-keyword kw">nil</span>
+26:     <span class="ruby-identifier">dir</span>  = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
+27:     <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">root</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dir</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'/'</span>
+28:       <span class="ruby-identifier">find</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">indicator</span>)
+29:       <span class="ruby-identifier">mark</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">find</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
+30:       <span class="ruby-identifier">root</span> = <span class="ruby-identifier">dir</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mark</span>
+31:       <span class="ruby-identifier">dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dir</span>)
+32:     <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-identifier">root</span> <span class="ruby-operator">?</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+34:   <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="root-method" class="method-detail ">
+        <a name="method-c-root"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">root</span><span
+            class="method-args">(local=Dir.pwd)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Locate the project&#8217;s root directory. This is determined by ascending
+up the directory tree from the current position until the <a
+href="POM.html#ROOT_INDICATORS">ROOT_INDICATORS</a> is matched. Returns
+<tt>nil</tt> if not found.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="root-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/root.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">local</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+13:     <span class="ruby-identifier">local</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
+14:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">local</span>) <span class="ruby-keyword kw">do</span>
+15:       <span class="ruby-identifier">dir</span> = <span class="ruby-keyword kw">nil</span>
+16:       <span class="ruby-constant">ROOT_INDICATORS</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+17:         <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">locate_root_at</span>(<span class="ruby-identifier">i</span>)
+18:       <span class="ruby-keyword kw">end</span>
+19:       <span class="ruby-identifier">dir</span> <span class="ruby-operator">?</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+20:     <span class="ruby-keyword kw">end</span>
+21:   <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</main>
+</body>
+</html>
+

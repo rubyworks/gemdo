@@ -1,0 +1,14 @@
+POM Statistics
+Sat Jun 05 17:14:31 -0400 2010
+
+TYPE       Total     Code  -%-     Docs  -%-    Blank  -%-    Files
+Source      3702     2117  57%      881  23%      704  19%       30
+Test           0        0   0%        0   0%        0   0%        0
+Total       3702     2117  57%      881  23%      704  19%       30
+
+RATIO     Code    Docs    Blank   Test   Total
+Code       1.0     2.4     3.0       -     0.6
+Docs       0.4     1.0     1.3       -     0.2
+Blank      0.3     0.8     1.0       -     0.2
+Test         -       -       -       -       -
+Total      1.7     4.2     5.3       -     1.0

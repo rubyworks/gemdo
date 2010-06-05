@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: POM::Resources</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../assets/icon/class.png">
+  
+
+  <link type="text/css" rel="stylesheet" href="../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../assets/highlight/styles/github.css" title="GitHub" />
+
+  <script type="text/javascript" charset="utf-8" src="../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
+</head>
+<body class="class">
+<div id="main">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../assets/icon/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Resources</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/pom/resources_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/resources.rb">lib/pom/resources.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <!-- why was this class="link" ? -->
+          <li class="class"><a href="../Object.html">Object</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+            
+            <li class="singleton">
+              <a href="#method-c-attr_accessor">::attr_accessor</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-size">#size</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_h">#to_h</a>
+            </li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+      <div id="includes-section" class="section">
+        <h3 class="section-header">Included Modules</h3>
+        <ul class="link-list">
+        
+        
+          <li class="module"><a class="include" href="../Enumerable.html">Enumerable</a></li>
+        
+        
+        </ul>
+      </div>
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
+        <ul>
+        
+          <li class="file"><a href="../PROFILE.html">PROFILE</a></li>
+        
+          <li class="file"><a href="../HISTORY_rdoc.html">HISTORY.rdoc</a></li>
+        
+          <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
+        
+          <li class="file"><a href="../VERSION.html">VERSION</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
+        
+          <li class="file"><a href="../NOTES_rdoc.html">NOTES.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../POM.html">POM</a></li>
+        
+          <li class="class"><a href="../POM/Command.html">POM::Command</a></li>
+        
+          <li class="module"><a href="../POM/Commands.html">POM::Commands</a></li>
+        
+          <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Init.html">POM::Commands::Init</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
+        
+          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
+        
+          <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
+        
+          <li class="class"><a href="../POM/Dependency/VName.html">POM::Dependency::VName</a></li>
+        
+          <li class="class"><a href="../POM/History.html">POM::History</a></li>
+        
+          <li class="class"><a href="../POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li class="class"><a href="../POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li class="class"><a href="../POM/MetaStore.html">POM::MetaStore</a></li>
+        
+          <li class="class"><a href="../POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
+        
+          <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
+        
+          <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
+        
+          <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
+        
+          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
+        
+          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+        
+          <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
+        
+          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+        
+          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+        
+          <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
+        
+          <li class="class"><a href="../FalseClass.html">FalseClass</a></li>
+        
+          <li class="class"><a href="../NilClass.html">NilClass</a></li>
+        
+          <li class="class"><a href="../Numeric.html">Numeric</a></li>
+        
+          <li class="class"><a href="../Object.html">Object</a></li>
+        
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+          <li class="class"><a href="../Symbol.html">Symbol</a></li>
+        
+          <li class="class"><a href="../TrueClass.html">TrueClass</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+    </div>
+
+    <div id="validator-badges">
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Resources</h1>
+      
+
+      
+    </div>
+
+    <!-- Constants -->
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="home-attribute-method" class="method-detail">
+        <a name="home"></a>
+        
+        <a name="home="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">home</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Offical project website.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="homepage-attribute-method" class="method-detail">
+        <a name="homepage"></a>
+        
+        <a name="homepage="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">homepage</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Offical project website.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="dev-attribute-method" class="method-detail">
+        <a name="dev"></a>
+        
+        <a name="dev="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">dev</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of development site.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="development-attribute-method" class="method-detail">
+        <a name="development"></a>
+        
+        <a name="development="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">development</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of development site.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="work-attribute-method" class="method-detail">
+        <a name="work"></a>
+        
+        <a name="work="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">work</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of development site.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="distributor-attribute-method" class="method-detail">
+        <a name="distributor"></a>
+        
+        <a name="distributor="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">distributor</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Package distribution service webpage.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="download-attribute-method" class="method-detail">
+        <a name="download"></a>
+        
+        <a name="download="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">download</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location to downloadable package(s).
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="code-attribute-method" class="method-detail">
+        <a name="code"></a>
+        
+        <a name="code="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">code</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Browse source code.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="source-attribute-method" class="method-detail">
+        <a name="source"></a>
+        
+        <a name="source="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">source</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Browse source code.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="forum-attribute-method" class="method-detail">
+        <a name="forum"></a>
+        
+        <a name="forum="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">forum</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+User discussion forum.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="mail-attribute-method" class="method-detail">
+        <a name="mail"></a>
+        
+        <a name="mail="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">mail</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Mailing list email or web address to online version.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="email-attribute-method" class="method-detail">
+        <a name="email"></a>
+        
+        <a name="email="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">email</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Mailing list email or web address to online version.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="mailinglist-attribute-method" class="method-detail">
+        <a name="mailinglist"></a>
+        
+        <a name="mailinglist="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">mailinglist</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Mailing list email or web address to online version.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="issues-attribute-method" class="method-detail">
+        <a name="issues"></a>
+        
+        <a name="issues="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">issues</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of issue tracker.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="bugs-attribute-method" class="method-detail">
+        <a name="bugs"></a>
+        
+        <a name="bugs="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">bugs</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of issue tracker.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="support-attribute-method" class="method-detail">
+        <a name="support"></a>
+        
+        <a name="support="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">support</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of support forum.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="doc-attribute-method" class="method-detail">
+        <a name="doc"></a>
+        
+        <a name="doc="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">doc</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="docs-attribute-method" class="method-detail">
+        <a name="docs"></a>
+        
+        <a name="docs="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">docs</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="documentation-attribute-method" class="method-detail">
+        <a name="documentation"></a>
+        
+        <a name="documentation="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">documentation</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="api-attribute-method" class="method-detail">
+        <a name="api"></a>
+        
+        <a name="api="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">api</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of API reference documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="reference-attribute-method" class="method-detail">
+        <a name="reference"></a>
+        
+        <a name="reference="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">reference</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of API reference documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="system-guide-attribute-method" class="method-detail">
+        <a name="system_guide"></a>
+        
+        <a name="system_guide="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">system_guide</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of API reference documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="wiki-attribute-method" class="method-detail">
+        <a name="wiki"></a>
+        
+        <a name="wiki="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">wiki</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of wiki.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="user-guide-attribute-method" class="method-detail">
+        <a name="user_guide"></a>
+        
+        <a name="user_guide="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">user_guide</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of wiki.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="blog-attribute-method" class="method-detail">
+        <a name="blog"></a>
+        
+        <a name="blog="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">blog</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource to project blog.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="weblog-attribute-method" class="method-detail">
+        <a name="weblog"></a>
+        
+        <a name="weblog="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">weblog</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource to project blog.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="irc-attribute-method" class="method-detail">
+        <a name="irc"></a>
+        
+        <a name="irc="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">irc</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+IRC channel
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="repo-attribute-method" class="method-detail">
+        <a name="repo"></a>
+        
+        <a name="repo="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">repo</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource for central <b>public</b> repository, e.g.
+</p>
+<pre>
+  git://github.com/protuils/pom.git</pre>
+        
+        </div>
+      </div>
+      
+      <div id="repository-attribute-method" class="method-detail">
+        <a name="repository"></a>
+        
+        <a name="repository="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">repository</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource for central <b>public</b> repository, e.g.
+</p>
+<pre>
+  git://github.com/protuils/pom.git</pre>
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="attr-accessor-method" class="method-detail ">
+        <a name="method-c-attr_accessor"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">attr_accessor</span><span
+            class="method-args">(*names)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Special accessors disperse access over multiple hash entries.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="attr-accessor-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 10</span>
+10:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attr_accessor</span>(*<span class="ruby-identifier">names</span>)
+11:       <span class="ruby-identifier">code</span> = []
+12:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+13:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}&quot;</span>
+14:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{name}']&quot;</span>
+15:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
+16:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}=(val)&quot;</span>
+17:         <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+18:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{n}'] = val&quot;</span>
+19:         <span class="ruby-keyword kw">end</span>
+20:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
+21:       <span class="ruby-keyword kw">end</span>
+22:       <span class="ruby-identifier">module_eval</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+23:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="method-c-new"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(table={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+New <a href="Resources.html">Resources</a>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 26</span>
+26:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">table</span>={})
+27:       <span class="ruby-ivar">@table</span> = {}
+28:       <span class="ruby-identifier">table</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>) }
+29:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="each-method" class="method-detail ">
+        <a name="method-i-each"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">each</span><span
+            class="method-args">(&block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="each-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
+84:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
+85:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="method-missing-method" class="method-detail ">
+        <a name="method-i-method_missing"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">method_missing</span><span
+            class="method-args">(sym, *args)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="method-missing-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 93</span>
+ 93:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
+ 94:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
+ 95:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
+ 96:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
+ 97:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
+ 98:         <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+ 99:       <span class="ruby-keyword kw">else</span>
+100:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+101:         <span class="ruby-keyword kw">nil</span>
+102:       <span class="ruby-keyword kw">end</span>
+103:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="size-method" class="method-detail ">
+        <a name="method-i-size"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">size</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="size-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 88</span>
+88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
+89:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">size</span>
+90:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-h-method" class="method-detail ">
+        <a name="method-i-to_h"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_h</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="to-h-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 78</span>
+78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
+79:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">dup</span>
+80:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</main>
+</body>
+</html>
+

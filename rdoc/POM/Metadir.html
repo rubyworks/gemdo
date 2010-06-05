@@ -1,0 +1,2519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: POM::Metadir</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../assets/icon/class.png">
+  
+
+  <link type="text/css" rel="stylesheet" href="../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../assets/highlight/styles/github.css" title="GitHub" />
+
+  <script type="text/javascript" charset="utf-8" src="../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
+</head>
+<body class="class">
+<div id="main">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../assets/icon/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">POM</a>&nbsp;
+      <a href="/">POM::Metadir</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/pom/metadir_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/metadir.rb">lib/pom/metadir.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <!-- why was this class="link" ? -->
+          <li class="class"><a href="MetaStore.html">POM::MetaStore</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+            
+            <li class="singleton">
+              <a href="#method-c-load">::load</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new_project">::new_project</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new_project_config">::new_project_config</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-assert_valid">#assert_valid</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-author">#author</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-author%3D">#author=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-backup%21">#backup!</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-cache">#cache</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-email">#email</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-initialize_preload">#initialize_preload</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-load%21">#load!</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-name%3D">#name=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-package_name">#package_name</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-released%3D">#released=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-root">#root</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-root%3D">#root=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-stage_name">#stage_name</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-store">#store</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-summary%3D">#summary=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_profile">#to_profile</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_verfile">#to_verfile</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-valid%3F">#valid?</a>
+            </li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
+        <ul>
+        
+          <li class="file"><a href="../PROFILE.html">PROFILE</a></li>
+        
+          <li class="file"><a href="../HISTORY_rdoc.html">HISTORY.rdoc</a></li>
+        
+          <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
+        
+          <li class="file"><a href="../VERSION.html">VERSION</a></li>
+        
+          <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
+        
+          <li class="file"><a href="../NOTES_rdoc.html">NOTES.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../POM.html">POM</a></li>
+        
+          <li class="class"><a href="../POM/Command.html">POM::Command</a></li>
+        
+          <li class="module"><a href="../POM/Commands.html">POM::Commands</a></li>
+        
+          <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Init.html">POM::Commands::Init</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
+        
+          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
+        
+          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
+        
+          <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
+        
+          <li class="class"><a href="../POM/Dependency/VName.html">POM::Dependency::VName</a></li>
+        
+          <li class="class"><a href="../POM/History.html">POM::History</a></li>
+        
+          <li class="class"><a href="../POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li class="class"><a href="../POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li class="class"><a href="../POM/MetaStore.html">POM::MetaStore</a></li>
+        
+          <li class="class"><a href="../POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
+        
+          <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
+        
+          <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
+        
+          <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
+        
+          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
+        
+          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+        
+          <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
+        
+          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+        
+          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+        
+          <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
+        
+          <li class="class"><a href="../FalseClass.html">FalseClass</a></li>
+        
+          <li class="class"><a href="../NilClass.html">NilClass</a></li>
+        
+          <li class="class"><a href="../Numeric.html">Numeric</a></li>
+        
+          <li class="class"><a href="../Object.html">Object</a></li>
+        
+          <li class="class"><a href="../Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+          <li class="class"><a href="../Symbol.html">Symbol</a></li>
+        
+          <li class="class"><a href="../TrueClass.html">TrueClass</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+    </div>
+
+    <div id="validator-badges">
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+
+      <h1><a href="Metadata.html">Metadata</a></h1>
+
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="STORES">STORES</a></dt>
+        
+        <dd class="description"><p>
+Storage locations for metadata. <a href="../POM.html">POM</a> supports the
+use of <tt>meta/</tt> or the hidden <tt>.meta/</tt>.
+</p></dd>
+        
+      
+        <dt><a name="RE_EMAIL">RE_EMAIL</a></dt>
+        
+        <dd class="description"></dd>
+        
+      
+        <dt><a name="OMIT">OMIT</a></dt>
+        
+        <dd class="description"></dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="name-attribute-method" class="method-detail">
+        <a name="name"></a>
+        
+        <a name="name="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">name</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Project&#8217;s <em>package name</em>. The entry is required and must not
+contain spaces or puncuation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="version-attribute-method" class="method-detail">
+        <a name="version"></a>
+        
+        <a name="version="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">version</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Current version of the project. Should be a dot separated string. Eg.
+&#8220;1.0.0&#8220;.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="status-attribute-method" class="method-detail">
+        <a name="status"></a>
+        
+        <a name="status="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">status</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Current status (stable, beta, alpha, rc1, etc.) DEPRECATE: Should be
+indicated by trailing letter on version number?
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="released-attribute-method" class="method-detail">
+        <a name="released"></a>
+        
+        <a name="released="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">released</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Date this version was released.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="codename-attribute-method" class="method-detail">
+        <a name="codename"></a>
+        
+        <a name="codename="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">codename</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Code name of the release (eg. Woody)
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="platforms-attribute-method" class="method-detail">
+        <a name="platforms"></a>
+        
+        <a name="platforms="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">platforms</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Platforms this project/package supports (<tt>nil</tt> for universal).
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="loadpath-attribute-method" class="method-detail">
+        <a name="loadpath"></a>
+        
+        <a name="loadpath="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">loadpath</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Load path(s) (used by Ruby&#8217;s own site loading and RubyGems). The
+default is &#8216;lib/&#8217;, which is usually correct. :attr_accessor:
+loadpath
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Load path(s) (used by Ruby&#8217;s own site loading and RubyGems). The
+default is &#8216;lib/&#8217;, which is usually correct. :attr_accessor:
+loadpath
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="suite-attribute-method" class="method-detail">
+        <a name="suite"></a>
+        
+        <a name="suite="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">suite</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Name of the user-account or master-project to which this project belongs.
+The suite name defaults to the project name if no entry is given. This is
+also aliased as #.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Name of the user-account or master-project to which this project belongs.
+The suite name defaults to the project name if no entry is given. This is
+also aliased as #.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="collection-attribute-method" class="method-detail">
+        <a name="collection"></a>
+        
+        <a name="collection="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">collection</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="title-attribute-method" class="method-detail">
+        <a name="title"></a>
+        
+        <a name="title="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">title</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Title of package (this defaults to project name capitalized).
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Title of package (this defaults to project name capitalized).
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="summary-attribute-method" class="method-detail">
+        <a name="summary"></a>
+        
+        <a name="summary="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">summary</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+A one-line brief description.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+A one-line brief description.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="description-attribute-method" class="method-detail">
+        <a name="description"></a>
+        
+        <a name="description="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">description</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Detailed description. Aliased as #.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="contact-attribute-method" class="method-detail">
+        <a name="contact"></a>
+        
+        <a name="contact="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">contact</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Contact can be any sort of resource that is intended to be the end-users
+initial point of contact. It could be the url to a mailing list, or a url
+to a forum, or the email address of the maintainer, etc.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="maintainer-attribute-method" class="method-detail">
+        <a name="maintainer"></a>
+        
+        <a name="maintainer="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">maintainer</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Maintainer. This is the package maintainers name and optionally their email
+addresses, eg. &#8220;Trans <trans@foo.com>&#8221;.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="created-attribute-method" class="method-detail">
+        <a name="created"></a>
+        
+        <a name="created="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">created</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+The date the project was started.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="copyright-attribute-method" class="method-detail">
+        <a name="copyright"></a>
+        
+        <a name="copyright="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">copyright</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Copyright notice. Eg. &#8220;Copyright &#169; 2009 Thomas Sawyer&#8220;
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="license-attribute-method" class="method-detail">
+        <a name="license"></a>
+        
+        <a name="license="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">license</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+License.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="authors-attribute-method" class="method-detail">
+        <a name="authors"></a>
+        
+        <a name="authors="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">authors</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+List of authors. :attr_accessor: authors
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+List of authors. :attr_accessor: authors
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="requires-attribute-method" class="method-detail">
+        <a name="requires"></a>
+        
+        <a name="requires="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">requires</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>must</b> this package have in order to function.
+This includes any requirements neccessary for installation. :attr_accessor:
+requries
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>must</b> this package have in order to function.
+This includes any requirements neccessary for installation. :attr_accessor:
+requries
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="externals-attribute-method" class="method-detail">
+        <a name="externals"></a>
+        
+        <a name="externals="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">externals</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+External requirements, outside of the normal packaging system.
+:attr_accessor: externals
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+External requirements, outside of the normal packaging system.
+:attr_accessor: externals
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="recommend-attribute-method" class="method-detail">
+        <a name="recommend"></a>
+        
+        <a name="recommend="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">recommend</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>should</b> be used with this package.
+:attr_accessor: recommend
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>should</b> be used with this package.
+:attr_accessor: recommend
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="suggest-attribute-method" class="method-detail">
+        <a name="suggest"></a>
+        
+        <a name="suggest="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">suggest</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>could</b> be useful with this package.
+:attr_accessor: suggest
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages <b>could</b> be useful with this package.
+:attr_accessor: suggest
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="conflicts-attribute-method" class="method-detail">
+        <a name="conflicts"></a>
+        
+        <a name="conflicts="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">conflicts</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+With what other packages does this package conflict. :attr_accessor:
+conflicts
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+With what other packages does this package conflict. :attr_accessor:
+conflicts
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="replaces-attribute-method" class="method-detail">
+        <a name="replaces"></a>
+        
+        <a name="replaces="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">replaces</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages does this package replace. This is very much like # but
+expresses a closser relation. For instance &#8220;libXML&#8221; has been
+replaced by &#8220;libXML2&#8221;. :attr_accessor: replaces
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other packages does this package replace. This is very much like # but
+expresses a closser relation. For instance &#8220;libXML&#8221; has been
+replaced by &#8220;libXML2&#8221;. :attr_accessor: replaces
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="provides-attribute-method" class="method-detail">
+        <a name="provides"></a>
+        
+        <a name="provides="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">provides</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other package(s) does this package provide the same dependency
+fulfilment. For example, a package &#8216;bar-plus&#8217; might fulfill the
+same dependency criteria as package &#8216;bar&#8217;, so
+&#8216;bar-plus&#8217; is said to provide &#8216;bar&#8217;.
+:attr_accessor: provides
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default--attribute-method" class="method-detail">
+        <a name="default="></a>
+        
+        <a name="default=="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default=</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+What other package(s) does this package provide the same dependency
+fulfilment. For example, a package &#8216;bar-plus&#8217; might fulfill the
+same dependency criteria as package &#8216;bar&#8217;, so
+&#8216;bar-plus&#8217; is said to provide &#8216;bar&#8217;.
+:attr_accessor: provides
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="consider-attribute-method" class="method-detail">
+        <a name="consider"></a>
+        
+        <a name="consider="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">consider</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Abirtary information, especially about what might be needed to use or build
+or use this package that does not fit under <tt>requires</tt>. This is
+strictly information for the end-user to consider, eg. &#8220;Needs gcc
+4.4+&#8221; or &#8220;Needs fast graphics card&#8221;.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="executables-attribute-method" class="method-detail">
+        <a name="executables"></a>
+        
+        <a name="executables="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">executables</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Executables default to the contents of bin/.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Executables default to the contents of bin/.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="extensions-attribute-method" class="method-detail">
+        <a name="extensions"></a>
+        
+        <a name="extensions="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">extensions</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+List of extension configuration scripts. These are used to compile the
+extensions.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="default-attribute-method" class="method-detail">
+        <a name="default"></a>
+        
+        <a name="default="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+List of extension configuration scripts. These are used to compile the
+extensions.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="homepage-attribute-method" class="method-detail">
+        <a name="homepage"></a>
+        
+        <a name="homepage="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">homepage</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Offical project website.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="development-attribute-method" class="method-detail">
+        <a name="development"></a>
+        
+        <a name="development="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">development</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of development site.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="documentation-attribute-method" class="method-detail">
+        <a name="documentation"></a>
+        
+        <a name="documentation="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">documentation</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="distribute-attribute-method" class="method-detail">
+        <a name="distribute"></a>
+        
+        <a name="distribute="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">distribute</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Package distribution service webpage.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="download-attribute-method" class="method-detail">
+        <a name="download"></a>
+        
+        <a name="download="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">download</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Downloadable packages.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="source-attribute-method" class="method-detail">
+        <a name="source"></a>
+        
+        <a name="source="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">source</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Browse source code.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="forum-attribute-method" class="method-detail">
+        <a name="forum"></a>
+        
+        <a name="forum="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">forum</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+User discussion forum.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="mailinglist-attribute-method" class="method-detail">
+        <a name="mailinglist"></a>
+        
+        <a name="mailinglist="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">mailinglist</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Mailing list email or web address to online version.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="issues-attribute-method" class="method-detail">
+        <a name="issues"></a>
+        
+        <a name="issues="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">issues</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of issue tracker.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="support-attribute-method" class="method-detail">
+        <a name="support"></a>
+        
+        <a name="support="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">support</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of support forum.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="api-attribute-method" class="method-detail">
+        <a name="api"></a>
+        
+        <a name="api="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">api</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of API documentation.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="wiki-attribute-method" class="method-detail">
+        <a name="wiki"></a>
+        
+        <a name="wiki="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">wiki</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Location of wiki-wiki.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="blog-attribute-method" class="method-detail">
+        <a name="blog"></a>
+        
+        <a name="blog="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">blog</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource to project blog.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="irc-attribute-method" class="method-detail">
+        <a name="irc"></a>
+        
+        <a name="irc="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">irc</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+IRC channel
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="repository-attribute-method" class="method-detail">
+        <a name="repository"></a>
+        
+        <a name="repository="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">repository</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Resource for central <b>public</b> repository, e.g.
+</p>
+<pre>
+  git://github.com/protuils/pom.git</pre>
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="load-method" class="method-detail ">
+        <a name="method-c-load"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">load</span><span
+            class="method-args">(root=Dir.pwd)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Like new but reads all metadata into memory.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="load-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 29</span>
+29:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">root</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+30:       <span class="ruby-identifier">o</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+31:       <span class="ruby-identifier">o</span>.<span class="ruby-identifier">load!</span>
+32:       <span class="ruby-identifier">o</span>
+33:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="method-c-new"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(root=nil, prime={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 71</span>
+71:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">prime</span>={})
+72:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">root</span>
+73:         <span class="ruby-ivar">@root</span>  = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+74:         <span class="ruby-ivar">@store</span> = <span class="ruby-constant">STORES</span>.<span class="ruby-identifier">find</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span> (<span class="ruby-ivar">@root</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">dir</span>).<span class="ruby-identifier">directory?</span> }
+75:         <span class="ruby-keyword kw">super</span>(<span class="ruby-ivar">@root</span>, <span class="ruby-ivar">@store</span>)
+76:         <span class="ruby-comment cmt">#super(nil, @root + 'meta', @root + '.meta')</span>
+77:         <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">prime</span>
+78:         <span class="ruby-identifier">initialize_preload</span>
+79:       <span class="ruby-keyword kw">else</span>
+80:         <span class="ruby-keyword kw">super</span>(<span class="ruby-keyword kw">nil</span>, *<span class="ruby-identifier">stores</span>)
+81:       <span class="ruby-keyword kw">end</span>
+82:       <span class="ruby-comment cmt">#load!</span>
+83:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-project-method" class="method-detail ">
+        <a name="method-c-new_project"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new_project</span><span
+            class="method-args">(root=Dir.pwd)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+If creating new metadata from scratch, use this to prefill entries to new
+project defaults.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-project-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 38</span>
+38:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_project</span>(<span class="ruby-identifier">root</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+39:       <span class="ruby-identifier">prime</span> = { 
+40:         <span class="ruby-value str">'name'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">root</span>),
+41:         <span class="ruby-value str">'version'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'0.0.0'</span>,
+42:         <span class="ruby-value str">'requires'</span>   =<span class="ruby-operator">&gt;</span> [],
+43:         <span class="ruby-value str">'summary'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FIX: brief one line description here&quot;</span>,
+44:         <span class="ruby-value str">'contact'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FIX: name &lt;email&gt; or uri&quot;</span>,
+45:         <span class="ruby-value str">'authors'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FIX: names of authors here&quot;</span>,
+46:         <span class="ruby-value str">'repository'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FIX: master public repo uri&quot;</span>
+47:       }
+48:       <span class="ruby-identifier">o</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">prime</span>)
+49:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span> = <span class="ruby-identifier">new_project_config</span>
+50:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">load!</span>(<span class="ruby-identifier">path</span>)
+51:       <span class="ruby-keyword kw">end</span>
+52:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">o</span>
+53:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-project-config-method" class="method-detail ">
+        <a name="method-c-new_project_config"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new_project_config</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Load per-user config values for a new project. This is used by the
+&#8216;pom init&#8217; command.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-project-config-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 58</span>
+58:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new_project_config</span>
+59:       <span class="ruby-identifier">new_project_defaults</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+60:         <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">value</span>
+61:       <span class="ruby-keyword kw">end</span>
+62:       <span class="ruby-identifier">home_config</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'XDG_CONFIG_HOME'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'~/.config'</span>
+63:       <span class="ruby-identifier">store</span> = <span class="ruby-identifier">stores</span>.<span class="ruby-identifier">find</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'.'</span> }  <span class="ruby-comment cmt"># not hidden</span>
+64:       <span class="ruby-identifier">path</span>  = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">home_config</span>, <span class="ruby-value str">'pom'</span>, <span class="ruby-identifier">store</span>))
+65:       <span class="ruby-identifier">path</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+66:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="assert-valid-method" class="method-detail ">
+        <a name="method-i-assert_valid"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">assert_valid</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Assert that the mininal information if provided.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="assert-valid-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 386</span>
+386:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_valid</span>
+387:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-value str">&quot;no name&quot;</span>    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span>
+388:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-value str">&quot;no version&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>
+389:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-value str">&quot;no summary&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">summary</span>
+390:       <span class="ruby-comment cmt">#raise ValidationError, &quot;no maintainer&quot; unless maintainer</span>
+391:       <span class="ruby-comment cmt">#raise ValidationError, &quot;no homepage&quot;   unless homepage</span>
+392:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="author-method" class="method-detail ">
+        <a name="method-i-author"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">author</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Returns the first entry in the authors list.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="author-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 324</span>
+324:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>
+325:       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">first</span>
+326:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="author--method" class="method-detail ">
+        <a name="method-i-author%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">author=</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="author--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 369</span>
+369:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author=</span>(<span class="ruby-identifier">name</span>)
+370:       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">name</span>).<span class="ruby-identifier">uniq!</span>
+371:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="backup--method" class="method-detail ">
+        <a name="method-i-backup%21"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">backup!</span><span
+            class="method-args">(chroot=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Backup current metadata files to <tt>.cache/pom/</tt>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="backup--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 463</span>
+463:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backup!</span>(<span class="ruby-identifier">chroot</span>=<span class="ruby-keyword kw">nil</span>)
+464:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span> = <span class="ruby-identifier">chroot</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chroot</span>
+465:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">stores</span>.<span class="ruby-identifier">any?</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dir</span>) }
+466:       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">cache</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">cache</span>)
+467:       <span class="ruby-identifier">stores</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">store</span><span class="ruby-operator">|</span>
+468:         <span class="ruby-identifier">temp</span>, <span class="ruby-identifier">$DEBUG</span> = <span class="ruby-identifier">$DEBUG</span>, <span class="ruby-keyword kw">false</span>
+469:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span>(<span class="ruby-identifier">store</span>, <span class="ruby-identifier">cache</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">store</span>)
+470:         <span class="ruby-identifier">$DEBUG</span> = <span class="ruby-identifier">temp</span>
+471:       <span class="ruby-keyword kw">end</span>
+472:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">cache</span>
+473:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="cache-method" class="method-detail ">
+        <a name="method-i-cache"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">cache</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Backup directory.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="cache-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 457</span>
+457:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cache</span>
+458:       <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache/pom'</span>
+459:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="email-method" class="method-detail ">
+        <a name="method-i-email"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">email</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Contact&#8217;s email address.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="email-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 315</span>
+315:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">email</span>
+316:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-constant">RE_EMAIL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">contact</span>.<span class="ruby-identifier">to_s</span>)
+317:         <span class="ruby-identifier">md</span>[<span class="ruby-value">0</span>]
+318:       <span class="ruby-keyword kw">else</span>
+319:         <span class="ruby-keyword kw">nil</span>
+320:       <span class="ruby-keyword kw">end</span>
+321:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="load--method" class="method-detail ">
+        <a name="method-i-load%21"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">load!</span><span
+            class="method-args">(path=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Load metadata from the <tt>.meta</tt> and/or <tt>meta</tt> directories.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="load--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 114</span>
+114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load!</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+115:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+116:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">path</span>)
+117:       <span class="ruby-keyword kw">else</span>
+118:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">root</span>
+119:           <span class="ruby-comment cmt">#load_version_stamp</span>
+120:           <span class="ruby-keyword kw">super</span>
+121:         <span class="ruby-keyword kw">end</span>
+122:       <span class="ruby-keyword kw">end</span>
+123:       <span class="ruby-keyword kw">self</span>
+124:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="name--method" class="method-detail ">
+        <a name="method-i-name%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">name=</span><span
+            class="method-args">(entry)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Name assignment. The <tt>entry</tt> must not contain spaces or puncuation.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="name--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 353</span>
+353:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name=</span>(<span class="ruby-identifier">entry</span>)
+354:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ValidationError</span>, <span class="ruby-node">&quot;invalid name -- #{n}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-regexp re">/^[\w-]+$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">entry</span>
+355:       <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'name'</span>] = <span class="ruby-identifier">entry</span>
+356:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="package-name-method" class="method-detail ">
+        <a name="method-i-package_name"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">package_name</span><span
+            class="method-args">(buildno=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Package name is generally in the form of <tt>name-version</tt>, or
+<tt>name-version-platform</tt> if <tt>platform</tt> is specified.
+</p>
+<p>
+TODO: Improve buildno support ?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="package-name-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 332</span>
+332:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package_name</span>(<span class="ruby-identifier">buildno</span>=<span class="ruby-keyword kw">nil</span>)
+333:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buildno</span>
+334:         <span class="ruby-identifier">buildno</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%H*60+%M&quot;</span>)
+335:         <span class="ruby-identifier">versnum</span> = <span class="ruby-node">&quot;#{version}.#{buildno}&quot;</span>
+336:       <span class="ruby-keyword kw">else</span>
+337:         <span class="ruby-identifier">versnum</span> = <span class="ruby-identifier">version</span>
+338:       <span class="ruby-keyword kw">end</span>
+339: 
+340:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">platform</span>
+341:         <span class="ruby-node">&quot;#{name}-#{versnum}-#{platform}&quot;</span>
+342:       <span class="ruby-keyword kw">else</span>
+343:         <span class="ruby-node">&quot;#{name}-#{versnum}&quot;</span>
+344:       <span class="ruby-keyword kw">end</span>
+345:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Metadir.html#method-i-stage_name">stage_name</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="released--method" class="method-detail ">
+        <a name="method-i-released%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">released=</span><span
+            class="method-args">(date)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="released--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 364</span>
+364:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">released=</span>(<span class="ruby-identifier">date</span>)
+365:       <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'released'</span>] = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">date</span>.<span class="ruby-identifier">strip</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">date</span>
+366:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="root-method" class="method-detail ">
+        <a name="method-i-root"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">root</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Project.html">Project</a> root directory.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="root-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 96</span>
+96:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root</span>
+97:       <span class="ruby-ivar">@root</span>
+98:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="root--method" class="method-detail ">
+        <a name="method-i-root%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">root=</span><span
+            class="method-args">(dir)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Change the root location if <tt>dir</tt>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="root--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 108</span>
+108:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root=</span>(<span class="ruby-identifier">dir</span>) 
+109:       <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dir</span>)
+110:       <span class="ruby-comment cmt">#@paths = [@root + 'meta', @root + '.meta']</span>
+111:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="save--method" class="method-detail ">
+        <a name="method-i-save%21"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">save!</span><span
+            class="method-args">(chroot=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is
+found).
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="save--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 477</span>
+477:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save!</span>(<span class="ruby-identifier">chroot</span>=<span class="ruby-keyword kw">nil</span>)
+478:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span> = <span class="ruby-identifier">chroot</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chroot</span>
+479:       <span class="ruby-keyword kw">super</span>
+480:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="stage-name-method" class="method-detail method-alias">
+        <a name="method-i-stage_name"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">stage_name</span><span
+            class="method-args">(buildno=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="store-method" class="method-detail ">
+        <a name="method-i-store"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">store</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Storage locations for metadata. <a href="../POM.html">POM</a> supports the
+use of <tt>meta</tt> and the hidden <tt>.meta</tt>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="store-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 103</span>
+103:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">store</span>
+104:       <span class="ruby-ivar">@store</span>
+105:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="summary--method" class="method-detail ">
+        <a name="method-i-summary%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">summary=</span><span
+            class="method-args">(line)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Limit summary to 69 characters.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="summary--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 359</span>
+359:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">summary=</span>(<span class="ruby-identifier">line</span>)
+360:       <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'summary'</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">to_s</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">69</span>]
+361:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-profile-method" class="method-detail ">
+        <a name="method-i-to_profile"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_profile</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="to-profile-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 494</span>
+494:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_profile</span>
+495:       <span class="ruby-comment cmt">#load!</span>
+496:       <span class="ruby-identifier">profile</span> = <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+497:       <span class="ruby-identifier">to_h</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+498:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OMIT</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>)
+499:         <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
+500:       <span class="ruby-keyword kw">end</span>
+501:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">homepage</span> = <span class="ruby-identifier">homepage</span>
+502:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">repository</span> = <span class="ruby-identifier">repository</span>
+503:       <span class="ruby-identifier">profile</span>
+504:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-s-method" class="method-detail ">
+        <a name="method-i-to_s"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Provide a summary text of project&#8217;s metadata.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="to-s-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 397</span>
+397:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+398:       <span class="ruby-identifier">s</span> = []
+399:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{title} v#{version}&quot;</span>
+400:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+401:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{summary}&quot;</span>
+402:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+403:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;contact    : #{contact}&quot;</span>
+404:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;homepage   : #{homepage}&quot;</span>
+405:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;repository : #{repository}&quot;</span>
+406:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;authors    : #{authors.join(',')}&quot;</span>
+407:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;package    : #{name}-#{version}&quot;</span>
+408:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;requires   : #{requires.join(',')}&quot;</span>
+409:       <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+410:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-verfile-method" class="method-detail ">
+        <a name="method-i-to_verfile"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_verfile</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="to-verfile-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 482</span>
+482:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_verfile</span>
+483:       <span class="ruby-identifier">verfile</span> = <span class="ruby-constant">Verfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+484:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">name</span>    = <span class="ruby-identifier">name</span>
+485:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>
+486:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">date</span>    = <span class="ruby-identifier">released</span>
+487:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">paths</span>   = <span class="ruby-identifier">loadpath</span>
+488:       <span class="ruby-comment cmt">#verfile.state   = status</span>
+489:       <span class="ruby-identifier">verfile</span>
+490:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="valid--method" class="method-detail ">
+        <a name="method-i-valid%3F"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">valid?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Is the minimal information provided?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="valid--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 376</span>
+376:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid?</span>
+377:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span>
+378:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>
+379:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">summary</span>
+380:       <span class="ruby-comment cmt">#return false unless maintainer</span>
+381:       <span class="ruby-comment cmt">#return false unless homepage</span>
+382:       <span class="ruby-keyword kw">true</span>
+383:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="private-instance-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="initialize-preload-method" class="method-detail ">
+        <a name="method-i-initialize_preload"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">initialize_preload</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="initialize-preload-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/metadir.rb, line 86</span>
+86:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_preload</span>
+87:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">root</span>
+88:         <span class="ruby-identifier">name</span>     <span class="ruby-comment cmt"># preload name</span>
+89:         <span class="ruby-identifier">version</span>  <span class="ruby-comment cmt"># preload version</span>
+90:       <span class="ruby-keyword kw">end</span>
+91:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</main>
+</body>
+</html>
+

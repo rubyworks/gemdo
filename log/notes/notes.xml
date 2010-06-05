@@ -1,0 +1,53 @@
+<notes>
+<set label="FIXME">
+<file src="lib/pom/gemspec.rb">
+<note line="25" type="FIXME">FIXME: this only works b/c of package staging
+distribute = Dir.glob(&apos;**/*&apos;)
+distribute = project.filelist
+distribute = manifest #.files</note>
+</file>
+</set>
+<set label="DEPRECATE">
+<file src="lib/pom/release_notes.rb">
+<note line="8" type="DEPRECATE">DEPRECATE: We will use improved History file instead.</note>
+</file>
+<file src="lib/pom/metadata.rb">
+<note line="72" type="DEPRECATE">DEPRECATE package</note>
+<note line="297" type="DEPRECATE">DEPRECATE: (should be indicated by version number)</note>
+</file>
+</set>
+<set label="TODO">
+<file src="lib/pom/gemspec.rb">
+<note line="74" type="TODO">TODO: bin/ is a POM convention, is there are reason to do otherwise?</note>
+<note line="107" type="TODO">TODO: make test_files configurable (?)</note>
+</file>
+<file src="lib/pom/history.rb">
+<note line="26" type="TODO">TODO: Allow the format to be more varied.</note>
+</file>
+<file src="lib/pom/metadata.rb">
+<note line="6" type="TODO">TODO: method_missing</note>
+<note line="7" type="TODO">TODO: extecutables is not right.</note>
+<note line="138" type="TODO">TODO: move to ReadMe class?
+@data[&apos;description&apos;] ||= readme.description
+@data[&apos;license&apos;]     ||= readme.license</note>
+<note line="163" type="TODO">TODO: See if there is not a better way to do this... is lazy loading worth it?</note>
+<note line="293" type="TODO">TODO: Better term then namespace?</note>
+<note line="390" type="TODO">TODO: Tecnically these next two are not metadata but build
+configuration, so ultimately they should go else where.
+But where?</note>
+<note line="578" type="TODO">TODO: Improve buildno support ?</note>
+<note line="685" type="TODO">TODO: Use String#to_list instead (?)</note>
+</file>
+<file src="lib/pom/readme.rb">
+<note line="138" type="TODO">TODO: Perhaps this should be in Metadata, and then we can if we want
+have this method too, but calling on it?</note>
+</file>
+<file src="lib/pom/project.rb">
+<note line="101" type="TODO">TODO: Support alternate source directory (?)</note>
+<note line="138" type="TODO">TODO: Deprecate in favor of using manifest.file ?</note>
+<note line="152" type="TODO">TODO: Support alternate source location in the future (?)</note>
+<note line="327" type="TODO">TODO: Add name to end of path ?</note>
+<note line="387" type="TODO">TODO: Don&apos;t use README, or make it an option.</note>
+</file>
+</set>
+</notes>
