@@ -31,7 +31,7 @@ module POM
         spec.description   = profile.description
         spec.authors       = profile.authors
         spec.email         = profile.email
-p profile.homepage
+
         spec.homepage      = profile.homepage
 
         # -- platform --
