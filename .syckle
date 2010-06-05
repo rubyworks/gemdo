@@ -13,6 +13,12 @@ email:
   secure  : <%= ENV['EMAIL_SECURE'] %>
   active  : true
 
+gemcutter:
+  active: true
+
+grancher:
+  active: true
+
 box:
   service: Box
   types  : [ gem ]
