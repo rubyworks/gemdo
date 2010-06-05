@@ -64,15 +64,17 @@ module POM
         if gemfile
           require 'bundler'
           spec.add_bundler_dependencies
+
         elsif reqfile.file
           reqfile.dependencies.each do |dep|
-            next if dep.optional?
             if dep.development?
               spec.add_development_dependency( *[dep.name, dep.constraint].compact )
             else
+              next if dep.optional?
               spec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
             end
           end
+
         end
 
         # TODO: considerations?

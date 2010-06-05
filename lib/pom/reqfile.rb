@@ -14,7 +14,8 @@ module POM
 
     #
     def self.find(root)
-      pattern = '{' + filename.join(',') + '}{,.cfg}'
+      root = Pathname.new(root)
+      pattern = '{' + filename.join(',') + '}{,.yml,.yaml}'
       root.glob(pattern).first
     end
 
@@ -39,7 +40,7 @@ module POM
     #
     def initialize(root)
       @root = Pathname.new(root)
-      @file = self.class.find(@root)
+      @file = self.class.find(root)
 
       @dependencies = []
 
@@ -76,7 +77,7 @@ module POM
       dependencies.select{ |dep| dep.development? }
     end
 
-    # TODO: Regfile needs a specialized to_yaml
+    # TODO: Reqfile needs a specialized to_yaml
 
     # TODO: What about production vs. runtime?
 
