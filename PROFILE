@@ -11,7 +11,7 @@ description:
   POM provides a metadata system for Ruby projects.
 
 authors:
-  - Thomas Sawyer <transfire@gmail.com>
+  - Thomas Sawyer
 
 resources:
   homepage:      http://proutils.github.com/pom
