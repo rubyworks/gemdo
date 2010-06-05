@@ -38,8 +38,8 @@ module POM
     # TODO: better name for this?
     attr_accessor :code
 
-    # Platforms this project/package supports (+nil+ for universal).
-    attr_accessor :arch
+    ## Platforms this project/package supports (+nil+ for universal).
+    #attr_accessor :arch
 
     # Load path(s) (used by Ruby's own site loading and RubyGems).
     # The default is 'lib/', which is usually correct.
@@ -57,7 +57,7 @@ module POM
       when Date, Time, DateTime
         @date = val
       else
-        @date = Date.parse(val) if val
+        @date = Time.parse(val) if val
       end
     end
 
@@ -106,9 +106,15 @@ module POM
       paths
     end
 
+    #
+    def now!
+      @date = Time.now
+    end
+
     # This method is not using #to_yaml in order to ensure
     # the file is saved neatly. This may require tweaking.
     def save!(file=nil)
+      now!
       file = file || @file || self.class.filename.first
       file = @root + file if String === file
       File.open(file, 'w') do |f|
@@ -118,9 +124,9 @@ module POM
         f.puts "patch: #{patch}" if patch
         f.puts "state: #{state}" if state
         f.puts "build: #{build}" if build
-        f.puts "date : #{date.strftime('%Y-%m-%d')}" if date
         f.puts "paths: #{paths.inspect}" if paths && paths != ["lib"]
-        f.puts "arch : #{arch.inspect}"  if arch
+        f.puts "date : #{date.strftime('%Y-%m-%d')}"
+        #f.puts "arch : #{arch.inspect}"  if arch
       end
     end
 
