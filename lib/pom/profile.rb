@@ -42,15 +42,9 @@ module POM
       suite
     end
 
-    # Contact can be any sort of resource that is intended
-    # to be the end-users initial point of contact. It could
-    # be the url to a mailing list, or a url to a forum, or the
-    # email address of the maintainer, etc.
+    # Official contact for this project. This is typically
+    # a name and email address.
     attr_accessor :contact
-
-    # Maintainer. This is the package maintainers name and
-    # optionally their email addresses, eg. "Trans <trans@foo.com>".
-    attr_accessor :maintainer
 
     # The date the project was started.
     attr_accessor :created

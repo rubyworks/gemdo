@@ -14,20 +14,12 @@ module POM
     attr :sources
 
     #
-    def initialize(root, profile=nil, verfile=nil)
+    def initialize(root)
       root = Pathname.new(root)
 
-      if profile
-        @profile = profile
-      elsif Profile.find(root)
-        @profile = Profile.new(root)
-      end
-
-      if verfile
-        @verfile = verfile
-      elsif Verfile.find(root)
-        @verfile = Verfile.new(root)
-      end
+      @verfile = Verfile.new(root)
+      @profile = Profile.new(root)
+      @reqfile = Reqfile.new(root)
 
       ## previous "confectionery" system (ahead of it's time, I'm afraid)
       #if Metadir.find(root)
@@ -45,7 +37,12 @@ module POM
 
     # Verfile provides all the current version information.
     def verfile
-      @versfile
+      @verfile
+    end
+
+    #
+    def reqfile
+      @reqfile
     end
 
     ##

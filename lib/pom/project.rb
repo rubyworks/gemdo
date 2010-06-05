@@ -3,10 +3,10 @@ require 'pom/root'
 require 'pom/metadata'
 require 'pom/profile'
 require 'pom/verfile'
+require 'pom/reqfile'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/release'
-require 'pom/package'
 #require 'pom/build'
 #require 'pom/gemspec'
 
@@ -94,20 +94,25 @@ module POM
     #  @settings ||= FileStore.new(root, '.config/pom')
     #end
 
-    # DEPRECATED. Provides access to both profile and verfile information
+    # Provides access to both profile and verfile information
     # through a single interface. This will probably be removed from API.
     def metadata
-      @metadata ||= Metadata.new(root, profile, verfile)
+      @metadata ||= Metadata.new(root)
     end
 
-    #
+    # General information.
     def profile
-      @profile ||= Profile.new(root)
+      @profile ||= metadata.profile
     end
 
-    #
+    # Current release information.
     def verfile
-      @verfile ||= Verfile.new(root)
+      @verfile ||= metadata.verfile
+    end
+
+    # Requirements Configuration.
+    def reqfile
+      @reqfile ||= metadata.reqfile
     end
 
     # Project name.
@@ -127,11 +132,6 @@ module POM
 
     def loadpath
       verfile.loadpath
-    end
-
-    # Package Configuration.
-    def package
-      @package ||= Package.new(root)
     end
 
     ## Build metadata.
@@ -156,12 +156,9 @@ module POM
     end
 
     # The <tt>log/</tt> directory stores log output created by 
-    # build tools.
-    #
-    #--
-    # Alternately this can be located in the #site
-    # directory if you wish to publish your logs.
-    #++
+    # build tools. If you want to publish your logs as part
+    # of your website (which might be a very nice thing to do)
+    # symlink it into you site location.
     #
     # Get pathname of given log +path+. Or without +path+
     # returns the pathname for the log directory.
@@ -169,13 +166,7 @@ module POM
       if path
         log + path
       else
-        @log ||= (
-          #if (site + 'log').directory?
-          #  site + log
-          #else
-            root + 'log'
-          #end
-        )
+        @log ||= root + 'log'
       end
     end
 
