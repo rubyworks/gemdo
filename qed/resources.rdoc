@@ -1,0 +1,39 @@
+= Resources
+
+The Resource class keeps track of al lthe various URIs associated with
+a project. Each entry has a name and then the URI corresponding to it.
+For the most part entries are freeform. You can name them what ever you
+like. However common names have beem aliased to one another, such as 'mail'
+and 'mailinglist'. And two entries are typically expected to avaialble if
+applicable, namely 'homepage', which is the project main website, and
+'repository', which is the project's public SCM repository address. 
+
+  require 'pom/resources'
+
+Resources are a subentry in the prokect's PROFILE, so the initializer simply
+take a hash of initial entires.
+
+  resources = POM::Resources.new(
+    :homepage=>'http://rubyworks.github.com/pom',
+    :repository=>'git://github.com/rubyworks/pom.git'
+  )
+
+The main thing to note about the Resources object is the ability to access
+information by aliased names.
+
+  resources.home.assert == 'http://rubyworks.github.com/pom'
+  resources.repo.assert == 'git://github.com/rubyworks/pom.git'
+
+If we look at the underlying hash we will see that all aliasing entries have
+the same value.
+
+  resources.assert.to_h = {
+    :homepage=>'http://rubyworks.github.com/pom',
+    :repository=>'git://github.com/rubyworks/pom.git',
+    :home=>'http://rubyworks.github.com/pom',
+    :repo=>'git://github.com/rubyworks/pom.git'
+  }
+
+This is important to be aware of if you utilize the resources as an Enumerable
+object.
+

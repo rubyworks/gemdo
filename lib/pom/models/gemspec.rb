@@ -31,6 +31,7 @@ module POM
         spec.description   = profile.description
         spec.authors       = profile.authors
         spec.email         = profile.email
+p profile.homepage
         spec.homepage      = profile.homepage
 
         # -- platform --
@@ -51,12 +52,26 @@ module POM
 
         # -- dependencies --
 
-        package.dependencies.each do |dep|
-          next if dep.optional?
-          if dep.development?
-            spec.add_development_dependency( *[dep.name, dep.constraint].compact )
-          else
-            spec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
+        case options[:gemfile]
+        #when String
+        #  gemfile = root.glob(options[:gemfile]).first  # TODO: Alternate gemfile
+        when nil, true
+          gemfile = root.glob('Gemfile').first
+        else
+          gemfile = nil
+        end
+
+        if gemfile
+          require 'bundler'
+          spec.add_bundler_dependencies
+        elsif reqfile.file
+          reqfile.dependencies.each do |dep|
+            next if dep.optional?
+            if dep.development?
+              spec.add_development_dependency( *[dep.name, dep.constraint].compact )
+            else
+              spec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
+            end
           end
         end
 
