@@ -1,8 +1,7 @@
 = POM
 
-* http://proutils.github.com/pom
-* http://github.com/protuils/pom
-
+* home: http://proutils.github.com/pom
+* work: http://github.com/protuils/pom
 
 == DESCRIPTION
 
@@ -32,6 +31,12 @@ The project object then ties into all the rest of available metadata, e.g.
 See the Wiki[http://wiki.github.com/proutils/pom] and
 API[http://proutils.github.com/pom/rdoc] documentation for further
 details.
+
+
+== DEVELOPMENT
+
+You can subscribe to the ProUtils mailing list by sensing a message to
+<a href="mailto:protuils+subscribe@googlegroups.com">this mailing address</a>.
 
 
 == HOW TO INSTALL

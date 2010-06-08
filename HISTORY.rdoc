@@ -1,6 +1,34 @@
 = RELEASE HISTORY
 
-== 1.7 / 2010-02-06
+== 2.0.0 / 2010-06-06
+
+Version 2.0 marks a major turning point for POM --it is offically
+ready for mass consumption! What separates this version from
+previous versions is the adoption of YAML-based metadata files,
+over the previous meta directory-based config system. Be sure
+to checkout the Wiki to learn more.
+
+Changes:
+
+* Swtich to YAML-based metadata files.
+* Announcement generator is much imropved.
+* Removed Build class (it was a dumb idea).
+
+
+== 1.8.0 / 2010-04-30
+
+This release refines the API a bit and adds a few additional niceities.
+
+Changes:
+
+* Add Project#name and #version as shortcuts to metadata.
+* README parser is much improved (could still use more though).
+* Filestore can be only be one directory (meta/ or .meta/, not both)
+* Add Build class for development metadata stored in .build/.
+* Simplifed root lookup code.
+
+
+== 1.7.0 / 2010-02-06
 
 This release introduced Metadata extensions, which can be defined
 to augment the primary metadata via a meta/ subdirectory. Currently
@@ -20,7 +48,7 @@ Changes:
 * Fix special reader bug.
 
 
-== 1.6 / 2009-12-07
+== 1.6.0 / 2009-12-07
 
 This release introduce the Metabuild class, which is like the
 Metadata class but supports general build configuration
@@ -28,12 +56,10 @@ information.
 
 Changes:
 
-* Major Enhancements
-
-    * Added Metabuild class.
+* Added Metabuild class.
 
 
-== 1.5 / 2009-11-14
+== 1.5.0 / 2009-11-14
 
 Between version 1.1 and the current 1.5, a great deal of polish
 has been applied to the project. There are no longer any metadata
@@ -44,39 +70,36 @@ a standard file or from the top entry of the HISTORY file. And a
 functions from printing out a project summary to generating meta
 entries from a +README+ and/or +.gemspec+ file.
 
-* 4 Major Enhancements
+Changes:
 
-    * Added +pom+ command-line tool.
-    * Added new Release class to handle current release notes.
-    * Removed all metadata aliases (save one).
-    * Metadata is no longer lazy-loaded.
- 
-* 3 Minor Enhancements
-
-    * Can generate meta entries from +README+ and/or +.gemspec+ file.
-    * Polished code, removing vestages of old code.
-    * Separated cli commands into separate classes.
+* Added +pom+ command-line tool.
+* Added new Release class to handle current release notes.
+* Removed all metadata aliases (save one).
+* Metadata is no longer lazy-loaded.
+* Can generate meta entries from +README+ and/or +.gemspec+ file.
+* Polished code, removing vestages of old code.
+* Separated cli commands into separate classes.
 
 
-== 1.1 / 2009-08-14
+== 1.1.0 / 2009-08-14
 
 This release brings some nice improements to POM, in particular
 the addition of the Project class and it's supporting classes
 History and Manifest, which were taken and deprecated from Syckle.
 
-* 3 Major Enhancements
+Changes:
 
-    * Metadata is loaded passively as needed.
-    * Metadata fallback is parsed README.
-    * Project class has added, taken from Reap.
+* Metadata is loaded passively as needed.
+* Metadata fallback is parsed README.
+* Project class has added, taken from Reap.
 
 
-== 1.0 / 2009-07-22
+== 1.0.0 / 2009-07-22
 
 This is the initial release of POM. POM is a "Project Object Model"
 designed for Ruby projects.
 
-* 1 Major Enhancment
+Changes:
 
-    * Happy Birthday!
+* Happy Birthday!
 

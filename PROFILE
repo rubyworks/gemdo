@@ -1,5 +1,5 @@
 title:     POM
-summary:   Project metadata system geared toward Ruby projects.
+summary:   Project metadata system for Ruby projects
 copyright: Copyright (c) 2009 Thomas Sawyer
 license:   MIT
 contact:   Thomas Sawyer <transfire@gmail.com>
@@ -14,10 +14,11 @@ authors:
   - Thomas Sawyer
 
 resources:
-  homepage:      http://proutils.github.com/pom
-  repository:    git://github.com/proutils/pom.git
-  reference:     http://proutils.github.com/pom/rdoc
-  documentation: http://wiki.github.com/proutils/pom
-  wiki:          http://wiki.github.com/proutils/pom
-  mailinglist:   http://groups.google.com/group/proutils
-  subscribe:     mailto:protuils+subscribe@googlegroups.com
+  home  : http://proutils.github.com/pom
+  work  : http://github.com/proutils/pom
+  repo  : git://github.com/proutils/pom.git
+  docs  : http://wiki.github.com/proutils/pom
+  wiki  : http://wiki.github.com/proutils/pom
+  api   : http://proutils.github.com/pom/rdoc
+  mail  : mailto:protuils+subscribe@googlegroups.com
+  forum : http://groups.google.com/group/proutils
