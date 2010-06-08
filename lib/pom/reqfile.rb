@@ -3,6 +3,7 @@ require 'pom/core_ext/pathname'
 
 module POM
 
+  # Access to REQUIRE file.
   #
   class Reqfile
     include Enumerable
@@ -54,6 +55,8 @@ module POM
             @dependencies << dep
           end
         end
+      else
+        warn "No REQUIRE file at #{root}" if $DEBUG
       end
     end
 
