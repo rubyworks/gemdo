@@ -1,6 +1,7 @@
 FIXTURE_DIR = 'qed/fixtures/'
 
 When 'iven a (((\w+))) project file' do |name, text|
+  FileUtils.mkdir_p(FIXTURE_DIR)
   File.open(FIXTURE_DIR + name, 'w') do |f|
     f << text
   end
