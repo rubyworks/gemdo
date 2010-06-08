@@ -1,0 +1,54 @@
+= Pom::Metadata
+
+Require metadata library.
+
+  require 'pom/metadata'
+
+Given a PROFILE project file containing ...
+
+    --- 
+    title: DemoApp
+    summary: Demo summary
+    license: MIT
+    contact: trans <transfire@gmail.com>
+    suite: demos
+    copyright: Copyright (c) 2010 Thomas Sawyer
+    created: 2010-10-10
+
+    authors: 
+      - Thomas Sawyer
+
+    description:
+      This is the description for the example.
+
+And given a VERSION project file containing ...
+
+    name : demoapp
+    major: 1
+    minor: 0
+    patch: 0
+    date : 2010-10-10
+
+We can load access both at the same time by passing the project
+directory to the POM::Metadata constructor method.
+
+  metadata = POM::Metadata.new('qed/fixtures')
+
+Now we can verify contact metadata is being read from project location.
+
+  metadata.contact.assert == "trans <transfire@gmail.com>"
+
+And verify version metadata is being read from directory location.
+
+  metadata.version.assert == "1.0.0"
+
+And verify description metadata is being read from directory location.
+
+  metadata.description.assert == "This is the description for the example."
+
+And verify metadata is falling back to defaults.
+
+  metadata.loadpath.assert == ['lib']
+
+And so forth.
+

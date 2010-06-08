@@ -1,0 +1,50 @@
+== Parse README file
+
+Given a README project file containing ...
+
+    = MyApp
+
+    * http://some.org
+
+    == DESCRIPTION
+
+    This is a description of the
+    fake project.
+
+    = INSTALL
+
+    To install use RubyGems
+
+      $ gem install myapp
+
+    = LICENSE
+
+    (GPL)
+
+    Copyright 2009 Thomas Sawyer
+
+Load the POM::Readme library.
+
+    require 'pom/readme'
+
+Create a new Readme object from file.
+
+    rm = POM::Readme.load("qed/fixtures/README")
+
+It should be able to parse out a title and project name.
+
+    rm.title.assert == "MyApp"
+
+    rm.name.assert == "myapp"
+    rm.project.assert == "myapp"
+
+It should be able to parse out a description.
+
+    rm.description.assert == "This is a description of the\nfake project."
+
+It should parse out the lincese.
+
+    rm.license.assert == "GPL"
+
+And so forth.
+

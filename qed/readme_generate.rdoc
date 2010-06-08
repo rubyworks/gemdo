@@ -1,0 +1,47 @@
+== Generate POM Metadata from README
+
+Given a README project file containing ...
+
+    = MyApp
+
+    * http://some.org
+
+    == DESCRIPTION
+
+    This is a description of the
+    fake project.
+
+    = INSTALL
+
+    To install use RubyGems
+
+      $ gem install myapp
+
+    = LICENSE
+
+    (GPL)
+
+    Copyright 2009 Thomas Sawyer
+
+We can generate metadata from the README using the pom command.
+
+    `cd qed/fixtures; pom init README`
+
+Now lets verify the metadata was extracted as expected.
+
+    require 'pom/project'
+
+    project = POM::Project.new('qed/fixtures')
+
+The values should have been picked up from VERSION and PROFILE files.
+
+    project.metadata.title.assert == "MyApp"
+    project.metadata.description.assert == "This is a description of the\nfake project."
+    project.metadata.license.assert == "GPL"
+
+Clean-up the generated files.
+
+    FileUtils.rm_r('qed/fixtures/VERSION')
+    FileUtils.rm_r('qed/fixtures/PROFILE')
+    FileUtils.rm_r('qed/fixtures/.cache') if File.exist?('fixture/.cache')
+

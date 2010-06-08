@@ -2,35 +2,83 @@
 
 The requirements configuration file provides information
 on what dependencies a project has on other projects.
+
+Given a REQUIRE project file containing ...
+
+    # Project must haves these to run.
+    runtime:
+      - rake 0.8.7+
+      - mocha 0.9.8+
+      - nokogiri 1.4.0+
+      - system_timer
+      - ruby-debug 0.10.3+
+      - json
+      - yajl-ruby
+      # AP
+      - rack-test 0.5.3
+      - RedCloth 4.2.2+
+      # AR
+      - sqlite3-ruby 1.3.0.beta.2
+
+    # Project does not have to have these, but its a good idea.
+    runtime/recommend:
+      - pg 0.9.0+
+      - mysql 2.8.1+
+
+    # Purely optional.
+    runtime/optional:
+      - fcgi 0.8.7+  # does not compile on mri 1.9+
+
+    # Requirements that are vendored and shipped with package.
+    runtime/vendor:
+      - arel
+
+    # To generate documentation.
+    development/document:
+      - rdoc 2.1
+
+    # To run tests.
+    development/test:
+      - rspec
+
+    # Packages that are vendored just for development.
+    development/vendor: []
+
+    alternate/provision: []
+
+    alternate/replacement: []
+
+    alternate/conflict: []
+
 The Reqfile class provides an interface to this information.
 
-  require 'pom/reqfile'
+    require 'pom/reqfile'
 
 The initializer takes the root directory for the project
 and looks for a file called +REQUIRE+ or +.require+.
 
-  req = POM::Reqfile.new('sample')
+    req = POM::Reqfile.new('qed/fixtures')
 
 The dependencies list for our sample project is fairly large.
 
-  deps = req.dependencies
-  deps.size.assert == 16
+    deps = req.dependencies
+    deps.size.assert == 16
 
 But a few of these dependencies are purely optional.
 
-  reqs = req.requirements
-  reqs.size.assert == 13
+    reqs = req.requirements
+    reqs.size.assert == 13
 
 Two of those are development dependencies.
 
-  devs = req.development
-  devs.size.assert == 2
+    devs = req.development
+    devs.size.assert == 2
 
 Since Reqfile is Enumerable we can filter dependencies using
 fine grain criteria as well.
 
-  test = req.select { |dep| dep.test? }
-  test.size.assert == 1
+    test = req.select { |dep| dep.test? }
+    test.size.assert == 1
 
 We see that we have a single dependecy for testing.
 
