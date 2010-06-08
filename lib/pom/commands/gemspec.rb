@@ -9,7 +9,7 @@ module POM::Commands
 
     #
     def initialize
-      require 'pom/models/gemspec'
+      require 'pom/gemspec'
       @project = POM::Project.new(:lookup=>true)
     end
 

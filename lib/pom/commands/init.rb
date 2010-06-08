@@ -63,7 +63,7 @@ module POM::Commands
 
       require 'pom/metadata'
       require 'pom/readme'
-      require 'pom/models/gemspec'
+      require 'pom/gemspec'
 
       #prime = { 
       #  'name'       => File.basename(Dir.pwd),
