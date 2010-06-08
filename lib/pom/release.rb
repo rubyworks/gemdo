@@ -48,7 +48,7 @@ module POM
       end
     end
 
-    # TODO: Improve parsing to RELEASE file.
+    # TODO: Improve parsing of RELEASE file.
     def read(file)
       text = File.read(file)
       index = notes.index(/^(##|==)/m)
@@ -65,7 +65,7 @@ module POM
       @history ||= History.new(root)
     end
 
-  end #class ReleaseNotes
+  end #class Release
 
 end #module POM
 

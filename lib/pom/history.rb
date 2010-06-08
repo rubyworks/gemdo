@@ -89,7 +89,8 @@ module POM
         @changes = changes.strip
       end
       def to_s
-        "#{marker}#{marker} #{header}\n\n#{notes}\n\n#{changes}"
+        "#{header}\n\n#{notes}\n\n#{changes}"
+        #"#{marker}#{marker} #{header}\n\n#{notes}\n\n#{changes}"
       end
     end
 

@@ -333,11 +333,15 @@ module POM
       root.glob('ext/**/extconf.rb')
     end
 
+    #
+    def compiles?
+      !extensions.empty?
+    end
+
     # About project notice.
     def about(*parts)
       # pre-format data
       released = verfile.date ? "(#{verfile.date.strftime('%Y-%m-%d')})" : nil
-
       if parts.empty?
         s = []
         s << "#{profile.title} v#{verfile.version} #{released} (#{verfile.name}-#{verfile.version})"
@@ -351,10 +355,10 @@ module POM
         s.join("\n").gsub("\n\n\n", "\n\n")
       else
         parts.each do |field|
-          case field
-          #when 'settings'
+          case field.to_sym
+          #when :settings
           #  puts settings.to_yaml
-          when 'profile'
+          when :profile
             puts profile.to_yaml
           else
             puts profile.__send__(field)
@@ -364,34 +368,45 @@ module POM
     end
 
     # Project release announcement built on README.
-    #--
-    # TODO: Don't use README, or make it an option.
-    #++
-    def announcement(file=nil, options={})
-      header = options[:header]
-      if file = Dir.glob(file, File::FNM_CASEFOLD).first
-        ann = File.read(file)
-      else
-        release = history.release.to_s
-        ann = []
-        if file = Dir.glob(README, File::FNM_CASEFOLD).first
-          readme  = File.read(file).strip
-          readme  = readme.gsub("Please see HISTORY file.", '=' + release)
-          ann << readme
-        else
-          if header
-            ann << "#{profile.title} #{self.version} has been released."
-            ann << ''
-            ann << "* #{profile.resources.homepage}"
-            ann << ''
-            ann << "#{profile.description}"
-            ann << ''
+    def announcement(*parts)
+      ann = []
+      parts.each do |part|
+        case part
+        when :message
+          ann << "#{profile.title} #{self.version} has been released."
+        when :description
+          ann << "#{profile.description}"
+        when :resources
+          list = ''
+          list << "* home: #{profile.resources.home}\n" if profile.resources.home
+          list << "* work: #{profile.resources.work}\n" if profile.resources.work
+          list << "* docs: #{profile.resources.docs}\n" if profile.resources.docs
+          ann << list
+        when :release
+          ann << "= #{title} #{history.release}"
+        when :version
+          ann << "= #{history.release.header}"
+        when :notes
+          ann << "#{history.release.notes}"
+        when :changes
+          ann << "#{history.release.changes}"
+        #when :line
+        #  ann << ("-" * 4) + "\n"
+        when :readme
+          release = history.release.to_s
+          if file = Dir.glob(README, File::FNM_CASEFOLD).first
+            readme  = File.read(file).strip
+            readme  = readme.gsub("Please see HISTORY file.", '= ' + release)
+            ann << readme
           end
-          ann << release
+        when String
+          ann << part
+        when File
+          ann << part.read
+          part.close
         end
-        ann = ann.join("\n")
       end
-      ann.unfold
+      ann.join("\n\n").unfold
     end
 
   end#class Project
