@@ -1,4 +1,4 @@
-FIXTURE_DIR = 'qed/fixtures/'
+FIXTURE_DIR = 'tmp/example/'
 
 When 'iven a (((\w+))) project file' do |name, text|
   FileUtils.mkdir_p(FIXTURE_DIR)
