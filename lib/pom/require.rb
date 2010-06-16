@@ -5,19 +5,20 @@ module POM
 
   # Access to REQUIRE file.
   #
-  class Reqfile
+  class Require
     include Enumerable
 
-    # TODO: Narrow naming.
-    def self.filename
-      ['REQUIRE', 'Require', '.require']
+    #
+    FILE_PATTERN = '{,.}require{.yml,.yaml,}'
+
+    #
+    def self.file_pattern
+      FILE_PATTERN
     end
 
     #
     def self.find(root)
-      root = Pathname.new(root)
-      pattern = '{' + filename.join(',') + '}{,.yml,.yaml}'
-      root.glob(pattern).first
+      root.glob(file_pattern, File::FNM_CASEFOLD).first
     end
 
     #
@@ -39,13 +40,11 @@ module POM
     attr :optional
 
     #
-    def initialize(root)
+    def initialize(root, file=nil)
       @root = Pathname.new(root)
-      @file = self.class.find(root)
+      @file = file || self.class.find(root)
 
       @dependencies = []
-
-      #@production  = []
 
       if @file && @file.exist?
         data = YAML.load(File.new(@file))
