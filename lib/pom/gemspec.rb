@@ -65,8 +65,8 @@ module POM
           require 'bundler'
           spec.add_bundler_dependencies
 
-        elsif reqfile.file
-          reqfile.dependencies.each do |dep|
+        elsif requires.file
+          requires.dependencies.each do |dep|
             if dep.development?
               spec.add_development_dependency( *[dep.name, dep.constraint].compact )
             else
