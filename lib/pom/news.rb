@@ -1,9 +1,10 @@
 require 'pom/core_ext'
 require 'pom/history'
+require 'pom/version_helper'
 
 module POM
 
-  # = Release Notes
+  # = News / Release Notes
   #
   # This class provides the latest release notes for a project.
   # These notes are either extracted from the latest entry in
@@ -11,17 +12,30 @@ module POM
   # provided. The +RELEASE+ file can optionally be called +NEWS+,
   # and have an extension.
   #
-  # There are two part to release notes, the +notes+ and the
-  # list of +changes+.
-  class Release
+  # TODO: Make resuable by History for release entries.
+  class News
 
-    DEFAULT_FILE = '{RELEASE,NEWS}{,.*}'
+    include VersionHelper
+
+    # Search glob if any files exist in project from which
+    # the Release class can gather information.
+    FILE_PATTERN = '{NEWS,RELEASE}{,.*}'
+
+    #
+    def self.file_pattern
+      FILE_PATTERN
+    end
+
+    #
+    def self.find(root)
+      root.glob(file_pattern, :casefold).first
+    end
 
     # Root directory of project.
     attr :root
 
     # Release file, if any.
-    attr :file
+    #attr :file
 
     # Release notes.
     attr :notes
@@ -29,35 +43,37 @@ module POM
     # List of changes.
     attr :changes
 
-    # New Release
-    def initialize(root, history=nil)
+    # Version number.
+    attr :version
+
+    # Release date.
+    attr :date
+
+    # Billing name of release, e.g. "Hardy Haron"
+    attr :billname
+
+    # New News.
+    def initialize(root, opts={})
       @root    = root
-      @history = history
+      @history = opts[:history]
 
       @notes   = ''
       @changes = ''
 
-      @file = root.glob(DEFAULT_FILE, :casefold).first
+      @file = root.glob(FIND, :casefold).first
 
       if @file
-        read(@file)
-      else
-        rel = history.releases[0]
-        @notes   = rel.notes
-        @changes = rel.notes
+        parse
+      #else
+      #  rel = history.releases[0]
+      #  @notes   = rel.notes
+      #  @changes = rel.changes
       end
     end
 
-    # TODO: Improve parsing of RELEASE file.
-    def read(file)
-      text = File.read(file)
-      index = notes.index(/^(##|==)/m)
-      if index
-        @notes   = notes[0...index]
-        @changes = notes[index..-1]
-      else
-        @notes   = text
-      end
+    #
+    def file
+      @file
     end
 
     # Access to HISTORY file.
@@ -65,7 +81,40 @@ module POM
       @history ||= History.new(root)
     end
 
-  end #class Release
+    private
+
+    #
+    def parse
+      text = File.read(file).strip
+      line = text.lines.find{ |line| line =~ /\d/ }
+      if line
+        rel = parse_release_stamp(line)
+        @version  = rel[:version]
+        @date     = rel[:date]
+        @billname = rel[:billname]
+      end
+      parse_body(text)
+    end
+
+    # TODO: Continue to improve parsing of news file.
+    # Also, share code with History entries.
+    def parse_body(text)
+      word = text.index(/^[A-Za-z]/)
+      list = text.index(/^(\*|\d+\.)/)
+
+      if list == nil
+        @notes = text
+      elsif word == nil
+        @changes = text.strip
+      elsif list > word
+        @notes   = notes[0...list].strip
+        @changes = notes[list..-1]
+      else
+        @notes   = notes[word..-1]
+        @changes = notes[0...word].strip
+      end
+    end
+
+  end #class News
 
 end #module POM
-
