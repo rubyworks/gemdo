@@ -1,14 +1,10 @@
 require 'pom/core_ext'
 require 'pom/root'
 require 'pom/metadata'
-require 'pom/profile'
-require 'pom/verfile'
-require 'pom/reqfile'
 require 'pom/manifest'
+require 'pom/require'
 require 'pom/history'
-require 'pom/release'
-#require 'pom/build'
-#require 'pom/gemspec'
+require 'pom/news'
 
 module POM
 
@@ -102,43 +98,57 @@ module POM
 
     # General information.
     def profile
-      @profile ||= metadata.profile
+      metadata.profile
     end
 
     # Current release information.
-    def verfile
-      @verfile ||= metadata.verfile
-    end
-
-    # Requirements Configuration.
-    def reqfile
-      @reqfile ||= metadata.reqfile
+    def release
+      metadata.release
     end
 
     # Project name.
     def name
-      verfile.name || profile.name || raise(ArgumentError, "name is requried")
+      metadata.name
     end
 
     # Version number string representation, e.g. "1.0.0".
     def version
-      verfile.to_s
+      metadata.version
     end
 
     #
-    def version=(vers)
-      verfile.version = vers
-    end
-
-    def loadpath
-      verfile.loadpath
-    end
-
-    ## Build metadata.
-    #
-    #def build
-    #  @build ||= Build.new(root, '.build')
+    #def version=(vers)
+    #  metadata.version = vers
     #end
+
+    #
+    def loadpath
+      metadata.loadpath
+    end
+
+    #
+    def classname
+      metadata.classname
+    end
+
+    # Package name is generally in the form of +name-version+,
+    # or +name-version-platform+ if +platform+ is specified.
+    def package_name(options={})
+      if platform = options[:platform]
+        "#{name}-#{version}-#{platform}"
+      else
+        "#{name}-#{version}"
+      end
+    end
+
+    # DEPRECATE
+    alias_method :stage_name, :package_name
+
+    # Requirements Configuration.
+    def requirements
+      @require ||= Require.new(root)
+    end
+    alias_method :requires, :requirements
 
     # Project manifest. For manifest file use <tt>manifest.file</tt>.
     def manifest
@@ -151,8 +161,8 @@ module POM
     end
 
     # Access latest release notes.
-    def release
-      @release ||= Release.new(root, history)
+    def news
+      @release ||= News.new(root, history)
     end
 
     # The <tt>log/</tt> directory stores log output created by 
