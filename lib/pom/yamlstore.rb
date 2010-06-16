@@ -8,9 +8,10 @@ module POM
       ['.' + name.split('::').last.downcase]
     end
 
+    #
     def self.find(root)
       pattern = '{' + filename.join(',') + '}{,.yml,.yaml}'
-      root.glob(pattern).first
+      root.glob(pattern, :casefold).first
     end
 
     #
@@ -103,6 +104,11 @@ module POM
         h[a.to_s] = __send__(a)
       end
       h
+    end
+
+    #
+    def each(&block)
+      to_h(&block)
     end
 
     #
