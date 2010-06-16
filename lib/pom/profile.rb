@@ -8,14 +8,14 @@ module POM
 
     #
     def self.filename
-      ['PROFILE', 'Profile', '.profile']
+      ['PROFILE']
     end
 
     # Project's <i>package name</i>. The entry is required
     # and must not contain spaces or puncuation.
-    attr_accessor :name
+    #attr_accessor :name
 
-    # Title of packa '.profile'ge (this defaults to project name capitalized).
+    # Title of package (this defaults to project name capitalized).
     attr_accessor :title do
       name.to_s.capitalize
     end
