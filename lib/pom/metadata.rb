@@ -1,8 +1,6 @@
-require 'time'
 require 'pom/root'
+require 'pom/package'
 require 'pom/profile'
-require 'pom/verfile'
-require 'pom/reqfile'
 require 'pom/metadir'
 
 module POM
@@ -18,38 +16,44 @@ module POM
     def initialize(root)
       root = Pathname.new(root)
 
-      @verfile = Verfile.new(root)
-      @profile = Profile.new(root)
-      @reqfile = Reqfile.new(root)
+      @package = Package.new(root) #if Package.find(root)
+      @profile = Profile.new(root) if Profile.find(root)
+      @metadir = Metadir.new(root) if Metadir.find(root)
 
-      ## previous "confectionery" system (ahead of it's time, I'm afraid)
-      #if Metadir.find(root)
-      #  @metadir = Metadir.new(root)
-      #end
-
-      # TODO: Add profile.resources to lookup ?
-      @sources = [@verfile, @profile].compact #@metadir].compact
+      # TODO: Add @profile.resources to lookup ?
+      @sources = [@package, @profile, @metadir].compact
     end
 
-    # Profile provides all the general information about the project.
+    # Release provides access to current release information.
+    def package
+      @package
+    end
+
+    # The PROFILE provides general information about the project.
     def profile
       @profile
     end
 
-    # Verfile provides all the current version information.
-    def verfile
-      @verfile
+    # Access to meta directory entries. For backward compatability,
+    # maybe deprecated in future.
+    def metadir
+      @metadir
     end
 
     #
-    def reqfile
-      @reqfile
+    def name
+      @package.name
     end
 
-    ##
-    #def metadir
-    #  @metadir
-    #end
+    #
+    def version
+      @package.version
+    end
+
+    #
+    def loadpath
+      @package.loadpath
+    end
 
     #
     def save!
@@ -67,15 +71,41 @@ module POM
 
     #
     def method_missing(sym, *args, &blk)
+      vals = []
       sources.each do |source|
         if source.respond_to?(sym)
-          return source.__send__(sym, *args, &blk)
+          val = source.__send__(sym, *args, &blk)
+          if val
+            return val unless $DEBUG
+          else
+            vals << val
+          end
         end
       end
-      nil
+      # warn "multiple values that are not equal" ?
+      vals.first
     end
 
-  end
+  private
 
+    #
+    #def version_file
+    #  @version_file ||= root.glob('version{,.yml,.yaml,.txt}', File::FNM_CASEFOLD).first
+    #end
+
+    #
+    #def meta_entry(name)
+    #  if file = meta_file(name)
+    #    File.read(file).strip
+    #  else
+    #    nil
+    #  end
+    #end
+
+    #
+    #def meta_file(name)
+    #  root.glob("{,.}meta/#{name}").first
+    #end
+  end
 end
 
