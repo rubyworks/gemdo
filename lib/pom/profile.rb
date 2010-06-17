@@ -1,32 +1,48 @@
-require 'pom/yamlstore'
+require 'pom/metafile'
 require 'pom/resources'
 
 module POM
 
+  # Profile store ancillary project metadata such
+  # as title, summary, list of authors, etc.
   #
-  class Profile < YAMLStore
+  class Profile < Metafile
 
     #
-    def self.filename
-      ['PROFILE']
+    #def self.filename
+    #  ['PROFILE']
+    #end
+
+    #
+    def self.default_filename
+      'PROFILE.yml'
     end
+
+    ;; private
+
+    #
+    def initialize(root, name, opts={})
+      @name = name
+      super(root, opts)
+    end
+
+    ;; public
 
     # Project's <i>package name</i>. The entry is required
     # and must not contain spaces or puncuation.
-    #attr_accessor :name
+    attr :name
 
     # Title of package (this defaults to project name capitalized).
     attr_accessor :title do
-      name.to_s.capitalize
+      name.capitalize if name
     end
 
     # A one-line brief description.
     attr_accessor :summary do
-      if description
-        i = description.index(/(\.|$)/)
-        i = 69 if i > 69
-        description.to_s[0..i]
-      end
+      d = description.to_s.strip
+      i = d.index(/(\.|$)/)
+      i = 69 if i > 69
+      d[0..i]
     end
 
     # Detailed description.
@@ -38,9 +54,7 @@ module POM
     attr_accessor :suite
 
     #
-    attr_accessor :collection do
-      suite
-    end
+    alias_accessor :collection, :suite
 
     # Official contact for this project. This is typically
     # a name and email address.
@@ -56,21 +70,18 @@ module POM
     attr_accessor :license
 
     # List of authors.
-    attr_accessor :authors, []
+    attr_accessor :authors do
+      []
+    end
 
     #
-    def resources
-      @resources ||= Resources.new
+    attr_accessor :resources do
+      Resources.new
     end
 
     #
     def resources=(resources)
-      case resources
-      when Resources
-        @resources = resources
-      else
-        @resources = Resources.new(resources)
-      end
+      self['resources'] = Resources.new(resources)
     end
 
     #
@@ -100,6 +111,29 @@ module POM
       authors.first
     end
 
+    # Profile is extensible. If a setting is assigned
+    # that is not already defined an attribute accessor
+    # will be created for it.
+    def method_missing(sym, *args)
+      meth = sym.to_s
+      name = meth.chomp('=')
+      case meth
+      when /=$/
+        @date[name] = args.first
+      else
+        super(sym, *args) if block_given? or args.size > 0
+        nil
+      end
+    end
+
+    # Convert to hash.
+    def to_h
+      data = @data.dup
+      data['resources'] = data['resources'].to_h
+      data
+    end
+
   end
 
 end
+

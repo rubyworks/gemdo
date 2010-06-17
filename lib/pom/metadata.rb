@@ -13,11 +13,16 @@ module POM
     attr :sources
 
     #
-    def initialize(root)
+    def initialize(root, opts={})
       root = Pathname.new(root)
 
-      @package = Package.new(root) #if Package.find(root)
-      @profile = Profile.new(root) if Profile.find(root)
+      @profile = nil
+      @metadir = nil
+
+      @package = Package.new(root, opts) #if Package.find(root)
+      @profile = Profile.new(root, name) #if Profile.find(root)
+
+      # DEPRECATE
       @metadir = Metadir.new(root) if Metadir.find(root)
 
       # TODO: Add @profile.resources to lookup ?
@@ -84,6 +89,22 @@ module POM
       end
       # warn "multiple values that are not equal" ?
       vals.first
+    end
+
+    # Provide a summary text of project's metadata.
+    def to_s
+      s = []
+      s << "#{title} v#{version}"
+      s << ""
+      s << "#{summary}"
+      s << ""
+      s << "contact    : #{contact}"
+      s << "homepage   : #{homepage}"
+      s << "repository : #{repository}"
+      s << "authors    : #{authors.join(',')}"
+      s << "package    : #{name}-#{version}"
+      s << "requires   : #{requires.join(',')}"
+      s.join("\n")
     end
 
   private

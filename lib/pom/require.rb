@@ -18,6 +18,7 @@ module POM
 
     #
     def self.find(root)
+      root = Pathname.new(root)
       root.glob(file_pattern, File::FNM_CASEFOLD).first
     end
 

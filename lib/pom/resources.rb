@@ -1,9 +1,8 @@
-require 'pom/yamlstore'
-
 module POM
 
-  #
+  # Table of project releated URLs.
   class Resources
+
     include Enumerable
 
     # Special accessors disperse access over multiple hash entries.

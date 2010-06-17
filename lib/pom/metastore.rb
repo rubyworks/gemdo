@@ -13,7 +13,7 @@ module POM
     # parent directory).
     attr :parent
 
-    # Filesystem path fopr the file store.
+    # Filesystem path for the file store.
     attr :pathname
 
     # New file store. The +parent+ is either the parent

@@ -12,10 +12,18 @@ module POM
   #
   class Metadir < MetaStore
 
-    # Storage locations for metadata. POM supports
-    # the use of +meta/+ or the hidden +.meta/+.
+    # Extra metadata can be stored in meta/ or .meta/.
+    FILE_PATTERN = '{,.}meta'
 
-    STORES = ['meta', '.meta']
+    #
+    def self.file_pattern
+      FILE_PATTERN
+    end
+
+    #
+    def self.find(root)
+      root.glob(file_pattern).select{ |f| f.directory? }.first
+    end
 
     #
     #def self.path
@@ -71,7 +79,7 @@ module POM
     def initialize(root=nil, prime={})
       if root
         @root  = Pathname.new(root)
-        @store = STORES.find{ |dir| (@root + dir).directory? }
+        @store = self.class.find(root)
         super(@root, @store)
         #super(nil, @root + 'meta', @root + '.meta')
         @data = prime
@@ -473,24 +481,24 @@ module POM
     end
 
     # Save metadata to <tt>meta/</tt> directory (or <tt>.meta/</tt> if it is found).
-
     def save!(chroot=nil)
       self.root = chroot if chroot
       super
     end
 
-    def to_verfile
-      verfile = Verfile.new(root)
-      verfile.name    = name
-      verfile.version = version
-      verfile.date    = released
-      verfile.paths   = loadpath
-      #verfile.state   = status
-      verfile
+    # For upgrading to new system.
+    def to_package
+      package = Package.new(root)
+      package.name    = name
+      package.version = version
+      package.date    = released
+      package.path    = loadpath
+      package
     end
 
     OMIT = %w{status released codename loadpath}
 
+    # For upgrading to new system.
     def to_profile
       #load!
       profile = Profile.new(root)

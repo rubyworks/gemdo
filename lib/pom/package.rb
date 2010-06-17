@@ -1,151 +1,196 @@
-require 'pom/yamlstore'
+require 'pom/metafile'
+require 'pom/version_helper'
+require 'pom/version_number'
 
 module POM
 
-  #--
-  # Is this 'package' information. Might we call it that?
-  #++
-  class Verfile < YAMLStore
+  # Access to PACKAGE file. The PACKAGE file is a YAML
+  # formatted file providing essential information for
+  # the packaging and library management. A typical
+  # example will look like:
+  #
+  #   ---
+  #   name: pom
+  #   vers: 1.0.0
+  #   date: 2010-06-15
+  #
+  #   module: POM
+  #
+  class Package < Metafile
 
     #
-    def self.filename
-      ['VERSION', '.version']  # '.package' ?
+    include VersionHelper
+
+    #
+    def self.default_filename
+      'PACKAGE.yml'
     end
 
-    # Project's <i>package name</i>. The entry is required
-    # and must not contain spaces or puncuation.
+    #
+    def initialize(root, opts={})
+      @segmented = false
+      super(root, opts)
+    end
+
+    # Project root.
+    attr :root
+
+    # Version file.
+    attr :file
+
+    # Version number.
+    attr_reader :version
+
+    #
+    def version=(raw)
+      self['version'] = VersionNumber.new(raw)
+    end
+
+    # Name of package.
     attr_accessor :name
 
-    #
-    attr_accessor :major
-
-    #
-    attr_accessor :minor
-
-    #
-    attr_accessor :patch
-
-    # Current status (beta, alpha, rc, etc.)
-    attr_accessor :state
-
-    #
-    attr_accessor :build
-
-    # Date this version was released.
-    attr_accessor :date
-
-    # Code name of the release (eg. Woody)
-    # TODO: better name for this?
+    # Code name for this package. Only needed if not the default
+    # of the +name+ capitalized. For example, +activerecord+ 
+    # has a code name of +ActiveRecord+, not Activerecord.
     attr_accessor :code
 
-    ## Platforms this project/package supports (+nil+ for universal).
-    #attr_accessor :arch
+    #
+    alias_accessor :codename, :code
 
-    # Load path(s) (used by Ruby's own site loading and RubyGems).
-    # The default is 'lib/', which is usually correct.
-    attr_accessor :paths, ['lib']
+    # Colorful release name, e.g. "Hardy Haron".
+    # TODO: Better name?
+    attr_accessor :bill
 
-    # Current version of the project. Will be a dot separated
-    # string, e.g. "1.0.0".
-    def version
-      to_a.join('.')
-    end
+    #
+    alias_accessor :billname, :bill
+
+    # Date this version was released.
+    attr_reader :date
 
     #
     def date=(val)
       case val
       when Date, Time, DateTime
-        @date = val
+        self['date'] = val
       else
-        @date = Time.parse(val) if val
+        self['date'] = Time.parse(val) if val
+      end
+    end
+
+    # Internal load paths.
+    attr_reader :path do
+      ['lib']
+    end
+
+    #
+    def path=(path)
+      case path
+      when NilClass
+        self['path'] = ['lib']
+      when String
+        self['path'] = path.split(/[,:;\ ]/)
+      else
+        self['path'] = path.to_a
       end
     end
 
     #
-    def version=(string)
-      @major, @minor, @patch, @state, @build = *string.split('.')
-      unless /[A-Za-z]/ =~ state 
-        @build = state
-        @state = nil
-      end
-    end
+    alias_accessor :loadpath, :path
 
-    # Package name is generally in the form of +name-version+,
-    # or +name-version-platform+ if +platform+ is specified.
-    def package_name(options={})
-      if options[:stamp]
-        stamp = Time.now.strftime("%H*60+%M")
-        versnum = "#{version}.#{stamp}"
-      else
-        versnum = version
-      end
+    ## Integer-esque revison id, typically from SCM.
+    #attr_accessor :revs
 
-      if platform = options[:platform]
-        "#{name}-#{versnum}-#{platform}"
-      else
-        "#{name}-#{versnum}"
-      end
+    #
+    def major
+      version.major
     end
 
     #
-    alias_method :stage_name, :package_name
+    def minor
+      version.minor
+    end
+
+    #
+    def patch
+      version.patch
+    end
+
+    #
+    def build
+      version.build
+    end
+
+    # Current status (beta, alpha, pre, rc, etc.)
+    def status
+      if md = /(\w+)/.match(build.to_s)
+        md[1].to_sym
+      end
+    end
+
+    # Set the date to now.
+    def now!
+      self['date'] = Time.now
+    end
 
     # Current version of the project. Will be a dot separated
     # string, e.g. "1.0.0".
-    def to_s
-      to_a.join('.')
-    end
+    #def to_s
+    #  @version.to_s
+    #end
 
     #
-    def to_a
-      [major, minor, patch, state, build].compact
-    end
+    #def to_a
+    #  @version.to_a
+    #end
 
     #
-    def loadpath
-      paths
-    end
-
-    #
-    def now!
-      @date = Time.now
+    def read!
+      if file 
+        #text = File.read(file).strip
+        data = YAML.load(File.new(file))
+        data = data.inject({}){|h,(k,v)| h[k.to_s] = v; h}
+        if data['major']
+          @segmented = true
+          self.version = data.values_at('major','minor','patch','build').compact
+        else
+          @segmented = false
+          self.version = data['vers'] || data['version']
+        end
+        self.name = data['name']
+        self.date = data['date']
+        self.code = data['code'] || data['codename']
+        self.path = data['path'] || data['loadpath'] || ['lib']
+      end
     end
 
     # This method is not using #to_yaml in order to ensure
     # the file is saved neatly. This may require tweaking.
     def save!(file=nil)
-      now!
-      file = file || @file || self.class.filename.first
+      file = file || @file || self.class.default_filename
       file = @root + file if String === file
-      File.open(file, 'w') do |f|
-        f.puts "name : #{name}"
-        f.puts "major: #{major}"
-        f.puts "minor: #{minor}" if minor
-        f.puts "patch: #{patch}" if patch
-        f.puts "state: #{state}" if state
-        f.puts "build: #{build}" if build
-        f.puts "paths: #{paths.inspect}" if paths && paths != ["lib"]
-        f.puts "date : #{date.strftime('%Y-%m-%d')}"
-        #f.puts "arch : #{arch.inspect}"  if arch
-      end
-    end
 
-    # TODO: Parse irregular VERSION files.
-    def parse_version_stamp
-      if file = root.glob('{VERSION,Version,version}{,.txt}').first
-        vers = YAML.load(File.new(file))
-        case vers
-        when Hash
-          vers = vers.inject({}){ |h,(k,v)| h[k.to_s.downcase.to_sym] = v; h }
-          @data['version'] = "#{vers[:major]}.#{vers[:minor]}.#{vers[:patch]}"
-        when Array
-          @data['version'] = vers.join('.')
-        else #String
-          @data['version'] = vers
+      now!
+
+      File.open(file, 'w') do |f|
+        f.puts "name: #{name}"
+        f.puts "date: #{date.strftime('%Y-%m-%d')}"
+        if @segmented
+          f.puts
+          f.puts "major: #{major}"
+          f.puts "minor: #{minor}" if minor
+          f.puts "patch: #{patch}" if patch
+          f.puts "build: #{build}" if build
+          f.puts
+        else
+          f.puts "vers: #{version}"
         end
+        f.puts "code: #{code}" if code
+        f.puts "bill: #{bill}" if bill
+        f.puts "path: #{path.inspect}" if path
       end
     end
 
   end
 
 end
+

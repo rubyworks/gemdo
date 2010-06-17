@@ -65,41 +65,44 @@ module POM::Commands
       require 'pom/readme'
       require 'pom/gemspec'
 
+      root = Dir.pwd
+
       #prime = { 
-      #  'name'       => File.basename(Dir.pwd),
+      #  'name'       => File.basename(root),
       #  'version'    => '0.0.0',
       #  'requires'   => [],
-      #  'summary'    => "FIX: brief one line description here",
-      #  'contact'    => "FIX: name <email> or uri",
-      #  'authors'    => "FIX: names of authors here",
-      #  'repository' => "FIX: master public repo uri"
+      #  'summary'    => "FIX brief one line description here",
+      #  'contact'    => "FIX name <email> or uri",
+      #  'authors'    => "FIX names of authors here",
+      #  'repository' => "FIX master public repo uri"
       #}
 
-      project = POM::Project.new(Dir.pwd)
-
-      #exists = Dir.glob('{.,}meta').first
-
-      if project.profile.file and not $FORCE
-        $stderr << "Profile already exists. Use --force option to allow overwrite.\n"
+      if POM::Package.find(root) and not $FORCE
+        $stderr << "PACKAGE file already exists. Use --force option to allow overwrite.\n"
         return
       end
 
-      if project.verfile.file and not $FORCE
-        $stderr << "Version file already exists. Use --force option to allow overwrite.\n"
+      if POM::Profile.find(root) and not $FORCE
+        $stderr << "PROFILE already exists. Use --force option to allow overwrite.\n"
         return
       end
 
-      # prime
-      project.verfile.name     = File.basename(Dir.pwd)
-      project.verfile.version  = '0.0.0'
-      project.verfile.code     = 'FIXME: A version code name is optional'
+      name = File.basename(root)
 
-      project.profile.summary = "FIXME: brief one line description here"
-      project.profile.contact = "FIXME: name <email> or uri"
-      project.profile.authors << "FIXME: list of author's names here"
+      project = POM::Project.new(root, :name=>name)
+      package = project.package #POM::Package.new(root, :name=>name)
+      profile = project.profile #POM::Profile.new(root, name)
 
-      project.profile.resources.homepage   = "FIXME: main website address"
-      project.profile.resources.repository = "FIXME: master public repo uri"
+      #package.name    = name
+      package.version  = '0.0.0'
+      package.code     = 'FIXME A version code name is optional'
+
+      profile.summary  = "FIXME brief one line description here"
+      profile.contact  = "FIXME name <email> or uri"
+      profile.authors << "FIXME list of author's names here"
+
+      profile.resources.homepage   = "FIXME: main website address"
+      profile.resources.repository = "FIXME: master public repo uri"
 
       #metadata.new_project
 
@@ -135,17 +138,20 @@ module POM::Commands
         end
       end
 
-      #project.root = Dir.pwd
+      #project.root = root
 
       # load any meta entries that may already exist
       #project.reload unless options[:replace]
 
-      unless $TRIAL
-        project.verfile.backup!
-        project.verfile.save!
+      #package_file = package.file ? package.file : File.join(root,'PACKAGE')
+      #profile_file = profile.file ? profile.file : File.join(root,'PROFILE')
 
-        project.profile.backup!
-        project.profile.save!
+      unless $TRIAL
+        package.backup!
+        package.save! #(package_file)
+
+        profile.backup!
+        profile.save! #(profile_file)
       end
 
       print_fixes
@@ -153,13 +159,12 @@ module POM::Commands
 
     #
     def print_fixes
+      root  = Dir.pwd
       fixes = []
-      pwd = Pathname.new(Dir.pwd)
-      paths = POM::Verfile.filename + POM::Profile.filename
-      paths.each do |path|
-        pwd.glob(path).each do |file|
-          File.readlines(file).each{ |l| l.grep(/FIXME:/).each{ |r| fixes << file.relative_path_from(pwd) } }
-        end
+      pwd = Pathname.new(root)
+      files = [POM::Package.find(root), POM::Profile.find(root)]
+      files.each do |file|
+        File.readlines(file).each{ |l| l.grep(/FIXME/).each{ |r| fixes << file.relative_path_from(pwd) } }
       end
       fixes.uniq!
       unless fixes.empty?

@@ -182,7 +182,7 @@ module POM
     def import_readme(readme=nil)
       readme = readme || self.readme
 
-      verfile.name        = readme.name         if readme.name
+      package.name        = readme.name         if readme.name
 
       profile.title       = readme.title        if readme.title
       profile.description = readme.description  if readme.description

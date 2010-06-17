@@ -129,22 +129,24 @@ module POM
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
-      verfile.name         = gemspec.name
-      verfile.version      = gemspec.version.to_s
-      verfile.paths        = gemspec.require_paths
-      verfile.arch         = gemspec.platform         # ?
+      package.name         = gemspec.name
+      package.version      = gemspec.version.to_s
+      package.path         = gemspec.require_paths
+      #package.arch        = gemspec.platform
 
+      profile.title        = gemspec.name.capitalize
       profile.summary      = gemspec.summary
       profile.description  = gemspec.description
       profile.authors      = gemspec.authors
       profile.contact      = gemspec.email
-      profile.homepage     = gemspec.homepage
+
+      profile.resources.homepage = gemspec.homepage
 
       #metadata.extensions   = gemspec.extensions
 
       gemspec.dependencies.each do |d|
         next unless d.type == :runtime
-        package << "#{d.name} #{d.version_requirements}"
+        requires << "#{d.name} #{d.version_requirements}"
       end
     end
 

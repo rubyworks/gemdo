@@ -62,6 +62,7 @@ module POM
       end
 
       @root = Pathname.new(root)
+      @opts = opts
 
       #metadata.load #if opts[:load]
 
@@ -90,15 +91,20 @@ module POM
     #  @settings ||= FileStore.new(root, '.config/pom')
     #end
 
-    # Provides access to both profile and verfile information
+    # Provides access to both profile and package information
     # through a single interface. This will probably be removed from API.
     def metadata
-      @metadata ||= Metadata.new(root)
+      @metadata ||= Metadata.new(root, @opts)
     end
 
     # General information.
     def profile
       metadata.profile
+    end
+
+    # General information.
+    def package
+      metadata.package
     end
 
     # Current release information.
@@ -127,8 +133,8 @@ module POM
     end
 
     #
-    def classname
-      metadata.classname
+    def codename
+      metadata.codename
     end
 
     # Package name is generally in the form of +name-version+,
@@ -351,15 +357,18 @@ module POM
     # About project notice.
     def about(*parts)
       # pre-format data
-      released = verfile.date ? "(#{verfile.date.strftime('%Y-%m-%d')})" : nil
+      released = package.date ? "(#{package.date.strftime('%Y-%m-%d')})" : nil
       if parts.empty?
         s = []
-        s << "#{profile.title} v#{verfile.version} #{released} (#{verfile.name}-#{verfile.version})"
+        s << "#{profile.title} v#{package.version} #{released} (#{package.name}-#{package.version})"
         s << ""
         s << "#{profile.description || profile.summary}"
         s << ""
-        s << "* #{profile.homepage}" if profile.hompage
-        s << "* #{profile.repository}" if profile.repository
+        s << "* home: #{profile.resources.homepage}"   if profile.resources.homepage
+        s << "* work: #{profile.resources.work}"       if profile.resources.work
+        s << "* talk: #{profile.resources.mail}"       if profile.resources.mail
+        s << "* talk: #{profile.resources.forum}"      if profile.resources.forum
+        s << "* repo: #{profile.resources.repository}" if profile.resources.repository
         s << ""
         s << "#{profile.copyright}"
         s.join("\n").gsub("\n\n\n", "\n\n")

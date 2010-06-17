@@ -44,14 +44,15 @@ module POM::Commands
     #
     def execute
       if entry
-        if project.verfile.respond_to?(entry)
-          puts project.verfile.__send__(entry)
-        else
-          puts project.profile.__send__(entry)
-        end
+        puts project.metadata.__send__(entry)
+        #if project.package.respond_to?(entry)
+        #  puts project.package.__send__(entry)
+        #else
+        #  puts project.profile.__send__(entry)
+        #end
       else
-        vars = project.verfile.instance_variables + project.profile.instance_variables
-        puts vars.map{ |iv| iv[1..-1] }.sort.join(' ')
+        vars = project.package.to_h.keys + project.profile.to_h.keys
+        puts vars.sort.join(' ')
       end
     end
 
