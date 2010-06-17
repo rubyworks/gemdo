@@ -1,4 +1,4 @@
-= Reqfile
+= Require Class
 
 The requirements configuration file provides information
 on what dependencies a project has on other projects.
@@ -33,6 +33,10 @@ Given a REQUIRE project file containing ...
     runtime/vendor:
       - arel
 
+    #
+    development:
+      - rake
+
     # To generate documentation.
     development/document:
       - rdoc 2.1
@@ -50,19 +54,20 @@ Given a REQUIRE project file containing ...
 
     alternate/conflict: []
 
-The Reqfile class provides an interface to this information.
+The Requre class provides an interface to this information.
 
-    require 'pom/reqfile'
+    require 'pom/require'
 
 The initializer takes the root directory for the project
-and looks for a file called +REQUIRE+ or +.require+.
+and looks for a file called +REQUIRE+ or +.require+,
+optionally ending in +.yml+ or +.yaml+.
 
-    req = POM::Reqfile.new('qed/fixtures')
+    req = POM::Require.new('tmp/example')
 
 The dependencies list for our sample project is fairly large.
 
     deps = req.dependencies
-    deps.size.assert == 16
+    deps.size.assert == 17
 
 But a few of these dependencies are purely optional.
 
@@ -72,7 +77,7 @@ But a few of these dependencies are purely optional.
 Two of those are development dependencies.
 
     devs = req.development
-    devs.size.assert == 2
+    devs.size.assert == 3
 
 Since Reqfile is Enumerable we can filter dependencies using
 fine grain criteria as well.

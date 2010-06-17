@@ -1,4 +1,4 @@
-== Parse README file
+= Parse README file
 
 Given a README project file containing ...
 
@@ -29,7 +29,7 @@ Load the POM::Readme library.
 
 Create a new Readme object from file.
 
-    rm = POM::Readme.load("qed/fixtures/README")
+    rm = POM::Readme.load("tmp/example/README")
 
 It should be able to parse out a title and project name.
 

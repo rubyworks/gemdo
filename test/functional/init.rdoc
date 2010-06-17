@@ -1,4 +1,6 @@
-== Generate POM Metadata from README
+= Generate POM Metadata with +init+ Command
+
+== Extracted from a README file
 
 Given a README project file containing ...
 
@@ -25,23 +27,58 @@ Given a README project file containing ...
 
 We can generate metadata from the README using the pom command.
 
-    `cd qed/fixtures; pom init README`
+    `cd tmp/example; pom init README`
 
 Now lets verify the metadata was extracted as expected.
 
     require 'pom/project'
 
-    project = POM::Project.new('qed/fixtures')
+    project = POM::Project.new('tmp/example')
 
-The values should have been picked up from VERSION and PROFILE files.
+The values should have been picked up from PACKAGE and PROFILE files.
 
-    project.metadata.title.assert == "MyApp"
+    project.metadata.title.assert       == "MyApp"
     project.metadata.description.assert == "This is a description of the\nfake project."
-    project.metadata.license.assert == "GPL"
+    project.metadata.license.assert     == "GPL"
 
 Clean-up the generated files.
 
-    FileUtils.rm_r('qed/fixtures/VERSION')
-    FileUtils.rm_r('qed/fixtures/PROFILE')
-    FileUtils.rm_r('qed/fixtures/.cache') if File.exist?('fixture/.cache')
+    FileUtils.rm_r('tmp/example/PACKAGE.yml')
+    FileUtils.rm_r('tmp/example/PROFILE.yml')
+    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
+
+== Extracted from a Gemspec
+
+Given a myapp.gemspec project file containing ...
+
+    Gem::Specification.new do |s|
+      s.name = %q{myapp}
+      s.version = "1.0.0"
+      s.authors = ["Tom Sawyer"]
+      s.date = %q{2010-10-10}
+      s.description = %q{This is a description of a fake project.}
+      s.email = %q{transfire@gmail.com}
+    end
+
+We can generate metadata from the gem specification using the pom command.
+
+    `cd tmp/example; pom init myapp.gemspec`
+
+Now lets verify the metadata was extracted as expected.
+
+    require 'pom/project'
+
+    project = POM::Project.new('tmp/example')
+
+The values should have been picked up from PACKAGE and PROFILE files.
+
+    project.metadata.title.assert        == "Myapp"
+    project.metadata.version.to_s.assert == "1.0.0"
+    project.metadata.description.assert  == "This is a description of a fake project."
+
+Clean-up the generated files.
+
+    FileUtils.rm_r('tmp/example/PACKAGE.yml')
+    FileUtils.rm_r('tmp/example/PROFILE.yml')
+    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
 
