@@ -4,7 +4,7 @@ module POM
 
   # Access to VERSION file. This class supports plain-text
   # and YAML formatted files.
-  class Verfile
+  class VersionFile
 
     #
     include VersionHelper

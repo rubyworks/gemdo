@@ -34,9 +34,12 @@ module POM
       when Hash
         version - version.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
         version = version.values_at(:major, :minor, :patch, :state, :build).compact
-        @segments = version.split('.').map{ |s| /\d+/ =~ s ? i.to_i : s }
+        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s }
       when Array
-        @segments = version.dup
+        version = version.join('.')
+        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s }
+      when VersionNumber
+        @segments = version.segments
       end
     end
 
@@ -101,12 +104,13 @@ module POM
     # or for "oddly long" version numbers, anything from the
     # state position onward.
     def build
-      i = @segments.index{ |s| STATES.keys.include?(s) }
+      i = @segments.index{ |s| STATES.include?(s) }
       if i
-        @segments[i..-1].join('.')
+        b = @segments[i..-1].join('.')
       else
-        @segments[3..-1].join('.')
+        b = @segments[3..-1].join('.')
       end
+      b.empty? ? nil : b
     end
 
     # State is the version number segment that matches any entry
@@ -126,14 +130,35 @@ module POM
       when :patch
         v = [major, minor, inc(patch)]
       when :state
-        i = @segments.index{ |s| STATES.include?(s) }
-        v = @segments[0...i] + [inc(@segments[i])] + (@segments[i+1] ? [1] : [])
-      when :build, :last
+        if i = @segments.index{ |s| STATES.include?(s) }
+          if n = inc(@segments[i])
+            v = @segments[0...i] + [n] + (@segments[i+1] ? [1] : [])
+          else
+            v = @segments[0...i]
+          end
+        else
+          v = @segments.dup
+        end
+      when :build
+        if i = @segments.index{ |s| STATES.include?(s) }
+          if i == @segments.size - 1
+            v = @segments + [1]
+          else
+            v = @segments[0...-1] + [inc(@segments.last)]
+          end
+        else
+          if @segments.size <= 3
+            v = @segments + [1]
+          else
+            v = @segments[0...-1] + [inc(@segments.last)]
+          end
+        end
+      when :last
         v = @segments[0...-1] + [inc(@segments.last)]
       else
         v = @segments.dup
       end
-      self.class.new(v)
+      self.class.new(v.compact)
     end
 
     # Change state.
@@ -194,6 +219,11 @@ module POM
       end
       return op, val
     end
+
+    ;; protected
+
+    #
+    attr :segments
 
   end
 

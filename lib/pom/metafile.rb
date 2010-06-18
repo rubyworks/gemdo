@@ -1,3 +1,5 @@
+require 'pom/core_ext'
+
 module POM
 
   # Where in project to store backups.

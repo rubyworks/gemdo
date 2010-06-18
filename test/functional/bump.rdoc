@@ -9,19 +9,17 @@ the PACKAGE file.
 
 Given a PACKAGE project file containing ...
 
-    name : foo
-    major: 1
-    minor: 0
-    patch: 0
+    name: foo
+    vers: 1.0.0
 
 First, the `pom bump` command, when given no other arguments will
 display the current version.
 
-  `cd tmp/example; pom bump`.assert == "1.0.0"
+  `cd tmp/example; pom bump`.assert == "1.0.0\n"
 
 This is the same as using `pom show version`.
 
-  `cd tmp/example; pom show version`.assert == "1.0.0"
+  `cd tmp/example; pom show version`.assert == "1.0.0\n"
 
 We can use the `pom bump` command to bump the `patch` version
 using the `--patch` flag.
@@ -30,7 +28,7 @@ using the `--patch` flag.
 
 We can see that the `patch` number has been incremented.
 
-  package['patch'].assert = 1
+  package['vers'].assert = '1.0.1'
 
 Again, we can use the `pom bump` command to bump the `minor` version
 with the `--minor` flag.
@@ -39,7 +37,7 @@ with the `--minor` flag.
 
 And we can see that the `minor` number has been incremented.
 
-  package['minor'].assert = 1
+  package['vers'].assert = '1.1.0'
 
 We can use the `pom bump` command to bump the `major` version by
 using the `--major` flag.
@@ -48,7 +46,7 @@ using the `--major` flag.
 
 We can see that the `major` number has been incremented.
 
-  package['major'].assert = 2
+  package['vers'].assert = '2.0.0'
 
 
 

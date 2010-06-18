@@ -1,34 +1,43 @@
 require 'pom/metafile'
-require 'pom/version_helper'
+require 'pom/version_file'
+#require 'pom/version_helper'
 require 'pom/version_number'
 
 module POM
 
-  # Access to PACKAGE file. The PACKAGE file is a YAML
-  # formatted file providing essential information for
-  # the packaging and library management. A typical
-  # example will look like:
+  # Access to PACKAGE (or VERSION) file. The PACKAGE file is a YAML
+  # formatted file providing essential information for packaging and
+  # library management. A typical example will look like:
   #
   #   ---
   #   name: pom
   #   vers: 1.0.0
   #   date: 2010-06-15
-  #
-  #   module: POM
+  #   code: POM
   #
   class Package < Metafile
 
-    #
-    include VersionHelper
+    require 'pom/package/simple_style'
+    require 'pom/package/jeweler_style'
+    require 'pom/package/pom_style'
+
+    STYLES = [SimpleStyle, JewelerStyle, POMStyle]
 
     #
+    #include VersionHelper
+
+    # Default file name.
     def self.default_filename
       'PACKAGE.yml'
     end
 
+    # Possible project file names.
+    def self.filename
+      ['PACKAGE', '.package', 'VERSION', '.version']
+    end
+
     #
     def initialize(root, opts={})
-      @segmented = false
       super(root, opts)
     end
 
@@ -46,6 +55,9 @@ module POM
       self['version'] = VersionNumber.new(raw)
     end
 
+    # Short name for #version.
+    alias_accessor :vers, :version
+
     # Name of package.
     attr_accessor :name
 
@@ -57,12 +69,11 @@ module POM
     #
     alias_accessor :codename, :code
 
-    # Colorful release name, e.g. "Hardy Haron".
-    # TODO: Better name?
-    attr_accessor :bill
+    # Colorful nick name for the particular version, e.g. "Lucid Lynx".
+    attr_accessor :nick
 
     #
-    alias_accessor :billname, :bill
+    alias_accessor :nickname, :nick
 
     # Date this version was released.
     attr_reader :date
@@ -117,7 +128,7 @@ module POM
 
     #
     def build
-      version.build
+      version.build[SimpleStyle, JewelerStyle, POMStyle]
     end
 
     # Current status (beta, alpha, pre, rc, etc.)
@@ -132,35 +143,18 @@ module POM
       self['date'] = Time.now
     end
 
-    # Current version of the project. Will be a dot separated
-    # string, e.g. "1.0.0".
-    #def to_s
-    #  @version.to_s
-    #end
-
-    #
-    #def to_a
-    #  @version.to_a
-    #end
-
     #
     def read!
-      if file 
-        #text = File.read(file).strip
-        data = YAML.load(File.new(file))
-        data = data.inject({}){|h,(k,v)| h[k.to_s] = v; h}
-        if data['major']
-          @segmented = true
-          self.version = data.values_at('major','minor','patch','build').compact
-        else
-          @segmented = false
-          self.version = data['vers'] || data['version']
-        end
-        self.name = data['name']
-        self.date = data['date']
-        self.code = data['code'] || data['codename']
-        self.path = data['path'] || data['loadpath'] || ['lib']
+      if file
+        data  = YAML.load(File.new(file))
+        style = STYLES.find{ |s| s.match?(data) }
+        extend(style)
+        parse(data)
+      else
+        extend POMStyle
       end
+
+      self.name = fallback_name unless self['name']
     end
 
     # This method is not using #to_yaml in order to ensure
@@ -169,28 +163,58 @@ module POM
       file = file || @file || self.class.default_filename
       file = @root + file if String === file
 
-      now!
+      now!  # update date
 
-      File.open(file, 'w') do |f|
-        f.puts "name: #{name}"
-        f.puts "date: #{date.strftime('%Y-%m-%d')}"
-        if @segmented
-          f.puts
-          f.puts "major: #{major}"
-          f.puts "minor: #{minor}" if minor
-          f.puts "patch: #{patch}" if patch
-          f.puts "build: #{build}" if build
-          f.puts
-        else
-          f.puts "vers: #{version}"
-        end
-        f.puts "code: #{code}" if code
-        f.puts "bill: #{bill}" if bill
-        f.puts "path: #{path.inspect}" if path
+      out = render
+
+      File.open(file, 'w'){ |f| f << out }
+    end
+
+    #
+    def to_s
+      s = "#{name} #{version}"
+      s << " " + date.strftime('%Y-%m-%d') if date
+      s << ' "' + nick.to_s + '"'          if nick
+      s
+    end
+
+    ;; private
+
+    # Failing to find a name for the project, the last hope
+    # is to discern it from the lib files.
+    def fallback_name
+      if file = root.glob('lib/*.rb').first
+        file.basename.to_s.chomp('.rb')
+      else
+        nil
       end
     end
+
+=begin
+    #
+    def parse_release_stamp(text)
+      release = {}
+      # version
+      if md = /\b(\d+\.\d.*?)\s/.match(text)
+        release[:vers] = md[1]
+      end
+      # date
+      if md = /\b(\d+\-\d.*?)\s/.match(text)
+        release[:date] = md[1]
+      end
+      # nickname
+      if md = /\"(.*?)\"/.match(text)
+        release[:nick] = md[1]
+      end
+      # loadpath
+      test.scan(/\s(\S+)\/\s/) do |m|
+        release[:path] ||= []
+        release[:path] << m
+      end
+      release
+    end
+=end
 
   end
 
 end
-

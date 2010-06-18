@@ -5,9 +5,10 @@ require 'optparse'
 
 module POM
 
+  # POM's command-line interface.
   class Command
 
-    #    
+    #
     def self.run
       require_commands
       new.run

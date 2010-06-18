@@ -44,7 +44,11 @@ module POM::Commands
         end
 
         opt.on("--state", "-s [TERM]", "specify a new state") do |term|
-          state = term
+          if term
+            state = term
+          else
+            slot = :state
+          end
         end
 
         opt.on("--no-write", "-n", "do not write version change") do
@@ -79,7 +83,7 @@ module POM::Commands
         end
 
         if @slot
-          new_version = new_version.version.bump(@slot)
+          new_version = new_version.bump(@slot)
         end
 
         if @state
@@ -89,7 +93,7 @@ module POM::Commands
         # TODO: Fail if new version is less then old version unless $FORCE
 
         project.package.version = new_version
-        project.package.save! unless $DRYRUN
+        project.package.save! unless $TRIAL
       end
 
       puts(project.version) 

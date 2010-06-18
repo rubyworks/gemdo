@@ -7,10 +7,8 @@ When 'iven a ((([\.\w]+))) project file' do |name, text|
   end
 end
 
-# TODO: remove the whole directory
-#After :document do
-#  Dir[FIXTURE_DIR + '**/*'].each do |file|
-#    FileUtils.rm_r(file) if File.exist?(file)
-#  end
-#end
+# Remove the example project if it exists.
+Before :document do
+  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
+end
 

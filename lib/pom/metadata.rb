@@ -107,7 +107,7 @@ module POM
       s.join("\n")
     end
 
-  private
+   private
 
     #
     #def version_file
