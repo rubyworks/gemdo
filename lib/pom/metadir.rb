@@ -1,4 +1,5 @@
 require 'time'
+require 'pathname'
 require 'pom/root'
 require 'pom/metastore'
 
@@ -22,6 +23,7 @@ module POM
 
     #
     def self.find(root)
+      root = Pathname.new(root)
       root.glob(file_pattern).select{ |f| f.directory? }.first
     end
 
@@ -496,19 +498,33 @@ module POM
       package
     end
 
-    OMIT = %w{status released codename loadpath}
+    PROFILE_OMIT = %w{name status released codename loadpath requires conflicts provides replaces recommend}
 
     # For upgrading to new system.
     def to_profile
       #load!
-      profile = Profile.new(root)
+      profile = Profile.new(root, name)
       to_h.each do |k,v|
-        next if OMIT.include?(k.to_s)
+        next if PROFILE_OMIT.include?(k.to_s)
         profile.__send__("#{k}=", v)
       end
       profile.resources.homepage = homepage
       profile.resources.repository = repository
       profile
+    end
+
+    #
+    def to_require
+      req = {}
+      req['runtime']             = requires  unless requires.empty?
+      req['runtime/recommend']   = recommend unless recommend.empty?
+      req['runtime/optional']    = suggest   unless suggest.empty?
+      req['alternate/conflict']  = conflicts unless conflicts.empty?
+      req['alternate/provision'] = provides  unless provides.empty?
+      req['alternate/replace']   = replaces  unless replaces.empty?
+      r = Require.new(root)
+      r.merge!(req)
+      r
     end
 
   end#class Metadata

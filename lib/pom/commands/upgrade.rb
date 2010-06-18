@@ -46,18 +46,20 @@ module POM::Commands
 
     #
     def execute
-      if File.exist?('PROFILE') or File.exist?('PACKAGE')
-        abort "use --force to overwrite PACKAGE and PROFILE files" unless $FORCE
+      if %w{PROFILE PACKAGE REQUIRE}.any?{ |f| File.exist?(f) }
+        abort "Use --force to overwrite PACKAGE, PROFILE and/or REQUIRE files." unless $FORCE
       end
       metadir = POM::Metadir.new('.')
       if metadir.store
         profile = metadir.to_profile
         package = metadir.to_package
+        require = metadir.to_require
         profile.save!('PROFILE')
         package.save!('PACKAGE')
-        puts "Please edit the PACKAGE and PROFILE files."
+        require.save!('REQUIRE')
+        puts "Please edit the PACKAGE, PROFILE and REQUIRE files."
       else
-        puts "No meta directory found to convert."
+        $stderr.puts "No meta directory found to convert."
       end
     end
 

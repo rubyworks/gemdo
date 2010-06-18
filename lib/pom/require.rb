@@ -9,6 +9,9 @@ module POM
     include Enumerable
 
     #
+    DEFAULT_FILE = 'REQUIRE.yml'
+
+    #
     FILE_PATTERN = '{,.}require{.yml,.yaml,}'
 
     #
@@ -29,18 +32,6 @@ module POM
     attr :dependencies
 
     #
-    attr :conflicts
-
-    #
-    attr :replaces
-
-    #
-    attr :provides
-
-    #
-    attr :optional
-
-    #
     def initialize(root, file=nil)
       @root = Pathname.new(root)
       @file = file || self.class.find(root)
@@ -49,12 +40,7 @@ module POM
 
       if @file && @file.exist?
         data = YAML.load(File.new(@file))
-        data.each do |group, deps|
-          deps.each do |pkg|
-            dep = Dependency.new(pkg, group)
-            @dependencies << dep
-          end
-        end
+        merge!(data)
       else
         warn "No REQUIRE file at #{root}" if $DEBUG
       end
@@ -80,9 +66,32 @@ module POM
       dependencies.select{ |dep| dep.development? }
     end
 
-    # TODO: Reqfile needs a specialized to_yaml
+    #
+    def to_yaml(*args)
+      env = {}
+      dependencies.each do |dep|
+        env[dep.group] ||= []
+        env[dep.group] << dep.to_s
+      end
+      env.to_yaml(*args)
+    end
 
-    # TODO: What about production vs. runtime?
+    #
+    def save!(file=nil)
+      file = file || self.file || DEFAULT_FILE
+      File.open(file, 'w'){ |f| f << to_yaml }
+    end
+
+    #
+    def merge!(data)
+      data.each do |group, deps|
+        deps.each do |pkg|
+          dep = Dependency.new(pkg, group)
+          @dependencies << dep
+        end
+      end
+      @dependencies.uniq!   
+    end
 
 =begin
     # Returns an Array of Dependency filtered by group.
@@ -138,14 +147,22 @@ module POM
     end
 
     #
+    def to_s
+      "#{name} #{version}".strip
+    end
+
+    #
     def inspect
       "#{name} #{version}".strip
     end
 
     #
     def runtime?
-      environment == 'runtime'
+      environment == 'runtime' || environment == 'production'
     end
+
+    # Alias for #runtime?
+    alias_method :production?, :runtime?
 
     #
     def optional?
@@ -211,6 +228,35 @@ module POM
       end
     end
 
+    #
+    def ==(other)
+      return false unless Dependency === other
+      return false unless group == other.group
+      return false unless name == other.name
+      return false unless constraint == other.constraint
+      return true
+    end
+
+    #
+    alias_method :eql?, :==
+
+    #
+    def <=>(other)
+      return 0 if self == other
+      constraint <=> other.constraint
+    end
+
+    # TODO: how best to define?
+    def hash
+      h = 0
+      h ^= group.hash
+      h *=137
+      h ^= name.hash
+      h *=137
+      h ^= constraint.hash
+      h
+    end
+
   protected
 
     # VName encapsulates a name-verison pair.
@@ -238,12 +284,14 @@ module POM
         end
       end
 
+      #
       def to_s
         "#{name} #{version}"
       end
 
     private
 
+      #
       def parse(package)
         parts = package.strip.split(/\s+/)
         name = parts.shift
