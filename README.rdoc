@@ -48,28 +48,29 @@ details.
 
 == Upgrading from 1.x to 2.0
 
-Early version of POM used a directory-based configuration store, storing
+Earlier versions of POM used a directory-based configuration store, storing
 each peice of informtation in a separate file under the meta/ or .meta/
 directory. The latest versions of POM have replaced this with a small
-set of YAML-base configuration files. Noth approaches has their advantages
-and disadvantages. POM moved to later primarily because of it's familiarity
+set of YAML-base configuration files. While both approaches has their advantages
+and disadvantages, POM moved to later primarily because of it's familiarity
 to developers.
 
-If you are using an old version of POM and need to updgrade your project
-for use with the new version, the pom command provides a helpful subcommand:
+If you were using an old version of POM with a project and need to updgrade,
+the pom command provides a helpful subcommand:
 
   $ pom upgrade
 
-This will create a PROFILE and PACKAGE file containing the entries in the
-meta/ or .meta/ directory. It will not be prefect, so be sure to edit these
-file after they are created, but it will at least make the process much 
-easier.
+This will create a PROFILE, PACKAGE and REQUIRE file containing the entries
+in the meta/ or .meta/ directory. It will not be prefect, so be sure to edit
+the files, but it will at least make the process much easier.
 
 
 == DEVELOPMENT
 
 You can subscribe to the ProUtils mailing list by sensing a message to
-<a href="mailto:protuils+subscribe@googlegroups.com">this mailing address</a>.
+this mailing address[mailto:protuils+subscribe@googlegroups.com].
+
+Or visit http://groups.google.com/group/proutils.
 
 
 == HOW TO INSTALL
@@ -81,8 +82,8 @@ To install with RubyGems simply open a console and type:
 Site installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
-  $ tar -xvzf pom-1.0.0.tgz
-  $ cd pom-1.0.0.tgz
+  $ tar -xvzf pom-2.1.0.tar.gz
+  $ cd pom-2.1.0.tar.gz
   $ sudo setup.rb all
 
 Windows users use 'ruby setup.rb all'.
