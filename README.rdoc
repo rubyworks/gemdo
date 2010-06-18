@@ -8,7 +8,7 @@
 POM stands for Project Object Model (yes, a term co-opted from Java/Maven world).
 Ruby's POM provides a standardized layout and a class model for working
 with Ruby projects. POM largely supports the most common practices of the
-Ruby community. In a few areas it goes a step further to define some
+Ruby community. In a few areas it takes things a step further to define
 practices of its own in order to expand it's capabilites.
 
 
@@ -19,18 +19,51 @@ Please see HISTORY.rdoc file.
 
 == SYNOPSIS
 
-Typical usage is to create a Project object passing the constructor
-the root directory of the project.
+Primarily POM defines a standard set of project layout and design patterns.
+Most of these derive for setup.rb --the original Ruby project specification,
+and common patterns widely used among the Ruby community.
+
+This specification is implementated in Ruby code. Common usage is to create
+a Project object passing the constructor the root directory of the project.
 
   project = POM::Project.new(root_directory)
 
 The project object then ties into all the rest of available metadata, e.g.
 
+  project.name
+  project.version
   project.profile
+
+  etc...
+
+POM also provides a command line tool with some useful project utilities.
+For example, it can be used to bump a project's version number.
+
+  $ pom bump --patch
 
 See the Wiki[http://wiki.github.com/proutils/pom] and
 API[http://proutils.github.com/pom/rdoc] documentation for further
 details.
+
+
+== Upgrading from 1.x to 2.0
+
+Early version of POM used a directory-based configuration store, storing
+each peice of informtation in a separate file under the meta/ or .meta/
+directory. The latest versions of POM have replaced this with a small
+set of YAML-base configuration files. Noth approaches has their advantages
+and disadvantages. POM moved to later primarily because of it's familiarity
+to developers.
+
+If you are using an old version of POM and need to updgrade your project
+for use with the new version, the pom command provides a helpful subcommand:
+
+  $ pom upgrade
+
+This will create a PROFILE and PACKAGE file containing the entries in the
+meta/ or .meta/ directory. It will not be prefect, so be sure to edit these
+file after they are created, but it will at least make the process much 
+easier.
 
 
 == DEVELOPMENT

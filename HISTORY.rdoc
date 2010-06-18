@@ -1,5 +1,22 @@
 = RELEASE HISTORY
 
+== 2.1.0 / 2010-10-18
+
+The significant change with v2.1 is the use of a PACKAGE
+file to provide essential information needed by package and
+library managers and other tools, including name, version
+and loadpath. The file can still be called VERSION if prefered.
+PACKAGE was chosen as a default to prevent potential clashes
+with other tools use of VERSION (and becuase it is a fitting
+description). Again review the POM wiki to learn more.
+
+Changes:
+
+* PACKAGE file is the default name of what was VERSION file.
+* Multi-format support for PACKAGE/VERSION file.
+* Renamed 'ver' subcommand to 'bump'.
+
+
 == 2.0.0 / 2010-06-06
 
 Version 2.0 marks a major turning point for POM --it is offically
