@@ -22,32 +22,49 @@
 <div class="main">
   <h1></h1>
   <div class="notes">
+    <h2>FIXME</h2>
+    <ol class="set fixme">
+      <li><h3><a href="lib/pom/version_number.rb">lib/pom/version_number.rb</a></h3><ol class="file" href="lib/pom/version_number.rb">
+        <li class="note fixme" ref="68">Ensure it can handle state. <sup>68</sup></li>
+        <li class="note fixme" ref="80">Ensure it can handle state. <sup>80</sup></li>
+      </ol></li>
+    </ol>
     <h2>DEPRECATE</h2>
     <ol class="set deprecate">
       <li><h3><a href="lib/pom/metadir.rb">lib/pom/metadir.rb</a></h3><ol class="file" href="lib/pom/metadir.rb">
-        <li class="note deprecate" ref="137">Should be indicated by trailing letter on version number? <sup>137</sup></li>
+        <li class="note deprecate" ref="147">Should be indicated by trailing letter on version number? <sup>147</sup></li>
       </ol></li>
     </ol>
     <h2>TODO</h2>
     <ol class="set todo">
+      <li><h3><a href="lib/pom/package/pom_style.rb">lib/pom/package/pom_style.rb</a></h3><ol class="file" href="lib/pom/package/pom_style.rb">
+        <li class="note todo" ref="20">Add time to date? <sup>20</sup></li>
+      </ol></li>
+      <li><h3><a href="lib/pom/gemspec.rb">lib/pom/gemspec.rb</a></h3><ol class="file" href="lib/pom/gemspec.rb">
+        <li class="note todo" ref="39">how to handle multiple platforms? <sup>39</sup></li>
+        <li class="note todo" ref="57">Alternate gemfile <sup>57</sup></li>
+        <li class="note todo" ref="80">considerations? <sup>80</sup></li>
+        <li class="note todo" ref="85">bin/ is a POM convention, is there are reason to do otherwise? <sup>85</sup></li>
+        <li class="note todo" ref="118">Improve. Make test_files configurable (?) <sup>118</sup></li>
+      </ol></li>
       <li><h3><a href="lib/pom/core_ext/pathname.rb">lib/pom/core_ext/pathname.rb</a></h3><ol class="file" href="lib/pom/core_ext/pathname.rb">
         <li class="note todo" ref="33">rename glob_first or deprecate <sup>33</sup></li>
-      </ol></li>
-      <li><h3><a href="lib/pom/verfile.rb">lib/pom/verfile.rb</a></h3><ol class="file" href="lib/pom/verfile.rb">
-        <li class="note todo" ref="38">better name for this? <sup>38</sup></li>
-        <li class="note todo" ref="133">Parse irregular VERSION files. <sup>133</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/history.rb">lib/pom/history.rb</a></h3><ol class="file" href="lib/pom/history.rb">
         <li class="note todo" ref="27">Allow the format to be more varied. <sup>27</sup></li>
         <li class="note todo" ref="29">Let marker be specified to handle odd formats. <sup>29</sup></li>
       </ol></li>
-      <li><h3><a href="lib/pom/metadir.rb">lib/pom/metadir.rb</a></h3><ol class="file" href="lib/pom/metadir.rb">
-        <li class="note todo" ref="6">executables is not right ? <sup>6</sup></li>
-        <li class="note todo" ref="27">search for root ? <sup>27</sup></li>
-        <li class="note todo" ref="331">Improve buildno support ? <sup>331</sup></li>
+      <li><h3><a href="lib/pom/news.rb">lib/pom/news.rb</a></h3><ol class="file" href="lib/pom/news.rb">
+        <li class="note todo" ref="15">Make resuable by History for release entries. <sup>15</sup></li>
+        <li class="note todo" ref="99">Continue to improve parsing of news file. <sup>99</sup></li>
       </ol></li>
-      <li><h3><a href="lib/pom/release.rb">lib/pom/release.rb</a></h3><ol class="file" href="lib/pom/release.rb">
-        <li class="note todo" ref="51">Improve parsing to RELEASE file. <sup>51</sup></li>
+      <li><h3><a href="lib/pom/metadir.rb">lib/pom/metadir.rb</a></h3><ol class="file" href="lib/pom/metadir.rb">
+        <li class="note todo" ref="7">executables is not right ? <sup>7</sup></li>
+        <li class="note todo" ref="37">search for root ? <sup>37</sup></li>
+        <li class="note todo" ref="341">Improve buildno support ? <sup>341</sup></li>
+      </ol></li>
+      <li><h3><a href="lib/pom/commands/bump.rb">lib/pom/commands/bump.rb</a></h3><ol class="file" href="lib/pom/commands/bump.rb">
+        <li class="note todo" ref="93">Fail if new version is less then old version unless $FORCE <sup>93</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/metastore.rb">lib/pom/metastore.rb</a></h3><ol class="file" href="lib/pom/metastore.rb">
         <li class="note todo" ref="148">rejection filter <sup>148</sup></li>
@@ -57,31 +74,21 @@
         <li class="note todo" ref="233">This might not be the best way to convert to YAML. <sup>233</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/metadata.rb">lib/pom/metadata.rb</a></h3><ol class="file" href="lib/pom/metadata.rb">
-        <li class="note todo" ref="30">Add profile.resources to lookup ? <sup>30</sup></li>
+        <li class="note todo" ref="28">Add @profile.resources to lookup ? <sup>28</sup></li>
       </ol></li>
-      <li><h3><a href="lib/pom/models/gemspec.rb">lib/pom/models/gemspec.rb</a></h3><ol class="file" href="lib/pom/models/gemspec.rb">
-        <li class="note todo" ref="39">how to handle multiple platforms? <sup>39</sup></li>
-        <li class="note todo" ref="57">Alternate gemfile <sup>57</sup></li>
-        <li class="note todo" ref="78">considerations? <sup>78</sup></li>
-        <li class="note todo" ref="83">bin/ is a POM convention, is there are reason to do otherwise? <sup>83</sup></li>
-        <li class="note todo" ref="116">Improve. Make test_files configurable (?) <sup>116</sup></li>
+      <li><h3><a href="lib/pom/require.rb">lib/pom/require.rb</a></h3><ol class="file" href="lib/pom/require.rb">
+        <li class="note todo" ref="249">how best to define? <sup>249</sup></li>
       </ol></li>
-      <li><h3><a href="lib/pom/commands/ver.rb">lib/pom/commands/ver.rb</a></h3><ol class="file" href="lib/pom/commands/ver.rb">
-        <li class="note todo" ref="78">fail is new version is less then old version <sup>78</sup></li>
-      </ol></li>
-      <li><h3><a href="lib/pom/reqfile.rb">lib/pom/reqfile.rb</a></h3><ol class="file" href="lib/pom/reqfile.rb">
-        <li class="note todo" ref="10">Narrow naming. <sup>10</sup></li>
-        <li class="note todo" ref="79">Regfile needs a specialized to_yaml <sup>79</sup></li>
-        <li class="note todo" ref="81">What about production vs. runtime? <sup>81</sup></li>
+      <li><h3><a href="lib/pom/version_file.rb">lib/pom/version_file.rb</a></h3><ol class="file" href="lib/pom/version_file.rb">
+        <li class="note todo" ref="103">handle jeweler and non-jeweler yaml? <sup>103</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/readme.rb">lib/pom/readme.rb</a></h3><ol class="file" href="lib/pom/readme.rb">
         <li class="note todo" ref="151">Imporve URL Regexp matching. <sup>151</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/project.rb">lib/pom/project.rb</a></h3><ol class="file" href="lib/pom/project.rb">
-        <li class="note todo" ref="86">Support alternate source location in the future verison? <sup>86</sup></li>
-        <li class="note todo" ref="243">This assumes lib/ is in the load path, and is used <sup>243</sup></li>
-        <li class="note todo" ref="312">Add name to end of path ? <sup>312</sup></li>
-        <li class="note todo" ref="368">Don&apos;t use README, or make it an option. <sup>368</sup></li>
+        <li class="note todo" ref="83">Support alternate source location in the future verison? <sup>83</sup></li>
+        <li class="note todo" ref="259">This assumes lib/ is in the load path, and is used <sup>259</sup></li>
+        <li class="note todo" ref="328">Add name to end of path ? <sup>328</sup></li>
       </ol></li>
       <li><h3><a href="lib/pom/commands/init.rb">lib/pom/commands/init.rb</a></h3><ol class="file" href="lib/pom/commands/init.rb">
         <li class="note todo" ref="59">How to handle options[:replace] ? <sup>59</sup></li>

@@ -61,8 +61,8 @@
             <li class="file"><a href="../lib/pom/readme_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
               class="thickbox" title="lib/pom/readme.rb">lib/pom/readme.rb</a></li>
           
-            <li class="file"><a href="../lib/pom/models/gemspec_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="lib/pom/models/gemspec.rb">lib/pom/models/gemspec.rb</a></li>
+            <li class="file"><a href="../lib/pom/gemspec_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/gemspec.rb">lib/pom/gemspec.rb</a></li>
           
           </ul>
         </div>
@@ -135,6 +135,16 @@
           
             
             <li class="method">
+              <a href="#method-i-codename">#codename</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-compiles%3F">#compiles?</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-config">#config</a>
             </li>
           
@@ -195,7 +205,22 @@
           
             
             <li class="method">
+              <a href="#method-i-news">#news</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-pack">#pack</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-package">#package</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-package_name">#package_name</a>
             </li>
           
             
@@ -230,12 +255,17 @@
           
             
             <li class="method">
-              <a href="#method-i-reqfile">#reqfile</a>
+              <a href="#method-i-require_rubygems">#require_rubygems</a>
             </li>
           
             
             <li class="method">
-              <a href="#method-i-require_rubygems">#require_rubygems</a>
+              <a href="#method-i-requirements">#requirements</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-requires">#requires</a>
             </li>
           
             
@@ -246,6 +276,11 @@
             
             <li class="method">
               <a href="#method-i-site">#site</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-stage_name">#stage_name</a>
             </li>
           
             
@@ -270,17 +305,7 @@
           
             
             <li class="method">
-              <a href="#method-i-verfile">#verfile</a>
-            </li>
-          
-            
-            <li class="method">
               <a href="#method-i-version">#version</a>
-            </li>
-          
-            
-            <li class="method">
-              <a href="#method-i-version%3D">#version=</a>
             </li>
           
         </ul>
@@ -304,9 +329,9 @@
         
           <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
         
-          <li class="file"><a href="../VERSION.html">VERSION</a></li>
-        
           <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../PACKAGE.html">PACKAGE</a></li>
         
           <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
         
@@ -340,6 +365,8 @@
         
           <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
         
+          <li class="class"><a href="../POM/Commands/Bump.html">POM::Commands::Bump</a></li>
+        
           <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
         
           <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
@@ -349,10 +376,6 @@
           <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
         
           <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
-        
-          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
-        
-          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
         
           <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
         
@@ -370,21 +393,33 @@
         
           <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
         
+          <li class="class"><a href="../POM/Metafile.html">POM::Metafile</a></li>
+        
+          <li class="class"><a href="../POM/News.html">POM::News</a></li>
+        
+          <li class="class"><a href="../POM/Package.html">POM::Package</a></li>
+        
+          <li class="module"><a href="../POM/Package/JewelerStyle.html">POM::Package::JewelerStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/POMStyle.html">POM::Package::POMStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/SimpleStyle.html">POM::Package::SimpleStyle</a></li>
+        
           <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
         
           <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
         
           <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
         
-          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
-        
-          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+          <li class="class"><a href="../POM/Require.html">POM::Require</a></li>
         
           <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
         
-          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+          <li class="class"><a href="../POM/VersionFile.html">POM::VersionFile</a></li>
         
-          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+          <li class="module"><a href="../POM/VersionHelper.html">POM::VersionHelper</a></li>
+        
+          <li class="class"><a href="../POM/VersionNumber.html">POM::VersionNumber</a></li>
         
           <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
         
@@ -524,13 +559,13 @@ New project with metadata fully loaded.
           <div class="method-source-code"
             id="load-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 40</span>
-40:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span>(*<span class="ruby-identifier">path_opts</span>)
-41:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">first</span>
-42:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">last</span>
-43:       <span class="ruby-identifier">opts</span>[<span class="ruby-value">:load</span>] = <span class="ruby-keyword kw">true</span>
-44:       <span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">opts</span>)
-45:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 36</span>
+36:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span>(*<span class="ruby-identifier">path_opts</span>)
+37:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">first</span>
+38:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">last</span>
+39:       <span class="ruby-identifier">opts</span>[<span class="ruby-value">:load</span>] = <span class="ruby-keyword kw">true</span>
+40:       <span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">opts</span>)
+41:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -564,13 +599,13 @@ directory form a given local.
           <div class="method-source-code"
             id="lookup-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 32</span>
-32:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">lookup</span>(*<span class="ruby-identifier">path_opts</span>)
-33:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">first</span>
-34:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">last</span>
-35:       <span class="ruby-identifier">opts</span>[<span class="ruby-value">:lookup</span>] =<span class="ruby-keyword kw">true</span>
-36:       <span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">opts</span>)
-37:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">lookup</span>(*<span class="ruby-identifier">path_opts</span>)
+29:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">options</span>.<span class="ruby-identifier">first</span>
+30:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">path_opts</span>.<span class="ruby-identifier">last</span>
+31:       <span class="ruby-identifier">opts</span>[<span class="ruby-value">:lookup</span>] =<span class="ruby-keyword kw">true</span>
+32:       <span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">opts</span>)
+33:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -610,26 +645,27 @@ location.
           <div class="method-source-code"
             id="new-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 59</span>
-59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">root_opts</span>)
-60:       <span class="ruby-identifier">root</span> = <span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">first</span>
-61:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> {}
-62: 
-63:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:lookup</span>] <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">root</span>
-64:         <span class="ruby-identifier">root</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">root</span>)
-65:         <span class="ruby-identifier">raise</span>(<span class="ruby-node">&quot;cannot locate project root -- #{root}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">root</span>
-66:       <span class="ruby-keyword kw">end</span>
-67: 
-68:       <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
-69: 
-70:       <span class="ruby-comment cmt">#metadata.load #if opts[:load]</span>
-71: 
-72:       <span class="ruby-comment cmt">#if options[:lookup]</span>
-73:       <span class="ruby-comment cmt">#  @root = locate_root(local) || raise(&quot;can't locate project root -- #{local}&quot;)</span>
-74:       <span class="ruby-comment cmt">#end</span>
-75: 
-76:       <span class="ruby-ivar">@source</span> = <span class="ruby-identifier">root</span>
-77:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">root_opts</span>)
+56:       <span class="ruby-identifier">root</span> = <span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">first</span>
+57:       <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">root_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> {}
+58: 
+59:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">:lookup</span>] <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">root</span>
+60:         <span class="ruby-identifier">root</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">root</span>)
+61:         <span class="ruby-identifier">raise</span>(<span class="ruby-node">&quot;cannot locate project root -- #{root}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">root</span>
+62:       <span class="ruby-keyword kw">end</span>
+63: 
+64:       <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+65:       <span class="ruby-ivar">@opts</span> = <span class="ruby-identifier">opts</span>
+66: 
+67:       <span class="ruby-comment cmt">#metadata.load #if opts[:load]</span>
+68: 
+69:       <span class="ruby-comment cmt">#if options[:lookup]</span>
+70:       <span class="ruby-comment cmt">#  @root = locate_root(local) || raise(&quot;can't locate project root -- #{local}&quot;)</span>
+71:       <span class="ruby-comment cmt">#end</span>
+72: 
+73:       <span class="ruby-ivar">@source</span> = <span class="ruby-identifier">root</span>
+74:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -661,10 +697,10 @@ href="../POM.html#method-c-root">POM::root</a>.
           <div class="method-source-code"
             id="root-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 23</span>
-23:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">local</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
-24:       <span class="ruby-constant">POM</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">local</span>)
-25:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">local</span>=<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+20:       <span class="ruby-constant">POM</span>.<span class="ruby-identifier">root</span>(<span class="ruby-identifier">local</span>)
+21:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -701,35 +737,37 @@ About project notice.
           <div class="method-source-code"
             id="about-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 337</span>
-337:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(*<span class="ruby-identifier">parts</span>)
-338:       <span class="ruby-comment cmt"># pre-format data</span>
-339:       <span class="ruby-identifier">released</span> = <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">date</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;(#{verfile.date.strftime('%Y-%m-%d')})&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-340: 
-341:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">empty?</span>
-342:         <span class="ruby-identifier">s</span> = []
-343:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.title} v#{verfile.version} #{released} (#{verfile.name}-#{verfile.version})&quot;</span>
-344:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
-345:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.description || profile.summary}&quot;</span>
-346:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
-347:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* #{profile.homepage}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">hompage</span>
-348:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* #{profile.repository}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">repository</span>
-349:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
-350:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.copyright}&quot;</span>
-351:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\n\n\n&quot;</span>, <span class="ruby-value str">&quot;\n\n&quot;</span>)
-352:       <span class="ruby-keyword kw">else</span>
-353:         <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
-354:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">field</span>
-355:           <span class="ruby-comment cmt">#when 'settings'</span>
-356:           <span class="ruby-comment cmt">#  puts settings.to_yaml</span>
-357:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'profile'</span>
-358:             <span class="ruby-identifier">puts</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">to_yaml</span>
-359:           <span class="ruby-keyword kw">else</span>
-360:             <span class="ruby-identifier">puts</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">field</span>)
-361:           <span class="ruby-keyword kw">end</span>
-362:         <span class="ruby-keyword kw">end</span>
-363:       <span class="ruby-keyword kw">end</span>
-364:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 358</span>
+358:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(*<span class="ruby-identifier">parts</span>)
+359:       <span class="ruby-comment cmt"># pre-format data</span>
+360:       <span class="ruby-identifier">released</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">date</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;(#{package.date.strftime('%Y-%m-%d')})&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+361:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">empty?</span>
+362:         <span class="ruby-identifier">s</span> = []
+363:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.title} v#{package.version} #{released} (#{package.name}-#{package.version})&quot;</span>
+364:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+365:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.description || profile.summary}&quot;</span>
+366:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+367:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* home: #{profile.resources.homepage}&quot;</span>   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">homepage</span>
+368:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* work: #{profile.resources.work}&quot;</span>       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">work</span>
+369:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* talk: #{profile.resources.mail}&quot;</span>       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">mail</span>
+370:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* talk: #{profile.resources.forum}&quot;</span>      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">forum</span>
+371:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* repo: #{profile.resources.repository}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">repository</span>
+372:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+373:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.copyright}&quot;</span>
+374:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\n\n\n&quot;</span>, <span class="ruby-value str">&quot;\n\n&quot;</span>)
+375:       <span class="ruby-keyword kw">else</span>
+376:         <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+377:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_sym</span>
+378:           <span class="ruby-comment cmt">#when :settings</span>
+379:           <span class="ruby-comment cmt">#  puts settings.to_yaml</span>
+380:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">:profile</span>
+381:             <span class="ruby-identifier">puts</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">to_yaml</span>
+382:           <span class="ruby-keyword kw">else</span>
+383:             <span class="ruby-identifier">puts</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">field</span>)
+384:           <span class="ruby-keyword kw">end</span>
+385:         <span class="ruby-keyword kw">end</span>
+386:       <span class="ruby-keyword kw">end</span>
+387:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -744,7 +782,7 @@ About project notice.
         <div class="method-heading">
         
           <span class="method-name">announcement</span><span
-            class="method-args">(file=nil, options={})</span>
+            class="method-args">(*parts)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -761,33 +799,47 @@ href="Project.html#README">README</a>.
           <div class="method-source-code"
             id="announcement-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 370</span>
-370:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announcement</span>(<span class="ruby-identifier">file</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={})
-371:       <span class="ruby-identifier">header</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:header</span>]
-372:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">file</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
-373:         <span class="ruby-identifier">ann</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>)
-374:       <span class="ruby-keyword kw">else</span>
-375:         <span class="ruby-identifier">release</span> = <span class="ruby-identifier">history</span>.<span class="ruby-identifier">release</span>.<span class="ruby-identifier">to_s</span>
-376:         <span class="ruby-identifier">ann</span> = []
-377:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">README</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
-378:           <span class="ruby-identifier">readme</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">strip</span>
-379:           <span class="ruby-identifier">readme</span>  = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;Please see HISTORY file.&quot;</span>, <span class="ruby-value str">'='</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">release</span>)
-380:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span>
-381:         <span class="ruby-keyword kw">else</span>
-382:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">header</span>
-383:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.title} #{self.version} has been released.&quot;</span>
-384:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span>
-385:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* #{profile.resources.homepage}&quot;</span>
-386:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span>
-387:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.description}&quot;</span>
-388:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span>
-389:           <span class="ruby-keyword kw">end</span>
-390:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">release</span>
-391:         <span class="ruby-keyword kw">end</span>
-392:         <span class="ruby-identifier">ann</span> = <span class="ruby-identifier">ann</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
-393:       <span class="ruby-keyword kw">end</span>
-394:       <span class="ruby-identifier">ann</span>.<span class="ruby-identifier">unfold</span>
-395:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 390</span>
+390:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announcement</span>(*<span class="ruby-identifier">parts</span>)
+391:       <span class="ruby-identifier">ann</span> = []
+392:       <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>
+393:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">part</span>
+394:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:message</span>
+395:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.title} #{self.version} has been released.&quot;</span>
+396:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:description</span>
+397:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{profile.description}&quot;</span>
+398:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:resources</span>
+399:           <span class="ruby-identifier">list</span> = <span class="ruby-value str">''</span>
+400:           <span class="ruby-identifier">list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* home: #{profile.resources.home}\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">home</span>
+401:           <span class="ruby-identifier">list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* work: #{profile.resources.work}\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">work</span>
+402:           <span class="ruby-identifier">list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;* docs: #{profile.resources.docs}\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">docs</span>
+403:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">list</span>
+404:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:release</span>
+405:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;= #{title} #{history.release}&quot;</span>
+406:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:version</span>
+407:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;= #{history.release.header}&quot;</span>
+408:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:notes</span>
+409:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{history.release.notes}&quot;</span>
+410:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:changes</span>
+411:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{history.release.changes}&quot;</span>
+412:         <span class="ruby-comment cmt">#when :line</span>
+413:         <span class="ruby-comment cmt">#  ann &lt;&lt; (&quot;-&quot; * 4) + &quot;\n&quot;</span>
+414:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">:readme</span>
+415:           <span class="ruby-identifier">release</span> = <span class="ruby-identifier">history</span>.<span class="ruby-identifier">release</span>.<span class="ruby-identifier">to_s</span>
+416:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">README</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
+417:             <span class="ruby-identifier">readme</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">strip</span>
+418:             <span class="ruby-identifier">readme</span>  = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;Please see HISTORY file.&quot;</span>, <span class="ruby-value str">'= '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">release</span>)
+419:             <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span>
+420:           <span class="ruby-keyword kw">end</span>
+421:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+422:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">part</span>
+423:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">File</span>
+424:           <span class="ruby-identifier">ann</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">part</span>.<span class="ruby-identifier">read</span>
+425:           <span class="ruby-identifier">part</span>.<span class="ruby-identifier">close</span>
+426:         <span class="ruby-keyword kw">end</span>
+427:       <span class="ruby-keyword kw">end</span>
+428:       <span class="ruby-identifier">ann</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n\n&quot;</span>).<span class="ruby-identifier">unfold</span>
+429:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -825,14 +877,78 @@ the pathname for the cache directory.
           <div class="method-source-code"
             id="cache-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 214</span>
-214:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cache</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-215:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-216:         <span class="ruby-identifier">cache</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-217:       <span class="ruby-keyword kw">else</span>
-218:         <span class="ruby-ivar">@cache</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache'</span>
-219:       <span class="ruby-keyword kw">end</span>
-220:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 230</span>
+230:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cache</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+231:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+232:         <span class="ruby-identifier">cache</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+233:       <span class="ruby-keyword kw">else</span>
+234:         <span class="ruby-ivar">@cache</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.cache'</span>
+235:       <span class="ruby-keyword kw">end</span>
+236:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="codename-method" class="method-detail ">
+        <a name="method-i-codename"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">codename</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="codename-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">codename</span>
+137:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">codename</span>
+138:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="compiles--method" class="method-detail ">
+        <a name="method-i-compiles%3F"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">compiles?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="compiles--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 353</span>
+353:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compiles?</span>
+354:       <span class="ruby-operator">!</span><span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">empty?</span>
+355:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -869,14 +985,14 @@ without <tt>path</tt> Returns the path to the config directory (either
           <div class="method-source-code"
             id="config-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 228</span>
-228:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-229:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-230:         <span class="ruby-identifier">config</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span> <span class="ruby-comment cmt">#root.glob_first('{.,}config' / path)</span>
-231:       <span class="ruby-keyword kw">else</span>
-232:         <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{.,}config'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.config'</span>
-233:       <span class="ruby-keyword kw">end</span>
-234:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 244</span>
+244:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+245:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+246:         <span class="ruby-identifier">config</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span> <span class="ruby-comment cmt">#root.glob_first('{.,}config' / path)</span>
+247:       <span class="ruby-keyword kw">else</span>
+248:         <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{.,}config'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'.config'</span>
+249:       <span class="ruby-keyword kw">end</span>
+250:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -914,14 +1030,14 @@ the pathname for the doc directory.
           <div class="method-source-code"
             id="doc-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 180</span>
-180:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doc</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-181:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-182:         <span class="ruby-identifier">doc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-183:       <span class="ruby-keyword kw">else</span>
-184:         <span class="ruby-ivar">@doc</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'doc'</span>
-185:       <span class="ruby-keyword kw">end</span>
-186:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 196</span>
+196:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doc</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+197:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+198:         <span class="ruby-identifier">doc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+199:       <span class="ruby-keyword kw">else</span>
+200:         <span class="ruby-ivar">@doc</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'doc'</span>
+201:       <span class="ruby-keyword kw">end</span>
+202:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -952,10 +1068,10 @@ Returns list of executable files in bin/.
           <div class="method-source-code"
             id="executables-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 326</span>
-326:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">executables</span>
-327:       <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'bin/*'</span>).<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">bin</span><span class="ruby-operator">|</span> <span class="ruby-identifier">bin</span>.<span class="ruby-identifier">executable?</span> }.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">bin</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">bin</span>) }
-328:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 342</span>
+342:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">executables</span>
+343:       <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'bin/*'</span>).<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">bin</span><span class="ruby-operator">|</span> <span class="ruby-identifier">bin</span>.<span class="ruby-identifier">executable?</span> }.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">bin</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">bin</span>) }
+344:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -987,10 +1103,10 @@ extensions.
           <div class="method-source-code"
             id="extensions-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 332</span>
-332:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extensions</span>
-333:       <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'ext/**/extconf.rb'</span>)
-334:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 348</span>
+348:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extensions</span>
+349:       <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'ext/**/extconf.rb'</span>)
+350:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1021,10 +1137,10 @@ Access to project history.
           <div class="method-source-code"
             id="history-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 149</span>
-149:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history</span>
-150:       <span class="ruby-ivar">@history</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">History</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
-151:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 165</span>
+165:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history</span>
+166:       <span class="ruby-ivar">@history</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">History</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+167:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1057,28 +1173,30 @@ href="../POM.html">POM</a> meta/ files if you already have a gemspec.
           <div class="method-source-code"
             id="import-gemspec-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/models/gemspec.rb, line 127</span>
-127:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">import_gemspec</span>(<span class="ruby-identifier">gemspec</span>=<span class="ruby-keyword kw">nil</span>)
-128:       <span class="ruby-identifier">gemspec</span> = <span class="ruby-identifier">gemspec</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">gemspec</span>
-129: 
-130:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">name</span>         = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">name</span>
-131:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">version</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_s</span>
-132:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">paths</span>        = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">require_paths</span>
-133:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">arch</span>         = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">platform</span>         <span class="ruby-comment cmt"># ?</span>
-134: 
-135:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">summary</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">summary</span>
-136:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">description</span>  = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">description</span>
-137:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">authors</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">authors</span>
-138:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">contact</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">email</span>
-139:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">homepage</span>     = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">homepage</span>
-140: 
-141:       <span class="ruby-comment cmt">#metadata.extensions   = gemspec.extensions</span>
+     <span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 129</span>
+129:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">import_gemspec</span>(<span class="ruby-identifier">gemspec</span>=<span class="ruby-keyword kw">nil</span>)
+130:       <span class="ruby-identifier">gemspec</span> = <span class="ruby-identifier">gemspec</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">gemspec</span>
+131: 
+132:       <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span>         = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">name</span>
+133:       <span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_s</span>
+134:       <span class="ruby-identifier">package</span>.<span class="ruby-identifier">path</span>         = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">require_paths</span>
+135:       <span class="ruby-comment cmt">#package.arch        = gemspec.platform</span>
+136: 
+137:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">title</span>        = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">capitalize</span>
+138:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">summary</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">summary</span>
+139:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">description</span>  = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">description</span>
+140:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">authors</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">authors</span>
+141:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">contact</span>      = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">email</span>
 142: 
-143:       <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
-144:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:runtime</span>
-145:         <span class="ruby-identifier">package</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{d.name} #{d.version_requirements}&quot;</span>
-146:       <span class="ruby-keyword kw">end</span>
-147:     <span class="ruby-keyword kw">end</span></pre>
+143:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">homepage</span> = <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">homepage</span>
+144: 
+145:       <span class="ruby-comment cmt">#metadata.extensions   = gemspec.extensions</span>
+146: 
+147:       <span class="ruby-identifier">gemspec</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+148:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:runtime</span>
+149:         <span class="ruby-identifier">requires</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{d.name} #{d.version_requirements}&quot;</span>
+150:       <span class="ruby-keyword kw">end</span>
+151:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1116,7 +1234,7 @@ href="Project.html#README">README</a>.
 182:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">import_readme</span>(<span class="ruby-identifier">readme</span>=<span class="ruby-keyword kw">nil</span>)
 183:       <span class="ruby-identifier">readme</span> = <span class="ruby-identifier">readme</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">readme</span>
 184: 
-185:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">name</span>         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">name</span>
+185:       <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">name</span>         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">name</span>
 186: 
 187:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">title</span>       = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">title</span>        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">title</span>
 188:       <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">description</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">description</span>
@@ -1156,10 +1274,10 @@ href="Project.html#README">README</a>.
           <div class="method-source-code"
             id="loadpath-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 133</span>
-133:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">loadpath</span>
-134:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">loadpath</span>
-135:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 131</span>
+131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">loadpath</span>
+132:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">loadpath</span>
+133:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1196,14 +1314,14 @@ the pathname for the log directory.
           <div class="method-source-code"
             id="log-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 165</span>
-165:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-166:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-167:         <span class="ruby-identifier">log</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-168:       <span class="ruby-keyword kw">else</span>
-169:         <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>
-170:       <span class="ruby-keyword kw">end</span>
-171:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 181</span>
+181:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+182:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+183:         <span class="ruby-identifier">log</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+184:       <span class="ruby-keyword kw">else</span>
+185:         <span class="ruby-ivar">@log</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'log'</span>
+186:       <span class="ruby-keyword kw">end</span>
+187:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1235,10 +1353,10 @@ the pathname for the log directory.
           <div class="method-source-code"
             id="manifest-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 144</span>
-144:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
-145:       <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Manifest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
-146:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 160</span>
+160:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
+161:       <span class="ruby-ivar">@manifest</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Manifest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+162:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1261,7 +1379,7 @@ the pathname for the log directory.
         <div class="method-description">
           
           <p>
-Provides access to both profile and verfile information through a single
+Provides access to both profile and package information through a single
 interface. This will probably be removed from API.
 </p>
           
@@ -1270,10 +1388,10 @@ interface. This will probably be removed from API.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 99</span>
- 99:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
-100:       <span class="ruby-ivar">@metadata</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
-101:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/project.rb, line 96</span>
+96:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
+97:       <span class="ruby-ivar">@metadata</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>, <span class="ruby-ivar">@opts</span>)
+98:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1304,10 +1422,44 @@ interface. This will probably be removed from API.
           <div class="method-source-code"
             id="name-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 119</span>
-119:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
-120:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;name is requried&quot;</span>)
-121:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 116</span>
+116:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
+117:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">name</span>
+118:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="news-method" class="method-detail ">
+        <a name="method-i-news"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">news</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Access latest release notes.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="news-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 170</span>
+170:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">news</span>
+171:       <span class="ruby-ivar">@release</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">News</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">history</span>)
+172:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1341,6 +1493,84 @@ Alias for <a href="Project.html#method-i-pkg">#</a>.
       </div>
 
     
+      <div id="package-method" class="method-detail ">
+        <a name="method-i-package"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">package</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+General information.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="package-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 106</span>
+106:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package</span>
+107:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">package</span>
+108:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="package-name-method" class="method-detail ">
+        <a name="method-i-package_name"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">package_name</span><span
+            class="method-args">(options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Package.html">Package</a> name is generally in the form of
+<tt>name-version</tt>, or <tt>name-version-platform</tt> if
+<tt>platform</tt> is specified.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="package-name-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 142</span>
+142:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package_name</span>(<span class="ruby-identifier">options</span>={})
+143:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">platform</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:platform</span>]
+144:         <span class="ruby-node">&quot;#{name}-#{version}-#{platform}&quot;</span>
+145:       <span class="ruby-keyword kw">else</span>
+146:         <span class="ruby-node">&quot;#{name}-#{version}&quot;</span>
+147:       <span class="ruby-keyword kw">end</span>
+148:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Project.html#method-i-stage_name">stage_name</a>
+        </div>
+        
+      </div>
+
+    
       <div id="pkg-method" class="method-detail ">
         <a name="method-i-pkg"></a>
 
@@ -1364,19 +1594,19 @@ the pathname within the pacakge path.
           <div class="method-source-code"
             id="pkg-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 190</span>
-190:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pkg</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-191:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-192:         <span class="ruby-identifier">pkg</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-193:       <span class="ruby-keyword kw">else</span>
-194:         <span class="ruby-ivar">@pkg</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{pkg,pack,package}{,s}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'pkg'</span>
-195:       <span class="ruby-keyword kw">end</span>
-196:       <span class="ruby-comment cmt">#@pkg ||=(</span>
-197:       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
-198:       <span class="ruby-comment cmt">#  dir.mkdir_p unless dir.exist?</span>
-199:       <span class="ruby-comment cmt">#  dir</span>
-200:       <span class="ruby-comment cmt">#)</span>
-201:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 206</span>
+206:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pkg</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+207:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+208:         <span class="ruby-identifier">pkg</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+209:       <span class="ruby-keyword kw">else</span>
+210:         <span class="ruby-ivar">@pkg</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{pkg,pack,package}{,s}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'pkg'</span>
+211:       <span class="ruby-keyword kw">end</span>
+212:       <span class="ruby-comment cmt">#@pkg ||=(</span>
+213:       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
+214:       <span class="ruby-comment cmt">#  dir.mkdir_p unless dir.exist?</span>
+215:       <span class="ruby-comment cmt">#  dir</span>
+216:       <span class="ruby-comment cmt">#)</span>
+217:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1425,14 +1655,14 @@ bin/, I prefer the former, but have not yet firmly decided.
           <div class="method-source-code"
             id="plugin-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 250</span>
-250:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugin</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-251:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-252:         <span class="ruby-identifier">plugin</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-253:       <span class="ruby-keyword kw">else</span>
-254:         <span class="ruby-ivar">@plugin</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'lib/plugins'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'lib/plugins'</span>
-255:       <span class="ruby-keyword kw">end</span>
-256:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 266</span>
+266:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugin</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+267:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+268:         <span class="ruby-identifier">plugin</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+269:       <span class="ruby-keyword kw">else</span>
+270:         <span class="ruby-ivar">@plugin</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'lib/plugins'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'lib/plugins'</span>
+271:       <span class="ruby-keyword kw">end</span>
+272:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1490,10 +1720,10 @@ General information.
           <div class="method-source-code"
             id="profile-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 104</span>
-104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">profile</span>
-105:       <span class="ruby-ivar">@profile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">profile</span>
-106:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">profile</span>
+102:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">profile</span>
+103:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1548,7 +1778,7 @@ General information.
         <div class="method-description">
           
           <p>
-Access latest release notes.
+Current release information.
 </p>
           
 
@@ -1556,44 +1786,10 @@ Access latest release notes.
           <div class="method-source-code"
             id="release-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 154</span>
-154:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
-155:       <span class="ruby-ivar">@release</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Release</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">history</span>)
-156:     <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="reqfile-method" class="method-detail ">
-        <a name="method-i-reqfile"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">reqfile</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Requirements Configuration.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="reqfile-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 114</span>
-114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reqfile</span>
-115:       <span class="ruby-ivar">@reqfile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">reqfile</span>
-116:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 111</span>
+111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
+112:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">release</span>
+113:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1616,7 +1812,7 @@ Requirements Configuration.
         <div class="method-description">
           
           <p>
-Require RubyGems library.
+<a href="Require.html">Require</a> RubyGems library.
 </p>
           
 
@@ -1624,7 +1820,7 @@ Require RubyGems library.
           <div class="method-source-code"
             id="require-rubygems-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/models/gemspec.rb, line 6</span>
+    <span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 6</span>
  6:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_rubygems</span>
  7:       <span class="ruby-keyword kw">begin</span>
  8:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'rubygems'</span> <span class="ruby-comment cmt">#/specification'</span>
@@ -1634,6 +1830,67 @@ Require RubyGems library.
 12:       <span class="ruby-keyword kw">end</span>
 13:     <span class="ruby-keyword kw">end</span></pre>
           </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="requirements-method" class="method-detail ">
+        <a name="method-i-requirements"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">requirements</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Requirements Configuration.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="requirements-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 154</span>
+154:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">requirements</span>
+155:       <span class="ruby-ivar">@require</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Require</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+156:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Project.html#method-i-requires">requires</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="requires-method" class="method-detail method-alias">
+        <a name="method-i-requires"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">requires</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
           
         </div>
 
@@ -1668,14 +1925,14 @@ returns the pathname for the script directory.
           <div class="method-source-code"
             id="script-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 267</span>
-267:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">script</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-268:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-269:         <span class="ruby-identifier">script</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-270:       <span class="ruby-keyword kw">else</span>
-271:         <span class="ruby-ivar">@script</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'script'</span>
-272:       <span class="ruby-keyword kw">end</span>
-273:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 283</span>
+283:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">script</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+284:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+285:         <span class="ruby-identifier">script</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+286:       <span class="ruby-keyword kw">else</span>
+287:         <span class="ruby-ivar">@script</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'script'</span>
+288:       <span class="ruby-keyword kw">end</span>
+289:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1711,20 +1968,45 @@ the pathname for the site directory.
           <div class="method-source-code"
             id="site-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 293</span>
-293:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">site</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-294:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-295:         <span class="ruby-identifier">site</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-296:       <span class="ruby-keyword kw">else</span>
-297:         <span class="ruby-ivar">@site</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{site,web,website}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'site'</span>
-298:       <span class="ruby-keyword kw">end</span>
-299:       <span class="ruby-comment cmt">#@pkg ||=(</span>
-300:       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
-301:       <span class="ruby-comment cmt">#  dir.mkdir_p unless dir.exist?</span>
-302:       <span class="ruby-comment cmt">#  dir</span>
-303:       <span class="ruby-comment cmt">#)</span>
-304:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 309</span>
+309:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">site</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+310:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+311:         <span class="ruby-identifier">site</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+312:       <span class="ruby-keyword kw">else</span>
+313:         <span class="ruby-ivar">@site</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{site,web,website}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'site'</span>
+314:       <span class="ruby-keyword kw">end</span>
+315:       <span class="ruby-comment cmt">#@pkg ||=(</span>
+316:       <span class="ruby-comment cmt">#  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'</span>
+317:       <span class="ruby-comment cmt">#  dir.mkdir_p unless dir.exist?</span>
+318:       <span class="ruby-comment cmt">#  dir</span>
+319:       <span class="ruby-comment cmt">#)</span>
+320:     <span class="ruby-keyword kw">end</span></pre>
           </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="stage-name-method" class="method-detail method-alias">
+        <a name="method-i-stage_name"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">stage_name</span><span
+            class="method-args">(options={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+DEPRECATE
+</p>
+          
+
           
         </div>
 
@@ -1759,14 +2041,14 @@ the pathname for the task directory.
           <div class="method-source-code"
             id="task-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 280</span>
-280:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">task</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-281:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-282:         <span class="ruby-identifier">task</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-283:       <span class="ruby-keyword kw">else</span>
-284:         <span class="ruby-ivar">@task</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{task,tasks}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'task'</span>
-285:       <span class="ruby-keyword kw">end</span>
-286:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 296</span>
+296:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">task</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+297:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+298:         <span class="ruby-identifier">task</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+299:       <span class="ruby-keyword kw">else</span>
+300:         <span class="ruby-ivar">@task</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-value str">'{task,tasks}'</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">root</span><span class="ruby-operator">+</span><span class="ruby-value str">'task'</span>
+301:       <span class="ruby-keyword kw">end</span>
+302:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1802,14 +2084,14 @@ returns the pathname to the temporary directory.
           <div class="method-source-code"
             id="tmp-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 314</span>
-314:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tmp</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
-315:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
-316:         <span class="ruby-identifier">tmp</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
-317:       <span class="ruby-keyword kw">else</span>
-318:         <span class="ruby-ivar">@tmp</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">tmpdir</span>) <span class="ruby-comment cmt">#cache+'tmp'</span>
-319:       <span class="ruby-keyword kw">end</span>
-320:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 330</span>
+330:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tmp</span>(<span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>)
+331:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+332:         <span class="ruby-identifier">tmp</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+333:       <span class="ruby-keyword kw">else</span>
+334:         <span class="ruby-ivar">@tmp</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">tmpdir</span>) <span class="ruby-comment cmt">#cache+'tmp'</span>
+335:       <span class="ruby-keyword kw">end</span>
+336:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1869,7 +2151,7 @@ Create a Gem::Specification
           <div class="method-source-code"
             id="to-gemspec-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/models/gemspec.rb, line 16</span>
+     <span class="ruby-comment cmt"># File lib/pom/gemspec.rb, line 16</span>
  16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_gemspec</span>(<span class="ruby-identifier">options</span>={})
  17:       <span class="ruby-identifier">require_rubygems</span>
  18: 
@@ -1921,96 +2203,64 @@ Create a Gem::Specification
  64:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">gemfile</span>
  65:           <span class="ruby-identifier">require</span> <span class="ruby-value str">'bundler'</span>
  66:           <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_bundler_dependencies</span>
- 67:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">reqfile</span>.<span class="ruby-identifier">file</span>
- 68:           <span class="ruby-identifier">reqfile</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
- 69:             <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">optional?</span>
+ 67: 
+ 68:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">requires</span>.<span class="ruby-identifier">file</span>
+ 69:           <span class="ruby-identifier">requires</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
  70:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">development?</span>
  71:               <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_development_dependency</span>( *[<span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">constraint</span>].<span class="ruby-identifier">compact</span> )
  72:             <span class="ruby-keyword kw">else</span>
- 73:               <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_runtime_dependency</span>( *[<span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">constraint</span>].<span class="ruby-identifier">compact</span> )
- 74:             <span class="ruby-keyword kw">end</span>
- 75:           <span class="ruby-keyword kw">end</span>
- 76:         <span class="ruby-keyword kw">end</span>
+ 73:               <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">optional?</span>
+ 74:               <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_runtime_dependency</span>( *[<span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">constraint</span>].<span class="ruby-identifier">compact</span> )
+ 75:             <span class="ruby-keyword kw">end</span>
+ 76:           <span class="ruby-keyword kw">end</span>
  77: 
- 78:         <span class="ruby-comment cmt"># TODO: considerations?</span>
- 79:         <span class="ruby-comment cmt">#spec.requirements = options[:requirements] || package.consider</span>
- 80: 
- 81:         <span class="ruby-comment cmt"># -- executables --</span>
+ 78:         <span class="ruby-keyword kw">end</span>
+ 79: 
+ 80:         <span class="ruby-comment cmt"># TODO: considerations?</span>
+ 81:         <span class="ruby-comment cmt">#spec.requirements = options[:requirements] || package.consider</span>
  82: 
- 83:         <span class="ruby-comment cmt"># TODO: bin/ is a POM convention, is there are reason to do otherwise?</span>
- 84:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">bindir</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-value">:bindir</span>]      <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;bin&quot;</span>
- 85:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:executables</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">executables</span>
- 86: 
- 87:         <span class="ruby-comment cmt"># -- rdocs (argh!) --</span>
+ 83:         <span class="ruby-comment cmt"># -- executables --</span>
+ 84: 
+ 85:         <span class="ruby-comment cmt"># TODO: bin/ is a POM convention, is there are reason to do otherwise?</span>
+ 86:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">bindir</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-value">:bindir</span>]      <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;bin&quot;</span>
+ 87:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:executables</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">executables</span>
  88: 
- 89:         <span class="ruby-identifier">readme</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_relative</span>(<span class="ruby-value str">'README{,.*}'</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
- 90:         <span class="ruby-identifier">extra</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value">:extra_rdoc_files</span>] <span class="ruby-operator">||</span> []
- 91: 
- 92:         <span class="ruby-identifier">rdocfiles</span> = []
- 93:         <span class="ruby-identifier">rdocfiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
- 94:         <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">extra</span>)
- 95:         <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">uniq!</span>
- 96: 
- 97:         <span class="ruby-identifier">rdoc_options</span> = [] <span class="ruby-comment cmt">#['--inline-source']</span>
- 98:         <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--title&quot;</span>, <span class="ruby-node">&quot;#{metadata.title} API&quot;</span>] <span class="ruby-comment cmt">#if metadata.title</span>
- 99:         <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--main&quot;</span>, <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">to_s</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
-100: 
-101:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">has_rdoc</span>         = <span class="ruby-keyword kw">true</span>  <span class="ruby-comment cmt"># always true</span>
-102:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">extra_rdoc_files</span> = <span class="ruby-identifier">rdocfiles</span>
-103:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">rdoc_options</span>     = <span class="ruby-identifier">rdoc_options</span>
-104: 
-105:         <span class="ruby-comment cmt"># -- distributed files --</span>
+ 89:         <span class="ruby-comment cmt"># -- rdocs (argh!) --</span>
+ 90: 
+ 91:         <span class="ruby-identifier">readme</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_relative</span>(<span class="ruby-value str">'README{,.*}'</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
+ 92:         <span class="ruby-identifier">extra</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value">:extra_rdoc_files</span>] <span class="ruby-operator">||</span> []
+ 93: 
+ 94:         <span class="ruby-identifier">rdocfiles</span> = []
+ 95:         <span class="ruby-identifier">rdocfiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
+ 96:         <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">extra</span>)
+ 97:         <span class="ruby-identifier">rdocfiles</span>.<span class="ruby-identifier">uniq!</span>
+ 98: 
+ 99:         <span class="ruby-identifier">rdoc_options</span> = [] <span class="ruby-comment cmt">#['--inline-source']</span>
+100:         <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--title&quot;</span>, <span class="ruby-node">&quot;#{metadata.title} API&quot;</span>] <span class="ruby-comment cmt">#if metadata.title</span>
+101:         <span class="ruby-identifier">rdoc_options</span>.<span class="ruby-identifier">concat</span> [<span class="ruby-value str">&quot;--main&quot;</span>, <span class="ruby-identifier">readme</span>.<span class="ruby-identifier">to_s</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">readme</span>
+102: 
+103:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">has_rdoc</span>         = <span class="ruby-keyword kw">true</span>  <span class="ruby-comment cmt"># always true</span>
+104:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">extra_rdoc_files</span> = <span class="ruby-identifier">rdocfiles</span>
+105:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">rdoc_options</span>     = <span class="ruby-identifier">rdoc_options</span>
 106: 
-107:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">exist?</span>
-108:           <span class="ruby-identifier">filelist</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">f</span>) }
-109:           <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-identifier">filelist</span>
-110:         <span class="ruby-keyword kw">else</span>
-111:           <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_relative</span>(<span class="ruby-value str">&quot;**/*&quot;</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_s</span> } <span class="ruby-comment cmt"># metadata.distribute ?</span>
-112:         <span class="ruby-keyword kw">end</span>
-113: 
-114:         <span class="ruby-comment cmt"># -- test files --</span>
+107:         <span class="ruby-comment cmt"># -- distributed files --</span>
+108: 
+109:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">exist?</span>
+110:           <span class="ruby-identifier">filelist</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">f</span>) }
+111:           <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-identifier">filelist</span>
+112:         <span class="ruby-keyword kw">else</span>
+113:           <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob_relative</span>(<span class="ruby-value str">&quot;**/*&quot;</span>).<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_s</span> } <span class="ruby-comment cmt"># metadata.distribute ?</span>
+114:         <span class="ruby-keyword kw">end</span>
 115: 
-116:         <span class="ruby-comment cmt"># TODO: Improve. Make test_files configurable (?)</span>
-117:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">test_files</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-118:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/test/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'.rb'</span>
-119:         <span class="ruby-keyword kw">end</span>
-120:       <span class="ruby-keyword kw">end</span>
-121: 
-122:     <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="verfile-method" class="method-detail ">
-        <a name="method-i-verfile"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">verfile</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Current release information.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="verfile-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 109</span>
-109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">verfile</span>
-110:       <span class="ruby-ivar">@verfile</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">verfile</span>
-111:     <span class="ruby-keyword kw">end</span></pre>
+116:         <span class="ruby-comment cmt"># -- test files --</span>
+117: 
+118:         <span class="ruby-comment cmt"># TODO: Improve. Make test_files configurable (?)</span>
+119:         <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">test_files</span> = <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+120:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/test/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">f</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'.rb'</span>
+121:         <span class="ruby-keyword kw">end</span>
+122:       <span class="ruby-keyword kw">end</span>
+123: 
+124:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -2041,42 +2291,10 @@ Version number string representation, e.g. &#8220;1.0.0&#8220;.
           <div class="method-source-code"
             id="version-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 124</span>
-124:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
-125:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">to_s</span>
-126:     <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="version--method" class="method-detail ">
-        <a name="method-i-version%3D"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">version=</span><span
-            class="method-args">(vers)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code"
-            id="version--source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 129</span>
-129:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version=</span>(<span class="ruby-identifier">vers</span>)
-130:       <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">vers</span>
-131:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/project.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
+122:       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">version</span>
+123:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

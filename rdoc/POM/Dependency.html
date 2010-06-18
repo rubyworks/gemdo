@@ -55,8 +55,8 @@
         <div class="section-body">
           <ul>
           
-            <li class="file"><a href="../lib/pom/reqfile_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="lib/pom/reqfile.rb">lib/pom/reqfile.rb</a></li>
+            <li class="file"><a href="../lib/pom/require_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/pom/require.rb">lib/pom/require.rb</a></li>
           
           </ul>
         </div>
@@ -108,6 +108,16 @@
           
             
             <li class="method">
+              <a href="#method-i-%3C%3D%3E">#<=></a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-%3D%3D">#==</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-alternate%3F">#alternate?</a>
             </li>
           
@@ -133,7 +143,17 @@
           
             
             <li class="method">
+              <a href="#method-i-eql%3F">#eql?</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-group%3D">#group=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-hash">#hash</a>
             </li>
           
             
@@ -154,6 +174,11 @@
             
             <li class="method">
               <a href="#method-i-package%3D">#package=</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-production%3F">#production?</a>
             </li>
           
             
@@ -179,6 +204,11 @@
             
             <li class="method">
               <a href="#method-i-test%3F">#test?</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_s">#to_s</a>
             </li>
           
             
@@ -212,9 +242,9 @@
         
           <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
         
-          <li class="file"><a href="../VERSION.html">VERSION</a></li>
-        
           <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../PACKAGE.html">PACKAGE</a></li>
         
           <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
         
@@ -248,6 +278,8 @@
         
           <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
         
+          <li class="class"><a href="../POM/Commands/Bump.html">POM::Commands::Bump</a></li>
+        
           <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
         
           <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
@@ -257,10 +289,6 @@
           <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
         
           <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
-        
-          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
-        
-          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
         
           <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
         
@@ -278,21 +306,33 @@
         
           <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
         
+          <li class="class"><a href="../POM/Metafile.html">POM::Metafile</a></li>
+        
+          <li class="class"><a href="../POM/News.html">POM::News</a></li>
+        
+          <li class="class"><a href="../POM/Package.html">POM::Package</a></li>
+        
+          <li class="module"><a href="../POM/Package/JewelerStyle.html">POM::Package::JewelerStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/POMStyle.html">POM::Package::POMStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/SimpleStyle.html">POM::Package::SimpleStyle</a></li>
+        
           <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
         
           <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
         
           <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
         
-          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
-        
-          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+          <li class="class"><a href="../POM/Require.html">POM::Require</a></li>
         
           <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
         
-          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+          <li class="class"><a href="../POM/VersionFile.html">POM::VersionFile</a></li>
         
-          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+          <li class="module"><a href="../POM/VersionHelper.html">POM::VersionHelper</a></li>
+        
+          <li class="class"><a href="../POM/VersionNumber.html">POM::VersionNumber</a></li>
         
           <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
         
@@ -435,11 +475,11 @@
           <div class="method-source-code"
             id="new-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 109</span>
-109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">package</span>, <span class="ruby-identifier">group</span>)
-110:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">package</span> = <span class="ruby-identifier">package</span>
-111:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">group</span>   = <span class="ruby-identifier">group</span>
-112:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 122</span>
+122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">package</span>, <span class="ruby-identifier">group</span>)
+123:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">package</span> = <span class="ruby-identifier">package</span>
+124:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">group</span>   = <span class="ruby-identifier">group</span>
+125:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -452,6 +492,79 @@
   
     <div id="public-instance-method-details" class="method-section section">
       <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="--method" class="method-detail ">
+        <a name="method-i-%3C%3D%3E"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">&lt;=&gt;</span><span
+            class="method-args">(other)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 244</span>
+244:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
+245:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>
+246:       <span class="ruby-identifier">constraint</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">constraint</span>
+247:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="--method" class="method-detail ">
+        <a name="method-i-%3D%3D"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">==</span><span
+            class="method-args">(other)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 232</span>
+232:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+233:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Dependency</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">other</span>
+234:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">group</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">group</span>
+235:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">name</span>
+236:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">constraint</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">constraint</span>
+237:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+238:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Dependency.html#method-i-eql%3F">eql?</a>
+        </div>
+        
+      </div>
 
     
       <div id="alternate--method" class="method-detail ">
@@ -474,10 +587,10 @@
           <div class="method-source-code"
             id="alternate--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 177</span>
-177:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alternate?</span>
-178:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'alternate'</span>
-179:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 198</span>
+198:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alternate?</span>
+199:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'alternate'</span>
+200:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -506,10 +619,10 @@
           <div class="method-source-code"
             id="conflict--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 192</span>
-192:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conflict?</span>
-193:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'conflict'</span>
-194:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 213</span>
+213:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conflict?</span>
+214:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'conflict'</span>
+215:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -540,19 +653,19 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="constraint-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 197</span>
-197:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">constraint</span>
-198:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">version</span>
-199:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\~$/</span>
-200:         <span class="ruby-node">&quot;~&gt; #{$1}&quot;</span>
-201:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\+$/</span>
-202:         <span class="ruby-node">&quot;&gt;= #{$1}&quot;</span>
-203:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\-$/</span>
-204:         <span class="ruby-node">&quot;&lt; #{$1}&quot;</span>
-205:       <span class="ruby-keyword kw">else</span>
-206:         <span class="ruby-identifier">version</span>
-207:       <span class="ruby-keyword kw">end</span>
-208:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 218</span>
+218:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">constraint</span>
+219:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">version</span>
+220:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\~$/</span>
+221:         <span class="ruby-node">&quot;~&gt; #{$1}&quot;</span>
+222:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\+$/</span>
+223:         <span class="ruby-node">&quot;&gt;= #{$1}&quot;</span>
+224:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\-$/</span>
+225:         <span class="ruby-node">&quot;&lt; #{$1}&quot;</span>
+226:       <span class="ruby-keyword kw">else</span>
+227:         <span class="ruby-identifier">version</span>
+228:       <span class="ruby-keyword kw">end</span>
+229:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -581,10 +694,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="development--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 157</span>
-157:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">development?</span>
-158:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'development'</span> <span class="ruby-comment cmt">#or environment == 'dev'</span>
-159:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 178</span>
+178:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">development?</span>
+179:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'development'</span> <span class="ruby-comment cmt">#or environment == 'dev'</span>
+180:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -613,11 +726,34 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="document--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 167</span>
-167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document?</span>
-168:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'document'</span>
-169:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 188</span>
+188:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document?</span>
+189:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'document'</span>
+190:     <span class="ruby-keyword kw">end</span></pre>
           </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="eql--method" class="method-detail method-alias">
+        <a name="method-i-eql%3F"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">eql?</span><span
+            class="method-args">(other)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
           
         </div>
 
@@ -645,11 +781,51 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="group--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 121</span>
-121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group=</span>(<span class="ruby-identifier">group</span>)
-122:       <span class="ruby-ivar">@group</span> = <span class="ruby-identifier">group</span>
-123:       <span class="ruby-ivar">@environment</span>, <span class="ruby-ivar">@subset</span> = <span class="ruby-identifier">group</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\//</span>)
-124:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 134</span>
+134:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group=</span>(<span class="ruby-identifier">group</span>)
+135:       <span class="ruby-ivar">@group</span> = <span class="ruby-identifier">group</span>
+136:       <span class="ruby-ivar">@environment</span>, <span class="ruby-ivar">@subset</span> = <span class="ruby-identifier">group</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\//</span>)
+137:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="hash-method" class="method-detail ">
+        <a name="method-i-hash"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">hash</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+TODO: how best to define?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="hash-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 250</span>
+250:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hash</span>
+251:       <span class="ruby-identifier">h</span> = <span class="ruby-value">0</span>
+252:       <span class="ruby-identifier">h</span> <span class="ruby-operator">^=</span> <span class="ruby-identifier">group</span>.<span class="ruby-identifier">hash</span>
+253:       <span class="ruby-identifier">h</span> <span class="ruby-operator">*=</span><span class="ruby-value">137</span>
+254:       <span class="ruby-identifier">h</span> <span class="ruby-operator">^=</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">hash</span>
+255:       <span class="ruby-identifier">h</span> <span class="ruby-operator">*=</span><span class="ruby-value">137</span>
+256:       <span class="ruby-identifier">h</span> <span class="ruby-operator">^=</span> <span class="ruby-identifier">constraint</span>.<span class="ruby-identifier">hash</span>
+257:       <span class="ruby-identifier">h</span>
+258:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -678,10 +854,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="inspect-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 137</span>
-137:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
-138:       <span class="ruby-node">&quot;#{name} #{version}&quot;</span>.<span class="ruby-identifier">strip</span>
-139:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 155</span>
+155:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+156:       <span class="ruby-node">&quot;#{name} #{version}&quot;</span>.<span class="ruby-identifier">strip</span>
+157:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -710,10 +886,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="name-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 127</span>
-127:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
-128:       <span class="ruby-ivar">@vname</span>.<span class="ruby-identifier">name</span>
-129:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 140</span>
+140:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
+141:       <span class="ruby-ivar">@vname</span>.<span class="ruby-identifier">name</span>
+142:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -742,10 +918,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="optional--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 147</span>
-147:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">optional?</span>
-148:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">runtime?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'optional'</span>
-149:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 168</span>
+168:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">optional?</span>
+169:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">runtime?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'optional'</span>
+170:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -774,12 +950,37 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="package--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 115</span>
-115:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package=</span>(<span class="ruby-identifier">package</span>)
-116:       <span class="ruby-ivar">@package</span> = <span class="ruby-identifier">package</span>
-117:       <span class="ruby-ivar">@vname</span> = <span class="ruby-constant">VName</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">package</span>)
-118:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 128</span>
+128:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">package=</span>(<span class="ruby-identifier">package</span>)
+129:       <span class="ruby-ivar">@package</span> = <span class="ruby-identifier">package</span>
+130:       <span class="ruby-ivar">@vname</span> = <span class="ruby-constant">VName</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">package</span>)
+131:     <span class="ruby-keyword kw">end</span></pre>
           </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="production--method" class="method-detail method-alias">
+        <a name="method-i-production%3F"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">production?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Alias for <a href="Dependency.html#method-i-runtime%3F">#</a>
+</p>
+          
+
           
         </div>
 
@@ -807,10 +1008,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="provision--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 182</span>
-182:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">provision?</span>
-183:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'provision'</span>
-184:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 203</span>
+203:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">provision?</span>
+204:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'provision'</span>
+205:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -839,10 +1040,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="replacement--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 187</span>
-187:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replacement?</span>
-188:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'replacement'</span>
-189:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 208</span>
+208:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replacement?</span>
+209:       <span class="ruby-identifier">alternate?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'replacement'</span>
+210:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -871,10 +1072,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="required--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 152</span>
-152:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">required?</span>
-153:       <span class="ruby-operator">!</span>(<span class="ruby-identifier">optional?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">alternate?</span>)
-154:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 173</span>
+173:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">required?</span>
+174:       <span class="ruby-operator">!</span>(<span class="ruby-identifier">optional?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">alternate?</span>)
+175:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -903,14 +1104,18 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="runtime--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 142</span>
-142:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">runtime?</span>
-143:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'runtime'</span>
-144:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 160</span>
+160:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">runtime?</span>
+161:       <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'runtime'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">environment</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'production'</span>
+162:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
 
+        
+        <div class="aliases">
+          Also aliased as: <a href="Dependency.html#method-i-production%3F">production?</a>
+        </div>
         
       </div>
 
@@ -935,10 +1140,42 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="test--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 162</span>
-162:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test?</span>
-163:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'test'</span>
-164:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 183</span>
+183:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test?</span>
+184:       <span class="ruby-identifier">development?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'test'</span>
+185:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-s-method" class="method-detail ">
+        <a name="method-i-to_s"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="to-s-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 150</span>
+150:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+151:       <span class="ruby-node">&quot;#{name} #{version}&quot;</span>.<span class="ruby-identifier">strip</span>
+152:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -967,10 +1204,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="vendored--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 172</span>
-172:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vendored?</span>
-173:       <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'vendor'</span>
-174:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 193</span>
+193:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vendored?</span>
+194:       <span class="ruby-identifier">subset</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'vendor'</span>
+195:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -999,10 +1236,10 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="version-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/reqfile.rb, line 132</span>
-132:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
-133:       <span class="ruby-ivar">@vname</span>.<span class="ruby-identifier">version</span>
-134:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 145</span>
+145:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
+146:       <span class="ruby-ivar">@vname</span>.<span class="ruby-identifier">version</span>
+147:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

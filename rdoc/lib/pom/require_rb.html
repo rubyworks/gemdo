@@ -1,0 +1,2236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>File: require.rb [POM]</title>
+
+  <link rel="SHORTCUT ICON" href="../../assets/icon/file.png">
+
+  <link type="text/css" rel="stylesheet" href="../../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../../assets/highlight/styles/github.css" title="GitHub" />
+
+  <script type="text/javascript" charset="utf-8" src="../../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
+</head>
+
+<body class="file"> <!-- .file-popup is no more -->
+<div id="main">
+
+  <div class="head">
+    <h1>
+      <img src="../../assets/icon/file.png" align="absmiddle">&nbsp;
+      <a href="../../index.html">POM</a>&nbsp;
+      <a href="/">require.rb</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="file-stats-section" class="section">
+      <h3 class="section-header">File Stats</h3>
+      <dl>
+        <dt class="modified-date">Last Modified</dt>
+        <dd class="modified-date">Fri Jun 18 13:58:28 -0400 2010</dd>
+
+        
+        <dt class="requires">Requires</dt>
+        <dd class="requires">
+          <ul>
+          
+            <li>pom/core_ext/pathname</li>
+          
+          </ul>
+        </dd>
+        
+
+        
+      </dl>
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
+        <ul>
+        
+          <li class="file"><a href="../../PROFILE.html">PROFILE</a></li>
+        
+          <li class="file"><a href="../../HISTORY_rdoc.html">HISTORY.rdoc</a></li>
+        
+          <li class="file"><a href="../../LICENSE.html">LICENSE</a></li>
+        
+          <li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../../PACKAGE.html">PACKAGE</a></li>
+        
+          <li class="file"><a href="../../REQUIRE.html">REQUIRE</a></li>
+        
+          <li class="file"><a href="../../NOTES_rdoc.html">NOTES.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../../assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li class="module"><a href="../../POM.html">POM</a></li>
+        
+          <li class="class"><a href="../../POM/Command.html">POM::Command</a></li>
+        
+          <li class="module"><a href="../../POM/Commands.html">POM::Commands</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/About.html">POM::Commands::About</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Bump.html">POM::Commands::Bump</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Init.html">POM::Commands::Init</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Show.html">POM::Commands::Show</a></li>
+        
+          <li class="class"><a href="../../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
+        
+          <li class="class"><a href="../../POM/Dependency.html">POM::Dependency</a></li>
+        
+          <li class="class"><a href="../../POM/Dependency/VName.html">POM::Dependency::VName</a></li>
+        
+          <li class="class"><a href="../../POM/History.html">POM::History</a></li>
+        
+          <li class="class"><a href="../../POM/History/Release.html">POM::History::Release</a></li>
+        
+          <li class="class"><a href="../../POM/Manifest.html">POM::Manifest</a></li>
+        
+          <li class="class"><a href="../../POM/MetaStore.html">POM::MetaStore</a></li>
+        
+          <li class="class"><a href="../../POM/Metadata.html">POM::Metadata</a></li>
+        
+          <li class="class"><a href="../../POM/Metadir.html">POM::Metadir</a></li>
+        
+          <li class="class"><a href="../../POM/Metafile.html">POM::Metafile</a></li>
+        
+          <li class="class"><a href="../../POM/News.html">POM::News</a></li>
+        
+          <li class="class"><a href="../../POM/Package.html">POM::Package</a></li>
+        
+          <li class="module"><a href="../../POM/Package/JewelerStyle.html">POM::Package::JewelerStyle</a></li>
+        
+          <li class="module"><a href="../../POM/Package/POMStyle.html">POM::Package::POMStyle</a></li>
+        
+          <li class="module"><a href="../../POM/Package/SimpleStyle.html">POM::Package::SimpleStyle</a></li>
+        
+          <li class="class"><a href="../../POM/Profile.html">POM::Profile</a></li>
+        
+          <li class="class"><a href="../../POM/Project.html">POM::Project</a></li>
+        
+          <li class="class"><a href="../../POM/Readme.html">POM::Readme</a></li>
+        
+          <li class="class"><a href="../../POM/Require.html">POM::Require</a></li>
+        
+          <li class="class"><a href="../../POM/Resources.html">POM::Resources</a></li>
+        
+          <li class="class"><a href="../../POM/VersionFile.html">POM::VersionFile</a></li>
+        
+          <li class="module"><a href="../../POM/VersionHelper.html">POM::VersionHelper</a></li>
+        
+          <li class="class"><a href="../../POM/VersionNumber.html">POM::VersionNumber</a></li>
+        
+          <li class="module"><a href="../../Enumerable.html">Enumerable</a></li>
+        
+          <li class="class"><a href="../../FalseClass.html">FalseClass</a></li>
+        
+          <li class="class"><a href="../../NilClass.html">NilClass</a></li>
+        
+          <li class="class"><a href="../../Numeric.html">Numeric</a></li>
+        
+          <li class="class"><a href="../../Object.html">Object</a></li>
+        
+          <li class="class"><a href="../../Pathname.html">Pathname</a></li>
+        
+          <li class="class"><a href="../../String.html">String</a></li>
+        
+          <li class="class"><a href="../../Symbol.html">Symbol</a></li>
+        
+          <li class="class"><a href="../../TrueClass.html">TrueClass</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      <!-- METHODS -->
+      <div id="methodindex-section" class="section project-section">
+        <h3 class="section-header">Method Index</h3>
+        <ul>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-c-%5B%5D">::[]</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-alias_accessor">::alias_accessor</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-attr_accessor">::attr_accessor</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-c-attr_accessor">::attr_accessor</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-c-attr_accessor">::attr_accessor</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-attr_reader">::attr_reader</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM</span>
+              <a href="POM.html#method-c-const_missing">::const_missing</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-c-constraint_lambda">::constraint_lambda</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-c-default_filename">::default_filename</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-c-default_filename">::default_filename</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-default_filename">::default_filename</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-c-defaults">::defaults</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-defaults">::defaults</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-c-file_pattern">::file_pattern</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-file_pattern">::file_pattern</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-c-file_pattern">::file_pattern</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-c-file_pattern">::file_pattern</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-c-filename">::filename</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-filename">::filename</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-c-listings">::listings</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-c-load">::load</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-load">::load</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-c-load">::load</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM</span>
+              <a href="POM.html#method-c-locate_root_at">::locate_root_at</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-c-lookup">::lookup</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::JewelerStyle</span>
+              <a href="POM/Package/JewelerStyle.html#method-c-match%3F">::match?</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::SimpleStyle</span>
+              <a href="POM/Package/SimpleStyle.html#method-c-match%3F">::match?</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::POMStyle</span>
+              <a href="POM/Package/POMStyle.html#method-c-match%3F">::match?</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Bump</span>
+              <a href="POM/Commands/Bump.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::History::Release</span>
+              <a href="POM/History/Release.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Dump</span>
+              <a href="POM/Commands/Dump.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::History</span>
+              <a href="POM/History.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Show</span>
+              <a href="POM/Commands/Show.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::About</span>
+              <a href="POM/Commands/About.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Upgrade</span>
+              <a href="POM/Commands/Upgrade.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency::VName</span>
+              <a href="POM/Dependency/VName.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-new_project">::new_project</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-c-new_project_config">::new_project_config</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-c-parse_constraint">::parse_constraint</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-c-require_commands">::require_commands</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM</span>
+              <a href="POM.html#method-c-root">::root</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-c-root">::root</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Upgrade</span>
+              <a href="POM/Commands/Upgrade.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Show</span>
+              <a href="POM/Commands/Show.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::About</span>
+              <a href="POM/Commands/About.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Bump</span>
+              <a href="POM/Commands/Bump.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Dump</span>
+              <a href="POM/Commands/Dump.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-c-run">::run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-%3C%3D%3E">#<=></a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-%3C%3D%3E">#<=></a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-%3D%3D">#==</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-%3D%7E">#=~</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-%5B%5D">#[]</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-%5B%5D">#[]</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-%5B%5D">#[]</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-%5B%5D">#[]</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-%5B%5D%3D">#[]=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-%5B%5D%3D">#[]=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-about">#about</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-alternate%3F">#alternate?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-announcement">#announcement</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-assert_valid">#assert_valid</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-author">#author</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-author">#author</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-author%3D">#author=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-authors">#authors</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-backup%21">#backup!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-backup%21">#backup!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-backup%21">#backup!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-build">#build</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-build">#build</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-bump">#bump</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-cache">#cache</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-cache">#cache</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-codename">#codename</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-compiles%3F">#compiles?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-config">#config</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-conflict%3F">#conflict?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-constraint">#constraint</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency::VName</span>
+              <a href="POM/Dependency/VName.html#method-i-constraint">#constraint</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-copyright">#copyright</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-date%3D">#date=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-date%3D">#date=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-description">#description</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-development">#development</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-development%3F">#development?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-doc">#doc</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-document%3F">#document?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-each">#each</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-email">#email</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-email">#email</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-empty%3F">#empty?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-entries">#entries</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-eql%3F">#eql?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-executables">#executables</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::About</span>
+              <a href="POM/Commands/About.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Dump</span>
+              <a href="POM/Commands/Dump.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Bump</span>
+              <a href="POM/Commands/Bump.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Upgrade</span>
+              <a href="POM/Commands/Upgrade.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Show</span>
+              <a href="POM/Commands/Show.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-exist%3F">#exist?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-extensions">#extensions</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-fallback_name">#fallback_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-i-file">#file</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-i-file">#file</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-files">#files</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Pathname</span>
+              <a href="Pathname.html#method-i-first">#first</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-get%21">#get!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Pathname</span>
+              <a href="Pathname.html#method-i-glob">#glob</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Pathname</span>
+              <a href="Pathname.html#method-i-glob_relative">#glob_relative</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-group%3D">#group=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-hash">#hash</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-i-history">#history</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-history">#history</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-homepage">#homepage</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-homepage">#homepage</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-ignore">#ignore</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-import_gemspec">#import_gemspec</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-import_readme">#import_readme</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-inc">#inc</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-initialize_defaults">#initialize_defaults</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-initialize_preload">#initialize_preload</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-inspect">#inspect</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-inspect">#inspect</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-inspect">#inspect</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-issues">#issues</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-key%3F">#key?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-key%3F">#key?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-keys">#keys</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-license">#license</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-list">#list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-load%21">#load!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-load%21">#load!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-loadpath">#loadpath</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-loadpath">#loadpath</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-log">#log</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-major">#major</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-major">#major</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-manifest">#manifest</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-merge%21">#merge!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-merge%21">#merge!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-merge%21">#merge!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-mesh%21">#mesh!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-metadir">#metadir</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-minor">#minor</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-minor">#minor</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-name">#name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-name">#name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-name">#name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-name">#name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-name%3D">#name=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-new_project_defaults">#new_project_defaults</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-news">#news</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-now%21">#now!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-optional%3F">#optional?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-pack">#pack</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-package">#package</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-package">#package</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-package%3D">#package=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-package_name">#package_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-package_name">#package_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Show</span>
+              <a href="POM/Commands/Show.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Upgrade</span>
+              <a href="POM/Commands/Upgrade.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::JewelerStyle</span>
+              <a href="POM/Package/JewelerStyle.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::About</span>
+              <a href="POM/Commands/About.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::POMStyle</span>
+              <a href="POM/Package/POMStyle.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Dump</span>
+              <a href="POM/Commands/Dump.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency::VName</span>
+              <a href="POM/Dependency/VName.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::SimpleStyle</span>
+              <a href="POM/Package/SimpleStyle.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Bump</span>
+              <a href="POM/Commands/Bump.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-i-parse">#parse</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::News</span>
+              <a href="POM/News.html#method-i-parse_body">#parse_body</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-i-parse_command">#parse_command</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse_copyright">#parse_copyright</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse_description">#parse_description</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse_license">#parse_license</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionHelper</span>
+              <a href="POM/VersionHelper.html#method-i-parse_release_hash">#parse_release_hash</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionHelper</span>
+              <a href="POM/VersionHelper.html#method-i-parse_release_stamp">#parse_release_stamp</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse_resources">#parse_resources</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-parse_title">#parse_title</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-patch">#patch</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-patch">#patch</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-path%3D">#path=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-path_to_name">#path_to_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-pkg">#pkg</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-plugin">#plugin</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-plugins">#plugins</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-i-print_fixes">#print_fixes</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-production%3F">#production?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-profile">#profile</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-profile">#profile</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-project">#project</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-provision%3F">#provision?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::History</span>
+              <a href="POM/History.html#method-i-read">#read</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-read%21">#read!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-read%21">#read!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-read%21">#read!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-read_version_file">#read_version_file</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-readme">#readme</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::History</span>
+              <a href="POM/History.html#method-i-release">#release</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-release">#release</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-released%3D">#released=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::POMStyle</span>
+              <a href="POM/Package/POMStyle.html#method-i-render">#render</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::JewelerStyle</span>
+              <a href="POM/Package/JewelerStyle.html#method-i-render">#render</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package::SimpleStyle</span>
+              <a href="POM/Package/SimpleStyle.html#method-i-render">#render</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-replacement%3F">#replacement?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-repository">#repository</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-i-require_rubygems">#require_rubygems</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-require_rubygems">#require_rubygems</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-required%3F">#required?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-requirements">#requirements</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-requirements">#requirements</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-requires">#requires</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-resources%3D">#resources=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-respond_to%3F">#respond_to?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-restate">#restate</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-root">#root</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-root">#root</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-root%3D">#root=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::About</span>
+              <a href="POM/Commands/About.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Dump</span>
+              <a href="POM/Commands/Dump.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Gemspec</span>
+              <a href="POM/Commands/Gemspec.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Upgrade</span>
+              <a href="POM/Commands/Upgrade.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Bump</span>
+              <a href="POM/Commands/Bump.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Init</span>
+              <a href="POM/Commands/Init.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Commands::Show</span>
+              <a href="POM/Commands/Show.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-i-run">#run</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Command</span>
+              <a href="POM/Command.html#method-i-run_command">#run_command</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-runtime%3F">#runtime?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-save%21">#save!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-save_version_file">#save_version_file</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-scan_for_github">#scan_for_github</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-scan_for_googlegroups">#scan_for_googlegroups</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-script">#script</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-site">#site</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-size">#size</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-size">#size</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-i-size">#size</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Manifest</span>
+              <a href="POM/Manifest.html#method-i-size">#size</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-stage_name">#stage_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-stage_name">#stage_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-state">#state</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-status">#status</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-status">#status</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-store">#store</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-summary%3D">#summary=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-task">#task</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-test%3F">#test?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-title">#title</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-tmp">#tmp</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-tmpdir">#tmpdir</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-to_a">#to_a</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-to_gemspec">#to_gemspec</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metafile</span>
+              <a href="POM/Metafile.html#method-i-to_h">#to_h</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-to_h">#to_h</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Profile</span>
+              <a href="POM/Profile.html#method-i-to_h">#to_h</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Resources</span>
+              <a href="POM/Resources.html#method-i-to_h">#to_h</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Enumerable</span>
+              <a href="Enumerable.html#method-i-to_list">#to_list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">String</span>
+              <a href="String.html#method-i-to_list">#to_list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">NilClass</span>
+              <a href="NilClass.html#method-i-to_list">#to_list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-to_package">#to_package</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-to_profile">#to_profile</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-to_require">#to_require</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::History::Release</span>
+              <a href="POM/History/Release.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency::VName</span>
+              <a href="POM/Dependency/VName.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-to_s">#to_s</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionNumber</span>
+              <a href="POM/VersionNumber.html#method-i-to_str">#to_str</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-to_yaml">#to_yaml</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Require</span>
+              <a href="POM/Require.html#method-i-to_yaml">#to_yaml</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">TrueClass</span>
+              <a href="TrueClass.html#method-i-try_dup">#try_dup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">FalseClass</span>
+              <a href="FalseClass.html#method-i-try_dup">#try_dup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Numeric</span>
+              <a href="Numeric.html#method-i-try_dup">#try_dup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">NilClass</span>
+              <a href="NilClass.html#method-i-try_dup">#try_dup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Symbol</span>
+              <a href="Symbol.html#method-i-try_dup">#try_dup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadir</span>
+              <a href="POM/Metadir.html#method-i-valid%3F">#valid?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-vendored%3F">#vendored?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Project</span>
+              <a href="POM/Project.html#method-i-version">#version</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Dependency</span>
+              <a href="POM/Dependency.html#method-i-version">#version</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Metadata</span>
+              <a href="POM/Metadata.html#method-i-version">#version</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-version%3D">#version=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Package</span>
+              <a href="POM/Package.html#method-i-version%3D">#version=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::Readme</span>
+              <a href="POM/Readme.html#method-i-wiki">#wiki</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-write%21">#write!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::MetaStore</span>
+              <a href="POM/MetaStore.html#method-i-write_raw%21">#write_raw!</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">POM::VersionFile</span>
+              <a href="POM/VersionFile.html#method-i-yaml%3F">#yaml?</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div id="validator-badges">
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://proutils.github.com/webri">WebRI Newfish</a> 1.2.1
+      <br/><br/>
+    </div>
+  </div>
+
+  <!-- .file-popup was wrapped:
+    <div id="documentation">
+      
+      <div class="description">
+          ... file.description ...
+      </div>
+      
+    </div>
+   So maybe that css is no longer needed.
+   -->
+
+  <div id="documentation">
+    
+  </div>
+
+</div>
+</body>
+</html>
+

@@ -77,7 +77,7 @@
         <ul>
           
           <!-- why was this class="link" ? -->
-          <li class="class"><a href="YAMLStore.html">POM::YAMLStore</a></li>
+          <li class="class"><a href="Metafile.html">POM::Metafile</a></li>
           
         </ul>
       </div>
@@ -94,7 +94,12 @@
           
             
             <li class="singleton">
-              <a href="#method-c-filename">::filename</a>
+              <a href="#method-c-default_filename">::default_filename</a>
+            </li>
+          
+            
+            <li class="singleton">
+              <a href="#method-c-new">::new</a>
             </li>
           
             
@@ -114,17 +119,27 @@
           
             
             <li class="method">
+              <a href="#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-repository">#repository</a>
             </li>
           
             
             <li class="method">
-              <a href="#method-i-resources">#resources</a>
+              <a href="#method-i-resources%3D">#resources=</a>
             </li>
           
             
             <li class="method">
-              <a href="#method-i-resources%3D">#resources=</a>
+              <a href="#method-i-respond_to%3F">#respond_to?</a>
+            </li>
+          
+            
+            <li class="method">
+              <a href="#method-i-to_h">#to_h</a>
             </li>
           
         </ul>
@@ -148,9 +163,9 @@
         
           <li class="file"><a href="../LICENSE.html">LICENSE</a></li>
         
-          <li class="file"><a href="../VERSION.html">VERSION</a></li>
-        
           <li class="file"><a href="../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../PACKAGE.html">PACKAGE</a></li>
         
           <li class="file"><a href="../REQUIRE.html">REQUIRE</a></li>
         
@@ -184,6 +199,8 @@
         
           <li class="class"><a href="../POM/Commands/About.html">POM::Commands::About</a></li>
         
+          <li class="class"><a href="../POM/Commands/Bump.html">POM::Commands::Bump</a></li>
+        
           <li class="class"><a href="../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
         
           <li class="class"><a href="../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
@@ -193,10 +210,6 @@
           <li class="class"><a href="../POM/Commands/Show.html">POM::Commands::Show</a></li>
         
           <li class="class"><a href="../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
-        
-          <li class="class"><a href="../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
-        
-          <li class="class"><a href="../POM/DebCtrl.html">POM::DebCtrl</a></li>
         
           <li class="class"><a href="../POM/Dependency.html">POM::Dependency</a></li>
         
@@ -214,21 +227,33 @@
         
           <li class="class"><a href="../POM/Metadir.html">POM::Metadir</a></li>
         
+          <li class="class"><a href="../POM/Metafile.html">POM::Metafile</a></li>
+        
+          <li class="class"><a href="../POM/News.html">POM::News</a></li>
+        
+          <li class="class"><a href="../POM/Package.html">POM::Package</a></li>
+        
+          <li class="module"><a href="../POM/Package/JewelerStyle.html">POM::Package::JewelerStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/POMStyle.html">POM::Package::POMStyle</a></li>
+        
+          <li class="module"><a href="../POM/Package/SimpleStyle.html">POM::Package::SimpleStyle</a></li>
+        
           <li class="class"><a href="../POM/Profile.html">POM::Profile</a></li>
         
           <li class="class"><a href="../POM/Project.html">POM::Project</a></li>
         
           <li class="class"><a href="../POM/Readme.html">POM::Readme</a></li>
         
-          <li class="class"><a href="../POM/Release.html">POM::Release</a></li>
-        
-          <li class="class"><a href="../POM/Reqfile.html">POM::Reqfile</a></li>
+          <li class="class"><a href="../POM/Require.html">POM::Require</a></li>
         
           <li class="class"><a href="../POM/Resources.html">POM::Resources</a></li>
         
-          <li class="class"><a href="../POM/Verfile.html">POM::Verfile</a></li>
+          <li class="class"><a href="../POM/VersionFile.html">POM::VersionFile</a></li>
         
-          <li class="class"><a href="../POM/YAMLStore.html">POM::YAMLStore</a></li>
+          <li class="module"><a href="../POM/VersionHelper.html">POM::VersionHelper</a></li>
+        
+          <li class="class"><a href="../POM/VersionNumber.html">POM::VersionNumber</a></li>
         
           <li class="module"><a href="../Enumerable.html">Enumerable</a></li>
         
@@ -270,7 +295,11 @@
         <h1>Profile</h1>
       
 
-      
+      <p>
+<a href="Profile.html">Profile</a> store ancillary project metadata such as
+title, summary, list of authors, etc.
+</p>
+
     </div>
 
     <!-- Constants -->
@@ -297,11 +326,9 @@
       <div id="name-attribute-method" class="method-detail">
         <a name="name"></a>
         
-        <a name="name="></a>
-        
         <div class="method-heading attribute-method-heading">
           <span class="method-name">name</span><span
-            class="attribute-access-type">[RW]</span>
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
@@ -327,8 +354,7 @@ contain spaces or puncuation.
         <div class="method-description">
         
         <p>
-Title of packa &#8217;.profile&#8217;ge (this defaults to project name
-capitalized).
+Title of package (this defaults to project name capitalized).
 </p>
         
         </div>
@@ -389,23 +415,6 @@ Name of the user-account or master-project to which this project belongs.
 The suite name defaults to the project name if no entry is given. This is
 also aliased as #.
 </p>
-        
-        </div>
-      </div>
-      
-      <div id="collection-attribute-method" class="method-detail">
-        <a name="collection"></a>
-        
-        <a name="collection="></a>
-        
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">collection</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
         
         </div>
       </div>
@@ -506,6 +515,23 @@ List of authors.
         </div>
       </div>
       
+      <div id="resources-attribute-method" class="method-detail">
+        <a name="resources"></a>
+        
+        <a name="resources="></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">resources</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
     </div>
     
 
@@ -515,12 +541,12 @@ List of authors.
       <h3 class="section-header">Public Class Methods</h3>
 
     
-      <div id="filename-method" class="method-detail ">
-        <a name="method-c-filename"></a>
+      <div id="default-filename-method" class="method-detail ">
+        <a name="method-c-default_filename"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">filename</span><span
+          <span class="method-name">default_filename</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         
@@ -533,12 +559,45 @@ List of authors.
 
           
           <div class="method-source-code"
-            id="filename-source">
+            id="default-filename-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 10</span>
-10:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filename</span>
-11:       [<span class="ruby-value str">'PROFILE'</span>, <span class="ruby-value str">'Profile'</span>, <span class="ruby-value str">'.profile'</span>]
-12:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 17</span>
+17:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_filename</span>
+18:       <span class="ruby-value str">'PROFILE.yml'</span>
+19:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="method-c-new"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(root, name, opts={})</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 24</span>
+24:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">opts</span>={})
+25:       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">name</span>
+26:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">opts</span>)
+27:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -575,10 +634,10 @@ Returns the first entry in the authors list.
           <div class="method-source-code"
             id="author-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 99</span>
- 99:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>
-100:       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">first</span>
-101:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 110</span>
+110:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>
+111:       <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">first</span>
+112:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -609,14 +668,14 @@ Contact&#8217;s email address.
           <div class="method-source-code"
             id="email-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 90</span>
-90:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">email</span>
-91:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-constant">RE_EMAIL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">contact</span>.<span class="ruby-identifier">to_s</span>)
-92:         <span class="ruby-identifier">md</span>[<span class="ruby-value">0</span>]
-93:       <span class="ruby-keyword kw">else</span>
-94:         <span class="ruby-keyword kw">nil</span>
-95:       <span class="ruby-keyword kw">end</span>
-96:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">email</span>
+102:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-constant">RE_EMAIL</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">contact</span>.<span class="ruby-identifier">to_s</span>)
+103:         <span class="ruby-identifier">md</span>[<span class="ruby-value">0</span>]
+104:       <span class="ruby-keyword kw">else</span>
+105:         <span class="ruby-keyword kw">nil</span>
+106:       <span class="ruby-keyword kw">end</span>
+107:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -645,10 +704,53 @@ Contact&#8217;s email address.
           <div class="method-source-code"
             id="homepage-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 77</span>
-77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">homepage</span>
-78:       <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">homepage</span>
-79:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 88</span>
+88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">homepage</span>
+89:       <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">homepage</span>
+90:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="method-missing-method" class="method-detail ">
+        <a name="method-i-method_missing"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">method_missing</span><span
+            class="method-args">(sym, *args)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Profile.html">Profile</a> is extensible. If a setting is assigned
+that is not already defined an attribute accessor will be created for it.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="method-missing-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 117</span>
+117:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
+118:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
+119:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
+120:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
+121:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
+122:         <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+123:       <span class="ruby-keyword kw">else</span>
+124:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+125:         <span class="ruby-keyword kw">nil</span>
+126:       <span class="ruby-keyword kw">end</span>
+127:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -677,42 +779,10 @@ Contact&#8217;s email address.
           <div class="method-source-code"
             id="repository-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 82</span>
-82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">repository</span>
-83:       <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">repository</span>
-84:     <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="resources-method" class="method-detail ">
-        <a name="method-i-resources"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">resources</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code"
-            id="resources-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 62</span>
-62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resources</span>
-63:       <span class="ruby-ivar">@resources</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Resources</span>.<span class="ruby-identifier">new</span>
-64:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 93</span>
+93:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">repository</span>
+94:       <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">repository</span>
+95:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -741,15 +811,80 @@ Contact&#8217;s email address.
           <div class="method-source-code"
             id="resources--source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 67</span>
-67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resources=</span>(<span class="ruby-identifier">resources</span>)
-68:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">resources</span>
-69:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Resources</span>
-70:         <span class="ruby-ivar">@resources</span> = <span class="ruby-identifier">resources</span>
-71:       <span class="ruby-keyword kw">else</span>
-72:         <span class="ruby-ivar">@resources</span> = <span class="ruby-constant">Resources</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">resources</span>)
-73:       <span class="ruby-keyword kw">end</span>
-74:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resources=</span>(<span class="ruby-identifier">resources</span>)
+84:       <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'resources'</span>] = <span class="ruby-constant">Resources</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">resources</span>)
+85:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="respond-to--method" class="method-detail ">
+        <a name="method-i-respond_to%3F"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">respond_to?</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="respond-to--source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 137</span>
+137:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>)
+138:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>)
+139:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>]
+140:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+141:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="to-h-method" class="method-detail ">
+        <a name="method-i-to_h"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">to_h</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Convert to hash.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="to-h-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 130</span>
+130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
+131:       <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">dup</span>
+132:       <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>] = <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>].<span class="ruby-identifier">to_h</span>
+133:       <span class="ruby-identifier">data</span>
+134:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

@@ -138,9 +138,9 @@
         
           <li class="file"><a href="../../LICENSE.html">LICENSE</a></li>
         
-          <li class="file"><a href="../../VERSION.html">VERSION</a></li>
-        
           <li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../../PACKAGE.html">PACKAGE</a></li>
         
           <li class="file"><a href="../../REQUIRE.html">REQUIRE</a></li>
         
@@ -174,6 +174,8 @@
         
           <li class="class"><a href="../../POM/Commands/About.html">POM::Commands::About</a></li>
         
+          <li class="class"><a href="../../POM/Commands/Bump.html">POM::Commands::Bump</a></li>
+        
           <li class="class"><a href="../../POM/Commands/Dump.html">POM::Commands::Dump</a></li>
         
           <li class="class"><a href="../../POM/Commands/Gemspec.html">POM::Commands::Gemspec</a></li>
@@ -183,10 +185,6 @@
           <li class="class"><a href="../../POM/Commands/Show.html">POM::Commands::Show</a></li>
         
           <li class="class"><a href="../../POM/Commands/Upgrade.html">POM::Commands::Upgrade</a></li>
-        
-          <li class="class"><a href="../../POM/Commands/Ver.html">POM::Commands::Ver</a></li>
-        
-          <li class="class"><a href="../../POM/DebCtrl.html">POM::DebCtrl</a></li>
         
           <li class="class"><a href="../../POM/Dependency.html">POM::Dependency</a></li>
         
@@ -204,21 +202,33 @@
         
           <li class="class"><a href="../../POM/Metadir.html">POM::Metadir</a></li>
         
+          <li class="class"><a href="../../POM/Metafile.html">POM::Metafile</a></li>
+        
+          <li class="class"><a href="../../POM/News.html">POM::News</a></li>
+        
+          <li class="class"><a href="../../POM/Package.html">POM::Package</a></li>
+        
+          <li class="module"><a href="../../POM/Package/JewelerStyle.html">POM::Package::JewelerStyle</a></li>
+        
+          <li class="module"><a href="../../POM/Package/POMStyle.html">POM::Package::POMStyle</a></li>
+        
+          <li class="module"><a href="../../POM/Package/SimpleStyle.html">POM::Package::SimpleStyle</a></li>
+        
           <li class="class"><a href="../../POM/Profile.html">POM::Profile</a></li>
         
           <li class="class"><a href="../../POM/Project.html">POM::Project</a></li>
         
           <li class="class"><a href="../../POM/Readme.html">POM::Readme</a></li>
         
-          <li class="class"><a href="../../POM/Release.html">POM::Release</a></li>
-        
-          <li class="class"><a href="../../POM/Reqfile.html">POM::Reqfile</a></li>
+          <li class="class"><a href="../../POM/Require.html">POM::Require</a></li>
         
           <li class="class"><a href="../../POM/Resources.html">POM::Resources</a></li>
         
-          <li class="class"><a href="../../POM/Verfile.html">POM::Verfile</a></li>
+          <li class="class"><a href="../../POM/VersionFile.html">POM::VersionFile</a></li>
         
-          <li class="class"><a href="../../POM/YAMLStore.html">POM::YAMLStore</a></li>
+          <li class="module"><a href="../../POM/VersionHelper.html">POM::VersionHelper</a></li>
+        
+          <li class="class"><a href="../../POM/VersionNumber.html">POM::VersionNumber</a></li>
         
           <li class="module"><a href="../../Enumerable.html">Enumerable</a></li>
         
@@ -367,17 +377,22 @@
 <pre>
     <span class="ruby-comment cmt"># File lib/pom/commands/upgrade.rb, line 48</span>
 48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>
-49:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-value str">'PROFILE'</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-value str">'VERSION'</span>)
-50:         <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;use --force to overwrite PROFILE and VERSION files&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$FORCE</span>
+49:       <span class="ruby-keyword kw">if</span> <span class="ruby-node">%{PROFILE PACKAGE REQUIRE}</span>.<span class="ruby-identifier">any?</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">f</span>) }
+50:         <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;Use --force to overwrite PACKAGE, PROFILE and/or REQUIRE files.&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$FORCE</span>
 51:       <span class="ruby-keyword kw">end</span>
 52:       <span class="ruby-identifier">metadir</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Metadir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'.'</span>)
 53:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">metadir</span>.<span class="ruby-identifier">store</span>
 54:         <span class="ruby-identifier">profile</span> = <span class="ruby-identifier">metadir</span>.<span class="ruby-identifier">to_profile</span>
-55:         <span class="ruby-identifier">verfile</span> = <span class="ruby-identifier">metadir</span>.<span class="ruby-identifier">to_verfile</span>
-56:         <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value str">'PROFILE'</span>)
-57:         <span class="ruby-identifier">verfile</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value str">'VERSION'</span>)
-58:       <span class="ruby-keyword kw">end</span>
-59:     <span class="ruby-keyword kw">end</span></pre>
+55:         <span class="ruby-identifier">package</span> = <span class="ruby-identifier">metadir</span>.<span class="ruby-identifier">to_package</span>
+56:         <span class="ruby-identifier">require</span> = <span class="ruby-identifier">metadir</span>.<span class="ruby-identifier">to_require</span>
+57:         <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value str">'PROFILE'</span>)
+58:         <span class="ruby-identifier">package</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value str">'PACKAGE'</span>)
+59:         <span class="ruby-identifier">require</span>.<span class="ruby-identifier">save!</span>(<span class="ruby-value str">'REQUIRE'</span>)
+60:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Please edit the PACKAGE, PROFILE and REQUIRE files.&quot;</span>
+61:       <span class="ruby-keyword kw">else</span>
+62:         <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;No meta directory found to convert.&quot;</span>
+63:       <span class="ruby-keyword kw">end</span>
+64:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -416,7 +431,7 @@
 31:           <span class="ruby-identifier">$VERBOSE</span> = <span class="ruby-keyword kw">true</span>
 32:         <span class="ruby-keyword kw">end</span>
 33: 
-34:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--force&quot;</span>, <span class="ruby-value str">&quot;overwrite pre-existing PROFILE/VERSION&quot;</span>) <span class="ruby-keyword kw">do</span>
+34:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--force&quot;</span>, <span class="ruby-value str">&quot;overwrite pre-existing PACKAGE/PROFILE files&quot;</span>) <span class="ruby-keyword kw">do</span>
 35:           <span class="ruby-identifier">$FORCE</span> = <span class="ruby-keyword kw">true</span>
 36:         <span class="ruby-keyword kw">end</span>
 37: 
