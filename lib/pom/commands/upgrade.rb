@@ -1,7 +1,7 @@
 module POM::Commands
   require 'pom/metadir'
   require 'pom/profile'
-  require 'pom/verfile'
+  require 'pom/package'
 
   #
   class Upgrade
@@ -31,7 +31,7 @@ module POM::Commands
           $VERBOSE = true
         end
 
-        opt.on("--force", "overwrite pre-existing PROFILE/VERSION") do
+        opt.on("--force", "overwrite pre-existing PACKAGE/PROFILE files") do
           $FORCE = true
         end
 
@@ -46,15 +46,18 @@ module POM::Commands
 
     #
     def execute
-      if File.exist?('PROFILE') or File.exist?('VERSION')
-        abort "use --force to overwrite PROFILE and VERSION files" unless $FORCE
+      if File.exist?('PROFILE') or File.exist?('PACKAGE')
+        abort "use --force to overwrite PACKAGE and PROFILE files" unless $FORCE
       end
       metadir = POM::Metadir.new('.')
       if metadir.store
         profile = metadir.to_profile
-        verfile = metadir.to_verfile
+        package = metadir.to_package
         profile.save!('PROFILE')
-        verfile.save!('VERSION')
+        package.save!('PACKAGE')
+        puts "Please edit the PACKAGE and PROFILE files."
+      else
+        puts "No meta directory found to convert."
       end
     end
 

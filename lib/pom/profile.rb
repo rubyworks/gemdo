@@ -119,7 +119,7 @@ module POM
       name = meth.chomp('=')
       case meth
       when /=$/
-        @date[name] = args.first
+        self[name] = args.first
       else
         super(sym, *args) if block_given? or args.size > 0
         nil

@@ -2,35 +2,52 @@ module POM
 
   # = VersionNumber
   #
-  # VersionNumber is a simplified form of a Tuple class
-  # desgined specifically for dealing with version numbers.
+  # VersionNumber is a simplified form of a tuple desgined
+  # specifically for dealing with version numbers.
   #
-  class VersionNumber #< Tuple
-
-    #include Enumerable
+  class VersionNumber
+    include Enumerable
     include Comparable
 
-    def initialize(raw)
-      case raw
+    # Possible build states
+    STATES = ['alpha', 'beta', 'pre', 'rc']
+
+    # Shortcut for creating a new verison number
+    # given segmented elements.
+    #
+    #   VersionNumber[1,0,0].to_s  #=> "1.0.0"
+    #
+    def self.[](*args)
+      new(args)
+    end
+
+    # Create a new VersionNumber.
+    #
+    # version - a String, Hash, or Array.
+    #
+    # Returns a new VersionNumber object.
+    def initialize(version)
+      case version
       when String
-        raw = raw.split('.')
-        @self = raw.map{ |s| /\d+/ =~ s ? s.to_i : s }
+        version = version.split('.')
+        @segments = version.map{ |s| /\d+/ =~ s ? s.to_i : s }
       when Hash
-        raw = raw.values_at(:major, :minor, :patch, :build)
-        @self = raw.split('.').map{ |s| /\d+/ =~ s ? i.to_i : s }
+        version - version.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
+        version = version.values_at(:major, :minor, :patch, :state, :build).compact
+        @segments = version.split('.').map{ |s| /\d+/ =~ s ? i.to_i : s }
       when Array
-        @self = raw.dup
+        @segments = version.dup
       end
     end
 
     #
     def to_s
-      @self.join('.')
+      @segments.join('.')
     end
 
-    # This is here only becuase File.join calls it instead of to_s.
+    # This is here only becuase `File.join` calls it instead of #to_s.
     def to_str
-      @self.join('.')
+      @segments.join('.')
     end
 
     #
@@ -38,66 +55,120 @@ module POM
       to_s
     end
 
+    #
     def [](i)
-      @self.fetch(i,0)
+      @segments.fetch(i,0)
     end
 
     # "Spaceship" comparsion operator.
+    #
+    # FIXME: Ensure it can handle state.
     def <=>( other )
       #other = other.to_t
-      [@self.size, other.size].max.times do |i|
-        c = @self[i] <=> other[i]
+      [@segments.size, other.size].max.times do |i|
+        c = @segments[i] <=> other[i]
         return c if c != 0
       end
       0
     end
 
-    # For pessimistic constraint (like '~>' in gems)
+    # For pessimistic constraint (like '~>' in gems).
+    #
+    # FIXME: Ensure it can handle state.
     def =~( other )
       #other = other.to_t
       upver = other.dup
       upver[0] += 1
-      @self >= other and @self < upver
+      @segments >= other and @segments < upver
     end
 
     # Major is the first number in the version series.
     def major
-      @self[0]
+      @segments[0] || 0
     end
 
     # Minor is the second number in the version series.
     def minor
-      @self[1] || 0
+      @segments[1] || 0
     end
 
     # Patch is third number in the version series.
     def patch
-      @self[2] || 0
+      @segments[2] || 0
     end
 
-    #
+    # The build number is everything after the patch number,
+    # or for "oddly long" version numbers, anything from the
+    # state position onward.
     def build
-      @self[3..-1].join('.')
+      i = @segments.index{ |s| STATES.keys.include?(s) }
+      if i
+        @segments[i..-1].join('.')
+      else
+        @segments[3..-1].join('.')
+      end
+    end
+
+    # State is the version number segment that matches any entry
+    # in the STATES constant.
+    def state
+      i = @segments.index{ |s| STATES.keys.include?(s) }
+      @segments[i]
     end
 
     #
     def bump(which=:patch)
-      case which
+      case which.to_sym
       when :major
-        self.class.new(major+1)
+        v = [inc(major), 0, 0]
       when :minor
-        self.class.new(major, minor+1)
+        v = [major, inc(minor), 0]
       when :patch
-        self.class.new(major, minor, patch+1)
+        v = [major, minor, inc(patch)]
+      when :state
+        i = @segments.index{ |s| STATES.include?(s) }
+        v = @segments[0...i] + [inc(@segments[i])] + (@segments[i+1] ? [1] : [])
+      when :build, :last
+        v = @segments[0...-1] + [inc(@segments.last)]
       else
-        # ???
+        v = @segments.dup
+      end
+      self.class.new(v)
+    end
+
+    # Change state.
+    def restate(new_state)
+      i = @segments.index{ |s| STATES.include?(s) }
+      if i
+        v = @segments[0...i] + [new_state.to_s] + [1]
+      else
+        v = @segments[0...3] + [new_state.to_s] + [1]
+      end
+      self.class.new(v)
+    end
+
+    #
+    def each(&block)
+      @segments.each(&block)
+    end
+
+    #
+    def size
+      @segments.size
+    end
+
+    ;; private
+
+    # Segement incrementor.
+    def inc(val)
+      if i = STATES.index(val.to_s)
+        STATES[i+1]
+      else
+        val.succ
       end
     end
 
-    # Delegate to the array.
-    def method_missing( sym, *args, &blk )
-      @self.send(sym, *args, &blk ) rescue super
-    end
+    ;; public
 
     # Parses a string constraint returning the operation as a lambda.
     def self.constraint_lambda( constraint )
@@ -105,7 +176,7 @@ module POM
       lambda { |t| t.send(op, val) }
     end
 
-    #
+    # Parses a string constraint returning the operator and value.
     def self.parse_constraint( constraint )
       constraint = constraint.strip
       re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}

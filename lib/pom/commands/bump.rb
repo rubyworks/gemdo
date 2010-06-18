@@ -1,6 +1,6 @@
 module POM::Commands
 
-  class Ver
+  class Bump
 
     def self.run
       new.run
@@ -25,7 +25,7 @@ module POM::Commands
       state = nil
 
       parser = OptionParser.new do |opt|
-        opt.banner = "pom show [ENTRY]"
+        opt.banner = "pom bump [OPTIONS | ENTRY]"
 
         opt.on("--major", "-M", "bump major version number") do
           slot = :major
@@ -43,7 +43,7 @@ module POM::Commands
           slot = :build
         end
 
-        opt.on("--state", "-s [TERM]", "specify a state") do |term|
+        opt.on("--state", "-s [TERM]", "specify a new state") do |term|
           state = term
         end
 
@@ -71,54 +71,63 @@ module POM::Commands
 
     #
     def execute
-      if @slot or @state or @entry
+      if @entry  or @slot or @state
+        new_version = project.package.version
+
+        if @entry
+          new_version = VersionNumber.new(@entry)
+        end
+
         if @slot
-          __send__("bump_#{@slot}")
-        elsif @entry
-          # TODO: fail is new version is less then old version
-          project.version = @entry
+          new_version = new_version.version.bump(@slot)
         end
 
         if @state
-          project.verfile.state = @state
-          project.verfile.build = 1 unless project.verfile.build
+          new_version = new_version.restate(@state)
         end
 
-        project.verfile.save! unless $DRYRUN
+        # TODO: Fail if new version is less then old version unless $FORCE
+
+        project.package.version = new_version
+        project.package.save! unless $DRYRUN
       end
+
       puts(project.version) 
     end
 
-  private
+    ;; private
 
+=begin
     #
     def bump_major
-      project.verfile.major = project.verfile.major.succ
-      project.verfile.minor = 0 if project.verfile.minor
-      project.verfile.patch = 0 if project.verfile.patch
-      project.verfile.state = nil
-      project.verfile.build = nil
+      project.package.version.bump(:major)
+      #project.package.major = project.package.major.succ
+      #project.package.minor = 0 if project.package.minor
+      #project.package.patch = 0 if project.package.patch
+      #project.package.build = nil
     end
 
     #
     def bump_minor
-      project.verfile.minor = project.verfile.minor.succ
-      project.verfile.patch = 0 if project.verfile.patch
-      project.verfile.state = nil
-      project.verfile.build = nil
+      project.package.version.bump(:minor)
+      #project.package.minor = project.package.minor.succ
+      #project.package.patch = 0 if project.package.patch
+      #project.package.build = nil
     end
 
     #
     def bump_patch
-      project.verfile.patch = project.verfile.patch.succ
-      project.verfile.state = nil
-      project.verfile.build = nil
+      project.package.version.bump(:patch)
+      #project.package.patch = project.package.patch.succ
+      #project.package.build = nil
     end
 
     #
     def bump_build
-      project.verfile.build = project.verfile.build.succ
+      project.package.version.bump(:build)
+      #project.package.build = project.package.build.succ
     end
+=end
 
 =begin
     # Bump given version index.
