@@ -82,7 +82,6 @@ module POM
           val = source.__send__(sym, *args, &blk)
           if val
             return val unless $DEBUG
-          else
             vals << val
           end
         end

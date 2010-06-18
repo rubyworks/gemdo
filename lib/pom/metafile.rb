@@ -108,6 +108,11 @@ module POM
     end
 
     #
+    def key?(name)
+      @data.key?(name.to_s)
+    end
+
+    #
     def merge!(hash)
       hash.each do |k,v|
         case v

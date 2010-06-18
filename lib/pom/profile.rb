@@ -133,6 +133,12 @@ module POM
       data
     end
 
+    #
+    def respond_to?(name)
+      return true if super(name)
+      return true if self[name]
+      return false
+    end
   end
 
 end
