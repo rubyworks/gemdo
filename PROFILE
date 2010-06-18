@@ -20,5 +20,5 @@ resources:
   docs  : http://wiki.github.com/proutils/pom
   wiki  : http://wiki.github.com/proutils/pom
   api   : http://proutils.github.com/pom/rdoc
-  mail  : mailto:protuils+subscribe@googlegroups.com
+  mail  : mailto:proutils+subscribe@googlegroups.com
   forum : http://groups.google.com/group/proutils
