@@ -1,4 +1,4 @@
-Fri, 18 Jun 2010 18:41:50 -0400
+Fri, 18 Jun 2010 19:03:17 -0400
 lib/pom/gemspec.rb	Thu, 17 Jun 2010 01:43:55 -0400
 lib/pom/commands/show.rb	Thu, 17 Jun 2010 02:21:19 -0400
 lib/pom/core_ext/to_list.rb	Fri, 28 May 2010 17:38:06 -0400
@@ -23,7 +23,7 @@ lib/pom/version_number.rb	Fri, 18 Jun 2010 11:27:40 -0400
 lib/pom/commands/gemspec.rb	Sun, 06 Jun 2010 20:48:06 -0400
 lib/pom/commands/dump.rb	Thu, 17 Jun 2010 02:17:27 -0400
 bin/pom	Sat, 14 Nov 2009 17:52:00 -0500
-README.rdoc	Fri, 18 Jun 2010 12:57:12 -0400
+README.rdoc	Fri, 18 Jun 2010 19:03:05 -0400
 PACKAGE	Fri, 18 Jun 2010 14:47:03 -0400
 lib/pom/manifest.rb	Wed, 13 Jan 2010 03:41:31 -0500
 lib/pom/require.rb	Fri, 18 Jun 2010 13:58:28 -0400

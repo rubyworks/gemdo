@@ -49,7 +49,7 @@
       <h3 class="section-header">File Stats</h3>
       <dl>
         <dt class="modified-date">Last Modified</dt>
-        <dd class="modified-date">Fri Jun 18 12:57:12 -0400 2010</dd>
+        <dd class="modified-date">Fri Jun 18 19:03:05 -0400 2010</dd>
 
         
 
@@ -2282,34 +2282,37 @@ further details.
 </p>
 <h2>Upgrading from 1.x to 2.0</h2>
 <p>
-Early version of <a href="POM.html">POM</a> used a directory-based
+Earlier versions of <a href="POM.html">POM</a> used a directory-based
 configuration store, storing each peice of informtation in a separate file
 under the meta/ or .meta/ directory. The latest versions of <a
 href="POM.html">POM</a> have replaced this with a small set of YAML-base
-configuration files. Noth approaches has their advantages and
-disadvantages. <a href="POM.html">POM</a> moved to later primarily because
+configuration files. While both approaches has their advantages and
+disadvantages, <a href="POM.html">POM</a> moved to later primarily because
 of it&#8217;s familiarity to developers.
 </p>
 <p>
-If you are using an old version of <a href="POM.html">POM</a> and need to
-updgrade your project for use with the new version, the pom command
-provides a helpful subcommand:
+If you were using an old version of <a href="POM.html">POM</a> with a
+project and need to updgrade, the pom command provides a helpful
+subcommand:
 </p>
 <pre>
   $ pom upgrade
 </pre>
 <p>
-This will create a <a href="PROFILE.html">PROFILE</a> and <a
-href="PACKAGE.html">PACKAGE</a> file containing the entries in the meta/ or
-.meta/ directory. It will not be prefect, so be sure to edit these file
-after they are created, but it will at least make the process much  easier.
+This will create a <a href="PROFILE.html">PROFILE</a>, <a
+href="PACKAGE.html">PACKAGE</a> and <a href="REQUIRE.html">REQUIRE</a> file
+containing the entries in the meta/ or .meta/ directory. It will not be
+prefect, so be sure to edit the files, but it will at least make the
+process much easier.
 </p>
 <h2>DEVELOPMENT</h2>
 <p>
-You can subscribe to the ProUtils mailing list by sensing a message to <a
-href=&#8220;<a
-href="mailto:protuils+subscribe@googlegroups.com">this">protuils+subscribe@googlegroups.com">this</a>
-mailing address</a>.
+You can subscribe to the ProUtils mailing list by sensing a message to this
+mailing <a href="mailto:protuils+subscribe@googlegroups.com">address</a>.
+</p>
+<p>
+Or visit <a
+href="http://groups.google.com/group/proutils.">groups.google.com/group/proutils.</a>
 </p>
 <h2>HOW TO INSTALL</h2>
 <p>
@@ -2323,8 +2326,8 @@ Site installation requires Setup.rb (gem install setup), then download the
 tarball package and type:
 </p>
 <pre>
-  $ tar -xvzf pom-1.0.0.tgz
-  $ cd pom-1.0.0.tgz
+  $ tar -xvzf pom-2.1.0.tar.gz
+  $ cd pom-2.1.0.tar.gz
   $ sudo setup.rb all
 </pre>
 <p>
