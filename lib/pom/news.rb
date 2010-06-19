@@ -1,21 +1,15 @@
 require 'pom/core_ext'
 require 'pom/history'
-require 'pom/version_helper'
 
 module POM
 
   # = News / Release Notes
   #
-  # This class provides the latest release notes for a project.
-  # These notes are either extracted from the latest entry in
-  # the +HISTORY+ file or taken from a +RELEASE+ file, if
-  # provided. The +RELEASE+ file can optionally be called +NEWS+,
-  # and have an extension.
+  # This class provides access to the latest news / release notes,
+  # for a project. These notes are either extracted from a +NEWS+
+  # file or from the lastest entry in the +HISTORY+ file.
   #
-  # TODO: Make resuable by History for release entries.
-  class News
-
-    include VersionHelper
+  class News < History::Release
 
     # Search glob if any files exist in project from which
     # the Release class can gather information.
@@ -28,6 +22,7 @@ module POM
 
     #
     def self.find(root)
+      root = Pathname.new(root)
       root.glob(file_pattern, :casefold).first
     end
 
@@ -35,84 +30,51 @@ module POM
     attr :root
 
     # Release file, if any.
-    #attr :file
+    attr :file
 
-    # Release notes.
-    attr :notes
-
-    # List of changes.
-    attr :changes
-
-    # Version number.
-    attr :version
-
-    # Release date.
-    attr :date
-
-    # Billing name of release, e.g. "Hardy Haron"
-    attr :billname
-
-    # New News.
+    # New News ;)
     def initialize(root, opts={})
-      @root    = root
+      @root    = Pathname.new(root)
       @history = opts[:history]
 
-      @notes   = ''
-      @changes = ''
-
-      @file = root.glob(FIND, :casefold).first
+      @file = opts[:file] || self.class.find(root)
 
       if @file
-        parse
-      #else
-      #  rel = history.releases[0]
-      #  @notes   = rel.notes
-      #  @changes = rel.changes
+        super(File.read(@file))
+      end
+
+      #if opts[:history]
+      #  @history = opts[:history]
+      #elsif History.find(root)
+      #  @history = History.new(root)
+      #end
+
+      if !file && history
+        @header   = history.release.header
+        @notes    = history.release.notes
+        @change   = history.release.changes
+
+        @version  = history.release.version
+        @date     = history.release.date
+        @nickname = history.release.nickname
       end
     end
 
-    #
+    # NEWS file.
     def file
       @file
     end
 
-    # Access to HISTORY file.
+    # Lazy access to HISTORY file.
     def history
-      @history ||= History.new(root)
-    end
-
-    private
-
-    #
-    def parse
-      text = File.read(file).strip
-      line = text.lines.find{ |line| line =~ /\d/ }
-      if line
-        rel = parse_release_stamp(line)
-        @version  = rel[:version]
-        @date     = rel[:date]
-        @billname = rel[:billname]
-      end
-      parse_body(text)
-    end
-
-    # TODO: Continue to improve parsing of news file.
-    # Also, share code with History entries.
-    def parse_body(text)
-      word = text.index(/^[A-Za-z]/)
-      list = text.index(/^(\*|\d+\.)/)
-
-      if list == nil
-        @notes = text
-      elsif word == nil
-        @changes = text.strip
-      elsif list > word
-        @notes   = notes[0...list].strip
-        @changes = notes[list..-1]
-      else
-        @notes   = notes[word..-1]
-        @changes = notes[0...word].strip
-      end
+      return @history unless @history.nil?
+      @history = (
+        if History.find(root)
+          History.new(root)
+        else
+          false
+        end
+      )
     end
 
   end #class News

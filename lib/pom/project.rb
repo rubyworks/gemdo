@@ -168,7 +168,7 @@ module POM
 
     # Access latest release notes.
     def news
-      @release ||= News.new(root, history)
+      @news ||= News.new(root, :history=>history)
     end
 
     # The <tt>log/</tt> directory stores log output created by 

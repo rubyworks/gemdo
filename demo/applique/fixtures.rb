@@ -1,5 +1,10 @@
 FIXTURE_DIR = 'tmp/example/'
 
+# Remove the example project if it exists.
+Before :document do
+  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
+end
+
 When 'iven a ((([\.\w]+))) project file' do |name, text|
   FileUtils.mkdir_p(FIXTURE_DIR)
   File.open(FIXTURE_DIR + name, 'w') do |f|
@@ -7,8 +12,7 @@ When 'iven a ((([\.\w]+))) project file' do |name, text|
   end
 end
 
-# Remove the example project if it exists.
-Before :document do
-  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
+When 'no ((([\.\w]+))) file in a project' do |name|
+  FileUtils.rm(FIXTURE_DIR + name)
 end
 

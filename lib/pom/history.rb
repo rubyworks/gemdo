@@ -1,4 +1,5 @@
 require 'pom/core_ext'
+require 'pom/version_helper'
 
 module POM
 
@@ -20,18 +21,24 @@ module POM
   #
   #   * outline oimportant changelog items
   #
-  # +Changes:+ is used a parsing marker, rather than looking
-  # for an '*', so that lists can be used in the release note
-  # too.
+  # +Changes:+ is used as a parsing marker. While optional, it
+  # helps the parser find the list of changes, rather than looking
+  # for an asterisk or digit, so that ordered and unordered lists
+  # can be used in the note section too.
   #
-  # TODO: Allow the format to be more varied.
-  #
-  # TODO: Let marker be specified to handle odd formats.
+  # TODO: Deal with ChangeLog like formats? Perhaps just make extendable
+  # to handle custom formats.
   #
   class History
 
     # File glob for finding the HISTORY file.
     DEFAULT_FILE = '{History}{,.*}'
+
+    #
+    def self.find(root)
+      root = Pathname.new(root)
+      root.glob(DEFAULT_FILE, :casefold).first
+    end
 
     # HISTORY file's pathname.
     attr :file
@@ -39,37 +46,31 @@ module POM
     # List of release entries.
     attr :releases
 
-    # Either '=' for RDoc or '#' for Markdown.
-    attr :marker
-
     # New History.
-    def initialize(root)
+    def initialize(root, opts={})
       @root     = Pathname.new(root)
-      @file     = @root.first(DEFAULT_FILE, :casefold)
-      @marker   = (file && file.extname == '.rdoc') ? '=' : '#'
-      @releases = []
+      @file     = opts[:file] || self.class.find(root)
       read
     end
 
+    # Match against version number string.
+    HEADER_RE = /^[=#]+\s*\d+\.\S+/
+
     # Read and parse the Histoy file.
     def read
+      @releases = []
+      entry = nil
       if file
-        text = file.read.strip
-
-        @marker = text.index(/^\=/) ? '=' : '#'
-
-        text = text.sub(/\A[#{marker}]\s+(.*?)$/,'').strip
-        scan = text.scan(/#{marker}{2}(.*?)\n(.*?)(^Changes:.*?)(?=#{marker}{2}|\Z)/m)
-        scan.each do |header, notes, changes|
-          @releases << Release.new(header, notes, changes)
-        end
-
-        if @releases.empty?
-          scan = text.scan(/#{marker}{2}(.*?)\n(.*?)(^[*].*?)(?=#{marker}{2}|\Z)/m)
-          scan.each do |header, notes, changes|
-            @releases << Release.new(header, notes, changes)
+        file.readlines.each do |line|
+          if HEADER_RE =~ line
+            @releases << Release.new(entry) if entry
+            entry = line
+          else
+            next unless entry
+            entry << line
           end
         end
+        @releases << Release.new(entry)
       end
     end
 
@@ -78,19 +79,88 @@ module POM
        releases.first
     end
 
-    # History Release Entry
+    # History release entry.
     class Release
+
+      include VersionHelper
+
+      # The full text of the release note.
+      attr :text
+
+      # The header.
       attr :header
+
+      # The description.
       attr :notes
+
+      # The list of changes.
       attr :changes
-      def initialize(header, notes, changes)
-        @header  = header.strip
-        @notes   = notes.strip
-        @changes = changes.strip
+
+      # Version number (as a string).
+      attr :version
+
+      # Release date.
+      attr :date
+
+      # Nick name of the release, if any.
+      attr :nickname
+
+      #
+      def initialize(text)
+        @text = text.strip
+        parse
       end
+
+      # Returns the complete text.
       def to_s
-        "#{header}\n\n#{notes}\n\n#{changes}"
-        #"#{marker}#{marker} #{header}\n\n#{notes}\n\n#{changes}"
+        text
+      end
+
+      ;; private
+
+      # Parse the release text into +header+, +notes+
+      # and +changes+ components.
+      def parse
+        lines = text.lines.to_a
+
+        @header = lines.shift.strip
+
+        parse_release_stamp(@header)
+
+        # remove blank lines from top
+        lines.shift until lines.first !~ /^\s+$/
+
+        # find line that looks like the startt of a list of c hanges.
+        idx = nil
+        idx ||= lines.index{ |line| /^changes\:\s*$/i =~ line }
+        idx ||= lines.index{ |line| /^1.\ / =~ line }
+        idx ||= lines.index{ |line| /^\*\ / =~ line }
+
+        if idx > 0
+          @notes   = lines[0...idx].join
+          @changes = lines[idx..-1].join
+        else
+          gap = lines.index{ |line| /^\s*$/ =~ line }
+          @changes = lines[0...gap].join
+          @notes   = lines[gap..-1].join
+        end
+      end
+
+      # Parse out the different components of the header, such
+      # as `version`, release `date` and release `nick name`.
+      def parse_release_stamp(text)
+        # version
+        if md = /\b(\d+\.\d.*?)(\s|$)/.match(text)
+          @version = md[1]
+        end
+        # date
+        if md = /\b(\d+\-\d+\-.*?\d)(\s|\W|$)/.match(text)
+          @date = md[1]
+        end
+        # nickname
+        if md = /\"(.*?)\"/.match(text)
+          @nickname = md[1]
+        end
       end
     end
 
