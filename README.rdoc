@@ -51,9 +51,9 @@ details.
 Earlier versions of POM used a directory-based configuration store, storing
 each peice of informtation in a separate file under the meta/ or .meta/
 directory. The latest versions of POM have replaced this with a small
-set of YAML-base configuration files. While both approaches has their advantages
-and disadvantages, POM moved to later primarily because of it's familiarity
-to developers.
+set of YAML-base configuration files. While both approaches has their
+advantages and disadvantages, POM moved to later primarily because of it's
+familiarity to developers.
 
 If you were using an old version of POM with a project and need to updgrade,
 the pom command provides a helpful subcommand:
@@ -71,6 +71,9 @@ You can subscribe to the ProUtils mailing list by sensing a message to
 this mailing address[mailto:protuils+subscribe@googlegroups.com].
 
 Or visit http://groups.google.com/group/proutils.
+
+Integration testing is handled by QED and unit testing is handled by
+Lemon.
 
 
 == HOW TO INSTALL
