@@ -1,0 +1,881 @@
+<html>
+<head>
+  <title>POM Demonstrations</title>
+
+  <style>
+    #container{ margin: 0 auto; width: 800px; }
+
+    /* Debug borders */
+    /* p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 { border: 1px solid red; } */
+
+    body { font-size: 14px; line-height: 20px; margin: 1em 5% 1em 5%; font-family: Verdana, Arial, Helvetica, sans-serif; }
+    a { color: #336; text-decoration: underline; }
+    a:visited { color: #334; }
+    em { font-style: italic; }
+    strong { font-weight: bold; }
+    tt { color: navy; }
+
+    h1, h2, h3, h4, h5, h6 { color: #223; margin-top: 1.2em; margin-bottom: 0.5em; line-height: 1.3; }
+    h1 { border-bottom: 2px solid silver; }
+    h2 { border-bottom: 2px solid silver; padding-top: 0.5em; }
+
+    hr { color: #ccc; margin-top: 1.6em; }
+
+    p { color: #222; text-align: justify; margin-top: 0.5em; margin-bottom: 0.5em; line-height: 1.4em; }
+
+    pre { padding: 10; margin: 0; font-family: monospace; font-size: 0.9em; }
+    pre.pass { color: green; }
+    pre.fail { color: red; }
+    pre.error { color: red; font-weight: bold; }
+
+    span#author { color: #527bbd; font-weight: bold; font-size: 1.1em; }
+    span#email { }
+    span#revision { }
+
+    div#footer { font-size: small; border-top: 2px solid silver; padding-top: 0.5em; margin-top: 4.0em; }
+    div#footer-text { float: left; padding-bottom: 0.5em; }
+    div#footer-badges { float: right; padding-bottom: 0.5em; }
+
+    /* Block element content. */
+    div.content { padding: 0; }
+
+    /* Block element titles. */
+    h1.title { font-weight: bold; text-align: left; font-size: 3em; margin-top: 1.0em; margin-bottom: 0.5em; }
+
+    /* Block element titles. */
+    div.title, caption.title { font-weight: bold; text-align: left; margin-top: 1.0em; margin-bottom: 0.5em; }
+    div.title + * { margin-top: 0; }
+    td div.title:first-child { margin-top: 0.0em; }
+    div.content div.title:first-child { margin-top: 0.0em; }
+    div.content + div.title { margin-top: 0.0em; }
+    div.sidebarblock > div.content { background: #ffffee; border: 1px solid silver; padding: 0.5em; }
+
+    img { border-style: none; }
+
+    dl { margin-top: 0.8em; margin-bottom: 0.8em; }
+    dt { margin-top: 0.5em; margin-bottom: 0; font-style: italic; }
+    dd > *:first-child { margin-top: 0; }
+    ul, ol { list-style-position: outside; }
+
+    thead { font-weight: bold; }
+    tfoot { font-weight: bold; }
+  </style>
+
+  <!-- TODO: only include if these files exists -->
+  <link href="../assets/styles/spec.css" type="text/css" rel="stylesheet">
+  <!-- spec.css might be a problem with clobber -->
+  <link href="spec.css" type="text/css" rel="stylesheet">
+
+  
+
+  <!-- JQuery is needed -->
+  <script src="jquery.js" type="text/javascript" language="javascript"></script>
+
+</head>
+
+<body>
+
+  <!-- Side Table of Contents -->
+  <div id="sidebar" style="position: fixed; top: 10; right: 10; background: white;">
+    <a href="javascript: toc_toggle();">
+      <img src="img/icon/book.jpg" height="30px;" style="border: none;" alt="TOC" align="right"/>
+    </a>
+
+    <div id="toc_side" class="toc">
+    </div>
+  </div>
+
+  <div id="container">
+    <div id="header">
+      <img src="img/icon/book.jpg" align="left" style="padding-right: 10px;" alt=""/>
+
+      <h1 class="title">POM Demonstrations</h1>
+
+      <h1>Table of Contents</h1>
+
+      <div class="toc">
+      </div>
+    </div>
+
+    <div id="content">
+      <body>
+<h1>Version Bumping</h1>
+<p>
+In the demonstration to follow we will uses this macro to reload the
+PACKAGE file.
+</p>
+<pre>
+  def package
+    YAML.load(File.new('tmp/example/PACKAGE'))
+  end
+</pre>
+<p>
+Given a PACKAGE project file containing …
+</p>
+<pre>
+    name: foo
+    vers: 1.0.0
+</pre>
+<p>
+First, the `pom bump` command, when given no other arguments will display
+the current version.
+</p>
+<pre>
+  `cd tmp/example; pom bump`.assert == "1.0.0\n"
+</pre>
+<p>
+This is the same as using `pom show version`.
+</p>
+<pre>
+  `cd tmp/example; pom show version`.assert == "1.0.0\n"
+</pre>
+<p>
+We can use the `pom bump` command to bump the `patch` version using the
+`—patch` flag.
+</p>
+<pre>
+  `cd tmp/example; pom bump --patch`
+</pre>
+<p>
+We can see that the `patch` number has been incremented.
+</p>
+<pre>
+  package['vers'].assert = '1.0.1'
+</pre>
+<p>
+Again, we can use the `pom bump` command to bump the `minor` version with
+the `—minor` flag.
+</p>
+<pre>
+  `cd tmp/example; pom bump --minor`
+</pre>
+<p>
+And we can see that the `minor` number has been incremented.
+</p>
+<pre>
+  package['vers'].assert = '1.1.0'
+</pre>
+<p>
+We can use the `pom bump` command to bump the `major` version by using the
+`—major` flag.
+</p>
+<pre>
+  `cd tmp/example; pom bump --major`
+</pre>
+<p>
+We can see that the `major` number has been incremented.
+</p>
+<pre>
+  package['vers'].assert = '2.0.0'
+</pre>
+</body>
+<body>
+<h1>History Class</h1>
+<p>
+The history class encapsulates this list of release made by a project. It
+parses a text file by the name of HISTORY into it indivdual relase entries.
+</p>
+<p>
+Given a HISTORY project file containing …
+</p>
+<pre>
+    = RELEASE HISTORY
+
+    == 1.2.0 / 2010-10-18
+
+    Some Dandy description of the 1.2.0 release.
+    This is  multiline description.
+
+    Changes:
+
+    * This is change 1.
+    * This is change 2.
+    * This is change 3.
+
+    == 1.1.0 | 2010-06-06 | "Happy Days"
+
+    Some Dandy description of the 1.1.0 release.
+    This is  multiline description. Notice the
+    header varies from the first.
+
+    The description can even have multiple paragraphs.
+
+    Changes:
+
+    * This is change 1.
+    * This is change 2.
+    * This is change 3.
+
+    == 1.0.0 / 2010-04-30
+
+    Some Dandy description of the 1.0.0 release.
+    This is  multiline description. Notice that
+    the "changes:" label isn't strictly needed.
+
+    * This is change 1.
+    * This is change 2.
+    * This is change 3.
+
+    == 0.9.0 / 2010-04-10
+
+    1. This is change 1.
+    2. This is change 2.
+    3. This is change 3.
+
+    Some Dandy description of the 0.9.0 release.
+    Notice this time that the changes are listed
+    first and are numerically enumerated.
+</pre>
+<p>
+The History class provides an interface to this information.
+</p>
+<pre>
+    require 'pom/history'
+</pre>
+<p>
+The initializer takes the root directory for the project and looks for a
+file called <tt>HISTORY</tt>, optionally ending in an extension such as
+<tt>.txt</tt> or <tt>.rdoc</tt>, etc.
+</p>
+<pre>
+    history = POM::History.new('tmp/example')
+</pre>
+<p>
+Now we should have an enumeration of each release entry in the HISTORY
+file.
+</p>
+<pre>
+    history.releases.size.assert == 4
+</pre>
+<p>
+The non-plurual #release method will give us the first entry. And we can
+see that it has been parsed into its component attributes.
+</p>
+<pre>
+    history.release.header.assert == '== 1.2.0 / 2010-10-18'
+    history.release.notes.assert.index('description of the 1.2.0')
+</pre>
+<p>
+The header is further parsed into version, date and nickname if given.
+</p>
+<pre>
+    history.release.version.assert == '1.2.0'
+    history.release.date.assert    == '2010-10-18'
+</pre>
+<p>
+We should see like results for the other release entries.
+</p>
+<pre>
+    history.releases[2].version.assert == '1.0.0'
+    history.releases[2].date.assert    == '2010-04-30'
+
+    history.releases[2].header.assert == '== 1.0.0 / 2010-04-30'
+    history.releases[2].notes.assert.index('description of the 1.0.0')
+    history.releases[2].changes.assert.index('This is change 1')
+</pre>
+<p>
+Even though there are variations in the formats of each entry they are
+still parsed correctly. For example the second release has a nick name.
+</p>
+<pre>
+    history.releases[1].nickname.assert == 'Happy Days'
+</pre>
+<p>
+And the last entry has it’s changes listed before the description.
+</p>
+<pre>
+    history.releases[3].header.assert == '== 0.9.0 / 2010-04-10'
+    history.releases[3].notes.assert.index('description of the 0.9.0')
+    history.releases[3].changes.assert.index('This is change 1')
+</pre>
+<p>
+The history parser is farily simplistic, but it is flexibile enough to
+parse the most common HISTORY file formats. 
+</p>
+</body>
+<body>
+<h1>Generate POM Metadata with <tt>init</tt> Command</h1>
+<h2>Extracted from a README file</h2>
+<p>
+Given a README project file containing …
+</p>
+<pre>
+    = MyApp
+
+    * http://some.org
+
+    == DESCRIPTION
+
+    This is a description of the
+    fake project.
+
+    = INSTALL
+
+    To install use RubyGems
+
+      $ gem install myapp
+
+    = LICENSE
+
+    (GPL)
+
+    Copyright 2009 Thomas Sawyer
+</pre>
+<p>
+We can generate metadata from the README using the pom command.
+</p>
+<pre>
+    `cd tmp/example; pom init README`
+</pre>
+<p>
+Now lets verify the metadata was extracted as expected.
+</p>
+<pre>
+    require 'pom/project'
+
+    project = POM::Project.new('tmp/example')
+</pre>
+<p>
+The values should have been picked up from PACKAGE and PROFILE files.
+</p>
+<pre>
+    project.metadata.title.assert       == "MyApp"
+    project.metadata.description.assert == "This is a description of the\nfake project."
+    project.metadata.license.assert     == "GPL"
+</pre>
+<p>
+Clean-up the generated files.
+</p>
+<pre>
+    FileUtils.rm_r('tmp/example/PACKAGE.yml')
+    FileUtils.rm_r('tmp/example/PROFILE.yml')
+    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
+</pre>
+<h2>Extracted from a Gemspec</h2>
+<p>
+Given a myapp.gemspec project file containing …
+</p>
+<pre>
+    Gem::Specification.new do |s|
+      s.name = %q{myapp}
+      s.version = "1.0.0"
+      s.authors = ["Tom Sawyer"]
+      s.date = %q{2010-10-10}
+      s.description = %q{This is a description of a fake project.}
+      s.email = %q{transfire@gmail.com}
+    end
+</pre>
+<p>
+We can generate metadata from the gem specification using the pom command.
+</p>
+<pre>
+    `cd tmp/example; pom init myapp.gemspec`
+</pre>
+<p>
+Now lets verify the metadata was extracted as expected.
+</p>
+<pre>
+    require 'pom/project'
+
+    project = POM::Project.new('tmp/example')
+</pre>
+<p>
+The values should have been picked up from PACKAGE and PROFILE files.
+</p>
+<pre>
+    project.metadata.title.assert        == "Myapp"
+    project.metadata.version.to_s.assert == "1.0.0"
+    project.metadata.description.assert  == "This is a description of a fake project."
+</pre>
+<p>
+Clean-up the generated files.
+</p>
+<pre>
+    FileUtils.rm_r('tmp/example/PACKAGE.yml')
+    FileUtils.rm_r('tmp/example/PROFILE.yml')
+    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
+</pre>
+</body>
+<body>
+<h1>Pom::Metadata</h1>
+<p>
+Require metadata library.
+</p>
+<pre>
+    require 'pom/metadata'
+</pre>
+<p>
+Given a PROFILE project file containing …
+</p>
+<pre>
+    --- 
+    title: DemoApp
+    summary: Demo summary
+    license: MIT
+    contact: trans &lt;transfire@gmail.com&gt;
+    copyright: Copyright (c) 2010 Thomas Sawyer
+    created: 2010-10-10
+
+    authors: 
+      * Thomas Sawyer
+
+    description:
+      This is the description for the example.
+</pre>
+<p>
+And given a PACKAGE project file containing …
+</p>
+<pre>
+    ---
+    name: demoapp
+    vers: 1.0.0
+    date: 2010-10-10
+</pre>
+<p>
+We can access both sets of information by passing the project directory to
+the POM::Metadata constructor method.
+</p>
+<pre>
+    metadata = POM::Metadata.new('tmp/example')
+</pre>
+<p>
+Now we can verify metadata is being read from the PROFILE.
+</p>
+<pre>
+    metadata.title.assert       == "DemoApp"
+    metadata.summary.assert     == "Demo summary"
+    metadata.license.assert     == "MIT"
+    metadata.contact.assert     == "trans &lt;transfire@gmail.com&gt;"
+    metadata.authors.assert     == ["Thomas Sawyer"]
+    metadata.copyright.assert   == "Copyright (c) 2010 Thomas Sawyer"
+    metadata.created.assert     == Date.parse("2010-10-10")
+    metadata.description.assert == "This is the description for the example."
+</pre>
+<p>
+And verify version metadata is being read from the VERSION file.
+</p>
+<pre>
+    metadata.version.to_s.assert == "1.0.0"
+</pre>
+<p>
+We can also verify that certain metadata is falling back to defaults.
+</p>
+<pre>
+    metadata.loadpath.assert == ['lib']
+</pre>
+<p>
+And so forth.
+</p>
+</body>
+<body>
+<h1>News Class</h1>
+<p>
+The News class encapsulates the current release notes for the project. It
+parses a text file by the name of NEWS in the same way that individual
+release entries are parsed in the History class.
+</p>
+<p>
+Given a NEWS project file containing …
+</p>
+<pre>
+    = Foo 1.2.1 (2010-10-18)
+
+    1. This is change 1.
+    2. This is change 2.
+    3. This is change 3.
+
+    Some Dandy description of the 1.2.1 release.
+    Notice this time that the changes are listed
+    first and are numerically enumerated.
+</pre>
+<p>
+The News class provides an interface to this information.
+</p>
+<pre>
+    require 'pom/news'
+</pre>
+<p>
+The initializer takes the root directory for the project and looks for a
+file called <tt>NEWS</tt>, optionally ending in an extension such as
+<tt>.txt</tt> or <tt>.rdoc</tt>, etc.
+</p>
+<pre>
+    news = POM::News.new('tmp/example')
+</pre>
+<p>
+Now we have access to the latest release notes as given in the the NEWS
+file.
+</p>
+<pre>
+    news.header.assert == '= Foo 1.2.1 (2010-10-18)'
+    news.notes.assert.index('description of the 1.2.1')
+    news.changes.assert.index('This is change 1')
+</pre>
+<p>
+The header is further parsed into version, date and nickname if given.
+</p>
+<pre>
+    news.version.assert == '1.2.1'
+    news.date.assert    == '2010-10-18'
+</pre>
+<p>
+If there is no NEWS file in a project, the News class will fall back to the
+HISTORY files first rentry.
+</p>
+<p>
+Given a HISTORY project file containing …
+</p>
+<pre>
+    = RELEASE HISTORY
+
+    == 1.2.1 / 2010-10-18
+
+    1. This is change 1.
+    2. This is change 2.
+    3. This is change 3.
+
+    Some Dandy description of the 1.2.1 release.
+    Notice this time that the changes are listed
+    first and are numerically enumerated.
+
+    == 1.1.0 / 2010-01-01
+
+    1. This is change 1.
+    2. This is change 2.
+    3. This is change 3.
+
+    Some Dandy description of the 1.1.0 release.
+    Notice this time that the changes are listed
+    first and are numerically enumerated.
+</pre>
+<p>
+Since the NEWS file is not present, we will get the top entry of the
+HISOTRY file above from the News object.
+</p>
+<pre>
+    news = POM::News.new('tmp/example')
+    news.header.assert == '== 1.2.1 / 2010-10-18'
+    news.version.assert == '1.2.1'
+    news.date.assert == '2010-10-18'
+</pre>
+<p>
+Like the history parser, the news parser is farily simplistic, but again it
+is designed to handle the most common cases.
+</p>
+</body>
+<body>
+<h1>Project Class</h1>
+<p>
+Almost all use of POM is via the Project class. This class encapsulate all
+the other aspects of the system from metdata to standard project paths.
+</p>
+</body>
+<body>
+<h1>Parse README file</h1>
+<p>
+Given a README project file containing …
+</p>
+<pre>
+    = MyApp
+
+    * http://some.org
+
+    == DESCRIPTION
+
+    This is a description of the
+    fake project.
+
+    = INSTALL
+
+    To install use RubyGems
+
+      $ gem install myapp
+
+    = LICENSE
+
+    (GPL)
+
+    Copyright 2009 Thomas Sawyer
+</pre>
+<p>
+Load the POM::Readme library.
+</p>
+<pre>
+    require 'pom/readme'
+</pre>
+<p>
+Create a new Readme object from file.
+</p>
+<pre>
+    rm = POM::Readme.load("tmp/example/README")
+</pre>
+<p>
+It should be able to parse out a title and project name.
+</p>
+<pre>
+    rm.title.assert == "MyApp"
+
+    rm.name.assert == "myapp"
+    rm.project.assert == "myapp"
+</pre>
+<p>
+It should be able to parse out a description.
+</p>
+<pre>
+    rm.description.assert == "This is a description of the\nfake project."
+</pre>
+<p>
+It should parse out the lincese.
+</p>
+<pre>
+    rm.license.assert == "GPL"
+</pre>
+<p>
+And so forth.
+</p>
+</body>
+<body>
+<h1>Require Class</h1>
+<p>
+The requirements configuration file provides information on what
+dependencies a project has on other projects.
+</p>
+<p>
+Given a REQUIRE project file containing …
+</p>
+<pre>
+    # Project must haves these to run.
+    runtime:
+      * rake 0.8.7+
+      * mocha 0.9.8+
+      * nokogiri 1.4.0+
+      * system_timer
+      * ruby-debug 0.10.3+
+      * json
+      * yajl-ruby
+      # AP
+      * rack-test 0.5.3
+      * RedCloth 4.2.2+
+      # AR
+      * sqlite3-ruby 1.3.0.beta.2
+
+    # Project does not have to have these, but its a good idea.
+    runtime/recommend:
+      * pg 0.9.0+
+      * mysql 2.8.1+
+
+    # Purely optional.
+    runtime/optional:
+      * fcgi 0.8.7+  # does not compile on mri 1.9+
+
+    # Requirements that are vendored and shipped with package.
+    runtime/vendor:
+      * arel
+
+    #
+    development:
+      * rake
+
+    # To generate documentation.
+    development/document:
+      * rdoc 2.1
+
+    # To run tests.
+    development/test:
+      * rspec
+
+    # Packages that are vendored just for development.
+    development/vendor: []
+
+    alternate/provision: []
+
+    alternate/replacement: []
+
+    alternate/conflict: []
+</pre>
+<p>
+The Requre class provides an interface to this information.
+</p>
+<pre>
+    require 'pom/require'
+</pre>
+<p>
+The initializer takes the root directory for the project and looks for a
+file called <tt>REQUIRE</tt> or <tt>.require</tt>, optionally ending in
+<tt>.yml</tt> or <tt>.yaml</tt>.
+</p>
+<pre>
+    req = POM::Require.new('tmp/example')
+</pre>
+<p>
+The dependencies list for our sample project is fairly large.
+</p>
+<pre>
+    deps = req.dependencies
+    deps.size.assert == 17
+</pre>
+<p>
+But a few of these dependencies are purely optional.
+</p>
+<pre>
+    reqs = req.requirements
+    reqs.size.assert == 13
+</pre>
+<p>
+Two of those are development dependencies.
+</p>
+<pre>
+    devs = req.development
+    devs.size.assert == 3
+</pre>
+<p>
+Since Reqfile is Enumerable we can filter dependencies using fine grain
+criteria as well.
+</p>
+<pre>
+    test = req.select { |dep| dep.test? }
+    test.size.assert == 1
+</pre>
+<p>
+We see that we have a single dependecy for testing.
+</p>
+</body>
+<body>
+<h1>Resources</h1>
+<p>
+The Resource class keeps track of al lthe various URIs associated with a
+project. Each entry has a name and then the URI corresponding to it. For
+the most part entries are freeform. You can name them what ever you like.
+However common names have beem aliased to one another, such as
+‘mail’ and ‘mailinglist’. And two entries are
+typically expected to avaialble if applicable, namely
+‘homepage’, which is the project main website, and
+‘repository’, which is the project’s public SCM
+repository address. 
+</p>
+<pre>
+  require 'pom/resources'
+</pre>
+<p>
+Resources are a subentry in the prokect’s PROFILE, so the initializer
+simply take a hash of initial entires.
+</p>
+<pre>
+  resources = POM::Resources.new(
+    :homepage=&gt;'http://rubyworks.github.com/pom',
+    :repository=&gt;'git://github.com/rubyworks/pom.git'
+  )
+</pre>
+<p>
+The main thing to note about the Resources object is the ability to access
+information by aliased names.
+</p>
+<pre>
+  resources.home.assert == 'http://rubyworks.github.com/pom'
+  resources.repo.assert == 'git://github.com/rubyworks/pom.git'
+</pre>
+<p>
+If we look at the underlying hash we will see that all aliasing entries
+have the same value.
+</p>
+<pre>
+  resources.assert.to_h = {
+    :homepage=&gt;'http://rubyworks.github.com/pom',
+    :repository=&gt;'git://github.com/rubyworks/pom.git',
+    :home=&gt;'http://rubyworks.github.com/pom',
+    :repo=&gt;'git://github.com/rubyworks/pom.git'
+  }
+</pre>
+<p>
+This is important to be aware of if you utilize the resources as an
+Enumerable object.
+</p>
+</body>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<script src="../assets/scripts/spec.js" type="text/javascript" language="javascript"></script>
+
+<script type="text/javascript" language="javascript">
+  /*****************************************************************
+   * $.toc()
+   * by rebecca murphey
+   * rmurphey gmail com
+   *
+   * This function is called on its own and takes as an argument
+   * a list of selectors with which it will build a table of
+   * contents. 
+   *
+   * The first selector will make up the top level of the TOC;
+   * the second selector will make up the second level of the TOC;
+   * etc.
+   *
+   * This function returns a div containing nested unordered lists;
+   * each list item is linked to an anchor tag added before the item
+   * on the page.
+   *
+   * usage: $.toc('h1,h2,h3').prependTo('body');
+   ************************************************************************/
+  (function($) { 
+    $.toc = function(tocList) {
+      $(tocList).addClass('jquery-toc');
+      var tocListArray = tocList.split(',');
+      $.each(tocListArray, function(i,v) { tocListArray[i] = $.trim(v); });
+      var $elements = $('.jquery-toc');
+      $('body').append('<div></div>');
+      var $toc = $('body div:last');
+      var lastLevel = 1;
+      $toc.append('<ul class="jquery-toc-1"></ul>');
+      $elements.each(function() {
+        var $e = $(this);
+        var text = $e.text();
+        var anchor = text.replace(/ /g,'-');
+        $e.before('<a name="' + anchor + '"></a>');
+        var level;
+        $.each(tocListArray, function(i,v) { 
+          if (v.match(' ')) {
+            var vArray = v.split(' '); 
+            var e = vArray[vArray.length - 1];
+          } else { e = v; }
+          if ($e.is(e)) { level = i+1; } 
+        });
+        var className = 'jquery-toc-' + level;
+        var li = '<li><a href="#' + anchor + '">' + text + '</a></li>';
+        if (level == lastLevel) {
+          $('ul.' + className + ':last',$toc).append(li);
+        } else if (level > lastLevel) {
+          var parentLevel = level - 1;
+          var parentClassName = 'jquery-toc-' + parentLevel;
+          $('ul.' + parentClassName + ':last',$toc).
+            append('<ul class="' + className + '"></ul>');
+          $('ul.' + className + ':last',$toc).append(li);
+        } else if (level < lastLevel) {
+          $('ul.' + className + ':last',$toc).append(li);
+        }
+        lastLevel = level;
+      });
+      var $toc_ul = $('ul.jquery-toc-1',$toc);
+      $toc.remove();
+      return($toc_ul);
+   }
+  })(jQuery);
+</script>
+
+<script>
+  function toc_toggle() {
+    $('#toc_side').toggle();
+    $("pre").addClass("pass");
+    $("pre:contains('FAIL:')").addClass("fail");
+    $("pre:contains('ERROR:')").addClass("error");
+  };
+
+  $.toc('#content h1,h2,h3,h4').appendTo('.toc');
+
+  toc_toggle();
+</script>
+
