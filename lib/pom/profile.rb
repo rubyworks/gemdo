@@ -3,24 +3,24 @@ require 'pom/resources'
 
 module POM
 
-  # Profile store ancillary project metadata such
-  # as title, summary, list of authors, etc.
+  # Profile stores ancillary project metadata such
+  # as title, summary, list of authors, etc. Profile
+  # is the "mother load" of end-user information
+  # about a project. It is also arbitraily extensible
+  # so fields not strictly defined by this class
+  # can also be provided.
   #
   class Profile < Metafile
 
-    #
-    #def self.filename
-    #  ['PROFILE']
-    #end
-
-    #
+    # The default file name to use for saving
+    # a new PROFILE file.
     def self.default_filename
       'PROFILE.yml'
     end
 
-    ;; private
-
-    #
+    # New Profile object. To create a new Profile
+    # the +root+ directory of the project and the +name+
+    # of the project are required.
     def initialize(root, name, opts={})
       @name = name
       super(root, opts)
@@ -48,9 +48,9 @@ module POM
     # Detailed description.
     attr_accessor :description
 
-    # Name of the user-account or master-project to which this project belongs.
-    # The suite name defaults to the project name if no entry is given.
-    # This is also aliased as #collection.
+    # Name of the user-account or master-project to which this project
+    # belongs. The suite name defaults to the project name if no entry
+    # is given. This is also aliased as #collection.
     attr_accessor :suite
 
     #
@@ -74,27 +74,27 @@ module POM
       []
     end
 
-    #
+    # Table of project URIs encapsulated in a Resources object.
     attr_accessor :resources do
       Resources.new
     end
 
-    #
+    # Set project resources table with a Hash or another Resources object.
     def resources=(resources)
       self['resources'] = Resources.new(resources)
     end
 
-    #
+    # Project's homepage as listed in the resources.
     def homepage
       resources.homepage
     end
 
-    #
+    # Project's public repository as listed in the resources.
     def repository
       resources.repository
     end
 
-    #
+    # Regular expression for matching valid email addresses.
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
     # Contact's email address.
@@ -109,6 +109,13 @@ module POM
     # Returns the first entry in the authors list.
     def author
       authors.first
+    end
+
+    # Convert to hash.
+    def to_h
+      data = @data.dup
+      data['resources'] = data['resources'].to_h
+      data
     end
 
     # Profile is extensible. If a setting is assigned
@@ -126,14 +133,8 @@ module POM
       end
     end
 
-    # Convert to hash.
-    def to_h
-      data = @data.dup
-      data['resources'] = data['resources'].to_h
-      data
-    end
-
-    #
+    # Override standard #respond_to? method to take
+    # method_missing lookup into account.
     def respond_to?(name)
       return true if super(name)
       return true if self[name]

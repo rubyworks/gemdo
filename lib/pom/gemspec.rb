@@ -12,7 +12,13 @@ module POM
       end
     end
 
-    # Create a Gem::Specification
+    # Create a Gem::Specification from a POM::Project.
+    # Becuase POM metadata is extensive a fairly complete
+    # Gem::Specification can be created from it --sufficient
+    # for almost all needs.
+    #
+    # TODO: However there are still a few features that need address,
+    # such as gem signatures.
     def to_gemspec(options={})
       require_rubygems
 
@@ -123,9 +129,8 @@ module POM
 
     end
 
-    # Build a POM project using a gemspec. This is intended to make it
-    # farily easy to build a set of POM meta/ files if you already have
-    # a gemspec.
+    # Import a Gem::Specification into a POM::Project. This is intended to make it
+    # farily easy to build a set of POM metadata files from pre-existing gemspec.
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
