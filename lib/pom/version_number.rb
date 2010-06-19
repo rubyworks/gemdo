@@ -18,6 +18,9 @@ module POM
     # Recognized build states in order of "completion".
     STATES = ['alpha', 'beta', 'pre', 'rc']
 
+    # Recognized version slots.
+    SLOTS = %w{major minor patch state build revision}
+
     # Shortcut for creating a new verison number
     # given segmented elements.
     #
@@ -248,6 +251,12 @@ module POM
           else
             v = @segments[0...-1] + [inc(@segments.last)]
           end
+        end
+      when :revision
+        if i = state_index
+          v = @segments[0...-1] + [inc(@segments.last)]
+        else
+          v = @segments[0..2] + ['alpha', 1]
         end
       when :last
         v = @segments[0...-1] + [inc(@segments.last)]

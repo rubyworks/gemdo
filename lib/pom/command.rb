@@ -32,7 +32,7 @@ module POM
         run_command
       rescue => err
         raise err if $DEBUG
-        puts err.message
+        $stderr.puts err.message
       end
     end
 

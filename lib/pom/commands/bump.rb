@@ -1,7 +1,10 @@
+require 'pom/version_number'
+
 module POM::Commands
 
   class Bump
 
+    #
     def self.run
       new.run
     end
@@ -11,6 +14,8 @@ module POM::Commands
     #
     def initialize
       @project = POM::Project.new(:lookup=>true)
+      @slots   = []
+      @force   = false
     end
 
     #
@@ -19,40 +24,37 @@ module POM::Commands
       execute
     end
 
-    #
-    def parse
-      slot  = nil
-      state = nil
-
-      parser = OptionParser.new do |opt|
+    # Returns instance of option parser.
+    def parser
+      @parser ||= OptionParser.new do |opt|
         opt.banner = "pom bump [OPTIONS | ENTRY]"
 
         opt.on("--major", "-M", "bump major version number") do
-          slot = :major
+          @slots << :major
         end
 
         opt.on("--minor", "-m", "bump minor version number") do
-          slot = :minor
+          @slots << :minor
         end
 
         opt.on("--patch", "-p", "bump patch version number") do
-          slot = :patch
+          @slots << :patch
         end
 
         opt.on("--build", "-b", "bump build version number") do
-          slot = :build
+          @slots << :build
         end
 
-        opt.on("--state", "-s [TERM]", "specify a new state") do |term|
-          if term
-            state = term
-          else
-            slot = :state
-          end
+        opt.on("--state", "-s", "bump version state") do |term|
+          @slots << :state
         end
 
         opt.on("--no-write", "-n", "do not write version change") do
           $DRYRUN = true
+        end
+
+        opt.on("--force", "-f", "force otherwise protected action") do
+          @force = true
         end
 
         opt.on("--debug", "run in debug mode") do
@@ -65,73 +67,54 @@ module POM::Commands
           exit
         end
       end
+    end
 
+    #
+    def parse
       parser.parse!
 
-      @slot  = slot
-      @state = state
       @entry = ARGV.last
+
+      if @entry == 'help'
+        puts parser
+        exit
+      end
     end
 
     #
     def execute
-      if @entry  or @slot or @state
-        new_version = project.package.version
+      if POM::VersionNumber::STATES.include?(@entry)
+        @state = @entry.to_sym
+      end
 
-        if @entry
-          new_version = VersionNumber.new(@entry)
-        end
+      if POM::VersionNumber::SLOTS.include?(@entry)
+        @slots << @entry.to_sym
+        @entry = nil
+      end
 
-        if @slot
-          new_version = new_version.bump(@slot)
-        end
+      raise "Why bump if you know what you want, silly?" if @entry && !@slots.empty?
 
-        if @state
-          new_version = new_version.restate(@state)
-        end
+      new_version = @entry ? POM::VersionNumber.new(@entry) : project.package.version
 
-        # TODO: Fail if new version is less then old version unless $FORCE
+      @slots.each do |slot|
+        new_version = new_version.bump(slot)
+      end
 
+      if @state
+        new_version = new_version.restate(@state)
+      end
+
+      if new_version > project.package.version or @force
         project.package.version = new_version
         project.package.save! unless $TRIAL
+      else
+        if new_version < project.package.version
+          $stderr.puts "pom: Going backwards in time?\n    New version is older than current version.\n    Use --force to fly the TARDIS."
+        end
       end
 
       puts(project.version) 
     end
-
-    ;; private
-
-=begin
-    #
-    def bump_major
-      project.package.version.bump(:major)
-      #project.package.major = project.package.major.succ
-      #project.package.minor = 0 if project.package.minor
-      #project.package.patch = 0 if project.package.patch
-      #project.package.build = nil
-    end
-
-    #
-    def bump_minor
-      project.package.version.bump(:minor)
-      #project.package.minor = project.package.minor.succ
-      #project.package.patch = 0 if project.package.patch
-      #project.package.build = nil
-    end
-
-    #
-    def bump_patch
-      project.package.version.bump(:patch)
-      #project.package.patch = project.package.patch.succ
-      #project.package.build = nil
-    end
-
-    #
-    def bump_build
-      project.package.version.bump(:build)
-      #project.package.build = project.package.build.succ
-    end
-=end
 
 =begin
     # Bump given version index.
