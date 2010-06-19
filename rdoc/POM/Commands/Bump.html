@@ -114,6 +114,11 @@
           
             
             <li class="method">
+              <a href="#method-i-parser">#parser</a>
+            </li>
+          
+            
+            <li class="method">
               <a href="#method-i-run">#run</a>
             </li>
           
@@ -326,10 +331,12 @@
           <div class="method-source-code"
             id="new-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 12</span>
-12:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-13:       <span class="ruby-ivar">@project</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Project</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:lookup=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>)
-14:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+16:       <span class="ruby-ivar">@project</span> = <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">Project</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:lookup=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>)
+17:       <span class="ruby-ivar">@slots</span>   = []
+18:       <span class="ruby-ivar">@force</span>   = <span class="ruby-keyword kw">false</span>
+19:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -358,10 +365,10 @@
           <div class="method-source-code"
             id="run-source">
 <pre>
-   <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 5</span>
-5:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run</span>
-6:       <span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
-7:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 8</span>
+ 8:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run</span>
+ 9:       <span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+10:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -396,31 +403,40 @@
           <div class="method-source-code"
             id="execute-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 77</span>
- 77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>
- 78:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@entry</span>  <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@slot</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@state</span>
- 79:         <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>
- 80: 
- 81:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@entry</span>
- 82:           <span class="ruby-identifier">new_version</span> = <span class="ruby-constant">VersionNumber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@entry</span>)
- 83:         <span class="ruby-keyword kw">end</span>
- 84: 
- 85:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@slot</span>
- 86:           <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">bump</span>(<span class="ruby-ivar">@slot</span>)
- 87:         <span class="ruby-keyword kw">end</span>
- 88: 
- 89:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@state</span>
- 90:           <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">restate</span>(<span class="ruby-ivar">@state</span>)
- 91:         <span class="ruby-keyword kw">end</span>
- 92: 
- 93:         <span class="ruby-comment cmt"># TODO: Fail if new version is less then old version unless $FORCE</span>
+     <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 85</span>
+ 85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>
+ 86:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">VersionNumber</span><span class="ruby-operator">::</span><span class="ruby-constant">STATES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@entry</span>)
+ 87:         <span class="ruby-ivar">@state</span> = <span class="ruby-ivar">@entry</span>.<span class="ruby-identifier">to_sym</span>
+ 88:       <span class="ruby-keyword kw">end</span>
+ 89: 
+ 90:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">VersionNumber</span><span class="ruby-operator">::</span><span class="ruby-constant">SLOTS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@entry</span>)
+ 91:         <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@entry</span>.<span class="ruby-identifier">to_sym</span>
+ 92:         <span class="ruby-ivar">@entry</span> = <span class="ruby-keyword kw">nil</span>
+ 93:       <span class="ruby-keyword kw">end</span>
  94: 
- 95:         <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">new_version</span>
- 96:         <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">save!</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$TRIAL</span>
- 97:       <span class="ruby-keyword kw">end</span>
+ 95:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Why bump if you know what you want, silly?&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@entry</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@slots</span>.<span class="ruby-identifier">empty?</span>
+ 96: 
+ 97:       <span class="ruby-identifier">new_version</span> = <span class="ruby-ivar">@entry</span> <span class="ruby-operator">?</span> <span class="ruby-constant">POM</span><span class="ruby-operator">::</span><span class="ruby-constant">VersionNumber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@entry</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>
  98: 
- 99:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">project</span>.<span class="ruby-identifier">version</span>) 
-100:     <span class="ruby-keyword kw">end</span></pre>
+ 99:       <span class="ruby-ivar">@slots</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">slot</span><span class="ruby-operator">|</span>
+100:         <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">bump</span>(<span class="ruby-identifier">slot</span>)
+101:       <span class="ruby-keyword kw">end</span>
+102: 
+103:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@state</span>
+104:         <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">restate</span>(<span class="ruby-ivar">@state</span>)
+105:       <span class="ruby-keyword kw">end</span>
+106: 
+107:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_version</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@force</span>
+108:         <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">new_version</span>
+109:         <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">save!</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">$TRIAL</span>
+110:       <span class="ruby-keyword kw">else</span>
+111:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">project</span>.<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>
+112:           <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;pom: Going backwards in time?\n    New version is older than current version.\n    Use --force to fly the TARDIS.&quot;</span>
+113:         <span class="ruby-keyword kw">end</span>
+114:       <span class="ruby-keyword kw">end</span>
+115: 
+116:       <span class="ruby-identifier">puts</span>(<span class="ruby-identifier">project</span>.<span class="ruby-identifier">version</span>) 
+117:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -449,59 +465,91 @@
           <div class="method-source-code"
             id="parse-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 23</span>
-23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>
-24:       <span class="ruby-identifier">slot</span>  = <span class="ruby-keyword kw">nil</span>
-25:       <span class="ruby-identifier">state</span> = <span class="ruby-keyword kw">nil</span>
-26: 
-27:       <span class="ruby-identifier">parser</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
-28:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;pom bump [OPTIONS | ENTRY]&quot;</span>
-29: 
-30:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--major&quot;</span>, <span class="ruby-value str">&quot;-M&quot;</span>, <span class="ruby-value str">&quot;bump major version number&quot;</span>) <span class="ruby-keyword kw">do</span>
-31:           <span class="ruby-identifier">slot</span> = <span class="ruby-value">:major</span>
-32:         <span class="ruby-keyword kw">end</span>
-33: 
-34:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--minor&quot;</span>, <span class="ruby-value str">&quot;-m&quot;</span>, <span class="ruby-value str">&quot;bump minor version number&quot;</span>) <span class="ruby-keyword kw">do</span>
-35:           <span class="ruby-identifier">slot</span> = <span class="ruby-value">:minor</span>
-36:         <span class="ruby-keyword kw">end</span>
-37: 
-38:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--patch&quot;</span>, <span class="ruby-value str">&quot;-p&quot;</span>, <span class="ruby-value str">&quot;bump patch version number&quot;</span>) <span class="ruby-keyword kw">do</span>
-39:           <span class="ruby-identifier">slot</span> = <span class="ruby-value">:patch</span>
-40:         <span class="ruby-keyword kw">end</span>
-41: 
-42:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--build&quot;</span>, <span class="ruby-value str">&quot;-b&quot;</span>, <span class="ruby-value str">&quot;bump build version number&quot;</span>) <span class="ruby-keyword kw">do</span>
-43:           <span class="ruby-identifier">slot</span> = <span class="ruby-value">:build</span>
-44:         <span class="ruby-keyword kw">end</span>
-45: 
-46:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--state&quot;</span>, <span class="ruby-value str">&quot;-s [TERM]&quot;</span>, <span class="ruby-value str">&quot;specify a new state&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>
-47:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">term</span>
-48:             <span class="ruby-identifier">state</span> = <span class="ruby-identifier">term</span>
-49:           <span class="ruby-keyword kw">else</span>
-50:             <span class="ruby-identifier">slot</span> = <span class="ruby-value">:state</span>
-51:           <span class="ruby-keyword kw">end</span>
-52:         <span class="ruby-keyword kw">end</span>
-53: 
-54:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--no-write&quot;</span>, <span class="ruby-value str">&quot;-n&quot;</span>, <span class="ruby-value str">&quot;do not write version change&quot;</span>) <span class="ruby-keyword kw">do</span>
-55:           <span class="ruby-identifier">$DRYRUN</span> = <span class="ruby-keyword kw">true</span>
-56:         <span class="ruby-keyword kw">end</span>
-57: 
-58:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--debug&quot;</span>, <span class="ruby-value str">&quot;run in debug mode&quot;</span>) <span class="ruby-keyword kw">do</span>
-59:           <span class="ruby-identifier">$DEBUG</span>   = <span class="ruby-keyword kw">true</span>
-60:           <span class="ruby-identifier">$VERBOSE</span> = <span class="ruby-keyword kw">true</span>
-61:         <span class="ruby-keyword kw">end</span>
-62: 
-63:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on_tail</span>(<span class="ruby-value str">&quot;--help&quot;</span>, <span class="ruby-value str">&quot;-h&quot;</span>, <span class="ruby-value str">&quot;display this help message&quot;</span>) <span class="ruby-keyword kw">do</span>
-64:           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">opt</span>
-65:           <span class="ruby-identifier">exit</span>
-66:         <span class="ruby-keyword kw">end</span>
-67:       <span class="ruby-keyword kw">end</span>
-68: 
-69:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse!</span>
-70: 
-71:       <span class="ruby-ivar">@slot</span>  = <span class="ruby-identifier">slot</span>
-72:       <span class="ruby-ivar">@state</span> = <span class="ruby-identifier">state</span>
-73:       <span class="ruby-ivar">@entry</span> = <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">last</span>
-74:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 73</span>
+73:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>
+74:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse!</span>
+75: 
+76:       <span class="ruby-ivar">@entry</span> = <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">last</span>
+77: 
+78:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@entry</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'help'</span>
+79:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">parser</span>
+80:         <span class="ruby-identifier">exit</span>
+81:       <span class="ruby-keyword kw">end</span>
+82:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="parser-method" class="method-detail ">
+        <a name="method-i-parser"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">parser</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Returns instance of option parser.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="parser-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parser</span>
+29:       <span class="ruby-ivar">@parser</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
+30:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;pom bump [OPTIONS | ENTRY]&quot;</span>
+31: 
+32:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--major&quot;</span>, <span class="ruby-value str">&quot;-M&quot;</span>, <span class="ruby-value str">&quot;bump major version number&quot;</span>) <span class="ruby-keyword kw">do</span>
+33:           <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:major</span>
+34:         <span class="ruby-keyword kw">end</span>
+35: 
+36:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--minor&quot;</span>, <span class="ruby-value str">&quot;-m&quot;</span>, <span class="ruby-value str">&quot;bump minor version number&quot;</span>) <span class="ruby-keyword kw">do</span>
+37:           <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:minor</span>
+38:         <span class="ruby-keyword kw">end</span>
+39: 
+40:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--patch&quot;</span>, <span class="ruby-value str">&quot;-p&quot;</span>, <span class="ruby-value str">&quot;bump patch version number&quot;</span>) <span class="ruby-keyword kw">do</span>
+41:           <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:patch</span>
+42:         <span class="ruby-keyword kw">end</span>
+43: 
+44:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--build&quot;</span>, <span class="ruby-value str">&quot;-b&quot;</span>, <span class="ruby-value str">&quot;bump build version number&quot;</span>) <span class="ruby-keyword kw">do</span>
+45:           <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:build</span>
+46:         <span class="ruby-keyword kw">end</span>
+47: 
+48:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--state&quot;</span>, <span class="ruby-value str">&quot;-s&quot;</span>, <span class="ruby-value str">&quot;bump version state&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>
+49:           <span class="ruby-ivar">@slots</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:state</span>
+50:         <span class="ruby-keyword kw">end</span>
+51: 
+52:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--no-write&quot;</span>, <span class="ruby-value str">&quot;-n&quot;</span>, <span class="ruby-value str">&quot;do not write version change&quot;</span>) <span class="ruby-keyword kw">do</span>
+53:           <span class="ruby-identifier">$DRYRUN</span> = <span class="ruby-keyword kw">true</span>
+54:         <span class="ruby-keyword kw">end</span>
+55: 
+56:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--force&quot;</span>, <span class="ruby-value str">&quot;-f&quot;</span>, <span class="ruby-value str">&quot;force otherwise protected action&quot;</span>) <span class="ruby-keyword kw">do</span>
+57:           <span class="ruby-ivar">@force</span> = <span class="ruby-keyword kw">true</span>
+58:         <span class="ruby-keyword kw">end</span>
+59: 
+60:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--debug&quot;</span>, <span class="ruby-value str">&quot;run in debug mode&quot;</span>) <span class="ruby-keyword kw">do</span>
+61:           <span class="ruby-identifier">$DEBUG</span>   = <span class="ruby-keyword kw">true</span>
+62:           <span class="ruby-identifier">$VERBOSE</span> = <span class="ruby-keyword kw">true</span>
+63:         <span class="ruby-keyword kw">end</span>
+64: 
+65:         <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">on_tail</span>(<span class="ruby-value str">&quot;--help&quot;</span>, <span class="ruby-value str">&quot;-h&quot;</span>, <span class="ruby-value str">&quot;display this help message&quot;</span>) <span class="ruby-keyword kw">do</span>
+66:           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">opt</span>
+67:           <span class="ruby-identifier">exit</span>
+68:         <span class="ruby-keyword kw">end</span>
+69:       <span class="ruby-keyword kw">end</span>
+70:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -530,11 +578,11 @@
           <div class="method-source-code"
             id="run-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 17</span>
-17:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
-18:       <span class="ruby-identifier">parse</span>
-19:       <span class="ruby-identifier">execute</span>
-20:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/commands/bump.rb, line 22</span>
+22:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
+23:       <span class="ruby-identifier">parse</span>
+24:       <span class="ruby-identifier">execute</span>
+25:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
