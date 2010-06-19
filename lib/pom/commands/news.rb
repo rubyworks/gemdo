@@ -14,7 +14,7 @@ module POM::Commands
     #
     def parser
       super do |opt|
-        opt.banner = "pom about"
+        opt.banner = "pom news"
 
         opt.on("--text", "-t", "show verbatim text") do
           options.text = true
@@ -27,16 +27,6 @@ module POM::Commands
         opt.on("--changes", "-c", "include list of changes") do
           options.changes = true
         end
-
-        #opt.on("--debug", "run in debug mode") do
-        #  $DEBUG   = true
-        #  $VERBOSE = true
-        #end
-
-        #opt.on_tail("--help", "-h", "display this help message") do
-        #  puts opt
-        #  exit
-        #end
       end
     end
 

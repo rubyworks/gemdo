@@ -44,12 +44,6 @@ module POM
         super(@text)
       end
 
-      #if opts[:history]
-      #  @history = opts[:history]
-      #elsif History.find(root)
-      #  @history = History.new(root)
-      #end
-
       if !file && history
         @text     = history.release.text
 
