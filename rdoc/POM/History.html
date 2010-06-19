@@ -103,6 +103,11 @@
           
             
             <li class="singleton">
+              <a href="#method-c-find">::find</a>
+            </li>
+          
+            
+            <li class="singleton">
               <a href="#method-c-new">::new</a>
             </li>
           
@@ -288,14 +293,14 @@ For example:
   * outline oimportant changelog items
 </pre>
 <p>
-<tt>Changes:</tt> is used a parsing marker, rather than looking for an
-&#8217;*&#8217;, so that lists can be used in the release note too.
+<tt>Changes:</tt> is used as a parsing marker. While optional, it helps the
+parser find the list of changes, rather than looking for an asterisk or
+digit, so that ordered and unordered lists can be used in the note section
+too.
 </p>
 <p>
-TODO: Allow the format to be more varied.
-</p>
-<p>
-TODO: Let marker be specified to handle odd formats.
+TODO: Deal with ChangeLog like formats? Perhaps just make extendable to
+handle custom formats.
 </p>
 
     </div>
@@ -310,6 +315,13 @@ TODO: Let marker be specified to handle odd formats.
         
         <dd class="description"><p>
 File glob for finding the HISTORY file.
+</p></dd>
+        
+      
+        <dt><a name="HEADER_RE">HEADER_RE</a></dt>
+        
+        <dd class="description"><p>
+Match against version number string.
 </p></dd>
         
       
@@ -357,23 +369,6 @@ List of release entries.
         </div>
       </div>
       
-      <div id="marker-attribute-method" class="method-detail">
-        <a name="marker"></a>
-        
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">marker</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        <p>
-Either &#8217;=&#8217; for RDoc or &#8217;#&#8217; for Markdown.
-</p>
-        
-        </div>
-      </div>
-      
     </div>
     
 
@@ -383,13 +378,46 @@ Either &#8217;=&#8217; for RDoc or &#8217;#&#8217; for Markdown.
       <h3 class="section-header">Public Class Methods</h3>
 
     
+      <div id="find-method" class="method-detail ">
+        <a name="method-c-find"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">find</span><span
+            class="method-args">(root)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="find-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 38</span>
+38:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">root</span>)
+39:       <span class="ruby-identifier">root</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+40:       <span class="ruby-identifier">root</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-value">:casefold</span>).<span class="ruby-identifier">first</span>
+41:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="new-method" class="method-detail ">
         <a name="method-c-new"></a>
 
         <div class="method-heading">
         
           <span class="method-name">new</span><span
-            class="method-args">(root)</span>
+            class="method-args">(root, opts={})</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -405,14 +433,12 @@ New <a href="History.html">History</a>.
           <div class="method-source-code"
             id="new-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 46</span>
-46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>)
-47:       <span class="ruby-ivar">@root</span>     = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
-48:       <span class="ruby-ivar">@file</span>     = <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">first</span>(<span class="ruby-constant">DEFAULT_FILE</span>, <span class="ruby-value">:casefold</span>)
-49:       <span class="ruby-ivar">@marker</span>   = (<span class="ruby-identifier">file</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">extname</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.rdoc'</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'='</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'#'</span>
-50:       <span class="ruby-ivar">@releases</span> = []
-51:       <span class="ruby-identifier">read</span>
-52:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 50</span>
+50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">root</span>, <span class="ruby-identifier">opts</span>={})
+51:       <span class="ruby-ivar">@root</span>     = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>)
+52:       <span class="ruby-ivar">@file</span>     = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:file</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">root</span>)
+53:       <span class="ruby-identifier">read</span>
+54:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -449,27 +475,23 @@ Read and parse the Histoy file.
           <div class="method-source-code"
             id="read-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 55</span>
-55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
-56:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>
-57:         <span class="ruby-identifier">text</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">strip</span>
-58: 
-59:         <span class="ruby-ivar">@marker</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">index</span>(<span class="ruby-regexp re">/^\=/</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'='</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'#'</span>
-60: 
-61:         <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">/\A[#{marker}]\s+(.*?)$/</span>,<span class="ruby-value str">''</span>).<span class="ruby-identifier">strip</span>
-62:         <span class="ruby-identifier">scan</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-node">/#{marker}{2}(.*?)\n(.*?)(^Changes:.*?)(?=#{marker}{2}|\Z)/</span>)
-63:         <span class="ruby-identifier">scan</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span>, <span class="ruby-identifier">notes</span>, <span class="ruby-identifier">changes</span><span class="ruby-operator">|</span>
-64:           <span class="ruby-ivar">@releases</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Release</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">header</span>, <span class="ruby-identifier">notes</span>, <span class="ruby-identifier">changes</span>)
-65:         <span class="ruby-keyword kw">end</span>
-66: 
-67:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@releases</span>.<span class="ruby-identifier">empty?</span>
-68:           <span class="ruby-identifier">scan</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-node">/#{marker}{2}(.*?)\n(.*?)(^[*].*?)(?=#{marker}{2}|\Z)/</span>)
-69:           <span class="ruby-identifier">scan</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span>, <span class="ruby-identifier">notes</span>, <span class="ruby-identifier">changes</span><span class="ruby-operator">|</span>
-70:             <span class="ruby-ivar">@releases</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Release</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">header</span>, <span class="ruby-identifier">notes</span>, <span class="ruby-identifier">changes</span>)
+    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 60</span>
+60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
+61:       <span class="ruby-ivar">@releases</span> = []
+62:       <span class="ruby-identifier">entry</span> = <span class="ruby-keyword kw">nil</span>
+63:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>
+64:         <span class="ruby-identifier">file</span>.<span class="ruby-identifier">readlines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+65:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">HEADER_RE</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+66:             <span class="ruby-ivar">@releases</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Release</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">entry</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>
+67:             <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">line</span>
+68:           <span class="ruby-keyword kw">else</span>
+69:             <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">entry</span>
+70:             <span class="ruby-identifier">entry</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
 71:           <span class="ruby-keyword kw">end</span>
 72:         <span class="ruby-keyword kw">end</span>
-73:       <span class="ruby-keyword kw">end</span>
-74:     <span class="ruby-keyword kw">end</span></pre>
+73:         <span class="ruby-ivar">@releases</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Release</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">entry</span>)
+74:       <span class="ruby-keyword kw">end</span>
+75:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -500,10 +522,10 @@ Returns first entry in releases list.
           <div class="method-source-code"
             id="release-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 77</span>
-77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
-78:        <span class="ruby-identifier">releases</span>.<span class="ruby-identifier">first</span>
-79:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/history.rb, line 78</span>
+78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
+79:        <span class="ruby-identifier">releases</span>.<span class="ruby-identifier">first</span>
+80:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

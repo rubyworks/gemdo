@@ -296,8 +296,11 @@
       
 
       <p>
-<a href="Profile.html">Profile</a> store ancillary project metadata such as
-title, summary, list of authors, etc.
+<a href="Profile.html">Profile</a> stores ancillary project metadata such
+as title, summary, list of authors, etc. <a href="Profile.html">Profile</a>
+is the &#8220;mother load&#8221; of end-user information about a project.
+It is also arbitraily extensible so fields not strictly defined by this
+class can also be provided.
 </p>
 
     </div>
@@ -310,7 +313,9 @@ title, summary, list of authors, etc.
       
         <dt><a name="RE_EMAIL">RE_EMAIL</a></dt>
         
-        <dd class="description"></dd>
+        <dd class="description"><p>
+Regular expression for matching valid email addresses.
+</p></dd>
         
       
       </dl>
@@ -527,7 +532,10 @@ List of authors.
 
         <div class="method-description">
         
-        
+        <p>
+Table of project URIs encapsulated in a <a
+href="Resources.html">Resources</a> object.
+</p>
         
         </div>
       </div>
@@ -554,7 +562,10 @@ List of authors.
 
         <div class="method-description">
           
-          
+          <p>
+The default file name to use for saving a new <a
+href="../PROFILE.html">PROFILE</a> file.
+</p>
           
 
           
@@ -586,7 +597,11 @@ List of authors.
 
         <div class="method-description">
           
-          
+          <p>
+New <a href="Profile.html">Profile</a> object. To create a new <a
+href="Profile.html">Profile</a> the <tt>root</tt> directory of the project
+and the <tt>name</tt> of the project are required.
+</p>
           
 
           
@@ -697,7 +712,9 @@ Contact&#8217;s email address.
 
         <div class="method-description">
           
-          
+          <p>
+Project&#8217;s homepage as listed in the resources.
+</p>
           
 
           
@@ -739,18 +756,18 @@ that is not already defined an attribute accessor will be created for it.
           <div class="method-source-code"
             id="method-missing-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 117</span>
-117:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
-118:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
-119:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
-120:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
-121:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
-122:         <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
-123:       <span class="ruby-keyword kw">else</span>
-124:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-125:         <span class="ruby-keyword kw">nil</span>
-126:       <span class="ruby-keyword kw">end</span>
-127:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 124</span>
+124:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
+125:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
+126:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
+127:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
+128:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
+129:         <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+130:       <span class="ruby-keyword kw">else</span>
+131:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+132:         <span class="ruby-keyword kw">nil</span>
+133:       <span class="ruby-keyword kw">end</span>
+134:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -772,7 +789,9 @@ that is not already defined an attribute accessor will be created for it.
 
         <div class="method-description">
           
-          
+          <p>
+Project&#8217;s public repository as listed in the resources.
+</p>
           
 
           
@@ -804,7 +823,10 @@ that is not already defined an attribute accessor will be created for it.
 
         <div class="method-description">
           
-          
+          <p>
+Set project resources table with a Hash or another <a
+href="Resources.html">Resources</a> object.
+</p>
           
 
           
@@ -836,19 +858,24 @@ that is not already defined an attribute accessor will be created for it.
 
         <div class="method-description">
           
-          
+          <p>
+Override standard <a href="Profile.html#method-i-respond_to%3F">#</a>
+method to take <a
+href="Profile.html#method-i-method_missing">method_missing</a> lookup into
+account.
+</p>
           
 
           
           <div class="method-source-code"
             id="respond-to--source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 137</span>
-137:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>)
-138:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>)
-139:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>]
-140:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
-141:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 138</span>
+138:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>)
+139:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>)
+140:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">name</span>]
+141:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+142:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -879,12 +906,12 @@ Convert to hash.
           <div class="method-source-code"
             id="to-h-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 130</span>
-130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
-131:       <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">dup</span>
-132:       <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>] = <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>].<span class="ruby-identifier">to_h</span>
-133:       <span class="ruby-identifier">data</span>
-134:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/profile.rb, line 115</span>
+115:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
+116:       <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">dup</span>
+117:       <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>] = <span class="ruby-identifier">data</span>[<span class="ruby-value str">'resources'</span>].<span class="ruby-identifier">to_h</span>
+118:       <span class="ruby-identifier">data</span>
+119:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
