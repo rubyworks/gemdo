@@ -1,5 +1,18 @@
 = RELEASE HISTORY
 
+== 2.1.1
+
+Bump command can not take state or slot as an argument.
+In other words, 'pom bump major' will work exactly like
+using 'pom bump --major'. Also History and News class
+have been made much more robust.
+
+Changes:
+
+* More robust History and News classes.
+* Bump command is more versitile.
+
+
 == 2.1.0 / 2010-10-18
 
 The significant change with v2.1 is the use of a PACKAGE
