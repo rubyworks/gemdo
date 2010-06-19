@@ -1,6 +1,23 @@
 module POM
 
-  # Table of project releated URLs.
+  # The Resource class models a table of project
+  # releated URIs. Each entry has a name and URI.
+  # The class is Enumerable so each entry can
+  # be iterated over, much like a hash.
+  #
+  # The class also recognizes common entry names
+  # and aliases, which can be accessed via method
+  # calls.
+  # 
+  # How aliases work in this class is unique. When
+  # a recognized name is assigned an URI, all it's
+  # aliases are assigned the URI as well. Therefore
+  # when iterating over the entries there will be
+  # duplicate URIs under the various names.
+  #
+  #   Resources.new(:home=>'http://foo.com').to_h
+  #   #=> {:home=>'http://foo.com', :homepage=>'http://foo.com'}
+  #
   class Resources
 
     include Enumerable
@@ -21,7 +38,8 @@ module POM
       module_eval code.join("\n")
     end
 
-    # New Resources.
+    # New Resources object. The initializer can
+    # take a hash of name to URI settings.
     def initialize(table={})
       @table = {}
       table.each{ |k,v| __send__("#{k}=", v) }
@@ -70,25 +88,29 @@ module POM
     attr_accessor :irc
 
     # Resource for central *public* repository, e.g.
-    #   git://github.com/protuils/pom.git
+    # `git://github.com/protuils/pom.git`.
     attr_accessor :repo, :repository
 
-    #
+    # Convert to Hash by duplicating the underlying
+    # hash table.
     def to_h
       @table.dup
     end
 
-    #
+    # Iterate over each enty, including aliases.
     def each(&block)
       @table.each(&block)
     end
 
-    #
+    # The size of the table, including aliases.
     def size
       @table.size
     end
 
-    #
+    # If a method is missing and it is a setter method
+    # (ending in '=') then a new entry by that name
+    # will be added to the table. If a plain method
+    # then the name will be looked for in the table.
     def method_missing(sym, *args)
       meth = sym.to_s
       name = meth.chomp('=')

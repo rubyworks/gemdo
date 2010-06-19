@@ -1,13 +1,13 @@
 module POM
 
-  # Root directory is indicated by the presence of either a PACKAGE file or
-  # as a fallback a lib/ directory.
+  # Root directory is indicated by the presence of either a
+  # PACKAGE file or as a fallback a lib/ directory.
   ROOT_INDICATORS = ['PACKAGE{.yml,.yaml,}', 'lib/', '{.meta,meta}']
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position
-  # until the ROOT_INDICATORS is matched. Returns +nil+ if not found.
-  #
+  # until the ROOT_INDICATORS is matched. Returns +nil+ if not
+  # found.
   def self.root(local=Dir.pwd)
     local ||= Dir.pwd
     Dir.chdir(local) do
@@ -19,7 +19,8 @@ module POM
     end
   end
 
-  #
+  # This method supplements #root. It does the actual
+  # ascention for each root indicator.
   def self.locate_root_at(indicator)
     root = nil
     dir  = Dir.pwd

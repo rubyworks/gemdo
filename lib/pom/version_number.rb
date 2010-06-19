@@ -1,21 +1,31 @@
 module POM
 
-  # = VersionNumber
+  # VersionNumber class models a dot-separated sequence
+  # of numbers or strings according to the most common
+  # rational versioning practices in the Ruby community.
   #
-  # VersionNumber is a simplified form of a tuple desgined
-  # specifically for dealing with version numbers.
+  # Version numbers consist of major, minor and patch
+  # segements along with an optional build segement which
+  # can itself be seperated into a state and revision count.
+  #
+  # The VersionNumber class is immutable. All methods that
+  # manipulate the verison return a new VersioNumber object.
   #
   class VersionNumber
     include Enumerable
     include Comparable
 
-    # Possible build states
+    # Recognized build states in order of "completion".
     STATES = ['alpha', 'beta', 'pre', 'rc']
 
     # Shortcut for creating a new verison number
     # given segmented elements.
     #
-    #   VersionNumber[1,0,0].to_s  #=> "1.0.0"
+    #   VersionNumber[1,0,0].to_s
+    #   #=> "1.0.0"
+    #
+    #   VersionNumber[1,0,0,:pre,2].to_s
+    #   #=> "1.0.0.pre.2"
     #
     def self.[](*args)
       new(args)
@@ -23,44 +33,73 @@ module POM
 
     # Create a new VersionNumber.
     #
-    # version - a String, Hash, or Array.
+    # version - a String, Hash or Array repsenting the version number
+    #
+    #   VersionNumber.new("1.0.0")
+    #   VersionNumber.new([1,0,0])
+    #   VersionNumber.new(:major=>1,:minor=>0,:patch=>0)
     #
     # Returns a new VersionNumber object.
     def initialize(version)
       case version
       when String
         version = version.split('.')
-        @segments = version.map{ |s| /\d+/ =~ s ? s.to_i : s }
+        @segments = version.map{ |s| /\d+/ =~ s ? s.to_i : s.to_s }
       when Hash
         version - version.inject({}){|h,(k,v)| h[k.to_sym] = v; h}
         version = version.values_at(:major, :minor, :patch, :state, :build).compact
-        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s }
+        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s.to_s }
       when Array
         version = version.join('.')
-        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s }
+        @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s.to_s }
       when VersionNumber
         @segments = version.segments
       end
     end
 
+    # Convert version to a dot-separated string.
+    #
+    #   VersionNumber[1,2,0].to_s
+    #   #=> "1.2.0"
     #
     def to_s
       @segments.join('.')
     end
 
-    # This is here only becuase `File.join` calls it instead of #to_s.
+    # This method is the same as #to_s. It is here becuase
+    # `File.join` calls it instead of #to_s.
+    #
+    #   VersionNumber[1,2,0].to_str
+    #   #=> "1.2.0"
+    #
     def to_str
       @segments.join('.')
     end
 
+    # Returns a String detaling the version number.
+    # Essentially it is the same as #to_s.
+    #
+    #   VersionNumber[1,2,0].inspect
+    #   #=> "1.2.0"
     #
     def inspect
       to_s
     end
 
+    # Fetch a sepecific segement by index number.
+    # In no value is found at that position than
+    # zero (0) is returned instead.
     #
-    def [](i)
-      @segments.fetch(i,0)
+    #   v = VersionNumber[1,2,0]
+    #   v[0]  #=> 1
+    #   v[1]  #=> 2
+    #   v[3]  #=> 0
+    #   v[4]  #=> 0
+    #
+    # Zero is returned instead of +nil+ to make different
+    # version numbers easier to compare.
+    def [](index)
+      @segments.fetch(index,0)
     end
 
     # "Spaceship" comparsion operator.
@@ -86,26 +125,43 @@ module POM
     end
 
     # Major is the first number in the version series.
+    #
+    #   VersionNumber[1,2,0].major
+    #   #=> 1
+    #
     def major
       @segments[0] || 0
     end
 
     # Minor is the second number in the version series.
+    #
+    #   VersionNumber[1,2,0].minor
+    #   #=> 2
+    #
     def minor
       @segments[1] || 0
     end
 
     # Patch is third number in the version series.
+    #
+    #   VersionNumber[1,5,3].patch
+    #   #=> 3
+    #
     def patch
       @segments[2] || 0
     end
 
-    # The build number is everything after the patch number,
-    # or for "oddly long" version numbers, anything from the
-    # state position onward.
+    # The build number is everything from state segment onward.
+    # If no state entries exists then +nil+ is returned.
+    #
+    #   VersionNumber[1,2,0,:pre,6].build
+    #   #=> 'pre.6'
+    #
+    #   VersionNumber[1,2,0].build
+    #   #=> nil
+    #
     def build
-      i = @segments.index{ |s| STATES.include?(s) }
-      if i
+      if i = state_index
         b = @segments[i..-1].join('.')
       else
         b = @segments[3..-1].join('.')
@@ -113,24 +169,64 @@ module POM
       b.empty? ? nil : b
     end
 
-    # State is the version number segment that matches any entry
-    # in the STATES constant.
+    # State is the version segment that matches any entry
+    # in the STATES constant. These include +pre+, +beta+, +alpha+,
+    # and so on.
+    #
+    #   VersionNumber[1,2,0,:pre,6].state
+    #   #=> 'pre'
+    #
     def state
-      i = @segments.index{ |s| STATES.keys.include?(s) }
-      @segments[i]
+      if i = state_index
+        @segments[i]
+      else
+        nil
+      end
     end
 
+    # Return the state revision count. This is the
+    # number that occurs after the state.
+    #
+    #   VersionNumber[1,2,0,:rc,4].revision
+    #   #=> 4
+    #
+    def revision
+      if i = state_index
+        @segments[i+1] || 0
+      else
+        nil
+      end
+    end
+
+    # Bump the version returning a new version number object.
+    # Select +which+ segement to bump by name: +major+, +minor+,
+    # +patch+, +state+, +build+ and also +last+.
+    #
+    #   VersionNumber[1,2,0].bump(:patch).to_s
+    #   #=> "1.2.1"
+    #
+    #   VersionNumber[1,2,1].bump(:minor).to_s
+    #   #=> "1.3.0"
+    #
+    #   VersionNumber[1,3,0].bump(:major).to_s
+    #   #=> "2.0.0"
+    #
+    #   VersionNumber[1,3,0,:pre,1].bump(:build).to_s
+    #   #=> "1.3.0.pre.2"
+    #
+    #   VersionNumber[1,3,0,:pre,2].bump(:state).to_s
+    #   #=> "1.3.0.rc.1"
     #
     def bump(which=:patch)
       case which.to_sym
-      when :major
+      when :major, :first
         v = [inc(major), 0, 0]
       when :minor
         v = [major, inc(minor), 0]
       when :patch
         v = [major, minor, inc(patch)]
       when :state
-        if i = @segments.index{ |s| STATES.include?(s) }
+        if i = state_index
           if n = inc(@segments[i])
             v = @segments[0...i] + [n] + (@segments[i+1] ? [1] : [])
           else
@@ -140,7 +236,7 @@ module POM
           v = @segments.dup
         end
       when :build
-        if i = @segments.index{ |s| STATES.include?(s) }
+        if i = state_index
           if i == @segments.size - 1
             v = @segments + [1]
           else
@@ -161,22 +257,41 @@ module POM
       self.class.new(v.compact)
     end
 
-    # Change state.
-    def restate(new_state)
-      i = @segments.index{ |s| STATES.include?(s) }
-      if i
-        v = @segments[0...i] + [new_state.to_s] + [1]
+    # Return a new version have the same major, minor and
+    # patch levels, but with a new state and revision count.
+    #
+    #   VersionNumber[1,2,3].restate(:pre,2).to_s
+    #   #=> "1.2.3.pre.2"
+    #
+    #   VersionNumber[1,2,3,:pre,2].restate(:rc,4).to_s
+    #   #=> "1.2.3.rc.4"
+    #
+    def restate(state, revision=1)
+      if i = state_index
+        v = @segments[0...i] + [state.to_s] + [revision]
       else
-        v = @segments[0...3] + [new_state.to_s] + [1]
+        v = @segments[0...3] + [state.to_s] + [revision]
       end
       self.class.new(v)
     end
 
+    # Iterate of each segment of the version. This allows
+    # all enumerable methods to be used.
     #
+    #   VersionNumber[1,2,3].map{|i| i + 1}
+    #   #=> [2,3,4]
+    #
+    # Though keep in mind that the state segment is not
+    # a number (and techincally any segment can be a string
+    # instead of an integer).
     def each(&block)
       @segments.each(&block)
     end
 
+    # Return the number of version segements.
+    #
+    #   VersionNumber[1,2,3].size
+    #   #=> 3
     #
     def size
       @segments.size
@@ -191,6 +306,21 @@ module POM
       else
         val.succ
       end
+    end
+
+    # Return the index of the first recognized state.
+    #
+    #   VersionNumber[1,2,3,:pre,3].state_index
+    #   #=> 3
+    #
+    # You might as why this is needed, since the state
+    # position should alwasy be 3. However, there isn't 
+    # always a state entry, which means this method will
+    # return +nil+, and we also leave open the potential
+    # for extra-long version numbers --though we do not
+    # recommend the idea, it is possible.
+    def state_index
+      @segments.index{ |s| STATES.include?(s) }
     end
 
     ;; public
@@ -222,7 +352,7 @@ module POM
 
     ;; protected
 
-    #
+    # Return the undelying segments array.
     attr :segments
 
   end
