@@ -3,4 +3,4 @@ development:
 
 development/test:
   - qed
-
+  - lemon
