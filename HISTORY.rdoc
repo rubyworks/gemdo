@@ -1,14 +1,17 @@
 = RELEASE HISTORY
 
-== 2.1.1
+== 2.1.1 / 2010-10-19
 
-Bump command can not take state or slot as an argument.
+Bump command can now take state or slot as an argument.
 In other words, 'pom bump major' will work exactly like
-using 'pom bump --major'. Also History and News class
-have been made much more robust.
+using 'pom bump --major'. Als added new 'pom news' command
+to show current release notes (usefule for tagging!). And
+last but not least History and News class are now much
+more robust.
 
 Changes:
 
+* Add pom news command to show current release notes.
 * More robust History and News classes.
 * Bump command is more versitile.
 

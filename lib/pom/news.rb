@@ -40,7 +40,8 @@ module POM
       @file = opts[:file] || self.class.find(root)
 
       if @file
-        super(File.read(@file))
+        @text = File.read(@file)
+        super(@text)
       end
 
       #if opts[:history]
@@ -50,9 +51,11 @@ module POM
       #end
 
       if !file && history
+        @text     = history.release.text
+
         @header   = history.release.header
         @notes    = history.release.notes
-        @change   = history.release.changes
+        @changes  = history.release.changes
 
         @version  = history.release.version
         @date     = history.release.date

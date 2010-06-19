@@ -2,6 +2,7 @@
 
 require 'pom'
 require 'optparse'
+require 'ostruct'
 
 module POM
 
@@ -83,6 +84,63 @@ Use 'pom <COMMAND> --help' for command options.
 END
 
   end#class Command
+
+  # Module to house all POM command-line utility classes.
+  #
+  module Commands
+
+    # Base class for POM commands.
+    class Base
+      #
+      attr :options
+
+      #
+      attr :arguments
+
+      #
+      def initialize
+        @options   = OpenStruct.new
+        @arguments = []
+      end
+
+      #
+      def run
+        parse
+        execute
+      end
+
+      #
+      def parse
+        parser.parse!
+        @arguments = ARGV
+      end
+
+      #
+      def parser(&block)
+        @parser ||= (
+          opt = OptionParser.new(&block)
+
+          opt.on("--debug", "run in debug mode") do
+            $DEBUG   = true
+            $VERBOSE = true
+          end
+
+          opt.on_tail("--help", "-h", "display this help message") do
+            puts opt
+            exit
+          end
+
+          opt
+        )
+      end
+
+      def self.run
+        new.run
+      end
+
+    end#class Base
+
+  end#module Commands
 
 end#module POM
 
