@@ -287,8 +287,23 @@
       
 
       <p>
-Table of project releated URLs.
+The Resource class models a table of project releated URIs. Each entry has
+a name and URI. The class is <a href="../Enumerable.html">Enumerable</a> so
+each entry can be iterated over, much like a hash.
 </p>
+<p>
+The class also recognizes common entry names and aliases, which can be
+accessed via method calls.
+</p>
+<p>
+How aliases work in this class is unique. When a recognized name is
+assigned an URI, all it&#8217;s aliases are assigned the URI as well.
+Therefore when iterating over the entries there will be duplicate URIs
+under the various names.
+</p>
+<pre>
+  Resources.new(:home=&gt;'http://foo.com').to_h
+  #=&gt; {:home=&gt;'http://foo.com', :homepage=&gt;'http://foo.com'}</pre>
 
     </div>
 
@@ -828,9 +843,8 @@ IRC channel
         
         <p>
 Resource for central <b>public</b> repository, e.g.
+`git://github.com/protuils/pom.git`.
 </p>
-<pre>
-  git://github.com/protuils/pom.git</pre>
         
         </div>
       </div>
@@ -849,9 +863,8 @@ Resource for central <b>public</b> repository, e.g.
         
         <p>
 Resource for central <b>public</b> repository, e.g.
+`git://github.com/protuils/pom.git`.
 </p>
-<pre>
-  git://github.com/protuils/pom.git</pre>
         
         </div>
       </div>
@@ -887,21 +900,21 @@ Special accessors disperse access over multiple hash entries.
           <div class="method-source-code"
             id="attr-accessor-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 9</span>
- 9:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attr_accessor</span>(*<span class="ruby-identifier">names</span>)
-10:       <span class="ruby-identifier">code</span> = []
-11:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
-12:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}&quot;</span>
-13:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{name}']&quot;</span>
-14:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
-15:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}=(val)&quot;</span>
-16:         <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
-17:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{n}'] = val&quot;</span>
-18:         <span class="ruby-keyword kw">end</span>
-19:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
-20:       <span class="ruby-keyword kw">end</span>
-21:       <span class="ruby-identifier">module_eval</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
-22:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 26</span>
+26:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attr_accessor</span>(*<span class="ruby-identifier">names</span>)
+27:       <span class="ruby-identifier">code</span> = []
+28:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+29:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}&quot;</span>
+30:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{name}']&quot;</span>
+31:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
+32:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;def #{name}=(val)&quot;</span>
+33:         <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+34:           <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;  @table['#{n}'] = val&quot;</span>
+35:         <span class="ruby-keyword kw">end</span>
+36:         <span class="ruby-identifier">code</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;end&quot;</span>
+37:       <span class="ruby-keyword kw">end</span>
+38:       <span class="ruby-identifier">module_eval</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+39:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -924,7 +937,8 @@ Special accessors disperse access over multiple hash entries.
         <div class="method-description">
           
           <p>
-New <a href="Resources.html">Resources</a>.
+New <a href="Resources.html">Resources</a> object. The initializer can take
+a hash of name to URI settings.
 </p>
           
 
@@ -932,11 +946,11 @@ New <a href="Resources.html">Resources</a>.
           <div class="method-source-code"
             id="new-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 25</span>
-25:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">table</span>={})
-26:       <span class="ruby-ivar">@table</span> = {}
-27:       <span class="ruby-identifier">table</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>) }
-28:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 43</span>
+43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">table</span>={})
+44:       <span class="ruby-ivar">@table</span> = {}
+45:       <span class="ruby-identifier">table</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>) }
+46:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -964,17 +978,19 @@ New <a href="Resources.html">Resources</a>.
 
         <div class="method-description">
           
-          
+          <p>
+Iterate over each enty, including aliases.
+</p>
           
 
           
           <div class="method-source-code"
             id="each-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 82</span>
-82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
-83:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
-84:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
+102:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">block</span>)
+103:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -996,25 +1012,29 @@ New <a href="Resources.html">Resources</a>.
 
         <div class="method-description">
           
-          
+          <p>
+If a method is missing and it is a setter method (ending in
+&#8217;=&#8217;) then a new entry by that name will be added to the table.
+If a plain method then the name will be looked for in the table.
+</p>
           
 
           
           <div class="method-source-code"
             id="method-missing-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 92</span>
- 92:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
- 93:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
- 94:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
- 95:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
- 96:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
- 97:         <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
- 98:       <span class="ruby-keyword kw">else</span>
- 99:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-100:         <span class="ruby-keyword kw">nil</span>
-101:       <span class="ruby-keyword kw">end</span>
-102:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 114</span>
+114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>)
+115:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
+116:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">meth</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'='</span>)
+117:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
+118:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/=$/</span>
+119:         <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+120:       <span class="ruby-keyword kw">else</span>
+121:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">sym</span>, *<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+122:         <span class="ruby-keyword kw">nil</span>
+123:       <span class="ruby-keyword kw">end</span>
+124:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1036,17 +1056,19 @@ New <a href="Resources.html">Resources</a>.
 
         <div class="method-description">
           
-          
+          <p>
+The size of the table, including aliases.
+</p>
           
 
           
           <div class="method-source-code"
             id="size-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 87</span>
-87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
-88:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">size</span>
-89:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 106</span>
+106:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
+107:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">size</span>
+108:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1068,17 +1090,19 @@ New <a href="Resources.html">Resources</a>.
 
         <div class="method-description">
           
-          
+          <p>
+Convert to Hash by duplicating the underlying hash table.
+</p>
           
 
           
           <div class="method-source-code"
             id="to-h-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 77</span>
-77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
-78:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">dup</span>
-79:     <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/pom/resources.rb, line 96</span>
+96:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_h</span>
+97:       <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">dup</span>
+98:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

@@ -1,4 +1,4 @@
-Fri, 18 Jun 2010 19:03:17 -0400
+Fri, 18 Jun 2010 22:35:22 -0400
 lib/pom/gemspec.rb	Thu, 17 Jun 2010 01:43:55 -0400
 lib/pom/commands/show.rb	Thu, 17 Jun 2010 02:21:19 -0400
 lib/pom/core_ext/to_list.rb	Fri, 28 May 2010 17:38:06 -0400
@@ -18,15 +18,15 @@ lib/pom/metadir.rb	Fri, 18 Jun 2010 13:32:35 -0400
 lib/pom.rb	Fri, 30 Apr 2010 13:01:57 -0400
 lib/pom/metastore.rb	Wed, 16 Jun 2010 11:56:30 -0400
 lib/pom/metadata.rb	Fri, 18 Jun 2010 18:38:51 -0400
-lib/pom/resources.rb	Wed, 16 Jun 2010 21:08:57 -0400
-lib/pom/version_number.rb	Fri, 18 Jun 2010 11:27:40 -0400
+lib/pom/resources.rb	Fri, 18 Jun 2010 21:29:39 -0400
+lib/pom/version_number.rb	Fri, 18 Jun 2010 21:15:40 -0400
 lib/pom/commands/gemspec.rb	Sun, 06 Jun 2010 20:48:06 -0400
 lib/pom/commands/dump.rb	Thu, 17 Jun 2010 02:17:27 -0400
 bin/pom	Sat, 14 Nov 2009 17:52:00 -0500
 README.rdoc	Fri, 18 Jun 2010 19:03:05 -0400
 PACKAGE	Fri, 18 Jun 2010 14:47:03 -0400
 lib/pom/manifest.rb	Wed, 13 Jan 2010 03:41:31 -0500
-lib/pom/require.rb	Fri, 18 Jun 2010 13:58:28 -0400
+lib/pom/require.rb	Fri, 18 Jun 2010 22:35:08 -0400
 lib/pom/package/simple_style.rb	Fri, 18 Jun 2010 10:48:14 -0400
 REQUIRE	Sat, 05 Jun 2010 17:03:08 -0400
 lib/pom/package.rb	Fri, 18 Jun 2010 10:49:59 -0400
@@ -40,6 +40,6 @@ lib/pom/command.rb	Fri, 18 Jun 2010 10:47:37 -0400
 lib/pom/commands/init.rb	Wed, 16 Jun 2010 23:09:50 -0400
 lib/pom/core_ext.rb	Wed, 06 Jan 2010 23:39:56 -0500
 NOTES.rdoc	Sun, 13 Jun 2010 14:48:55 -0400
-lib/pom/root.rb	Wed, 16 Jun 2010 11:31:32 -0400
+lib/pom/root.rb	Fri, 18 Jun 2010 21:17:18 -0400
 lib/pom/core_ext/try_dup.rb	Mon, 24 May 2010 18:19:28 -0400
 lib/pom/version_helper.rb	Fri, 18 Jun 2010 06:45:09 -0400

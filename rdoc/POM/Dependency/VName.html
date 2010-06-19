@@ -268,6 +268,9 @@
       <p>
 <a href="VName.html">VName</a> encapsulates a name-verison pair.
 </p>
+<p>
+TODO: Need to support version &#8220;from-to&#8221; spans.
+</p>
 
     </div>
 
@@ -290,7 +293,9 @@
 
         <div class="method-description">
         
-        
+        <p>
+<a href="../Package.html">Package</a> name.
+</p>
         
         </div>
       </div>
@@ -305,7 +310,9 @@
 
         <div class="method-description">
         
-        
+        <p>
+<a href="../Package.html">Package</a> verison with constraint.
+</p>
         
         </div>
       </div>
@@ -332,17 +339,19 @@
 
         <div class="method-description">
           
-          
+          <p>
+New <a href="VName.html">VName</a> object.
+</p>
           
 
           
           <div class="method-source-code"
             id="new-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 269</span>
-269:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>)
-270:         <span class="ruby-ivar">@name</span>, <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">name</span>)
-271:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 351</span>
+351:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>)
+352:         <span class="ruby-ivar">@name</span>, <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">name</span>)
+353:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -379,19 +388,19 @@ Converts the version into a constraint recognizable by RubyGems.
           <div class="method-source-code"
             id="constraint-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 274</span>
-274:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">constraint</span>
-275:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">version</span>
-276:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\~$/</span>
-277:           <span class="ruby-node">&quot;~&gt; #{$1}&quot;</span>
-278:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\+$/</span>
-279:           <span class="ruby-node">&quot;&gt;= #{$1}&quot;</span>
-280:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\-$/</span>
-281:           <span class="ruby-node">&quot;&lt; #{$1}&quot;</span>
-282:         <span class="ruby-keyword kw">else</span>
-283:           <span class="ruby-identifier">version</span>
-284:         <span class="ruby-keyword kw">end</span>
-285:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 356</span>
+356:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">constraint</span>
+357:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">version</span>
+358:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\~$/</span>
+359:           <span class="ruby-node">&quot;~&gt; #{$1}&quot;</span>
+360:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\+$/</span>
+361:           <span class="ruby-node">&quot;&gt;= #{$1}&quot;</span>
+362:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(.*?)\-$/</span>
+363:           <span class="ruby-node">&quot;&lt; #{$1}&quot;</span>
+364:         <span class="ruby-keyword kw">else</span>
+365:           <span class="ruby-identifier">version</span>
+366:         <span class="ruby-keyword kw">end</span>
+367:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -413,17 +422,19 @@ Converts the version into a constraint recognizable by RubyGems.
 
         <div class="method-description">
           
-          
+          <p>
+Returns a <a href="../../String.html">String</a> with name and version.
+</p>
           
 
           
           <div class="method-source-code"
             id="to-s-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 288</span>
-288:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
-289:         <span class="ruby-node">&quot;#{name} #{version}&quot;</span>
-290:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 370</span>
+370:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+371:         <span class="ruby-node">&quot;#{name} #{version}&quot;</span>
+372:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -451,20 +462,22 @@ Converts the version into a constraint recognizable by RubyGems.
 
         <div class="method-description">
           
-          
+          <p>
+Parse package entry into name and version constraint.
+</p>
           
 
           
           <div class="method-source-code"
             id="parse-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 295</span>
-295:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">package</span>)
-296:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)
-297:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">shift</span>
-298:         <span class="ruby-identifier">vers</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)
-299:         [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">vers</span>]
-300:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/pom/require.rb, line 377</span>
+377:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">package</span>)
+378:         <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)
+379:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">shift</span>
+380:         <span class="ruby-identifier">vers</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)
+381:         [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">vers</span>]
+382:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
