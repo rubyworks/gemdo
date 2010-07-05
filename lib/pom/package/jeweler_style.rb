@@ -23,7 +23,7 @@ class POM::Package
       ":major: #{@segments[0]}\n" +
       ":minor: #{@segments[1]}\n" +
       ":patch: #{@segments[2]}\n" +
-      ":build: #{@segments[3..-1]}\n"
+      ":build: #{@segments[3..-1].join('.')}\n"
     end
 
     #

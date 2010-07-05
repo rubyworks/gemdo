@@ -15,6 +15,7 @@ module POM::Commands
     def initialize
       @project = POM::Project.new(:lookup=>true)
       @slots   = []
+      @state   = nil
       @force   = false
     end
 

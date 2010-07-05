@@ -136,7 +136,10 @@ module POM
         idx ||= lines.index{ |line| /^1.\ / =~ line }
         idx ||= lines.index{ |line| /^\*\ / =~ line }
 
-        if idx > 0
+        if idx.nil?
+          @notes   = lines.join
+          @changes = ''
+        elsif idx > 0
           @notes   = lines[0...idx].join
           @changes = lines[idx..-1].join
         else

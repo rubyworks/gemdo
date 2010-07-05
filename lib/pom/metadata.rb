@@ -102,7 +102,6 @@ module POM
       s << "repository : #{repository}"
       s << "authors    : #{authors.join(',')}"
       s << "package    : #{name}-#{version}"
-      s << "requires   : #{requires.join(',')}"
       s.join("\n")
     end
 

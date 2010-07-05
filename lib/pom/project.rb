@@ -390,7 +390,7 @@ module POM
     def announcement(*parts)
       ann = []
       parts.each do |part|
-        case part
+        case part.to_sym
         when :message
           ann << "#{profile.title} #{self.version} has been released."
         when :description

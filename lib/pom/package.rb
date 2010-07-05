@@ -20,8 +20,9 @@ module POM
     require 'pom/package/simple_style'
     require 'pom/package/jeweler_style'
     require 'pom/package/pom_style'
+    require 'pom/package/jpom_style'
 
-    STYLES = [SimpleStyle, JewelerStyle, POMStyle]
+    STYLES = [SimpleStyle, JewelerStyle, POMStyle, JPOMStyle]
 
     #
     #include VersionHelper
@@ -128,7 +129,7 @@ module POM
 
     #
     def build
-      version.build[SimpleStyle, JewelerStyle, POMStyle]
+      version.build
     end
 
     # Current status (beta, alpha, pre, rc, etc.)
@@ -146,7 +147,7 @@ module POM
     #
     def read!
       if file
-        data  = YAML.load(File.new(file))
+        data  = YAML.load(File.new(file.to_s))
         style = STYLES.find{ |s| s.match?(data) }
         extend(style)
         parse(data)
