@@ -2,7 +2,7 @@ module POM
 
   # Root directory is indicated by the presence of either a
   # PACKAGE file or as a fallback a lib/ directory.
-  ROOT_INDICATORS = ['PACKAGE{.yml,.yaml,}', 'lib/', '{.meta,meta}']
+  ROOT_INDICATORS = ['.git', '.hg', '_darcs', 'PACKAGE{.yml,.yaml,}', 'lib/', '{.meta,meta}']
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position
