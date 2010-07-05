@@ -1,5 +1,16 @@
 = RELEASE HISTORY
 
+== 2.1.2 / 2010-01-20
+
+Add new 'pom news' command to show current release
+notes --useful for tagging! (NOTE: I thought this was
+in the last release but it never made it into the MANIFEST.)
+
+Changes:
+
+* Add pom news command to show current release notes.
+
+
 == 2.1.1 / 2010-10-19
 
 Bump command can now take state or slot as an argument.
@@ -11,7 +22,6 @@ more robust.
 
 Changes:
 
-* Add pom news command to show current release notes.
 * More robust History and News classes.
 * Bump command is more versitile.
 
