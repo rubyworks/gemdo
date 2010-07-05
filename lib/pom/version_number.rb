@@ -57,6 +57,9 @@ module POM
         @segments = version.split('.').map{ |s| /\d+/ =~ s ? s.to_i : s.to_s }
       when VersionNumber
         @segments = version.segments
+      else
+        version = version.to_s.split('.')
+        @segments = version.map{ |s| /\d+/ =~ s ? s.to_i : s.to_s }
       end
     end
 
