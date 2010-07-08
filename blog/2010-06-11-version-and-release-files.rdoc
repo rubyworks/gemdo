@@ -1,0 +1,45 @@
+= 2010-06-11 | VERSION and RELEASE files
+
+I face an issue with supporting the VERSION file as the source for
+a project's current version information. Specifically, tools like
+Tim Pease's Mr. Bones and and Josh Nichols' Jeweler utilize the VERSION
+file as well, but in more limited formats. Bones looks for a simple text 
+entry, e.g. "1.0.0", while Jeweler can accept this as well, but prefers
+the YAML layout:
+
+  --
+  :major: 1
+  :minor: 0
+  :patch: 0
+  :build: 
+
+Both are fine as far as they go. But POM recognizes additional version
+information including *release date*, *code name*, and *revision number*.
+This additional information could be added to either format of VERSION file,
+but without modification to Bones and Jeweler, they will choke-on and/or
+clobber the additional information. I am somewhat hopeful they will repsond
+to my email asking for us to work out a common design, but after 4 days
+I have yet to heard from them :(  I do not want to step on other's toes.
+As much as possible I am trying to conform POM to the way Rubyists already 
+organize their projects, rather than the other way around.
+
+If I cannot reach an accord with other developers on a more flexible VERSION
+file, the alternative is to fallback to meta/ entries. Yes, those again.
+I considered using the RELEASE file instead. I know that a few developer's
+already use this file to store a description the the current release, so
+it follows logically. I thought it would be possible to utilize a document
+header to extract the information, whether it is a line of text or YAML
+front matter. But I releazed that the file is inteded for human readability
+and not machine, so it won't fly.
+
+Finally there are three important pieces of information that do not seem
+to fit properly among the version data, but must be readily available
+to many project tools. These are the project's *unixname*, it's *classname*
+and the *loadpath*. Initially I simply placed this information in with
+the version data, however, strictly speaking it is not version information.
+To avoid this I have utilize certain hueristics that infer the information
+from other aspects of the project. For example the unixname can be infered
+by the name of the directory in lib/. If for the some reason the project
+differs from the usual norms, this information can be specifically specified
+in the .meta/ directory.
+

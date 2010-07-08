@@ -1,0 +1,19 @@
+= 2010-01-16 | Build Metadata
+
+Debated a long time about what to do about "build metadata".
+At issue is the fact that it is almost entirely information that
+the end-user never needs to see, so it does not need to be
+shipped with the package(s), as regular metadata generally
+does. So this build data doesn't belong in the same location
+as the regular metadata --with one exception. Build requirements
+to actually compile and install the pacakge are needed.
+
+After much consideration I have decided that such build requirements
+should be included in the regular requirements field when
+they are needed to compile and/or install.
+
+As for the rest, I have for now at least declared a YAGNI.
+The build fields would only act as defaults for other tools in
+anycase. One might as well provide the configuration settings
+for the tools themselves (e.g. setting them in a Rakefile).
+

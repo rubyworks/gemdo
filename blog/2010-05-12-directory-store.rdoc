@@ -1,0 +1,38 @@
+= 2010-05-12 | Directory Store
+
+One of the more "controversial" design decisions made by POM was to store all
+metadata in a directory store --one file per peice of information. But there is
+a very specific reason for this. Namely that the version number needs to be
+accessible indpendently of the other metadata so that it could be easily
+updated. While the version could have been singled out, a few other fields were
+related to the version number, for instance, the release date. In addition
+other fields, such as the package name, are more commonly useful than
+most of the other information and it seems wasteful to load up a large amount
+of metadata for the sake of single entry. And so, taking all this into account,
+the most consitant result was to put all entires in separate files.
+There are plenty of advantages to this approach, as I have discussed else 
+where, but their are also some unfortunate downsides. 
+
+* Access of metadata via URL is hamperd since it takes multiple http requests to access the data.
+* Having to edit multiple files is obviously not as convenient as editing a single file.
+* Perhaps, worse of all, it simply strike some developers as "weird".
+
+I have, for some time tried to work out a potential alternative design, one that
+uses a small number of files, separating metadata according the needs mentioned
+above. While I am not 100% on the exact names of the files, I have worked out 
+taht this alternative would have two files:
+
+* <tt>.version</tt> for name, version, release date, status, and also internal load path.
+* <tt>.package</tt> for dependencies, with suitable distinction for platforms.
+* <tt>.profile</tt> for all other metadata such as description, summary, authors, etc.
+
+This system would work just as well as the per file system as far as the
+separation of important concerns --the .version file would be updated regularly
+while the .profile file would rarely ever change. I am tempted to support this
+design, but I am a little hestitant to break backward compatability and concerned
+that future needs might prove this division of information more fragile than it
+presently seems. That's one of the big advantages of the file store design
+actually, adding new stuff to it has essentially no ramifications on the design.
+POM could support both designs, but I worry this would only further complicate
+matters.
+

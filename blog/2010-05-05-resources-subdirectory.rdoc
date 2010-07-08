@@ -1,0 +1,10 @@
+= 2010-05-05 | Resourcess Subdirectory
+
+To subdirectory or not to subdirectory? That is the question. Whether it is better
+to separate relavent sets of information into their own little area of concern or
+to leave them adrift within all the other metadata, it is a difficult choice.
+On the one hand, the simplicity of a single depth store is very attractive, on the
+other the sepration of concerns leads to a cleaner layout. And then I must ask,
+how far does it go? Does separating "requirements", like +requires+, +provides+,
+and so on, into a separate subdirectory, make more sense as well?
+

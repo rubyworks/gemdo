@@ -1,0 +1,13 @@
+== 2010-01-17 | Wiki's Make the Best User Manuals
+
+Today I have finally decided that a Wiki is the best place
+to keep user documentation. There is of course the obvious
+advantage to this: online access, editable by any user, anywhere
+at anytime. There are some subtle advantages as well. For instance,
+I get automatic spell-checking via my browser.
+
+Of course the big disadvantage is that should the Wiki Host
+go kaputz, then no more documentation. I trust GitHub is not
+going anywhere anytime soon, but I have had such a thing happen
+to me before so I will be sure to look into making backups just in case.
+
