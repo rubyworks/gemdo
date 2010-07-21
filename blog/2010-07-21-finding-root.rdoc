@@ -1,0 +1,85 @@
+= 2010-07-21 | Find Root
+
+How can we reliably identify the root directory of a Ruby project?
+This is an important need and yet has gone unatteneded.
+
+The issue has been largely circumvented by the use of Rake, since a Rakefile
+resides in the project's root. However this only covers build needs, and 
+attempting ot make it a more general requirement also leaves users of
+alternate build tools in the cold.
+
+It has been suggested to me that searching for a lib/ directory is the
+best choice. And it is a nice idea in that project maintainers would not
+have to do anything to support the specification as the lib/ directory
+is already a standard, having been derived from setup.rb. However, as
+remarkable as it may seem there are a few Ruby projects out there that do not
+use a lib/ directory. Since the loadpath can be adjusted in a gemspec, it is
+certainly not necessary to do so. We could require it's existance as part of
+the POM specification, but I believe allowing a modifiable loadpath yet
+requiring a lib/ directory are antithetical.
+
+An more obvious, and rather generic choice would be special SCM directories.
+The use of .git, .hg, _darcs, etc. are give aways as to the location
+of the project's root. But here again we run into off cases. Some persons
+may use an uncommon SCM or none at all. Worse still, .svn can't be used
+becuase Subversion puts this directory in _every_ project directory.
+
+Another option is the +.gemspec+ file. This is a farily good option in that
+it clearly marks the project as a Ruby project, but many tools generate this
+the Gem::Specification on demand and thus have no need to perminanely present
+.gempec file (despite what some have argued). Moreover, it undermines the 
+purpose of POM which is more complete and resuable design for storing much of
+the same information.
+
+Similarly some may suggest the Gemfile as a marker, being rapidly
+popularized by Bundler. And this I think would be a better notion, however
+I have some issues with the Gemfile. Primarily I do not think it is wise
+to make a configuration file a executable Ruby script. By doing so it is no
+long declartive in nature. This is what led me to create the alteranate
+REQUIRE file.
+
+If none of these pre-existing options are full satisfactory, where does this
+leave us? We could define a specific marker just for the purpose. However if
+we are going to define a file or a directory to act as marker, clearly the
+file of directory also be of some use as more than a mere marker --an empty
+file or directory would be silly.
+
+POM defines one essential file, the PACKAGE file. This file could be
+used as a marker. And it will almost assuredly work in every case. But since
+the name is so generic, there remains the small chance of a conflict. This is
+a difficulty I ran into when I originally wented to use the name "VERSION"
+instead of "PACKAGE". I realized that too many other projects were already
+using such a file in incompatiable ways, in particular projects using
+Mr. Bones or Jeweler. But this is very minor point, and if it were really
+a worry a more esoteric name, like +PKGFILE+, would suffice. The more pressing
+concern is that the name lacks any sort of "this is a Ruby" quality. In this
+reagard there is a trade-off. On the one hand it would be nice for POM to define
+a fully generic specification so POM it might be useful to other project
+types as well --not just Ruby projects. On the other hand, it would also be
+nice to readily see that a project is a Ruby project. And between them I
+peronally favor the later, simply because there is a greater tendency to
+stick one's langauge of choice than to cross tools (Java and C are the only
+two exception that I know of where it is not uncommon to do so). So perhaps
+the solution then is simply to rename the PACKAGE file to something a little
+more Ruby-esque? Something like +RUBYPKG+, +RUBY.pkg+ or +RUBY.spec+ and use
+that as the marker. Hmmm.... perhaps +Rubyfile+.
+
+The final alterantive is using something more akin to the origina POM .meta/
+directory. This was a good indicator in itself. But again it lacks the "Ruby"
+quality. So perhaps it can be called .ruby/ instead. I very much like this in
+that is has an appreciable quality, in much the same way "Gemfile" does. On
+the other hand, a more logical approach would be to use somthing generic like
++.meta/+, .project/ or .pom/ but have +ruby+ file within it, e.g.
+<code>.project/ruby</code> Thus achivieving a generic design but also clearly
+indicating a Ruby project at the same time. The trouble with the .ruby/ or
+.pom/ruby however is what else do we put in the directory? Do we move PACKAGE,
+REQUIRE and/or PROFILE into it? Do we want to hide these files under a hidden
+directory when they offer lots of useful general purpose information about a
+project? The placing of these files into the directory could be optional but git
+won't track an empty directory, so something has to go in it. On the plus side,
+other tools could use the location as well. Currently Setup.rb uses a .setup/
+directory to house install hooks and other files it might utilize. Potentially
+it could use .ruby/ instead.
+
+
+
