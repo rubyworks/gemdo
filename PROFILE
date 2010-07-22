@@ -7,8 +7,8 @@ suite:     proutils
 created:   2009-07-22 15:21:34
 
 description:
-  Ruby POM stands for Ruby Project Object Model.
-  POM provides a metadata system for Ruby projects.
+  POM provides a complete metadata system
+  for Ruby projects.
 
 authors:
   - Thomas Sawyer
