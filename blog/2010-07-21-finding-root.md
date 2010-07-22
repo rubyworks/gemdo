@@ -20,25 +20,25 @@ the POM specification, but I believe allowing a modifiable loadpath yet
 requiring a `lib/` directory are antithetical to one another.
 
 A more obvious, and rather generic choice, would be the use of special SCM
-directories. Directory like .git, .hg, _darcs, and so on, are dead-giveaways
+directories. Directory like `.git`, `.hg`, `_darcs`, and so on, are dead-giveaways
 as to the location of the project's root fodler. But here again we run into
 off cases. Some persons may use an uncommon SCM or none at all. Worse still,
 Subverison can't be include here becuase it puts `.svn/` in _every_ project
 directory.
 
-Another option is the +.gemspec+ file. This is a farily good option in that
+Another option is the `.gemspec` file. This is a farily good option in that
 it clearly marks the project as a Ruby project, but many tools generate a
 Gem::Specification on demand and thus have no need of a perminanely present
 .gempec file (despite what some have urged). Moreover, it undermines the 
 purpose of POM which is a more complete and resuable design for storing much
 of the same information.
 
-Similarly some may suggest the Gemfile as a marker, being rapidly
+Similarly some may suggest the `Gemfile` as a marker, being rapidly
 popularized by Bundler. And this I think would be a better notion, however
 I have some issues with the Gemfile. Primarily I do not think it is wise
-to make a configuration file an executable Ruby script. By doing so it is no
-long declartive in nature. If condistions are especially unacceptable. 
-This is what led me to create the alteranate REQUIRE file.
+to make a configuration file an executable Ruby script. By doing so, it is no
+long declartive in nature. If-conditions are especially unacceptable. 
+This is what led me to create POM's alteranate `REQUIRE` file.
 
 If none of these pre-existing options are full satisfactory, where does this
 leave us? We could define a specific marker just for the purpose. However if
@@ -55,19 +55,19 @@ projects were already using a VERSION file in incompatiable ways (even I
 had done so in the past), in particular any project using Mr. Bones or Jeweler.
 But this is very minor point, and if it were really an issue a more esoteric
 name, like `PKGFILE`, would suffice. The larger concern is that the name lacks
-any sort of "This is a Ruby" quality. In this respect, we must acknowledge
-a a trade-off. On the one hand it would be nice for POM to define a fully
+any sort of <i>this-is-a-Ruby</i> quality. In this respect, we must acknowledge
+a trade-off. On the one hand it would be nice for POM to define a fully
 generic specification, so that POM might be useful to other project types
 as well --not just Ruby projects. On the other hand, it would also be nice to
 readily see that a project is a Ruby project. I am torn between the two choices,
 though I suppose I must favor the later simply because there is a greater
-tendency to stick to one's langauge of choice than to cross tools 
-Java and C are the only two exception that I know of where it is not
+tendency to stick to one's langauge of choice than to "polyglot" one's tools 
+(Java and C are the only two exceptions that I know of where it is not
 uncommon to do so). So perhaps the solution then is simply to rename the
 `PACKAGE` file to something a little more Ruby-esque? Something like `RUBYPKG`,
 `RUBY.pkg` or `RUBY.spec` and use that as the marker.
 
-The final alterantive is to use something more akin to the original POM .meta/
+The final alterantive is to use something more akin to the original POM `.meta/`
 directory. This was a good indicator in itself. Though again it lacks the "Ruby"
 quality. So perhaps it can be called `.ruby/` instead? I very much like this in
 that is has an appreciable quality, in much the same way "Gemfile" does. On
@@ -75,15 +75,22 @@ the other hand, the more generic approach would be to use somthing like
 `.meta/`, `.project/` or `.pom/` but have `ruby` file within it, e.g.
 `.project/ruby`. Thus achivieving a generic design but also clearly
 indicating a Ruby project at the same time. The trouble with the `.ruby/` or
-`.pom/ruby` however is what else do we put in the directory? Do we move 
-`PACKAGE`, `REQUIRE` and/or `PROFILE` into it? Do we really want to hide these
+`.pom/ruby` is what else do we put in the directory? Do we move `PACKAGE`,
+`REQUIRE` and/or `PROFILE` into it? Do we really want to hide these
 files away under a hidden directory when they offer so much useful general
 purpose information about a project? The placing of these files into the
-directory could be optional but git will not track an empty directory, so
-something has to go in it. On the plus side, other tools could use the location
-as well. Currently Setup.rb uses a `.setup/` directory to house install hooks
-and other optional files. Potentially it could use the `.ruby/` directory
-instead. In other words the directory has more room for growth where as using
-a file is more limited.
+directory could be optional but remember that git will not track an empty
+directory, so something has to go in it. On the plus side, other tools could
+use the location as well. Currently Setup.rb uses a `.setup/` directory to house
+install hooks and other optional files. Potentially it could use the `.ruby/`
+directory instead. In other words the directory has more room for growth, where
+as using a file as a marker is more limited.
+
+So we have at least narrowed the possibilities down to these four.
+
+1. Use the `PACKAGE` file as a marker.
+2. Rename the `PACKAGE` file to something like `Rubyfile`, and use that as the marker.
+3. Use a `.ruby/` directory, where the main metadata files can optional reside.
+4. Use a `.meta/` or `.pom/` or `.project/` directory with a `ruby` file in it and optionally the other metadata files.
 
 
