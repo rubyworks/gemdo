@@ -1,0 +1,11 @@
+---
+- name: qed
+  vers: 2.3+
+  type: test
+
+- name: rdazzle
+  type: doc
+
+- name: syckle
+  type: build
+
