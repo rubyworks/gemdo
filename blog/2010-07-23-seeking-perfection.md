@@ -1,4 +1,4 @@
-= 2010-07-23 | Seeking Perfection
+# 2010-07-23 | Seeking Perfection
 
 I releaize my biggest problem it working out the various details of desing for
 POM primarily stem from my over baring desire to achieve "perfection", or at
@@ -33,11 +33,11 @@ vs. using toplevel files. Of these, there three significant designs.
 
 The first is the subdirectory approach.
 
-  .ruby/
-    loadpath
-    package
-    profile
-    require
+    .ruby/
+      loadpath
+      package
+      profile
+      require
 
 Notice that this approach allows us to split the loadpath out a seprate 
 entry, it we wish. On the downside this hides important metadata away into
@@ -53,10 +53,10 @@ to detect the root directory. To give the file contents some use, like the
 `ruby` file above, it could contain a list of the versions of Ruby the project
 has been tested against.
 
-  .ruby
-  PACKAGE
-  PROFILE
-  REQUIRE
+    .ruby
+    PACKAGE
+    PROFILE
+    REQUIRE
 
 Possibly we might also merge REQUIRE into PACKAGE, leaving us a single file,
 and if we did that we could rename it in such a way as to use it as a Ruby
@@ -64,8 +64,8 @@ root marker as well. Something likes `Rubyfile` or `Ruby.yml`, in which would
 be the all the package and requirements information. Thus leaving us with
 simply:
 
-  Profile
-  Rubyfile
+    Profile
+    Rubyfile
 
 The choice boils down to these three. Now the question is, "which?".
 
