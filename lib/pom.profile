@@ -1,3 +1,4 @@
+---
 title:     POM
 summary:   Project metadata system for Ruby projects
 copyright: Copyright (c) 2009 Thomas Sawyer
@@ -22,3 +23,4 @@ resources:
   api   : http://proutils.github.com/pom/rdoc
   mail  : mailto:proutils+subscribe@googlegroups.com
   forum : http://groups.google.com/group/proutils
+
