@@ -3,18 +3,29 @@
 * home: http://proutils.github.com/pom
 * work: http://github.com/protuils/pom
 
+
 == DESCRIPTION
 
 POM stands for Project Object Model (yes, a term co-opted from Java/Maven world).
 Ruby's POM provides a standardized layout and a class model for working
 with Ruby projects. POM largely supports the most common practices of the
-Ruby community. In a few areas it takes things a step further to define
-practices of its own in order to expand it's capabilites.
+Ruby community, but also defines new practices shore up some of the weaker 
+points of Ruby project standards, and expand its capabilities.
 
 
-== RELEASE NOTES
+== WHY?
 
-Please see HISTORY.rdoc file.
+Consider the state of Ruby project standards today. While a number of well
+aheared practices have evolved over the years, largely due to specifications 
+of the orginal setup.rb, still other common project needs remain chaotic and
+confusing. The storage of the a project's current version is one of the most
+painfully obvious examples. The data is required in a project's .gemspec, but
+good practice dictates that is also needed in our library code as a constant;
+if we use Rakegem that constanct should be in lib/foo.rb, but if we are using
+Bundler it is expected in lib/foo/version.rb. If we use Bones to help us manage
+our project, the verison is also stored in a VERSION file as a string, but if 
+we use Jeweler instead uses the same file but prefers a hash. All this for
+only one field and a handful of available tools.
 
 
 == SYNOPSIS
@@ -23,12 +34,20 @@ Primarily POM defines a standard set of project layout and design patterns.
 Most of these derive for setup.rb --the original Ruby project specification,
 and common patterns widely used among the Ruby community.
 
-This specification is implementated in Ruby code. Common usage is to create
-a Project object passing the constructor the root directory of the project.
+The specification designates particular files and their uses, most fo which
+are obvious, such as a `README` or a `MANIFEST`. Others are new introduced
+by Rock to shore up the weaks links in common paactices. In particular, Rock
+designates a `.ruby` file to act as the "metadata engine yard", linking named
+information to the resources within project metadata files.
 
-  project = POM::Project.new(root_directory)
+This entire specification is then implemeted in Ruby code, known as the "POM"
+(Project Object Model). Primary usage of this model relies on the toplevel
+Project class, instantiated by passing the constructor the root directory
+of the project.
 
-The project object then ties into all the rest of available metadata, e.g.
+  project = Project.new(root_directory)
+
+The project object then ties into all the available metadata, e.g.
 
   project.name
   project.version
@@ -36,7 +55,7 @@ The project object then ties into all the rest of available metadata, e.g.
 
   etc...
 
-POM also provides a command line tool with some useful project utilities.
+Rock also provides a command line tool with some useful project utilities.
 For example, it can be used to bump a project's version number.
 
   $ pom bump --patch
