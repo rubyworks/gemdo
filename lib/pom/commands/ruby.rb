@@ -1,6 +1,6 @@
 module POM::Commands
 
-  class Init
+  class Dotruby
 
     def self.run
       new.run
@@ -91,13 +91,11 @@ module POM::Commands
       #  return
       #end
 
-      name = File.basename(root)
-
       project = POM::Project.new(root) #, :name=>name)
       rubydir = POM::RubyDir.new(root)
       package = POM::Package.new(root)
 
-      name = rubydir.name || package.name || File.basename(root)
+      name = package.name || File.basename(root)
 
       profile = POM::Profile.new(root, name)
 
@@ -119,18 +117,27 @@ module POM::Commands
       #metadata.new_project
 
       files = resources()
-      if files.empty? && !has_package && !has_rubydir
-        files << Dir.glob('*.gemspec').first
-        files << Dir.glob('README{,.*}').first
+      if files.empty? &&
+        if !has_package
+          files << Dir.glob('*.gemspec').first if rubygems?
+          files << Dir.glob('README{,.*}').first
+        else
+          files << 'PACKAGE'
+        end
       end
+
       files.compact!
 
       files.each do |file|
         case file
         when /\.gemspec$/
-          text = File.read(file)
-          gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
-          project.import_gemspec(gemspec)
+          if rubygems?
+            text = File.read(file)
+            gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
+            project.import_gemspec(gemspec)
+          else
+            raise "Could not load RubyGems."
+          end
         when /^README/i
           readme = POM::Readme.load(file)
           project.import_readme(readme)
@@ -153,52 +160,17 @@ module POM::Commands
       end
 
       #
-      if !has_rubydir
-        rubydir.load_from_package(package)
-      end
-
-      #project.root = root
-
-      # load any meta entries that may already exist
-      #project.reload unless options[:replace]
-
-      #package_file = package.file ? package.file : File.join(root,'PACKAGE')
-      #profile_file = profile.file ? profile.file : File.join(root,'PROFILE')
+      rubydir.load_from_package(package)
 
       if $TRIAL
-      else
-        if $FORCE or !has_rubydir
-          rubydir.save!
-        end
-
-        if $FORCE or !has_package
-          package.backup!
-          package.save! #(package_file)
-        end
-
-        if $FORCE or !has_profile
-          profile.backup!
-          profile.save! #(profile_file)
-        end
+      else    
+        rubydir.save!
       end
-
-      print_fixes
     end
 
     #
-    def print_fixes
-      root  = Dir.pwd
-      fixes = []
-      pwd = Pathname.new(root)
-      files = [POM::Package.find(root), POM::Profile.find(root)]
-      files.each do |file|
-        File.readlines(file).each{ |l| l.grep(/FIXME/).each{ |r| fixes << file.relative_path_from(pwd) } }
-      end
-      fixes.uniq!
-      unless fixes.empty?
-        puts "The following files require editing:\n"
-        puts "  " + fixes.join("\n  ")
-      end
+    def rubygems?
+      @rubygems
     end
 
     #
@@ -206,11 +178,13 @@ module POM::Commands
       begin
         require 'rubygems'
         #::Gem::manage_gems
+        @rubygems = true
       rescue LoadError
-        raise LoadError, "RubyGems is not installed."
+        @rubygems = false
       end
     end
 
   end
 
 end
+

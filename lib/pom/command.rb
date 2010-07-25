@@ -43,6 +43,7 @@ module POM
     def run_command
       job = parse_command
       begin
+        job = 'dotruby' if job == '.ruby'
         cmd = POM::Commands.const_get(job.capitalize)
       rescue NameError
         puts "Unrecognized command -- #{job}"

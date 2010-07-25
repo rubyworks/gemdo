@@ -97,14 +97,19 @@ module POM
       @metadata ||= Metadata.new(root, @opts)
     end
 
-    # General information.
-    def profile
-      metadata.profile
+    #
+    def rubydir
+      metadata.rubydir
     end
 
-    # General information.
+    #
     def package
       metadata.package
+    end
+
+    #
+    def profile
+      metadata.profile
     end
 
     # Current release information.

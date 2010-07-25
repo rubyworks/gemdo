@@ -15,7 +15,12 @@ module POM
     # The default file name to use for saving
     # a new PROFILE file.
     def self.default_filename
-      'PROFILE.yml'
+      '.ruby/profile'
+    end
+
+    # Possible project file names.
+    def self.filename
+      ['.ruby/profile', 'PROFILE']
     end
 
     # New Profile object. To create a new Profile

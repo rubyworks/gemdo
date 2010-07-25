@@ -167,6 +167,7 @@ module POM
     #
     def save!(path=nil)
       @pathname = Pathname.new(path) if path
+      @pathname.mkdir unless @pathname.exist?
       @data.each do |name, value|
         write!(name, value)
       end
@@ -180,9 +181,10 @@ module POM
     #++
 
     def write!(name, value, overwrite=true)
+      return if value.nil?
       fname = name # TODO
       file  = @pathname + fname
-      if file
+      if file.exist?
         if overwrite
           text  = file.read
           yaml  = /\A---/ =~ text

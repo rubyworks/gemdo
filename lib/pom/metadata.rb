@@ -1,6 +1,7 @@
 require 'pom/root'
 require 'pom/package'
 require 'pom/profile'
+require 'pom/rubydir'
 require 'pom/metadir'
 
 module POM
@@ -16,17 +17,30 @@ module POM
     def initialize(root, opts={})
       root = Pathname.new(root)
 
+      @rubydir = nil
       @profile = nil
       @metadir = nil
 
-      @package = Package.new(root, opts) #if Package.find(root)
-      @profile = Profile.new(root, name) #if Profile.find(root)
+      @rubydir = RubyDir.new(root)       if RubyDir.find(root)
+      @package = Package.new(root, opts) if Package.find(root)
+      @profile = Profile.new(root, name) if Profile.find(root)
 
-      # DEPRECATE
-      @metadir = Metadir.new(root) if Metadir.find(root)
+      # DEPRECATE: This is legacy.
+      @metadir = Metadir.new(root)       if Metadir.find(root)
+
+      if @package && @rubydir
+        unless @package.verify_rubydir(rubydir)
+          warn ".ruby/ entries are out of sync with package/verison file"
+        end
+      end
 
       # TODO: Add @profile.resources to lookup ?
-      @sources = [@package, @profile, @metadir].compact
+      @sources = [@package, @rubydir, @profile, @metadir].compact
+    end
+
+    # The .ruby directory provides access to current package information.
+    def rubydir
+      @rubydir
     end
 
     # The PACKAGE provides access to current package information.
@@ -47,32 +61,32 @@ module POM
 
     # Name of the project, which is provided by the package.
     def name
-      @package.name
+      @package && @package.name || @rubydir && @rubydir.name
     end
 
     # Version of the project, which is provided by the package.
     def version
-      @package.version
+      @package && @package.version || @rubydir && @rubydir.version
     end
 
     # Load path(s) of the project, which are provided by the package.
     def loadpath
-      @package.loadpath
+      @package && @package.loadpath || @rubydir && @rubydir.loadpath
     end
 
     # Save all metadata resources, i.e. package and profile.
-    def save!
-      sources.each do |source|
-        source.save!
-      end
-    end
+    #def save!
+    #  sources.each do |source|
+    #    source.save!
+    #  end
+    #end
 
     # Backup all metadata resources to `.cache/pom` location.
-    def backup!
-      sources.each do |source|
-        source.backup!
-      end
-    end
+    #def backup!
+    #  sources.each do |source|
+    #    source.backup!
+    #  end
+    #end
 
     # Delegate access to metdata sources.
     def method_missing(sym, *args, &blk)
@@ -105,21 +119,7 @@ module POM
       s.join("\n")
     end
 
-   private
-
-    #
-    #def meta_entry(name)
-    #  if file = meta_file(name)
-    #    File.read(file).strip
-    #  else
-    #    nil
-    #  end
-    #end
-
-    #
-    #def meta_file(name)
-    #  root.glob("{,.}meta/#{name}").first
-    #end
   end
+
 end
 

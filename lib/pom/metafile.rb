@@ -1,4 +1,6 @@
 require 'pom/core_ext'
+require 'erb'
+require 'yaml'
 
 module POM
 
@@ -137,7 +139,9 @@ module POM
     #
     def read!
       if file && file.exist?
-        data = YAML.load(File.new(file))
+        text = File.read(file)
+        text = ERB.new(text).result(Object.new.instance_eval{binding})
+        data = YAML.load(text)
         data.each do |k,v|
           __send__("#{k}=", v)
         end
