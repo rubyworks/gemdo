@@ -31,32 +31,15 @@ is a Ruby project.
 The remaining possibilites fall into two groups. Using a sub-directory
 vs. using toplevel files. Of these, there three significant designs.
 
-The first is the subdirectory approach.
-
-    .ruby/
-      loadpath
-      package
-      profile
-      require
-
-Notice that this approach allows us to split the loadpath out a seprate 
-entry, it we wish. On the downside this hides important metadata away into
-a hidden directory. To remedy that, instead of .ruby/ we could use `ruby/`
-or `RUBY`/. But it still places the data a directory down which makes it
-slighty less convenient to access. In addition, `ruby/` gets kind of lost
-among the other directories, while `RUBY/` -- I don't know, it just sort
-of seems odd.
-
 The simplist solution relative to what POM has now, would be to simply add
 a file to identify the project as Ruby, using it as a marker be able
-to detect the root directory. To give the file contents some use, like the
-`ruby` file above, it could contain a list of the versions of Ruby the project
-has been tested against.
+to detect the root directory. To give the file contents some use it could
+contain a list of the versions of Ruby the project has been tested against.
 
-    .ruby
-    PACKAGE
-    PROFILE
-    REQUIRE
+      .ruby
+      PACKAGE
+      PROFILE
+      REQUIRE
 
 Possibly we might also merge REQUIRE into PACKAGE, leaving us a single file,
 and if we did that we could rename it in such a way as to use it as a Ruby
@@ -64,8 +47,27 @@ root marker as well. Something likes `Rubyfile` or `Ruby.yml`, in which would
 be the all the package and requirements information. Thus leaving us with
 simply:
 
-    Profile
-    Rubyfile
+      Profile
+      Rubyfile
 
-The choice boils down to these three. Now the question is, "which?".
+The subdirectory approach moves the current files into a `.ruby` directory.
+
+      .ruby/
+        loadpath
+        package
+        profile
+        require
+
+Notice that this allows for spliting the loadpath out a separate entry,
+it we wish. On the downside this hides important metadata away into
+a hidden directory. To remedy that, instead of .ruby/ we could use `ruby/`
+or `RUBY`/. But it still places the data a directory down which makes it
+slighty less convenient to access. In addition, `ruby/` gets kind of lost
+among the other directories, while `RUBY/` -- I don't know, it just sort
+of seems odd.
+
+After further consideration I think the first choice feels too much like
+an after thought (which make sense, b/c it is). It also tends to clutter up
+the root directory, where the README is really the most important file.
+So the choice boils down to the last two. The question is, "which of the two?".
 
