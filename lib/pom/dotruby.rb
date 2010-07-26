@@ -1,8 +1,9 @@
 module POM
 
   # The `.ruby` file acts a junction for access to metadata defined
-  # throughout the project.
+  # for the project.
   #
+  #--
   # Metadata sources are designated by "protocol://filename#index".
   #
   # If a protocol indicator is not given, it will attempt to determine
@@ -15,12 +16,29 @@ module POM
   # * yaml:// - YAML formatted
   #
   # It likely that JSON will ultimately be added to this list.
+  #--
   class DotRuby
 
     #
     def initialize(root, data={})
       @root = root
 
+      preinitialize_defaults
+
+      data.each do |k,v|
+        __send__("#{k}=", v)
+      end
+
+      load
+    end
+
+    #
+    def root
+      @root
+    end
+
+    #
+    def preinitialize_defaults
       @loadpath = ['lib']
     end
 
@@ -58,83 +76,63 @@ module POM
     #
     def loadpath=(paths)
       case paths
+      when NilClass
+        @loadpath = ['lib']
       when String
-        @loadpath = paths.split(/\W/)
+        @loadpath = paths.split(/[,:;\ ]/)
       else
         @loadpath = [paths].flatten
       end
     end
 
     #
-    def profile
-      @profile ||= default_profile
-    end
-
-    # Profile is the collecton of data that provides ancillary information
-    # about a project, such as description and authors list.
-    def profile=(path_index)
-      @profile = path_index
-    end
-
-    # Package is the collection of date that identifies that version and
-    # release date.
-    def package
-      @package ||= default_package
+    def module=(mod)
+      @namespace = mod
     end
 
     #
-    def package=(path_index)
-      @package = path_index
+    def metadata
+      @metadata ||= default_metadata
     end
 
     #
-    def require
-      @require
-    end
-
-    #
-    def require=(path_index)
-      @require = path_index
+    def metadata=(sources)
+      @sources = [sources].flatten
     end
 
     # D E F A U L T S
 
+    # Profile is the collecton of data that provides ancillary information
+    # about a project, such as description and authors list.
     #
-    def default_profile
-      "yaml://lib/#{name}.profile"
-    end
-
+    # Package is the collection of date that identifies that version and
+    # release date.
+    #
     # We're using "gem" in a generic sense as meaning a "Ruby Package"
     # regardless of how it was actually installed.
-    def default_package
-      "yaml://lib/#{name}.gemfile"
-    end
-
-    #
-    def build
-      file, type, index = reference(package)
-      case type
-      when 'yaml'
-        ['package'] = YAML.load(package)
+    def default_metadata
+      lib = loadpath.first
+      %w{.version .require .profile}.map do |ext|
+        File.join(lib, name + ext)
       end
     end
 
     #
-    def reference(path_index)
-      if md = /\#(.*?)$/.match(path_index)
-        index      = md[1]
-        path_index = md.pre_match
-      end
-       
-      if md = /^(.*?)\:\/\//.match(path_index)
-        protocol   = md[1]
-        path_index = md.post_match
-      end
-
-      protocol = 'yaml' unless protocol
-
-      return path_index, protocol, index
-    end
+    #def reference(path_index)
+    #  if md = /\#(.*?)$/.match(path_index)
+    #    index      = md[1]
+    #    path_index = md.pre_match
+    #  end
+    #   
+    #  if md = /^(.*?)\:\/\//.match(path_index)
+    #    protocol   = md[1]
+    #    path_index = md.post_match
+    #  end
+    #
+    #  protocol = 'yaml' unless protocol
+    #
+    #  return path_index, protocol, index
+    #end
 
   end
 

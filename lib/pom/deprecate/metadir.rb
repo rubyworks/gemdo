@@ -1,7 +1,7 @@
 require 'time'
 require 'pathname'
 require 'pom/root'
-require 'pom/metastore'
+require 'pom/deprecate/metastore'
 
 #--
 # TODO: executables is not right ?

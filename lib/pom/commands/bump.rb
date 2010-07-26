@@ -1,4 +1,4 @@
-require 'pom/version_number'
+require 'pom/version'
 
 module POM::Commands
 

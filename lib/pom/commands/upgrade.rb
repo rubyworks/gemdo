@@ -1,7 +1,6 @@
 module POM::Commands
-  require 'pom/metadir'
-  require 'pom/profile'
-  require 'pom/package'
+  require 'pom/deprecate/metadir'
+  require 'pom/metadata'
 
   #
   class Upgrade

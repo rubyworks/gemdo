@@ -2,9 +2,9 @@ require 'pom/core_ext'
 require 'pom/root'
 require 'pom/metadata'
 require 'pom/manifest'
-require 'pom/require'
 require 'pom/history'
 require 'pom/news'
+require 'pom/dotruby'
 
 module POM
 
@@ -43,7 +43,7 @@ module POM
     # Instantiate a new project.
     #
     # If a root directory is not given, it will be looked-up starting from
-    # the current working directory until a <tt>meta/</tt> directory is found.
+    # the current working directory until a <tt>.ruby/</tt> file is found.
     #
     # The +:lookup+ option can be used to induce a lookup from a given location.
     #
@@ -91,30 +91,19 @@ module POM
     #  @settings ||= FileStore.new(root, '.config/pom')
     #end
 
-    # Provides access to both profile and package information
-    # through a single interface. This will probably be removed from API.
+    # Provides access to the .ruby configuration file.
+    def dotruby
+      @dotruby ||= DotRuby.new(root)
+    end
+
+    #
+    def loadpath
+      dotruby.loadpath
+    end
+
+    # Provides access to project metadata.
     def metadata
-      @metadata ||= Metadata.new(root, @opts)
-    end
-
-    #
-    def rubydir
-      metadata.rubydir
-    end
-
-    #
-    def package
-      metadata.package
-    end
-
-    #
-    def profile
-      metadata.profile
-    end
-
-    # Current release information.
-    def release
-      metadata.release
+      @metadata ||= Metadata.new(root, *dotruby.metadata)
     end
 
     # Project name.
@@ -128,19 +117,17 @@ module POM
     end
 
     #
-    #def version=(vers)
-    #  metadata.version = vers
-    #end
-
-    #
-    def loadpath
-      metadata.loadpath
-    end
-
-    #
     def codename
       metadata.codename
     end
+
+    # Requirements Configuration.
+    def requires
+      metadata.requires
+    end
+
+    #
+    alias_method :requirements, :requires
 
     # Package name is generally in the form of +name-version+,
     # or +name-version-platform+ if +platform+ is specified.
@@ -154,12 +141,6 @@ module POM
 
     # DEPRECATE
     alias_method :stage_name, :package_name
-
-    # Requirements Configuration.
-    def requirements
-      @require ||= Require.new(root)
-    end
-    alias_method :requires, :requirements
 
     # Project manifest. For manifest file use <tt>manifest.file</tt>.
     def manifest
@@ -175,6 +156,8 @@ module POM
     def news
       @news ||= News.new(root, :history=>history)
     end
+
+    # S T A N D A R D  D I R E C T O R I E S
 
     # The <tt>log/</tt> directory stores log output created by 
     # build tools. If you want to publish your logs as part
@@ -362,30 +345,30 @@ module POM
     # About project notice.
     def about(*parts)
       # pre-format data
-      released = package.date ? "(#{package.date.strftime('%Y-%m-%d')})" : nil
+      released = metadata.date ? "(#{metadata.date.strftime('%Y-%m-%d')})" : nil
       if parts.empty?
         s = []
-        s << "#{profile.title} v#{package.version} #{released} (#{package.name}-#{package.version})"
+        s << "#{metadata.title} v#{metadata.version} #{released} (#{metadata.name}-#{metadata.version})"
         s << ""
-        s << "#{profile.description || profile.summary}"
+        s << "#{metadata.description || metadata.summary}"
         s << ""
-        s << "* home: #{profile.resources.homepage}"   if profile.resources.homepage
-        s << "* work: #{profile.resources.work}"       if profile.resources.work
-        s << "* talk: #{profile.resources.mail}"       if profile.resources.mail
-        s << "* talk: #{profile.resources.forum}"      if profile.resources.forum
-        s << "* repo: #{profile.resources.repository}" if profile.resources.repository
+        s << "* home: #{metadata.resources.homepage}"   if metadata.resources.homepage
+        s << "* work: #{metadata.resources.work}"       if metadata.resources.work
+        s << "* talk: #{metadata.resources.mail}"       if metadata.resources.mail
+        s << "* talk: #{metadata.resources.forum}"      if metadata.resources.forum
+        s << "* repo: #{metadata.resources.repository}" if metadata.resources.repository
         s << ""
-        s << "#{profile.copyright}"
+        s << "#{metadata.copyright}"
         s.join("\n").gsub("\n\n\n", "\n\n")
       else
         parts.each do |field|
           case field.to_sym
           #when :settings
           #  puts settings.to_yaml
-          when :profile
-            puts profile.to_yaml
+          when :metadata
+            puts metadata.to_yaml
           else
-            puts profile.__send__(field)
+            puts metadata.__send__(field)
           end
         end
       end
@@ -397,14 +380,14 @@ module POM
       parts.each do |part|
         case part.to_sym
         when :message
-          ann << "#{profile.title} #{self.version} has been released."
+          ann << "#{metadata.title} #{self.version} has been released."
         when :description
-          ann << "#{profile.description}"
+          ann << "#{metadata.description}"
         when :resources
           list = ''
-          list << "* home: #{profile.resources.home}\n" if profile.resources.home
-          list << "* work: #{profile.resources.work}\n" if profile.resources.work
-          list << "* docs: #{profile.resources.docs}\n" if profile.resources.docs
+          list << "* home: #{metadata.resources.home}\n" if metadata.resources.home
+          list << "* work: #{metadata.resources.work}\n" if metadata.resources.work
+          list << "* docs: #{metadata.resources.docs}\n" if metadata.resources.docs
           ann << list
         when :release
           ann << "= #{title} #{history.release}"

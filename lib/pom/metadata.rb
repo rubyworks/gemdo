@@ -1,14 +1,164 @@
+require 'yaml'
 require 'pom/root'
-require 'pom/package'
-require 'pom/profile'
-require 'pom/rubydir'
-require 'pom/metadir'
 
 module POM
 
+  #
+  class Metadata
+
+    BACKUP_DIRECTORY = '.cache/pom/'
+
+    #
+    def self.register(type_class)
+      type_class.names.each do |name|
+        registry[name.to_sym] = type_class
+      end
+    end
+
+    #
+    def self.registry
+      @registry ||= {}
+    end
+
+    #
+    def initialize(root, *sources)
+      @root  = Pathname.new(root)
+      @zero  = {}
+      @name  = {}
+      @data  = {}
+      sources.each do |source|
+        data = YAML.load(File.new(source))
+        data.each do |key, value|
+          if type = Metadata.registry[key.to_sym]
+            mobj = type.new(value) #, self)
+            @data[key.to_sym] = mobj
+            @zero[key.to_sym] = source
+            type.names.each do |name|
+              @name[name.to_sym] = key.to_sym
+            end
+          else
+            type = Metadata::Custom
+            mobj = type.new(value) #, self)
+            @zero[key.to_sym] = source
+            @name[key.to_sym] = key.to_sym
+            @data[key.to_sym] = mobj
+          end
+        end
+      end
+    end
+
+    #
+    def method_missing(sym,value=nil,*a,&b)
+      key = sym.to_s.chomp('=').to_sym
+      case sym.to_s
+      when /\=$/
+        self[key] = value
+      else
+        self[key]
+      end
+    end
+
+    #
+    def []=(key,value)
+      if type = Metadata.registry[key]
+        mobj = type.new(value) #, self)
+        @zero[key.to_sym] ||= default_source
+        @data[key.to_sym] = mobj
+        type.names.each do |name|
+          @name[name.to_sym] = key.to_sym
+        end
+      else
+        type = Metadata::Custom
+        mobj = type.new(value) #, self)
+        @zero[key.to_sym] ||= default_source
+        @name[key.to_sym] = key.to_sym
+        @data[key.to_sym] = mobj
+      end
+    end
+
+    #
+    def [](key)
+      @data[@name[key.to_sym]]
+    end
+
+    # Override standard #respond_to? method to take
+    # method_missing lookup into account.
+    def respond_to?(name)
+      return true if super(name)
+      return true if @data[name.to_sym]
+      return false
+    end
+
+    # Save metadata back to source files. This will not save a source if it
+    # has not changed. Returns a list of the source files that were changed,
+    # or +nil if none of the files were changed.
+    #
+    # TODO: Pretty ouput, but how?
+    def save!
+      saved = []
+      table = Hash.new{|h,k| h[k]=[]}
+      @data.each do |key, value|
+        src = @zero[key]
+        #table[src] ||= []
+        table[src] << key
+      end
+      table.each do |src, keys|
+        hash = {}
+        keys.each do |key|
+          hash[key.to_s] = self[key].to_data
+        end
+        data = normalize(YAML.load(File.new(src)))
+        if data != hash
+          backup!(src)
+          File.open(src, 'w') do |f|
+            f << hash.to_yaml
+          end
+          saved << src
+        end
+      end
+      saved.empty? ? nil : saved
+    end
+
+    #
+    def backup!(file=nil)
+      if file
+        dir = root + BACKUP_DIRECTORY
+        FileUtils.mkdir_p(dir)
+        FileUtils.cp(file, dir)
+      else
+        sources.each do |src|
+          backup!(src)
+        end
+      end
+    end
+
+    #
+    def normalize(data)
+      hash = {}
+      data.each do |k,v|
+        case v
+        when Date
+          hash[k] = v.strftime('%Y-%m-%d')
+        else
+          hash[k] = v
+        end
+      end
+      hash
+    end
+
+  end
+
+  require 'pom/metadata/abstract'
+  Dir[File.join(File.dirname(__FILE__), 'metadata', '*.rb')].each do |rb|
+    require rb
+  end
+
+end
+
+=begin
   # The Metadata class encsulates a project's Package
   # and Profile data in a single interface.
-  class Metadata
+  class MetadataOld
 
     # Metadata sources.
     attr :sources
@@ -17,30 +167,21 @@ module POM
     def initialize(root, opts={})
       root = Pathname.new(root)
 
-      @rubydir = nil
       @profile = nil
       @metadir = nil
 
-      @rubydir = RubyDir.new(root)       if RubyDir.find(root)
-      @package = Package.new(root, opts) if Package.find(root)
-      @profile = Profile.new(root, name) if Profile.find(root)
+      @dotruby = DotRuby.new(root)
 
-      # DEPRECATE: This is legacy.
-      @metadir = Metadir.new(root)       if Metadir.find(root)
-
-      if @package && @rubydir
-        unless @package.verify_rubydir(rubydir)
-          warn ".ruby/ entries are out of sync with package/verison file"
-        end
-      end
+      @package = Package.load(@dotruby.package)
+      @profile = Profile.load(@dotruby.profile)
 
       # TODO: Add @profile.resources to lookup ?
-      @sources = [@package, @rubydir, @profile, @metadir].compact
+      @sources = [@package, @profile].compact
     end
 
-    # The .ruby directory provides access to current package information.
-    def rubydir
-      @rubydir
+    # Load path(s) of the project, which are provided by the package.
+    def loadpath
+      @dotruby.loadpath
     end
 
     # The PACKAGE provides access to current package information.
@@ -53,25 +194,14 @@ module POM
       @profile
     end
 
-    # Access to meta directory entries. For backward compatability,
-    # maybe deprecated in future.
-    def metadir
-      @metadir
-    end
-
     # Name of the project, which is provided by the package.
     def name
-      @package && @package.name || @rubydir && @rubydir.name
+      @package && @package.name
     end
 
     # Version of the project, which is provided by the package.
     def version
-      @package && @package.version || @rubydir && @rubydir.version
-    end
-
-    # Load path(s) of the project, which are provided by the package.
-    def loadpath
-      @package && @package.loadpath || @rubydir && @rubydir.loadpath
+      @package && @package.version
     end
 
     # Save all metadata resources, i.e. package and profile.
@@ -120,6 +250,5 @@ module POM
     end
 
   end
-
-end
+=end
 

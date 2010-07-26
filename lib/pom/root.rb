@@ -1,7 +1,9 @@
+require 'pom/core_ext/pathname'
+
 module POM
 
   # Root directory is indicated by the presence of either a
-  # PACKAGE file or as a fallback a lib/ directory.
+  # .ruby file or as a fallback a lib/ directory.
   ROOT_INDICATORS = ['.ruby', '.git', '.hg', '_darcs', 'lib/']
 
   # Locate the project's root directory. This is determined

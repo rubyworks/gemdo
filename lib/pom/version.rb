@@ -369,5 +369,103 @@ module POM
 
   end
 
+  #
+  # TODO: Need to support version "from-to" spans ?
+  class VersionConstraint
+
+    # Verison number.
+    attr :number
+
+    # Constraint operator.
+    attr :operator
+
+    #
+    def initialize(constraint)
+      @constraint = constraint || '> 0'
+      @operator, @number = *parse(@constraint)
+    end
+
+    # Converts the version into a constraint recognizable by RubyGems.
+    def constraint
+      @constraint
+    end
+
+    #
+    def parse(constraint)
+      case constraint
+      when /^(.*?)\~$/
+        ["~>", $1]
+      when /^(.*?)\+$/
+        [">=", $1]
+      when /^(.*?)\-$/
+        ["<", $1]
+      else
+        constraint.split(/\s+/)
+      end
+    end
+
+    #
+    def to_s
+      "#{constraint}"
+    end
+
+  private
+
+    # Parse package entry into name and version constraint.
+    #def parse(package)
+    #  parts = package.strip.split(/\s+/)
+    #  name = parts.shift
+    #  vers = parts.empty? ? nil : parts.join(' ')
+    # [name, vers]
+    #end
+
+  end
+
+  #
+  module VersionHelper
+
+    #
+    def parse_release_stamp(text)
+      release = {}
+      # version
+      if md = /\b(\d+\.\d.*?)\s/.match(text)
+        release[:version] = md[1]
+      end
+      # date
+      if md = /\b(\d+\-\d.*?)\s/.match(text)
+        release[:date] = md[1]
+      end
+      # codename
+      if md = /\"(.*?)\"/.match(text)
+        release[:billname] = md[1]
+      end
+      release
+    end
+
+    #
+    def parse_release_hash(data)
+      data = data.inject({}){ |h,(k,v)| h[k.to_sym] = v; h }
+      release = {}
+      release[:version]  = data.values_at(:major,:minor,:patch,:build).compact.join('.')
+      release[:date]     = data[:date]
+      release[:billname] = data[:bill] || data[:billname]
+      release
+    end
+
+    #
+    #def parse_version_file
+    #  file = root.glob('VERSION{,.txt,.yml,.yaml').first
+    #  if file
+    #    text = file.read.strip
+    #    if file.extname == '.yml' or file.extname == '.yaml' or text[0,3] == '---'
+    #      parse_version_yaml(text)
+    #    else
+    #      parse_version_text(text)
+    #    end
+    #  end
+    #end
+
+  end
+
 end
 

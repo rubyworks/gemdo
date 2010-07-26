@@ -3,22 +3,17 @@ require 'pom/project'
 module POM
   DIRECTORY = File.dirname(__FILE__)
 
-  def self.package
-    @pack ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Version.yml')))
+  def self.metadata
+    @metadata ||= %w{version profile gemfile}.inject({}) |data, name|
+      data.merge(YAML.load(File.new(DIRECTORY + "/pom/.meta/#{name}.yml")))
+      data
+    end
   end
 
-  def self.profile
-    @file ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Profile.yml')))
-  end
-
-  def self.dependencies
-    @gems ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Gemfile.yml')))
-  end
-
-  # Raw access to project metadata, e.g. VERSION.
+  # Access to project metadata, e.g. VERSION.
   def self.const_missing(name)
     name = name.to_s.downcase
-    pkgfile[name] || profile[name]
+    metadata[name]
   end
 end
 

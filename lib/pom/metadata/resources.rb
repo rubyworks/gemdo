@@ -1,4 +1,4 @@
-module POM
+class POM::Metadata
 
   # The Resource class models a table of project
   # releated URIs. Each entry has a name and URI.
@@ -20,39 +20,86 @@ module POM
   #
   class Resources
 
+    include AbstractField
+
     include Enumerable
 
-    # Special accessors disperse access over multiple hash entries.
-    def self.attr_accessor(*names)
+    @key_aliases = {}
+
+    #
+    def self.key_aliases
+      @key_aliases
+    end
+
+    #
+    def self.attr_accessor *names
       code = []
       names.each do |name|
+        key_aliases[name.to_sym] = names
         code << "def #{name}"
-        code << "  @table['#{name}']"
+        code << "  self['#{name}']"
         code << "end"
         code << "def #{name}=(val)"
-        names.each do |n|
-          code << "  @table['#{n}'] = val"
-        end
+        code << "  self['#{name}'] = val"
         code << "end"
       end
-      module_eval code.join("\n")
+      module_eval code.join("\n") 
     end
+
+    # Special accessors disperse access over multiple hash entries.
+    #def self.attr_accessor(*names)
+    #  code = []
+    #  names.each do |name|
+    #    code << "def #{name}"
+    #    code << "  @table['#{name}']"
+    #    code << "end"
+    #    code << "def #{name}=(val)"
+    #    names.each do |n|
+    #      code << "  @table['#{n}'] = val"
+    #    end
+    #    code << "end"
+    #  end
+    #  module_eval code.join("\n")
+    #end
 
     # New Resources object. The initializer can
     # take a hash of name to URI settings.
-    def initialize(table={})
+    def initialize(data={})
       @table = {}
-      table.each{ |k,v| __send__("#{k}=", v) }
+      @index = {}
+      data.each do |key, value|
+        @table[key.to_s] = value
+        self.class.key_aliases[key.to_sym].each do |name|
+          @index[name.to_s] = key.to_s
+        end
+      end
+    end
+
+    #
+    def [](key)
+      @table[@index[key.to_s]]
+    end
+
+    #
+    def []=(key, value)
+      if alt = @index[key.to_s]
+        @table[alt] = value
+      else
+        @table[key] = value
+        self.class.key_aliases[key].each do |name|
+          @index[name.to_s] = key.to_s
+        end
+      end
     end
 
     # Offical project website.
     attr_accessor :home, :homepage
 
     # Location of development site.
-    attr_accessor :dev, :development, :work
+    attr_accessor :work, :dev, :development
 
     # Package distribution service webpage.
-    attr_accessor :distributor
+    attr_accessor :gem, :ditro, :distributor
 
     # Location to downloadable package(s).
     attr_accessor :download
@@ -85,7 +132,7 @@ module POM
     attr_accessor :blog, :weblog
 
     # IRC channel
-    attr_accessor :irc
+    attr_accessor :irc, :chat
 
     # Resource for central *public* repository, e.g.
     # `git://github.com/protuils/pom.git`.
@@ -95,6 +142,11 @@ module POM
     # hash table.
     def to_h
       @table.dup
+    end
+
+    #
+    def to_data
+      to_h
     end
 
     # Iterate over each enty, including aliases.

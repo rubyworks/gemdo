@@ -1,5 +1,5 @@
 require 'pom/core_ext'
-require 'pom/version_helper'
+require 'pom/version'
 
 module POM
 
