@@ -97,7 +97,7 @@ module POM
 
     #
     def metadata=(sources)
-      @sources = [sources].flatten
+      @metadata = [sources].flatten
     end
 
     # D E F A U L T S
@@ -112,8 +112,8 @@ module POM
     # regardless of how it was actually installed.
     def default_metadata
       lib = loadpath.first
-      %w{.version .require .profile}.map do |ext|
-        File.join(lib, name + ext)
+      %w{version require profile}.map do |file|
+        File.join(lib, "#{name}.rock", file + '.yml')
       end
     end
 
