@@ -1,14 +1,14 @@
-= POM
+= Rock
 
-* home: http://proutils.github.com/pom
-* work: http://github.com/protuils/pom
+* home: http://proutils.github.com/rock
+* work: http://github.com/protuils/rock
 
 
 == DESCRIPTION
 
-POM stands for Project Object Model (yes, a term co-opted from Java/Maven world).
-Ruby's POM provides a standardized layout and a class model for working
-with Ruby projects. POM largely supports the most common practices of the
+Rock defines a standard Ruby POM (Project Object Model).
+Rock provides a standardized layout and a class model for working
+with Ruby projects. Rock largely supports the most common practices of the
 Ruby community, but also defines new practices shore up some of the weaker 
 points of Ruby project standards, and expand its capabilities.
 
@@ -30,7 +30,7 @@ only one field and a handful of available tools.
 
 == SYNOPSIS
 
-Primarily POM defines a standard set of project layout and design patterns.
+Primarily Rock defines a standard set of project layout and design patterns.
 Most of these derive for setup.rb --the original Ruby project specification,
 and common patterns widely used among the Ruby community.
 
@@ -40,7 +40,7 @@ by Rock to shore up the weaks links in common paactices. In particular, Rock
 designates a `.ruby` file to act as the "metadata engine yard", linking named
 information to the resources within project metadata files.
 
-This entire specification is then implemeted in Ruby code, known as the "POM"
+This entire specification is then implemeted in Ruby code, known as the "Rock"
 (Project Object Model). Primary usage of this model relies on the toplevel
 Project class, instantiated by passing the constructor the root directory
 of the project.
@@ -58,26 +58,26 @@ The project object then ties into all the available metadata, e.g.
 Rock also provides a command line tool with some useful project utilities.
 For example, it can be used to bump a project's version number.
 
-  $ pom bump --patch
+  $ rock bump --patch
 
-See the Wiki[http://wiki.github.com/proutils/pom] and
-API[http://proutils.github.com/pom/rdoc] documentation for further
+See the Wiki[http://wiki.github.com/proutils/rock] and
+API[http://proutils.github.com/rock/rdoc] documentation for further
 details.
 
 
 == Upgrading from 1.x to 2.0
 
-Earlier versions of POM used a directory-based configuration store, storing
+Earlier versions of Rock used a directory-based configuration store, storing
 each peice of informtation in a separate file under the meta/ or .meta/
-directory. The latest versions of POM have replaced this with a small
+directory. The latest versions of Rock have replaced this with a small
 set of YAML-base configuration files. While both approaches has their
-advantages and disadvantages, POM moved to later primarily because of it's
+advantages and disadvantages, Rock moved to later primarily because of it's
 familiarity to developers.
 
-If you were using an old version of POM with a project and need to updgrade,
-the pom command provides a helpful subcommand:
+If you were using an old version of Rock with a project and need to updgrade,
+the rock command provides a helpful subcommand:
 
-  $ pom upgrade
+  $ rock upgrade
 
 This will create a PROFILE, PACKAGE and REQUIRE file containing the entries
 in the meta/ or .meta/ directory. It will not be prefect, so be sure to edit
@@ -99,13 +99,13 @@ Lemon.
 
 To install with RubyGems simply open a console and type:
 
-  $ sudo gem install pom
+  $ sudo gem install rock
 
 Site installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
-  $ tar -xvzf pom-2.1.0.tar.gz
-  $ cd pom-2.1.0.tar.gz
+  $ tar -xvzf rock-2.1.0.tar.gz
+  $ cd rock-2.1.0.tar.gz
   $ sudo setup.rb all
 
 Windows users use 'ruby setup.rb all'.
