@@ -10,8 +10,9 @@ module POM
   # so fields not strictly defined by this class
   # can also be provided.
   #
-  class Profile < Metafile
+  class Profile #< Metafile
 
+=begin
     # The default file name to use for saving
     # a new PROFILE file.
     def self.default_filename
@@ -22,24 +23,29 @@ module POM
     def self.filename
       ['.ruby/profile', 'PROFILE']
     end
+=end
 
     # New Profile object. To create a new Profile
     # the +root+ directory of the project and the +name+
     # of the project are required.
-    def initialize(root, name, opts={})
+    def initialize(name, data={})
       @name = name
-      super(root, opts)
+      initialize_defaults
+      data.each{ |k,v| __send__("#{k}=", v) }
     end
-
-    ;; public
 
     # Project's <i>package name</i>. The entry is required
     # and must not contain spaces or puncuation.
     attr :name
 
     # Title of package (this defaults to project name capitalized).
-    attr_accessor :title do
-      name.capitalize if name
+    def title
+      @title ||= name.to_s.capitalize
+    end
+
+    #
+    def title=(title)
+      @title = title
     end
 
     # A one-line brief description.

@@ -1,0 +1,4 @@
+name: fred
+version: 1.0.0
+loadpath: [lib, ext]
+date: 2010-01-01

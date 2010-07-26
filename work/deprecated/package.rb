@@ -6,28 +6,24 @@ require 'pom/require'
 
 module POM
 
-  # Access to PACKAGE file. The PACKAGE file is a YAML
-  # formatted file providing essential information for packaging and
-  # library management. A typical example will look like:
+  # The Package class encapsulates essential information for packaging and
+  # library management. This information will usually derive from a YAML
+  # document. A typical example will look like:
   #
   #   ---
   #   name: pom
   #   vers: 1.0.0
   #   date: 2010-06-15
-  #   code: POM
+  #   module: POM
   #
-  #--
-  #   requires:
-  #   - qed 2.3+ (dev)
-  #++
   class Package
 
     #
-    def self.find(root)
-      root = Pathname.new(root)
-      pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
-      root.glob(pattern, :casefold).first
-    end
+    #def self.find(root)
+    #  root = Pathname.new(root)
+    #  pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
+    #  root.glob(pattern, :casefold).first
+    #end
 
     #require 'pom/package/simple_style'
     #require 'pom/package/jeweler_style'
@@ -40,24 +36,21 @@ module POM
     #include VersionHelper
 
     # Default file name.
-    def self.default_filename
-      '.ruby/package'
-    end
+    #def self.default_filename
+    #  '.ruby/package'
+    #end
 
     # Possible project file names.
-    def self.filename
-      ['.ruby/package', 'Rubyfile', 'PACKAGE']
-    end
+    #def self.filename
+    #  ['.ruby/package', 'Rubyfile', 'PACKAGE']
+    #end
 
     #
-    def initialize(root, data={})
-      @root = Pathname.new(root)
-
+    def initialize(data={})
+      #@root = Pathname.new(root)
       initialize_defaults
-
       data.each{ |k,v| __send__("#{k}=", v) }
-
-      read!
+      #read!
     end
 
     #
@@ -144,10 +137,7 @@ module POM
     # Namespace for this package. Only needed if not the default
     # of the +name+ capitalized. For example, +activerecord+ 
     # uses +ActiveRecord+ for it's namespace, not Activerecord.
-    attr_accessor :namespace
-
-    alias_method :space,  :namespace
-    alias_method :space=, :namespace=
+    attr_accessor :module
 
     # Internal load paths.
     def path
@@ -170,18 +160,20 @@ module POM
     alias_method :loadpath,  :path
     alias_method :loadpath=, :path=
 
+=begin
     # List of requirements.
     attr_reader :requires
 
     #
     def requires=(requirements)
-      @requires = Requirements.new(root, requirements)
+      @requires = Requirements.new(requirements)
     end
 
     #
     alias_method :requirements,  :requires
     alias_method :requirements=, :requires=
- 
+=end
+
     #
     def major ; version.major ; end
 
@@ -228,6 +220,7 @@ module POM
       s.join("\n")
     end
 
+=begin
     # This method is not using #to_yaml in order to ensure
     # the file is saved neatly. This may require tweaking.
     def save!(file=nil)
@@ -299,6 +292,7 @@ module POM
       patterns = patterns.join('|')
       text.sub!(/(#{patterns}\s*)=\s*(.*?)(?!\s*\#?|$)/, '\1=' + __send__(field))
     end
+=end
 
 =begin
     #
