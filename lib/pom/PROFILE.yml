@@ -4,7 +4,7 @@ suite:   proutils
 summary: Project metadata system for Ruby projects
 license: MIT
 contact: Thomas Sawyer <transfire@gmail.com>
-created: 2009-07-22 15:21:34
+created: 2009-07-22
 
 description:
   POM provides a complete metadata system

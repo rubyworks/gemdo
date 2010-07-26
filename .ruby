@@ -1,6 +1,5 @@
 ---
-name: pom
-path: lib
-profile: lib/pom.profile
-package: lib/pom.gemfile
-require: lib/pom.gemfile@requires
+name     : pom
+loadpath : lib
+module   : PO
+
