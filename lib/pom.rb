@@ -1,16 +1,24 @@
 require 'pom/project'
 
 module POM
+  DIRECTORY = File.dirname(__FILE__)
 
-  # Raw access to project metedata, e.g. VERSION.
-  def self.const_missing(name)
-    file = File.dirname(__FILE__) + "/pom/meta/#{name.to_s.downcase}"
-    if File.exist?(file)
-      File.read(file).strip
-    else
-      super(name)
-    end
+  def self.package
+    @pack ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Version.yml')))
   end
 
+  def self.profile
+    @file ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Profile.yml')))
+  end
+
+  def self.dependencies
+    @gems ||= YAML.load(File.new(File.join(DIRECTORY,'pom/Gemfile.yml')))
+  end
+
+  # Raw access to project metadata, e.g. VERSION.
+  def self.const_missing(name)
+    name = name.to_s.downcase
+    pkgfile[name] || profile[name]
+  end
 end
 
