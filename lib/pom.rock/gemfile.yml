@@ -1,0 +1,17 @@
+---
+requires:
+
+  - name    : syckle
+    group   : build
+
+  - name    : qed
+    version : 2.3+
+    group   : test
+
+  - name    : rdazzle
+    group   : doc
+
+  - name    : rdoc
+    version : 2.5+
+    group   : doc
+
