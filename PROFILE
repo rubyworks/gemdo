@@ -1,14 +1,14 @@
 ---
-title:   POM
+title:   Rock
 suite:   proutils
-summary: Project metadata system for Ruby projects
+summary: Ruby Project Object Model
 license: MIT
 contact: Thomas Sawyer <transfire@gmail.com>
 created: 2009-07-22
 
 description:
-  POM provides a complete metadata system
-  for Ruby projects.
+  Rock provides a complete standards based structure 
+  and metadata system for Ruby projects.
 
 authors:
   - Thomas Sawyer
@@ -20,7 +20,7 @@ resources:
   docs  : http://wiki.github.com/proutils/pom
   wiki  : http://wiki.github.com/proutils/pom
   api   : http://proutils.github.com/pom/rdoc
-  mail  : mailto:proutils+subscribe@googlegroups.com
+  mail  : http://groups.google.com/group/proutils
   forum : http://groups.google.com/group/proutils
 
 copyright:
