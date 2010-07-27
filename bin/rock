@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require  'pom/command'
-POM::Command.run
+require 'rock/command'
+Rock::Command.run
 
