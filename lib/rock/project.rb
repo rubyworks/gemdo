@@ -4,7 +4,8 @@ require 'rock/metadata'
 require 'rock/manifest'
 require 'rock/history'
 require 'rock/news'
-require 'rock/dotruby'
+require 'rock/package'
+require 'rock/profile'
 
 module Rock
 
@@ -91,24 +92,24 @@ module Rock
     #  @settings ||= FileStore.new(root, '.config/rock')
     #end
 
-    # Provides access to the .ruby configuration file.
-    def dotruby
-      @dotruby ||= DotRuby.new(root)
+    # Provides access to the PACAKGE metadata file.
+    def package
+      @package ||= Package.new(root)
     end
 
-    #
-    def loadpath
-      dotruby.loadpath
+    # Provides access to the PROFILE metadata file.
+    def profile
+      @profile ||= Profile.new(root, :name=>package.name)
     end
 
-    # Provides access to project metadata.
+    # Provides unified access to all metadata.
     def metadata
-      @metadata ||= Metadata.new(root, *dotruby.metadata)
+      @metadata ||= Metadata.new(root, package, profile)
     end
 
     # Project name.
     def name
-      metadata.name
+      package.name
     end
 
     # Version number string representation, e.g. "1.0.0".
@@ -119,6 +120,11 @@ module Rock
     #
     def codename
       metadata.codename
+    end
+
+    #
+    def loadpath
+      metadata.loadpath
     end
 
     # Requirements Configuration.
@@ -352,11 +358,11 @@ module Rock
         s << ""
         s << "#{metadata.description || metadata.summary}"
         s << ""
-        s << "* home: #{metadata.resources.homepage}"   if metadata.resources.homepage
+        s << "* home: #{metadata.resources.homepage}"   if metadata.resources.home
         s << "* work: #{metadata.resources.work}"       if metadata.resources.work
-        s << "* talk: #{metadata.resources.mail}"       if metadata.resources.mail
-        s << "* talk: #{metadata.resources.forum}"      if metadata.resources.forum
-        s << "* repo: #{metadata.resources.repository}" if metadata.resources.repository
+        s << "* mail: #{metadata.resources.mail}"       if metadata.resources.mail
+        s << "* chat: #{metadata.resources.forum}"      if metadata.resources.chat
+        s << "* repo: #{metadata.resources.repository}" if metadata.resources.repo
         s << ""
         s << "#{metadata.copyright}"
         s.join("\n").gsub("\n\n\n", "\n\n")

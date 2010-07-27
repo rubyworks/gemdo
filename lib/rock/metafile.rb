@@ -1,8 +1,8 @@
-require 'pom/core_ext'
+require 'rock/core_ext'
 require 'erb'
 require 'yaml'
 
-module POM
+module Rock
 
   # Where in project to store backups.
   BACKUP_DIRECTORY = '.cache/pom'

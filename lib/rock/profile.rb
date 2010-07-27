@@ -1,7 +1,7 @@
-require 'pom/metafile'
-require 'pom/resources'
+require 'rock/metafile'
+require 'rock/resources'
 
-module POM
+module Rock
 
   # Profile stores ancillary project metadata such
   # as title, summary, list of authors, etc. Profile
@@ -10,42 +10,34 @@ module POM
   # so fields not strictly defined by this class
   # can also be provided.
   #
-  class Profile #< Metafile
+  class Profile < Metafile
 
-=begin
-    # The default file name to use for saving
-    # a new PROFILE file.
+    # The default file name to use for saving a new PROFILE.
     def self.default_filename
-      '.ruby/profile'
+      'PROFILE'
     end
 
-    # Possible project file names.
+    # Possible profile file names.
     def self.filename
-      ['.ruby/profile', 'PROFILE']
+      ['[Pp]rofile', 'PROFILE']
     end
-=end
 
     # New Profile object. To create a new Profile
     # the +root+ directory of the project and the +name+
     # of the project are required.
-    def initialize(name, data={})
-      @name = name
+    def initialize(root, data={})
+      super(root, data)
       initialize_defaults
       data.each{ |k,v| __send__("#{k}=", v) }
     end
 
-    # Project's <i>package name</i>. The entry is required
-    # and must not contain spaces or puncuation.
+    # Project's <i>package name</i>. This actually comes from package,
+    # but if provided here, can set the default for title.
     attr :name
 
     # Title of package (this defaults to project name capitalized).
-    def title
-      @title ||= name.to_s.capitalize
-    end
-
-    #
-    def title=(title)
-      @title = title
+    attr_accessor :title do
+      name.to_s.capitalize
     end
 
     # A one-line brief description.

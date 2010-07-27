@@ -1,29 +1,33 @@
-#require 'pom/metafile'
-#require 'pom/version_file'
-#require 'pom/version_helper'
-require 'pom/version_number'
-require 'pom/require'
+#require 'rock/metafile'
+#require 'rock/version_file'
+#require 'rock/version_helper'
+require 'rock/version'
+require 'rock/requires'
 
-module POM
+module Rock
 
   # The Package class encapsulates essential information for packaging and
   # library management. This information will usually derive from a YAML
   # document. A typical example will look like:
   #
   #   ---
-  #   name: pom
-  #   vers: 1.0.0
-  #   date: 2010-06-15
-  #   module: POM
+  #   name      : pom
+  #   version   : 1.0.0
+  #   date      : 2010-06-15
+  #
+  #   requires:
+  #     - qed 2.3+ (test)
   #
   class Package
 
+    BACKUP_DIRECTORY = '.cache/rock'
+
     #
-    #def self.find(root)
-    #  root = Pathname.new(root)
-    #  pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
-    #  root.glob(pattern, :casefold).first
-    #end
+    def self.find(root)
+      root = Pathname.new(root)
+      pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
+      root.glob(pattern, :casefold).first
+    end
 
     #require 'pom/package/simple_style'
     #require 'pom/package/jeweler_style'
@@ -36,27 +40,28 @@ module POM
     #include VersionHelper
 
     # Default file name.
-    #def self.default_filename
-    #  '.ruby/package'
-    #end
+    def self.default_filename
+      'PACKAGE'
+    end
 
     # Possible project file names.
-    #def self.filename
-    #  ['.ruby/package', 'Rubyfile', 'PACKAGE']
-    #end
+    def self.filename
+      ['[Pp]ackage', 'PACAKGE']
+    end
 
     #
-    def initialize(data={})
-      #@root = Pathname.new(root)
+    def initialize(root, data={})
+      @root  = Pathname.new(root)
+      @table = {}
       initialize_defaults
       data.each{ |k,v| __send__("#{k}=", v) }
-      #read!
+      read!
     end
 
     #
     def initialize_defaults
       @file = self.class.find(root)
-      @path = ['lib']
+      @table[:loadpath] = ['lib']
     end
 
     # Project root.
@@ -72,60 +77,71 @@ module POM
       @file = file
     end
 
+    #
+    def [](key)
+      @table[key.to_sym]
+    end
+
+    #
+    def []=(key, value)
+      @table[key.to_sym] = value
+    end
+
+    # Name of package.
+    def name
+      self[:name]
+    end
+
+    # Set name of package.
+    def name=(name)
+      self[:name] = name
+    end
+
     # Version number.
     def version
-      @version
+      self[:version]
     end
 
     #
     def version=(raw)
-      @version = VersionNumber.new(raw)
+      self[:version] = VersionNumber.new(raw)
     end
 
     # Short name for #version.
     alias_method :vers,  :version
     alias_method :vers=, :version=
 
-    # Name of package.
-    def name
-      @name
-    end
-
-    # Set name of package.
-    def name=(name)
-      @name = name
-    end
-
     # Date this version was released.
     def date
-      @date
+      self[:date]
     end
 
     # Set release date.
     def date=(val)
       case val
       when Date #, Time, DateTime
-        @date = val
+        self[:date] = val
       else
-        @date = Date.parse(val) if val
+        self[:date] = Date.parse(val) if val
       end
     end
 
-    # Integer-esque build number.
-    #attr_accessor :no
-
-    # Integer-esque revison id from SCM.
-    #attr_accessor :id
-
     #
-    alias_method :release,  :date
-    alias_method :release=, :date=
+    alias_method :released,  :date
+    alias_method :released=, :date=
 
     #
     alias_method :release_date, :date
 
     # Colorful nick name for the particular version, e.g. "Lucid Lynx".
-    attr_accessor :codename
+    def codename
+      self[:codename]
+    end
+
+    #
+    def codename=(codename)
+      self[:codename]=codename
+    end
 
     #
     alias_method :code,  :codename
@@ -134,45 +150,78 @@ module POM
     #alias_method :moniker,  :nick
     #alias_method :monicker, :nick # because clowns are funny
 
-    # Namespace for this package. Only needed if not the default
-    # of the +name+ capitalized. For example, +activerecord+ 
-    # uses +ActiveRecord+ for it's namespace, not Activerecord.
-    attr_accessor :module
+    # Namespace for this program. This is only needed if it is not the default
+    # of the +name+ capitalized and/or the toplevel namespace is not a module.
+    # For example, +activerecord+  uses +ActiveRecord+ for it's namespace,
+    # not Activerecord.
+    def namespace
+      self[:namespace]
+    end
+
+    # Set namespace.
+    def namespace=(ns)
+      case ns
+      when /^class/, /^module/
+        self[:namespace] = ns.strip
+      else
+        self[:namespace] = "module #{ns.strip}"
+      end
+    end
+
+    # TODO: Integer-esque build number.
+    #attr_accessor :no
+
+    # TODO: Integer-esque revison id from SCM.
+    #attr_accessor :id
 
     # Internal load paths.
-    def path
-      @path
+    def loadpath
+      self[:loadpath]
     end
 
     #
-    def path=(path)
+    def loadpath=(path)
       case path
       when NilClass
-        self['path'] = ['lib']
+        self[:loadpath] = ['lib']
       when String
-        self['path'] = path.split(/[,:;\ ]/)
+        self[:loadpath] = path.split(/[,:;\ ]/)
       else
-        self['path'] = path.to_a
+        self[:loadpath] = path.to_a
       end
     end
 
     #
-    alias_method :loadpath,  :path
-    alias_method :loadpath=, :path=
+    alias_method :path, :loadpath
+    alias_method :path=, :loadpath=
 
-=begin
     # List of requirements.
-    attr_reader :requires
+    def requires ; self[:requires] ; end
 
     #
-    def requires=(requirements)
-      @requires = Requirements.new(requirements)
+    def requires=(list)
+      self[:requires] = Requires.new(list)
     end
 
     #
     alias_method :requirements,  :requires
     alias_method :requirements=, :requires=
-=end
+
+    #
+    def conflicts ; self[:conflicts] ; end
+
+    #
+    def conflicts=(list)
+      self[:conflicts] = Conflicts.new(list)
+    end
+
+    #
+    def replaces ; self[:replaces] ; end
+
+    #
+    def replaces=(list)
+      self[:replaces] = Replaces.new(list)
+    end
 
     #
     def major ; version.major ; end
@@ -195,15 +244,20 @@ module POM
 
     # Set the date to the present moment.
     def now!
-      @date = Time.now
+      self[:date] = Date.new
     end
 
     #
     def to_s
       s = "#{name} #{version}"
       s << " " + date.strftime('%Y-%m-%d') if date
-      s << ' "' + nick.to_s + '"'          if nick
+      s << ' "' + codename.to_s + '"'      if codename
       s
+    end
+
+    #
+    def to_h
+      @table
     end
 
     #
@@ -220,17 +274,7 @@ module POM
       s.join("\n")
     end
 
-=begin
-    # This method is not using #to_yaml in order to ensure
-    # the file is saved neatly. This may require tweaking.
-    def save!(file=nil)
-      file = file || @file || self.class.default_filename
-      file = @root + file if String === file
-      now!  # update date
-      File.open(file, 'w'){ |f| f << yaml }
-    end
-
-    #
+    # Read the package file.
     def read!
       if file && file.exist?
         text = File.read(file)
@@ -242,16 +286,16 @@ module POM
       end
     end
 
-    #
+    # This method is not using #to_yaml in order to ensure
+    # the file is saved neatly. This may require tweaking.
     def save!(file=nil)
       file = file || @file || self.class.default_filename
       file = @root + file if String === file
-      File.open(file, 'w') do |f|
-        f << yaml #to_h.to_yaml
-      end
+      now!  # update date
+      File.open(file, 'w'){ |f| f << yaml }
     end
 
-    #
+    # Backup the package file. This is used when updating the file.
     def backup!
       if @file
         dir = @root + BACKUP_DIRECTORY
@@ -265,15 +309,17 @@ module POM
     #
     #   module Foo
     #     VERSION  = "1.0.0"
-    #     RELEASE  = "2010-10-01"
+    #     RELEASED = "2010-10-01"
     #     CODENAME = "Fussy Foo"
     #   end
     #
+    # NOTE: This is not actually needed, as I exmplain in a recent
+    # blog post. But we will leave it here for the time being.
     def save_as_ruby(file)
       if File.exist?(file)
         text = File.read(file)
         save_as_ruby_sub!(text, :version, 'VERSION')
-        save_as_ruby_sub!(text, :release, 'RELEASE', 'DATE')
+        save_as_ruby_sub!(text, :released, 'RELEASED', 'DATE')
         save_as_ruby_sub!(text, :codename, 'CODENAME')
       else
         t = []
@@ -292,7 +338,6 @@ module POM
       patterns = patterns.join('|')
       text.sub!(/(#{patterns}\s*)=\s*(.*?)(?!\s*\#?|$)/, '\1=' + __send__(field))
     end
-=end
 
 =begin
     #

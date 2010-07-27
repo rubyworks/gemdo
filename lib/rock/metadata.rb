@@ -21,103 +21,57 @@ module Rock
     end
 
     #
-    def initialize(root)
-      @root = Pathname.new(root)
-      load_sources
+    def initialize(root, *sources)
+      @root    = Pathname.new(root)
+      @sources = sources
       initialize_defaults
     end
 
     #
-    def dotruby
-      @dotruby ||= DotRuby.new(@root)
-    end
-
-    #def name
-    #  dotruby.name
-    #end
-
-    #def loadpath
-    #  dotruby.loadpath
-    #end
-
     def sources
-      srcs = dotruby.metadata
-      srcs = ['.ruby'] + srcs
-      srcs.map do |file|
-        @root + file
-      end
-    end
-
-    def load_sources
-      @zero  = {}
-      @name  = {}
-      @data  = {}
-      sources.each do |source|
-        next unless File.exist?(source)
-        data = YAML.load(File.new(source))
-        data.each do |key, value|
-          if type = Metadata.registry[key.to_sym]
-            mobj = type.new(value) #, self)
-            @data[key.to_sym] = mobj
-            @zero[key.to_sym] = source
-            type.names.each do |name|
-              @name[name.to_sym] = key.to_sym
-            end
-          else
-            type = Metadata::Custom
-            mobj = type.new(value) #, self)
-            @zero[key.to_sym] = source
-            @name[key.to_sym] = key.to_sym
-            @data[key.to_sym] = mobj
-          end
-        end
-      end
-    end
-
-    # Initialize defaults
-    def initialize_defaults
-      Metadata.registry.each do |key, type|
-        if !@data.key?(key.to_sym)
-          if type.respond_to?(:default)
-            @data[key.to_sym] = type.default(self)
-            type.names.each do |name|
-              @name[name.to_sym] = key.to_sym
-            end
-          end
-        end
-      end
+      @sources
     end
 
     #
+    #def dotruby
+    #  @dotruby ||= DotRuby.new(@root)
+    #end
+
+    # Initialize defaults
+    #def initialize_defaults
+    #  Metadata.registry.each do |key, type|
+    #    if !@data.key?(key.to_sym)
+    #      if type.respond_to?(:default)
+    #        @data[key.to_sym] = type.default(self)
+    #        type.names.each do |name|
+    #          @name[name.to_sym] = key.to_sym
+    #        end
+    #      end
+    #    end
+    #  end
+    #end
+
+    #
     def to_h
-      h = {}
-      @data.each do |k,v|
-        h[k.to_s] = v.to_data
+      sources.inject({}) do |h, s|
+        d = s.to_h.rekey(&:to_s)
+        h.merge!(d); h
       end
-      h
     end
 
     #
     def []=(key,value)
-      if type = Metadata.registry[key]
-        mobj = type.new(value) #, self)
-        @zero[key.to_sym] ||= default_source
-        @data[key.to_sym] = mobj
-        type.names.each do |name|
-          @name[name.to_sym] = key.to_sym
-        end
-      else
-        type = Metadata::Custom
-        mobj = type.new(value) #, self)
-        @zero[key.to_sym] ||= default_source
-        @name[key.to_sym] = key.to_sym
-        @data[key.to_sym] = mobj
+      sources.each do |src|
+        keq = "#{key}="
+        return src.__send__(keq, value) if src.respond_to?(keq)
       end
     end
 
     #
     def [](key)
-      @data[@name[key.to_sym]]
+      sources.each do |src|
+        return src.__send__(key) if src.respond_to?(key)
+      end
     end
 
     #
@@ -135,41 +89,23 @@ module Rock
     # method_missing lookup into account.
     def respond_to?(name)
       return true if super(name)
-      return true if @data[name.to_sym]
+      return true if sources.any?{ |src| src.respond_to?(name) }
       return false
     end
 
-    # Save metadata back to source files. This will not save a source if it
+    # Save metadata back to source files. This should not save a source if it
     # has not changed. Returns a list of the source files that were changed,
-    # or +nil if none of the files were changed.
-    #
-    # TODO: Pretty ouput, but how?
+    # or +nil+ if none of the files were changed.
     def save!
-      saved = []
-      table = Hash.new{|h,k| h[k]=[]}
-      @data.each do |key, value|
-        src = @zero[key]
-        #table[src] ||= []
-        table[src] << key
+      changed = []
+      sources.each do |src|
+        saved = src.save!
+        changed << src if saved
       end
-      table.each do |src, keys|
-        hash = {}
-        keys.each do |key|
-          hash[key.to_s] = self[key].to_data
-        end
-        data = normalize(YAML.load(File.new(src)))
-        if data != hash
-          backup!(src)
-          File.open(src, 'w') do |f|
-            f << hash.to_yaml
-          end
-          saved << src
-        end
-      end
-      saved.empty? ? nil : saved
+      changed.empty? ? nil : changed
     end
 
-    #
+    # TODO: only back-up if changed
     def backup!(file=nil)
       if file
         dir = root + BACKUP_DIRECTORY
@@ -182,28 +118,12 @@ module Rock
       end
     end
 
-    ;; private
-
-    #
-    def normalize(data)
-      hash = {}
-      data.each do |k,v|
-        case v
-        when Date
-          hash[k] = v #.strftime('%Y-%m-%d')
-        else
-          hash[k] = v
-        end
-      end
-      hash
-    end
-
   end
 
-  require 'rock/metadata/abstract'
-  Dir[File.join(File.dirname(__FILE__), 'metadata', '*.rb')].each do |rb|
-    require rb
-  end
+  #require 'rock/metadata/abstract'
+  #Dir[File.join(File.dirname(__FILE__), 'metadata', '*.rb')].each do |rb|
+  #  require rb
+  #end
 
 end
 

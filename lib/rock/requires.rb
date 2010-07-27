@@ -1,6 +1,6 @@
 require 'rock/version'
 
-class Rock::Metadata
+module Rock #::Metadata
 
   # The Requires class models the list of project requirements.
   # Essentially it is an array of Requirement objects.
@@ -23,7 +23,7 @@ class Rock::Metadata
 
     include Enumerable
 
-    include AbstractField
+    #include AbstractField
 
     # New requirements class.
     def initialize(reqs)

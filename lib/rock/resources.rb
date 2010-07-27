@@ -1,4 +1,4 @@
-class Rock::Metadata
+module Rock #::Metadata
 
   # The Resource class models a table of project
   # releated URIs. Each entry has a name and URI.
@@ -20,7 +20,7 @@ class Rock::Metadata
   #
   class Resources
 
-    include AbstractField
+    #include AbstractField
 
     include Enumerable
 
@@ -85,8 +85,8 @@ class Rock::Metadata
       if alt = @index[key.to_s]
         @table[alt] = value
       else
-        @table[key] = value
-        self.class.key_aliases[key].each do |name|
+        @table[key.to_s] = value
+        self.class.key_aliases[key.to_sym].each do |name|
           @index[name.to_s] = key.to_s
         end
       end

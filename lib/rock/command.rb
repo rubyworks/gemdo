@@ -71,8 +71,8 @@ rock <COMMAND> [OPTIONS ...]
 COMMANDS:
   about                            show a summary of project
   show [name]                      show specific metadata entry
-  init                             generate default metadata files
-  gemspec                          generate a gemspec file
+  init                             make starter metadata files
+  gemspec                          make a gemspec file
   bump                             bump version number
   dump                             show all metadata in YAML format
   help                             show this help message
