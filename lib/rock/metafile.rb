@@ -68,10 +68,12 @@ module Rock
     ;; private
 
     #
-    def initialize(root, opts={})
+    def initialize(root, data={})
       @root = Pathname.new(root)
-      @file = opts.delete(:file) || self.class.find(root)
-      @data = opts.inject({}){|h,(k,v)| h[k.to_s] = v; h}
+      @file = data.delete(:file)    ||
+              self.class.find(root) ||
+              root + self.class.default_filename
+      @data = data.inject({}){|h,(k,v)| h[k.to_s] = v; h}
 
       read!
 

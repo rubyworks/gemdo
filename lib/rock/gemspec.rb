@@ -147,18 +147,18 @@ module Rock
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
-      metadata.name         = gemspec.name
-      metadata.version      = gemspec.version.to_s
-      metadata.path         = gemspec.require_paths
+      package.name          = gemspec.name
+      package.version       = gemspec.version.to_s
+      package.path          = gemspec.require_paths
       #metadata.arch        = gemspec.platform
 
-      metadata.title        = gemspec.name.capitalize
-      metadata.summary      = gemspec.summary
-      metadata.description  = gemspec.description
-      metadata.authors      = gemspec.authors
-      metadata.contact      = gemspec.email
+      profile.title        = gemspec.name.capitalize
+      profile.summary      = gemspec.summary
+      profile.description  = gemspec.description
+      profile.authors      = gemspec.authors
+      profile.contact      = gemspec.email
 
-      metadata.resources.homepage = gemspec.homepage
+      profile.resources.homepage = gemspec.homepage
 
       #metadata.extensions   = gemspec.extensions
 

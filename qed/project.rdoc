@@ -1,7 +1,0 @@
-= Project Class
-
-Almost all use of POM is via the Project class.
-This class encapsulate all the other aspects
-of the system from metdata to standard project
-paths.
-

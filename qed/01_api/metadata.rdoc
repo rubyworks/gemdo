@@ -1,8 +1,8 @@
-= Pom::Metadata
+= Rock::Metadata
 
 Require metadata library.
 
-    require 'pom/metadata'
+    require 'rock/metadata'
 
 Given a PROFILE project file containing ...
 
@@ -28,9 +28,9 @@ And given a PACKAGE project file containing ...
     date: 2010-10-10
 
 We can access both sets of information by passing the project
-directory to the POM::Metadata constructor method.
+directory to the Rock::Metadata constructor method.
 
-    metadata = POM::Metadata.new('tmp/example')
+    metadata = Rock::Metadata.new('tmp/example')
 
 Now we can verify metadata is being read from the PROFILE.
 

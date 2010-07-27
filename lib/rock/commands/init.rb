@@ -91,44 +91,47 @@ module Rock::Commands
       #  return
       #end
 
-      has_dotruby = File.exist?('.ruby')
+      if !File.exist?('.ruby')
+        File.open('.ruby', 'w'){|f| f << ""}
+      end
 
-      if has_dotruby && !$FORCE
-        $stderr.puts "Looks like you're project is built on a rock already."
-        $stderr.puts "To re-initialize use the --force option."
+      has_package = Rock::Package.find(root)
+      has_profile = Rock::Profile.find(root)
+
+      if (has_package || has_profile) && !$FORCE
+        $stderr.puts "Looks like your project is already built on a rock."
+        $stderr.puts "To re-create the metadata files use the --force option."
         return
       end
 
-      name = File.basename(root)
+      #name = File.basename(root)
 
-      project = Rock::Project.new(root) #, :name=>name)
+      project = Rock::Project.new(root)
 
-      #rubydir = Rock::RubyDir.new(root)
-      #package = Rock::Package.new(root)
-
-      name = project.name || 
+      name = project.name || File.basename(root)
 
       #profile = Rock::Profile.new(root, name)
 
       metadata = project.metadata
 
-      if !has_ruby
+      if !has_package
         #metadata.new_project
         metadata.name     = File.basename(root)
         metadata.version  = '0.0.0'
         metadata.codename = 'FIXME A version codename is optional'
+      end
 
+      if !has_profile
         metadata.summary  = "FIXME brief one line description here"
-        metadata.contact  = "FIXME name <email> or uri"
+        metadata.contact  = "FIXME name <#{ENV['EMAIL']}>"
         metadata.authors << "FIXME list of author's names here"
-
-        metadata.resources.homepage   = "FIXME: main website address"
+        metadata.resources.homepage   = "FIXME: http://your_website.org"
         metadata.resources.repository = "FIXME: master public repo uri"
       end
 
       files = resources
 
-      if files.empty? && !has_dotruby
+      if files.empty?
         files << Dir.glob('*.gemspec').first
         files << Dir.glob('README{,.*}').first
       end
@@ -143,8 +146,6 @@ module Rock::Commands
         when /^README/i
           readme = Rock::Readme.load(file)
           project.import_readme(readme)
-        #when /^PACKAGE/
-        #  rubydir.load_from_package(package)
         else
           text = File.read(file)
           obj  = /^---/.match(text) ? YAML.load(text) : text
@@ -161,11 +162,6 @@ module Rock::Commands
         end
       end
 
-      #
-      #if !has_rubydir
-      #  rubydir.load_from_package(package)
-      #end
-
       #project.root = root
 
       # load any meta entries that may already exist
@@ -176,31 +172,32 @@ module Rock::Commands
 
       if $TRIAL
       else
-        if $FORCE or !has_dotruby
-          #dotruby.save!
+        #if $FORCE or !(has_package or has_profile)
           metadata.backup!
           metadata.save! #(package_file)
-        end
+        #end
       end
 
-      print_fixes
+      puts "The following files were created or updated and should be edited:\n"
+      puts "  PACKAGE"
+      puts "  PROFILE"
     end
 
     #
-    def print_fixes
-      root  = Dir.pwd
-      fixes = []
-      pwd = Pathname.new(root)
-      files = [Rock::Package.find(root), Rock::Profile.find(root)]
-      files.each do |file|
-        File.readlines(file).each{ |l| l.grep(/FIXME/).each{ |r| fixes << file.relative_path_from(pwd) } }
-      end
-      fixes.uniq!
-      unless fixes.empty?
-        puts "The following files require editing:\n"
-        puts "  " + fixes.join("\n  ")
-      end
-    end
+    #def print_fixes
+    #  root  = Dir.pwd
+    #  fixes = []
+    # pwd = Pathname.new(root)
+    #  files = [Rock::Package.find(root), Rock::Profile.find(root)]
+    #  files.each do |file|
+    #    File.readlines(file).each{ |l| l.grep(/FIXME/).each{ |r| fixes << file.relative_path_from(pwd) } }
+    #  end
+    #  fixes.uniq!
+    #  unless fixes.empty?
+    #    puts "The following files require editing:\n"
+    #    puts "  " + fixes.join("\n  ")
+    #  end
+    #end
 
     #
     def require_rubygems

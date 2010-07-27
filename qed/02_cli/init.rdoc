@@ -25,15 +25,15 @@ Given a README project file containing ...
 
     Copyright 2009 Thomas Sawyer
 
-We can generate metadata from the README using the pom command.
+We can generate metadata from the README using the +init+ command.
 
-    `cd tmp/example; pom init README`
+    `cd tmp/example; rock init README`
 
 Now lets verify the metadata was extracted as expected.
 
-    require 'pom/project'
+    require 'rock/project'
 
-    project = POM::Project.new('tmp/example')
+    project = Rock::Project.new('tmp/example')
 
 The values should have been picked up from PACKAGE and PROFILE files.
 
@@ -41,15 +41,10 @@ The values should have been picked up from PACKAGE and PROFILE files.
     project.metadata.description.assert == "This is a description of the\nfake project."
     project.metadata.license.assert     == "GPL"
 
-Clean-up the generated files.
-
-    FileUtils.rm_r('tmp/example/PACKAGE.yml')
-    FileUtils.rm_r('tmp/example/PROFILE.yml')
-    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
-
 == Extracted from a Gemspec
 
-Given a myapp.gemspec project file containing ...
+Given an empty project directory and given a myapp.gemspec
+project file containing ...
 
     Gem::Specification.new do |s|
       s.name = %q{myapp}
@@ -62,23 +57,17 @@ Given a myapp.gemspec project file containing ...
 
 We can generate metadata from the gem specification using the pom command.
 
-    `cd tmp/example; pom init myapp.gemspec`
+    `cd tmp/example; rock init myapp.gemspec`
 
 Now lets verify the metadata was extracted as expected.
 
-    require 'pom/project'
+    require 'rock/project'
 
-    project = POM::Project.new('tmp/example')
+    project = Rock::Project.new('tmp/example')
 
 The values should have been picked up from PACKAGE and PROFILE files.
 
     project.metadata.title.assert        == "Myapp"
     project.metadata.version.to_s.assert == "1.0.0"
     project.metadata.description.assert  == "This is a description of a fake project."
-
-Clean-up the generated files.
-
-    FileUtils.rm_r('tmp/example/PACKAGE.yml')
-    FileUtils.rm_r('tmp/example/PROFILE.yml')
-    FileUtils.rm_r('tmp/example/.cache') if File.exist?('tmp/example/.cache')
 

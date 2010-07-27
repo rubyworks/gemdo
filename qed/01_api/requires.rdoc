@@ -56,28 +56,27 @@ Given a REQUIRE project file containing ...
 
 The Requre class provides an interface to this information.
 
-    require 'pom/require'
+    require 'rock/requires'
 
 The initializer takes the root directory for the project
 and looks for a file called +REQUIRE+ or +.require+,
 optionally ending in +.yml+ or +.yaml+.
 
-    req = POM::Require.new('tmp/example')
+    req = Rock::Requires.new(['facets 2.8.3', 'qed 1.0+ (test)'])
 
-The dependencies list for our sample project is fairly large.
+Requires is enumerable over all dependencies list.
 
-    deps = req.dependencies
-    deps.size.assert == 17
+    req.size.assert == 2
 
 But a few of these dependencies are purely optional.
 
-    reqs = req.requirements
-    reqs.size.assert == 13
+    reqs = req.production
+    reqs.size.assert == 1
 
 Two of those are development dependencies.
 
     devs = req.development
-    devs.size.assert == 3
+    devs.size.assert == 1
 
 Since Reqfile is Enumerable we can filter dependencies using
 fine grain criteria as well.

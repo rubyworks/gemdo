@@ -1,9 +1,13 @@
 require 'yaml'
 require 'rock/root'
+require 'rock/package'
+require 'rock/profile'
 
 module Rock
 
-  #
+  # The Metadata class is a simple wrapper around the Package
+  # and Profile class. It serves to provide a unified interface
+  # to project metadata.
   class Metadata
 
     BACKUP_DIRECTORY = '.cache/rock/'
@@ -23,6 +27,11 @@ module Rock
     #
     def initialize(root, *sources)
       @root    = Pathname.new(root)
+      if sources.empty?
+        package = Package.new(root)
+        profile = Profile.new(root, :name=>package.name)
+        sources = [package, profile]
+      end
       @sources = sources
       initialize_defaults
     end
@@ -105,15 +114,17 @@ module Rock
       changed.empty? ? nil : changed
     end
 
-    # TODO: only back-up if changed
+    # TODO: only backup if changed
     def backup!(file=nil)
       if file
-        dir = root + BACKUP_DIRECTORY
-        FileUtils.mkdir_p(dir)
-        FileUtils.cp(file, dir)
+        if File.exist?(file)
+          dir = root + BACKUP_DIRECTORY
+          FileUtils.mkdir_p(dir)
+          FileUtils.cp(file, dir)
+        end
       else
         sources.each do |src|
-          backup!(src)
+          backup!(src.file)
         end
       end
     end

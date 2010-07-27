@@ -109,9 +109,10 @@ module Rock #::Metadata
 
     # Set the categorical group(s).
     def group=(groups)
-      if String===groups
-        groups = groups.strip.sub(/^[\(\[]/,'').sub(/[\)\]]$/,'')
-        groups = groups.split(/\s+\/?\s+/)
+      groups = [groups].flatten
+      groups = groups.map do |g|
+        g = g.gsub(/[,;:\\\)\(\]\[]/, ' ').strip
+        g = g.split(/\s+/)
       end
       @group = [groups].flatten
     end
@@ -188,7 +189,7 @@ module Rock #::Metadata
     # and specifcally marked runtime dependencies are considered
     # optional. 
     def optional?
-      development? || groups.any?{ |g| /^opt/ -~ g }
+      development? || groups.any?{ |g| /^opt/ =~ g }
     end
 
     # Dependencies that are not optional and not alternates are

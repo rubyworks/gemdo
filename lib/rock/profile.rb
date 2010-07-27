@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'rock/metafile'
 require 'rock/resources'
 
@@ -26,6 +27,7 @@ module Rock
     # the +root+ directory of the project and the +name+
     # of the project are required.
     def initialize(root, data={})
+      @name = data.delete(:name) || data.delete('name')
       super(root, data)
       initialize_defaults
       data.each{ |k,v| __send__("#{k}=", v) }
@@ -33,7 +35,9 @@ module Rock
 
     # Project's <i>package name</i>. This actually comes from package,
     # but if provided here, can set the default for title.
-    attr :name
+    def name
+      @name
+    end
 
     # Title of package (this defaults to project name capitalized).
     attr_accessor :title do

@@ -1,6 +1,7 @@
 #require 'rock/metafile'
 #require 'rock/version_file'
 #require 'rock/version_helper'
+require 'fileutils'
 require 'rock/version'
 require 'rock/requires'
 
@@ -60,8 +61,11 @@ module Rock
 
     #
     def initialize_defaults
-      @file = self.class.find(root)
-      @table[:loadpath] = ['lib']
+      @file = self.class.find(root) || root + self.class.default_filename
+      @table[:loadpath]  = ['lib']
+      @table[:requires]  = []
+      @table[:conflicts] = []
+      @table[:replaces]  = []
     end
 
     # Project root.
@@ -244,7 +248,7 @@ module Rock
 
     # Set the date to the present moment.
     def now!
-      self[:date] = Date.new
+      self[:date] = Date.today
     end
 
     #
@@ -267,9 +271,11 @@ module Rock
       s << "vers: #{version}"
       s << "date: #{date.strftime('%Y-%m-%d')}"
       s << ""
-      s << "require:"
-      requires.each do
-        s << "- " + req.yaml.tabto(2)
+      if !requires.empty?
+        s << "requires:"
+        requires.each do |req|
+          s << "- " + req.yaml.tabto(2)
+        end
       end
       s.join("\n")
     end

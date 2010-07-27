@@ -1,7 +1,14 @@
+require 'fileutils'
+
 FIXTURE_DIR = 'tmp/example/'
 
 # Remove the example project if it exists.
-Before :document do
+Before :all do
+  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
+  File.open(FIXTURE_DIR + '/.ruby', 'w'){ |f| f << "" }
+end
+
+When 'Given an empty project directory' do
   FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
 end
 
