@@ -2,7 +2,7 @@ require 'rock/version'
 
 class Rock::Metadata
 
-  class Version < POM::VersionNumber
+  class Version < Rock::VersionNumber
 
     def self.aliases
       ['vers']

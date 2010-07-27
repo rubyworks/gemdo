@@ -39,8 +39,7 @@ module Rock::Commands
 
     #
     def execute
-      puts project.package.to_yaml
-      puts project.profile.to_yaml
+      puts project.metadata.to_h.to_yaml
     end
 
   end

@@ -69,13 +69,12 @@ COMMAND_HELP = <<-END
 rock <COMMAND> [OPTIONS ...]
 
 COMMANDS:
-  about                            summary of project
-  dump                             output all metadata in YAML format
+  about                            show a summary of project
   show [name]                      show specific metadata entry
-  init                             create default meta entries
+  init                             generate default metadata files
   gemspec                          generate a gemspec file
-  ver                              show/bump version
-  upgrade                          Upgrade old meta directory to files
+  bump                             bump version number
+  dump                             show all metadata in YAML format
   help                             show this help message
 
 COMMON OPTIONS:

@@ -18,7 +18,7 @@ class Rock::Metadata
     include AbstractField
 
     def to_data
-      strftime('%Y-%m-%d')
+      self #strftime('%Y-%m-%d')
     end
 
   end

@@ -111,10 +111,22 @@ module Rock
     # We're using "gem" in a generic sense as meaning a "Ruby Package"
     # regardless of how it was actually installed.
     def default_metadata
-      lib = loadpath.first
-      %w{version require profile}.map do |file|
-        File.join(lib, "#{name}.rock", file + '.yml')
-      end
+      Dir[File.join(meta_dir, "*")]
+    end
+
+    #
+    def meta_dir
+      @meta_dir ||= (
+        dir = nil
+        loadpath.each do |lp|
+          path = File.join(@root, lp, "#{name}.rock")
+          if File.directory?(path)
+            dir = path
+            break
+          end
+        end
+        dir || File.join(@root, loadpath.first, "#{name}.rock")
+      )
     end
 
     #

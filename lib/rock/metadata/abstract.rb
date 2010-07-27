@@ -5,7 +5,7 @@ class Rock::Metadata
 
     def self.included(base)
       base.extend Meta
-      POM::Metadata.register(base)
+      Rock::Metadata.register(base)
     end
 
     module Meta
@@ -27,7 +27,7 @@ class Rock::Metadata
     end
 
     def to_data
-      self
+      to_s
     end
 
   end

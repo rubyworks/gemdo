@@ -3,7 +3,7 @@ class Rock::Metadata
   class Title < String
 
     def self.default(metadata)
-      metadata.name.capitalized
+      metadata.name.capitalize
     end
 
     include AbstractField

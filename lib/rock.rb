@@ -1,11 +1,11 @@
-require 'pom/project'
+require 'rock/project'
 
-module POM
+module Rock
   DIRECTORY = File.dirname(__FILE__)
 
   def self.metadata
     @metadata ||= %w{version profile gemfile}.inject({}) do |data, name|
-      data.merge(YAML.load(File.new(DIRECTORY + "/pom.meta/#{name}.yml")))
+      data.merge(YAML.load(File.new(DIRECTORY + "/rock.meta/#{name}.yml")))
       data
     end
   end

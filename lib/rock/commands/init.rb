@@ -77,9 +77,9 @@ module Rock::Commands
       #  'repository' => "FIX master public repo uri"
       #}
 
-      has_package = Rock::Package.find(root)
-      has_profile = Rock::Profile.find(root)
-      has_rubydir = Rock::RubyDir.find(root)
+      #has_package = Rock::Package.find(root)
+      #has_profile = Rock::Profile.find(root)
+      #has_rubydir = Rock::RubyDir.find(root)
 
       #if Rock::Package.find(root) and not $FORCE
       #  $stderr << "PACKAGE file already exists. Use --force option to allow overwrite.\n"
@@ -91,35 +91,44 @@ module Rock::Commands
       #  return
       #end
 
+      has_dotruby = File.exist?('.ruby')
+
+      if has_dotruby && !$FORCE
+        $stderr.puts "Looks like you're project is built on a rock already."
+        $stderr.puts "To re-initialize use the --force option."
+        return
+      end
+
       name = File.basename(root)
 
       project = Rock::Project.new(root) #, :name=>name)
-      rubydir = Rock::RubyDir.new(root)
-      package = Rock::Package.new(root)
 
-      name = rubydir.name || package.name || File.basename(root)
+      #rubydir = Rock::RubyDir.new(root)
+      #package = Rock::Package.new(root)
 
-      profile = Rock::Profile.new(root, name)
+      name = project.name || 
 
-      if !has_package
-        #package.name    = name # ???
-        package.version  = '0.0.0'
-        package.code     = 'FIXME A version code name is optional'
+      #profile = Rock::Profile.new(root, name)
+
+      metadata = project.metadata
+
+      if !has_ruby
+        #metadata.new_project
+        metadata.name     = File.basename(root)
+        metadata.version  = '0.0.0'
+        metadata.codename = 'FIXME A version codename is optional'
+
+        metadata.summary  = "FIXME brief one line description here"
+        metadata.contact  = "FIXME name <email> or uri"
+        metadata.authors << "FIXME list of author's names here"
+
+        metadata.resources.homepage   = "FIXME: main website address"
+        metadata.resources.repository = "FIXME: master public repo uri"
       end
 
-      if !has_profile
-        profile.summary  = "FIXME brief one line description here"
-        profile.contact  = "FIXME name <email> or uri"
-        profile.authors << "FIXME list of author's names here"
+      files = resources
 
-        profile.resources.homepage   = "FIXME: main website address"
-        profile.resources.repository = "FIXME: master public repo uri"
-      end
-
-      #metadata.new_project
-
-      files = resources()
-      if files.empty? && !has_package && !has_rubydir
+      if files.empty? && !has_dotruby
         files << Dir.glob('*.gemspec').first
         files << Dir.glob('README{,.*}').first
       end
@@ -134,8 +143,8 @@ module Rock::Commands
         when /^README/i
           readme = Rock::Readme.load(file)
           project.import_readme(readme)
-        when /^PACKAGE/
-          rubydir.load_from_package(package)
+        #when /^PACKAGE/
+        #  rubydir.load_from_package(package)
         else
           text = File.read(file)
           obj  = /^---/.match(text) ? YAML.load(text) : text
@@ -153,9 +162,9 @@ module Rock::Commands
       end
 
       #
-      if !has_rubydir
-        rubydir.load_from_package(package)
-      end
+      #if !has_rubydir
+      #  rubydir.load_from_package(package)
+      #end
 
       #project.root = root
 
@@ -167,18 +176,10 @@ module Rock::Commands
 
       if $TRIAL
       else
-        if $FORCE or !has_rubydir
-          rubydir.save!
-        end
-
-        if $FORCE or !has_package
-          package.backup!
-          package.save! #(package_file)
-        end
-
-        if $FORCE or !has_profile
-          profile.backup!
-          profile.save! #(profile_file)
+        if $FORCE or !has_dotruby
+          #dotruby.save!
+          metadata.backup!
+          metadata.save! #(package_file)
         end
       end
 

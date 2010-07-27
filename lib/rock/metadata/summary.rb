@@ -5,6 +5,7 @@ class Rock::Metadata
 
     #
     def self.default(metadata)
+p metadata.description.to_s.strip
       d = metadata.description.to_s.strip
       i = d.index(/(\.|$)/)
       i = 69 if i > 69

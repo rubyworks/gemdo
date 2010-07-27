@@ -12,33 +12,44 @@ module Rock
       end
     end
 
-    # Create a Gem::Specification from a Rock::Project.
-    # Becuase Rock metadata is extensive a fairly complete
-    # Gem::Specification can be created from it --sufficient
-    # for almost all needs.
+    # Create a Gem::Specification from a Rock::Project. Because Rock metadata
+    # is extensive a fairly complete a Gem::Specification can be created from
+    # it which is sufficient for almost all needs.
     #
-    # TODO: However there are still a few features that need address,
-    # such as gem signatures.
+    # TODO: However there are still a few features that need address,  such
+    # as signatures.
     def to_gemspec(options={})
       require_rubygems
 
-      if md = /(\w+).rubyforge.org/.match(profile.homepage)
+      if metadata.resources
+        homepage = metadata.resources.homepage
+      else
+        homepage = nil
+      end
+
+      if homepage && md = /(\w+).rubyforge.org/.match(homepage)
         rubyforge_project = md[1]
       else
-        rubyforge_project = metadata.name  # b/c it has to be something according to Eric Hodel.
+        rubyforge_project = metadata.name.to_s  # b/c it has to be something according to Eric Hodel.
+      end
+
+      #TODO: may be able to get this from project method
+      if news = Dir[root + 'NEWS{,.txt}'].first
+        install_message = File.read(news)
       end
 
       ::Gem::Specification.new do |spec|
-        spec.name          = self.name
-        spec.version       = self.version
-        spec.require_paths = self.loadpath
+        spec.name          = self.name.to_s
+        spec.version       = self.version.to_s
+        spec.require_paths = self.loadpath.to_a
 
-        spec.summary       = profile.summary
-        spec.description   = profile.description
-        spec.authors       = profile.authors
-        spec.email         = profile.email
+        spec.summary       = metadata.summary.to_s
+        spec.description   = metadata.description.to_s
+        spec.authors       = metadata.authors.to_a
+        spec.email         = metadata.email.to_s
+        spec.licenses      = [metadata.license.to_s]
 
-        spec.homepage      = profile.homepage
+        spec.homepage      = metadata.homepage.to_s
 
         # -- platform --
 
@@ -70,9 +81,8 @@ module Rock
         if gemfile
           require 'bundler'
           spec.add_bundler_dependencies
-
-        elsif requires.file
-          requires.dependencies.each do |dep|
+        else
+          metadata.requirements.each do |dep|
             if dep.development?
               spec.add_development_dependency( *[dep.name, dep.constraint].compact )
             else
@@ -80,7 +90,6 @@ module Rock
               spec.add_runtime_dependency( *[dep.name, dep.constraint].compact )
             end
           end
-
         end
 
         # TODO: considerations?
@@ -125,6 +134,10 @@ module Rock
         spec.test_files = manifest.select do |f|
           File.basename(f) =~ /test/ && File.extname(f) == '.rb'
         end
+
+        if install_message
+          sepc.post_install_message = install_message
+        end
       end
 
     end
@@ -134,18 +147,18 @@ module Rock
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
-      package.name         = gemspec.name
-      package.version      = gemspec.version.to_s
-      package.path         = gemspec.require_paths
-      #package.arch        = gemspec.platform
+      metadata.name         = gemspec.name
+      metadata.version      = gemspec.version.to_s
+      metadata.path         = gemspec.require_paths
+      #metadata.arch        = gemspec.platform
 
-      profile.title        = gemspec.name.capitalize
-      profile.summary      = gemspec.summary
-      profile.description  = gemspec.description
-      profile.authors      = gemspec.authors
-      profile.contact      = gemspec.email
+      metadata.title        = gemspec.name.capitalize
+      metadata.summary      = gemspec.summary
+      metadata.description  = gemspec.description
+      metadata.authors      = gemspec.authors
+      metadata.contact      = gemspec.email
 
-      profile.resources.homepage = gemspec.homepage
+      metadata.resources.homepage = gemspec.homepage
 
       #metadata.extensions   = gemspec.extensions
 

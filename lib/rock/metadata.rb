@@ -21,12 +21,39 @@ module Rock
     end
 
     #
-    def initialize(root, *sources)
-      @root  = Pathname.new(root)
+    def initialize(root)
+      @root = Pathname.new(root)
+      load_sources
+      initialize_defaults
+    end
+
+    #
+    def dotruby
+      @dotruby ||= DotRuby.new(@root)
+    end
+
+    #def name
+    #  dotruby.name
+    #end
+
+    #def loadpath
+    #  dotruby.loadpath
+    #end
+
+    def sources
+      srcs = dotruby.metadata
+      srcs = ['.ruby'] + srcs
+      srcs.map do |file|
+        @root + file
+      end
+    end
+
+    def load_sources
       @zero  = {}
       @name  = {}
       @data  = {}
       sources.each do |source|
+        next unless File.exist?(source)
         data = YAML.load(File.new(source))
         data.each do |key, value|
           if type = Metadata.registry[key.to_sym]
@@ -47,15 +74,27 @@ module Rock
       end
     end
 
-    #
-    def method_missing(sym,value=nil,*a,&b)
-      key = sym.to_s.chomp('=').to_sym
-      case sym.to_s
-      when /\=$/
-        self[key] = value
-      else
-        self[key]
+    # Initialize defaults
+    def initialize_defaults
+      Metadata.registry.each do |key, type|
+        if !@data.key?(key.to_sym)
+          if type.respond_to?(:default)
+            @data[key.to_sym] = type.default(self)
+            type.names.each do |name|
+              @name[name.to_sym] = key.to_sym
+            end
+          end
+        end
       end
+    end
+
+    #
+    def to_h
+      h = {}
+      @data.each do |k,v|
+        h[k.to_s] = v.to_data
+      end
+      h
     end
 
     #
@@ -79,6 +118,17 @@ module Rock
     #
     def [](key)
       @data[@name[key.to_sym]]
+    end
+
+    #
+    def method_missing(sym,value=nil,*a,&b)
+      key = sym.to_s.chomp('=').to_sym
+      case sym.to_s
+      when /\=$/
+        self[key] = value
+      else
+        self[key]
+      end
     end
 
     # Override standard #respond_to? method to take
@@ -132,13 +182,15 @@ module Rock
       end
     end
 
+    ;; private
+
     #
     def normalize(data)
       hash = {}
       data.each do |k,v|
         case v
         when Date
-          hash[k] = v.strftime('%Y-%m-%d')
+          hash[k] = v #.strftime('%Y-%m-%d')
         else
           hash[k] = v
         end

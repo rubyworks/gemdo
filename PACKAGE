@@ -1,6 +1,9 @@
 ---
-requires:
+name: rock
+date: 2010-07-26
+version: 1.0.0
 
+requires:
   - name    : syckle
     group   : build
 

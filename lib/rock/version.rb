@@ -381,7 +381,7 @@ module Rock
 
     #
     def initialize(constraint)
-      @constraint = constraint || '> 0'
+      @constraint = constraint || '0+'
       @operator, @number = *parse(@constraint)
     end
 

@@ -16,7 +16,13 @@ class Rock::Metadata
       "require.yml"
     end
 
+    #
+    def self.default(metadata)
+      new([])
+    end
+
     include Enumerable
+
     include AbstractField
 
     # New requirements class.
@@ -48,6 +54,9 @@ class Rock::Metadata
       map{ |r| r.to_h }.to_yaml
     end
 
+    def to_data
+      map{ |r| r.to_h }
+    end
   end
 
   # The Requirement class models a single project dependency,
@@ -62,14 +71,14 @@ class Rock::Metadata
     def initialize(data)
       case data
       when String
-        name, vers, *groups = *data.split(/\s+/)
+        name, vers, *group = *data.strip.split(/\s+/)
         self.name    = name
         self.version = vers
-        self.groups  = groups
+        self.group   = group
       else
         self.name    = data['name']
         self.version = data.values_at('version', 'vers').first
-        self.groups  = data.values_at('group', 'groups', 'type', 'types')
+        self.group   = data.values_at('group', 'groups', 'type', 'types').compact
       end
     end
 
@@ -90,27 +99,46 @@ class Rock::Metadata
 
     # Set version constraint.
     def version=(vers)
-      @version = POM::VersionConstraint.new(vers)
+      @version = Rock::VersionConstraint.new(vers)
     end
 
     # Categorical group(s) to which the requirement belongs.
-    def groups
-      @groups
+    def group
+      @group
     end
 
     # Set the categorical group(s).
-    def groups=(groups)
+    def group=(groups)
       if String===groups
         groups = groups.strip.sub(/^[\(\[]/,'').sub(/[\)\]]$/,'')
         groups = groups.split(/\s+\/?\s+/)
       end
-      @groups = [groups].flatten
+      @group = [groups].flatten
     end
 
     #
-    alias_method :type, :groups
-    alias_method :type=, :groups=
+    alias_method :groups,  :group
+    alias_method :groups=, :group=
 
+    #
+    alias_method :type,  :group
+    alias_method :type=, :group=
+
+    #
+    def arch
+      @arch
+    end
+
+    #
+    def arch=(arch)
+      @arch = arch
+    end
+
+    #
+    alias_method :platform,  :arch
+    alias_method :platform=, :arch=
+
+=begin
     # An provision is a dependency, identified by a subset labeled
     # `provision`. A provsion is an arbitrary term that succinctly
     # describes the functionaltiy of the present package. For example
@@ -124,10 +152,20 @@ class Rock::Metadata
     def provides=(provides)
       @provides = provides
     end
+=end
 
     # Return the name and version contraint as a String.
     def to_s
       "#{name} #{version}".strip
+    end
+
+    #
+    def to_h
+      h = {}
+      h['name']     = name
+      h['version']  = version.to_s
+      h['group']    = group
+      h
     end
 
     # Same as #to_S, returning the name and version contraint
