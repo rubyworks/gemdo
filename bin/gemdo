@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require 'rock/command'
-Rock::Command.run
+require 'gemdo/command'
+Gemdo::Command.run
 

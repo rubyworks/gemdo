@@ -1,4 +1,4 @@
-#!mast -x Syckfile bin demo lib test [A-Z]*
+#!mast -x Syckfile bin demo lib qed test [A-Z]*
 bin/rock
 lib/rock/command.rb
 lib/rock/commands/about.rb

@@ -1,51 +1,51 @@
-= Rock
+= Gemdo
 
-* home: http://proutils.github.com/rock
-* work: http://github.com/protuils/rock
+* home: http://proutils.github.com/gemdo
+* code: http://github.com/protuils/gemdo
 
 
 == DESCRIPTION
 
-Rock defines a standard Ruby POM (Project Object Model).
-Rock provides a standardized layout and a class model for working
-with Ruby projects. Rock largely supports the most common practices of the
-Ruby community, but also defines new practices shore up some of the weaker 
-points of Ruby project standards, and expand its capabilities.
+Gemdo defines a standard Ruby Project Object Model (POM), encompassing a 
+standard project layout, project files and thier formats. The standard is
+specified via an implementation in Ruby, suited for use by Ruby projects
+tools. Gemdo supports the most common practices of the Ruby community at large.
+But also defines some new practices to shore up weaker points or altogether
+missing features.
 
 
 == WHY?
 
 Consider the state of Ruby project standards today. While a number of well
 aheared practices have evolved over the years, largely due to specifications 
-of the orginal setup.rb, still other common project needs remain chaotic and
-confusing. The storage of the a project's current version is one of the most
-painfully obvious examples. The data is required in a project's .gemspec, but
-good practice dictates that is also needed in our library code as a constant;
-if we use Rakegem that constanct should be in lib/foo.rb, but if we are using
-Bundler it is expected in lib/foo/version.rb. If we use Bones to help us manage
-our project, the verison is also stored in a VERSION file as a string, but if 
-we use Jeweler instead uses the same file but prefers a hash. All this for
-only one field and a handful of available tools.
+of the orginal _setup.rb_, still other common project needs remain chaotic and
+confusing. The storage of the a project's current <i>version number</i> is a 
+painfully obvious example. The data is required in a project's .gemspec, and
+common practice dictates that is should also be in our library code as a
+constant; if we use Rakegem[http://rakegem.github.org] that constanct should be
+in lib/foo.rb, but if we are using Bundler[http://bundler.org] it is expected
+in lib/foo/version.rb. If we use Bones[http://twp.github.com/bones] to help us
+manage our project, the verison number is stored in a VERSION file as a string,
+but if we use Jeweler[http://] the same file may be a YAML-formated hash. All
+of this just for one piece of metadata and a small smatter of available tools!
 
 
 == SYNOPSIS
 
-Primarily Rock defines a standard set of project layout and design patterns.
-Most of these derive for setup.rb --the original Ruby project specification,
-and common patterns widely used among the Ruby community.
+Primarily Gemdo defines a standard set of project layout and design patterns.
+Most of these derive for setup.rb, the original Ruby project installer,
+as well as common patterns widely used among the Ruby community.
 
 The specification designates particular files and their uses, most fo which
 are obvious, such as a `README` or a `MANIFEST`. Others are new introduced
-by Rock to shore up the weaks links in common paactices. In particular, Rock
-designates a `.ruby` file to act as the "metadata engine yard", linking named
-information to the resources within project metadata files.
+by Gemdo such as the `.ruby` and `PROFILE` files.
 
-This entire specification is then implemeted in Ruby code, known as the "Rock"
-(Project Object Model). Primary usage of this model relies on the toplevel
+This entire specification is implemeted in Ruby code, known as the "POM"
+(Project Object Model). Primary usage of this model relies on the
 Project class, instantiated by passing the constructor the root directory
 of the project.
 
-  project = Project.new(root_directory)
+  project = Gemdo::Project.new(root_directory)
 
 The project object then ties into all the available metadata, e.g.
 
@@ -55,57 +55,53 @@ The project object then ties into all the available metadata, e.g.
 
   etc...
 
-Rock also provides a command line tool with some useful project utilities.
-For example, it can be used to bump a project's version number.
+Gemdo also provides a command line tool with some useful project utilities.
+For example, it can be used to easily bump a project's version number.
 
-  $ rock bump --patch
+  $ gemdo bump --patch
 
-See the Wiki[http://wiki.github.com/proutils/rock] and
-API[http://proutils.github.com/rock/rdoc] documentation for further
+See the Wiki[http://wiki.github.com/proutils/gemdo] and
+API[http://proutils.github.com/gemdo/rdoc] documentation for further
 details.
 
 
-== Upgrading from 1.x to 2.0
+== Upgrading from POM
 
-Earlier versions of Rock used a directory-based configuration store, storing
-each peice of informtation in a separate file under the meta/ or .meta/
-directory. The latest versions of Rock have replaced this with a small
-set of YAML-base configuration files. While both approaches has their
-advantages and disadvantages, Rock moved to later primarily because of it's
-familiarity to developers.
+Earlier versions of Gemdo were called "POM" and used a directory-based
+configuration store with each piece of information in a separate file under
+the meta/ or .meta/ directory. While this design has some useful advantages,
+it also suffers for some distinct disadvantages, not the least of which is it's
+lack of familiarity to developers. The latest versions of Gemdo therefore
+replaces this design with a set of YAML-base configuration files. 
 
-If you were using an old version of Rock with a project and need to updgrade,
-the rock command provides a helpful subcommand:
+If you were using an old version of POM with a project and need to updgrade,
+the gemdo command provides a helpful subcommand:
 
-  $ rock upgrade
+  $ gemdo upgrade
 
-This will create a PROFILE, PACKAGE and REQUIRE file containing the entries
+This will create the PROFILE and PACKAGE files containing the entries
 in the meta/ or .meta/ directory. It will not be prefect, so be sure to edit
-the files, but it will at least make the process much easier.
+the newly created files, but it will at least make the process much easier.
 
 
 == DEVELOPMENT
 
-You can subscribe to the ProUtils mailing list by sensing a message to
-this mailing address[mailto:protuils+subscribe@googlegroups.com].
-
-Or visit http://groups.google.com/group/proutils.
-
-Integration testing is handled by QED and unit testing is handled by
-Lemon.
+You can subscribe to the ProUtils mailing list by sending a message to
+this mailing address[mailto:proutils+subscribe@googlegroups.com], or
+visit http://groups.google.com/group/proutils.
 
 
 == HOW TO INSTALL
 
 To install with RubyGems simply open a console and type:
 
-  $ sudo gem install rock
+  $ sudo gem install gemdo
 
 Site installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
-  $ tar -xvzf rock-2.1.0.tar.gz
-  $ cd rock-2.1.0.tar.gz
+  $ tar -xvzf gemdo-1.0.0.tar.gz
+  $ cd gemdo-1.0.0.tar.gz
   $ sudo setup.rb all
 
 Windows users use 'ruby setup.rb all'.
@@ -113,18 +109,9 @@ Windows users use 'ruby setup.rb all'.
 
 == LICENSE/COPYRIGHT
 
-(MIT License)
+Gemdo Copyright (c) 2009 Thomas Sawyer
 
-Copyright (c) 2009 Thomas Sawyer
-
-This program is ditributed under the terms of the MIT license.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Gem is distributed under the terms of the Apache License, version 2.0.
 
 See LICENSE file for more details.
+
