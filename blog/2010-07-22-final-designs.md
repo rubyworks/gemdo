@@ -1,4 +1,4 @@
-= 2010-07-22 | Final Designs
+# 2010-07-22 | Final Designs
 
 Over the years POM has evolved. Many considerations have contributed to
 changes in it's design. The most significant of which was the recent move away
@@ -20,7 +20,7 @@ I touched on the first and last of these in my previous blog entry. The second
 bares further explination. It is, of course, easy enough for a file system
 to do a file name search. Currently POM is littered with code like:
 
-  Dir.glob('Package{,.yml,.yaml}', File::FNM_CASEFOLD)
+    Dir.glob('Package{,.yml,.yaml}', File::FNM_CASEFOLD)
 
 Perhaps not as simple as we might like, but perfectly acceptable, and if that
 were the only naggle, I wouldn't think twice about it. But also consider a web
