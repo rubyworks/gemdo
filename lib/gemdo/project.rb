@@ -1,13 +1,13 @@
-require 'rock/core_ext'
-require 'rock/root'
-require 'rock/metadata'
-require 'rock/manifest'
-require 'rock/history'
-require 'rock/news'
-require 'rock/package'
-require 'rock/profile'
+require 'gemdo/core_ext'
+require 'gemdo/root'
+require 'gemdo/metadata'
+require 'gemdo/manifest'
+require 'gemdo/history'
+require 'gemdo/news'
+require 'gemdo/package'
+require 'gemdo/profile'
 
-module Rock
+module Gemdo
 
   # The Project class provides the location of specific directories
   # and files in the project, plus access to the projects metadata, etc.
@@ -16,9 +16,9 @@ module Rock
     # File glob for matching README file.
     README = "README{,.*}"
 
-    # Locate the project's root directory. See Rock::root.
+    # Locate the project's root directory. See Gemdo::root.
     def self.root(local=Dir.pwd)
-      Rock.root(local)
+      Gemdo.root(local)
     end
 
     # Instantiate a new Project looking up the root
@@ -85,11 +85,11 @@ module Rock
     #++
     attr :source
 
-    ## Rock configuration settings. These are found under <tt>.config/rock/</tt>.
-    ## Rock settings are a file store like Metadata.
+    ## Gemdo configuration settings. These are found under <tt>.config/gemdo/</tt>.
+    ## Gemdo settings are a file store like Metadata.
     #
     #def settings
-    #  @settings ||= FileStore.new(root, '.config/rock')
+    #  @settings ||= FileStore.new(root, '.config/gemdo')
     #end
 
     # Provides access to the PACAKGE metadata file.
@@ -214,7 +214,7 @@ module Rock
     alias_method :pack, :pkg
 
     # The <tt>.cache/</tt> directory is used by build tools to
-    # store temporary files. For instance, the +rock+ command uses
+    # store temporary files. For instance, the +gemdo+ command uses
     # it to store backups of metadata entries when overwriting
     # old entries. <tt>.cache/</tt> should be in your SCM's
     # ignore list.
@@ -424,5 +424,5 @@ module Rock
 
   end#class Project
 
-end#module Rock
+end#module Gemdo
 

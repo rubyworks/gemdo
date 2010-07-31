@@ -1,4 +1,4 @@
-module Rock
+module Gemdo
 
   class Project
 
@@ -12,7 +12,7 @@ module Rock
       end
     end
 
-    # Create a Gem::Specification from a Rock::Project. Because Rock metadata
+    # Create a Gem::Specification from a Gemdo::Project. Because Gemdo metadata
     # is extensive a fairly complete a Gem::Specification can be created from
     # it which is sufficient for almost all needs.
     #
@@ -97,7 +97,7 @@ module Rock
 
         # -- executables --
 
-        # TODO: bin/ is a Rock convention, is there are reason to do otherwise?
+        # TODO: bin/ is a Gemdo convention, is there are reason to do otherwise?
         spec.bindir      = options[:bindir]      || "bin"
         spec.executables = options[:executables] || self.executables
 
@@ -142,8 +142,8 @@ module Rock
 
     end
 
-    # Import a Gem::Specification into a Rock::Project. This is intended to make it
-    # farily easy to build a set of Rock metadata files from pre-existing gemspec.
+    # Import a Gem::Specification into a Gemdo::Project. This is intended to make it
+    # farily easy to build a set of Gemdo metadata files from pre-existing gemspec.
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
@@ -170,5 +170,5 @@ module Rock
 
   end#class Project
 
-end#module Rock
+end#module Gemdo
 

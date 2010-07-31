@@ -1,10 +1,10 @@
-require 'rock/core_ext'
-require 'rock/errors'
+require 'gemdo/core_ext'
+require 'gemdo/errors'
 
-module Rock
+module Gemdo
 
   # MetaStore serves as the base class for the Metadata
-  # class. It connects the file system to the Rock model.
+  # class. It connects the file system to the Gemdo model.
   class MetaStore
 
     # Parent store, or root pathname. The topmost store

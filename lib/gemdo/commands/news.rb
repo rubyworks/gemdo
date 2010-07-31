@@ -1,4 +1,4 @@
-module Rock::Commands
+module Gemdo::Commands
 
   # New command displays the current release notes.
   class News < Base
@@ -8,13 +8,13 @@ module Rock::Commands
     #
     def initialize
       super
-      @project = Rock::Project.new(:lookup=>true)
+      @project = Gemdo::Project.new(:lookup=>true)
     end
 
     #
     def parser
       super do |opt|
-        opt.banner = "rock news"
+        opt.banner = "gemdo news"
 
         opt.on("--text", "-t", "show verbatim text") do
           options.text = true

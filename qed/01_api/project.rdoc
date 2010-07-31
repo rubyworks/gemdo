@@ -1,9 +1,9 @@
 = Project Class
 
-Almost all use of Rock will be via the Project class. This class encapsulates
+Almost all use of Gemdo will be via the Project class. This class encapsulates
 all the other aspects of the system from metdata to standard project paths.
 
-  require 'rock/project'
+  require 'gemdo/project'
 
-  Rock::Project.new('tmp/example')
+  Gemdo::Project.new('tmp/example')
 

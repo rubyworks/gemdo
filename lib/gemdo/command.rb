@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'rock'
+require 'gemdo'
 require 'optparse'
 require 'ostruct'
 
-module Rock
+module Gemdo
 
-  # Rock's command-line interface.
+  # Gemdo's command-line interface.
   class Command
 
     #
@@ -44,7 +44,7 @@ module Rock
       job = parse_command
       begin
         job = 'dotruby' if job == '.ruby'
-        cmd = Rock::Commands.const_get(job.capitalize)
+        cmd = Gemdo::Commands.const_get(job.capitalize)
       rescue NameError
         puts "Unrecognized command -- #{job}"
         exit 1
@@ -66,7 +66,7 @@ module Rock
     end
 
 COMMAND_HELP = <<-END
-rock <COMMAND> [OPTIONS ...]
+gemdo <COMMAND> [OPTIONS ...]
 
 COMMANDS:
   about                            show a summary of project
@@ -80,16 +80,16 @@ COMMANDS:
 COMMON OPTIONS:
   --debug                          activate debug mode
 
-Use 'rock <COMMAND> --help' for command options.
+Use 'gemdo <COMMAND> --help' for command options.
 END
 
   end#class Command
 
-  # Module to house all Rock command-line utility classes.
+  # Module to house all Gemdo command-line utility classes.
   #
   module Commands
 
-    # Base class for Rock commands.
+    # Base class for Gemdo commands.
     class Base
       #
       attr :options
@@ -142,5 +142,5 @@ END
 
   end#module Commands
 
-end#module Rock
+end#module Gemdo
 

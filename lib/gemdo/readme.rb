@@ -1,6 +1,6 @@
-require 'rock/core_ext'
+require 'gemdo/core_ext'
 
-module Rock
+module Gemdo
 
   # Readme is designed to parse a README file
   # applying various hueristics in order to
@@ -176,8 +176,8 @@ module Rock
       @readme ||= Readme.load(root)
     end
 
-    # Get Rock metadata from a README. This is intended to make it
-    # fairly easy to build a set of Rock's metadata files if you
+    # Get Gemdo metadata from a README. This is intended to make it
+    # fairly easy to build a set of Gemdo's metadata files if you
     # already have a README.
     def import_readme(readme=nil)
       readme = readme || self.readme

@@ -23,13 +23,13 @@ Given a README project file containing ...
 
     Copyright 2009 Thomas Sawyer
 
-Load the Rock::Readme library.
+Load the Gemdo::Readme library.
 
-    require 'rock/readme'
+    require 'gemdo/readme'
 
 Create a new Readme object from file.
 
-    rm = Rock::Readme.load("tmp/example/README")
+    rm = Gemdo::Readme.load("tmp/example/README")
 
 It should be able to parse out a title and project name.
 

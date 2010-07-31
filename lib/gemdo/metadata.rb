@@ -1,16 +1,16 @@
 require 'yaml'
-require 'rock/root'
-require 'rock/package'
-require 'rock/profile'
+require 'gemdo/root'
+require 'gemdo/package'
+require 'gemdo/profile'
 
-module Rock
+module Gemdo
 
   # The Metadata class is a simple wrapper around the Package
   # and Profile class. It serves to provide a unified interface
   # to project metadata.
   class Metadata
 
-    BACKUP_DIRECTORY = '.cache/rock/'
+    BACKUP_DIRECTORY = '.cache/gemdo/'
 
     #
     def self.register(type_class)
@@ -131,7 +131,7 @@ module Rock
 
   end
 
-  #require 'rock/metadata/abstract'
+  #require 'gemdo/metadata/abstract'
   #Dir[File.join(File.dirname(__FILE__), 'metadata', '*.rb')].each do |rb|
   #  require rb
   #end
@@ -194,7 +194,7 @@ end
     #  end
     #end
 
-    # Backup all metadata resources to `.cache/rock` location.
+    # Backup all metadata resources to `.cache/gemdo` location.
     #def backup!
     #  sources.each do |source|
     #    source.backup!

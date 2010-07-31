@@ -1,8 +1,8 @@
 require 'fileutils'
-require 'rock/metafile'
-require 'rock/resources'
+require 'gemdo/metafile'
+require 'gemdo/resources'
 
-module Rock
+module Gemdo
 
   # Profile stores ancillary project metadata such
   # as title, summary, list of authors, etc. Profile

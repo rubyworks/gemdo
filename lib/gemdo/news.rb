@@ -1,7 +1,7 @@
-require 'rock/core_ext'
-require 'rock/history'
+require 'gemdo/core_ext'
+require 'gemdo/history'
 
-module Rock
+module Gemdo
 
   # = News / Release Notes
   #
@@ -76,4 +76,4 @@ module Rock
 
   end #class News
 
-end #module Rock
+end #module Gemdo

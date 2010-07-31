@@ -1,6 +1,6 @@
-require 'rock/core_ext/pathname'
+require 'gemdo/core_ext/pathname'
 
-module Rock
+module Gemdo
 
   # Root directory is indicated by the presence of either a
   # .ruby file or as a fallback a lib/ directory.

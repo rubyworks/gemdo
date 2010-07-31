@@ -1,8 +1,8 @@
-require 'rock/core_ext'
+require 'gemdo/core_ext'
 require 'erb'
 require 'yaml'
 
-module Rock
+module Gemdo
 
   # Where in project to store backups.
   BACKUP_DIRECTORY = '.cache/pom'

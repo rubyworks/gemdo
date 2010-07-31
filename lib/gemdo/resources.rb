@@ -1,4 +1,4 @@
-module Rock #::Metadata
+module Gemdo #::Metadata
 
   # The Resource class models a table of project
   # releated URIs. Each entry has a name and URI.

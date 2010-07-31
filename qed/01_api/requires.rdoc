@@ -56,13 +56,13 @@ Given a REQUIRE project file containing ...
 
 The Requre class provides an interface to this information.
 
-    require 'rock/requires'
+    require 'gemdo/requires'
 
 The initializer takes the root directory for the project
 and looks for a file called +REQUIRE+ or +.require+,
 optionally ending in +.yml+ or +.yaml+.
 
-    req = Rock::Requires.new(['facets 2.8.3', 'qed 1.0+ (test)'])
+    req = Gemdo::Requires.new(['facets 2.8.3', 'qed 1.0+ (test)'])
 
 Requires is enumerable over all dependencies list.
 

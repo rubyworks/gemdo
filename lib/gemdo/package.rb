@@ -1,11 +1,11 @@
-#require 'rock/metafile'
-#require 'rock/version_file'
-#require 'rock/version_helper'
+#require 'gemdo/metafile'
+#require 'gemdo/version_file'
+#require 'gemdo/version_helper'
 require 'fileutils'
-require 'rock/version'
-require 'rock/requires'
+require 'gemdo/version'
+require 'gemdo/requires'
 
-module Rock
+module Gemdo
 
   # The Package class encapsulates essential information for packaging and
   # library management. This information will usually derive from a YAML
@@ -21,7 +21,7 @@ module Rock
   #
   class Package
 
-    BACKUP_DIRECTORY = '.cache/rock'
+    BACKUP_DIRECTORY = '.cache/gemdo'
 
     #
     def self.find(root)

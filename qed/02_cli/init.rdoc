@@ -27,13 +27,13 @@ Given a README project file containing ...
 
 We can generate metadata from the README using the +init+ command.
 
-    `cd tmp/example; rock init README`
+    `cd tmp/example; gemdo init README`
 
 Now lets verify the metadata was extracted as expected.
 
-    require 'rock/project'
+    require 'gemdo/project'
 
-    project = Rock::Project.new('tmp/example')
+    project = Gemdo::Project.new('tmp/example')
 
 The values should have been picked up from PACKAGE and PROFILE files.
 
@@ -57,13 +57,13 @@ project file containing ...
 
 We can generate metadata from the gem specification using the pom command.
 
-    `cd tmp/example; rock init myapp.gemspec`
+    `cd tmp/example; gemdo init myapp.gemspec`
 
 Now lets verify the metadata was extracted as expected.
 
-    require 'rock/project'
+    require 'gemdo/project'
 
-    project = Rock::Project.new('tmp/example')
+    project = Gemdo::Project.new('tmp/example')
 
 The values should have been picked up from PACKAGE and PROFILE files.
 

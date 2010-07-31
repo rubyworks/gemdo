@@ -1,6 +1,2 @@
-Covers 'pom/news'
-
-TestCase POM::News do
-
-end
+covers 'rock/news'
 

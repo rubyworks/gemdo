@@ -1,6 +1,6 @@
-require 'rock/version'
+require 'gemdo/version'
 
-module Rock::Commands
+module Gemdo::Commands
 
   class Bump
 
@@ -13,7 +13,7 @@ module Rock::Commands
 
     #
     def initialize
-      @project = Rock::Project.new(:lookup=>true)
+      @project = Gemdo::Project.new(:lookup=>true)
       @slots   = []
       @state   = nil
       @force   = false
@@ -28,7 +28,7 @@ module Rock::Commands
     # Returns instance of option parser.
     def parser
       @parser ||= OptionParser.new do |opt|
-        opt.banner = "rock bump [OPTIONS | ENTRY]"
+        opt.banner = "gemdo bump [OPTIONS | ENTRY]"
 
         opt.on("--major", "-M", "bump major version number") do
           @slots << :major
@@ -84,18 +84,18 @@ module Rock::Commands
 
     #
     def execute
-      if Rock::VersionNumber::STATES.include?(@entry)
+      if Gemdo::VersionNumber::STATES.include?(@entry)
         @state = @entry.to_sym
       end
 
-      if Rock::VersionNumber::SLOTS.include?(@entry)
+      if Gemdo::VersionNumber::SLOTS.include?(@entry)
         @slots << @entry.to_sym
         @entry = nil
       end
 
       raise "Why bump if you know what you want, silly?" if @entry && !@slots.empty?
 
-      new_version = @entry ? Rock::VersionNumber.new(@entry) : project.package.version
+      new_version = @entry ? Gemdo::VersionNumber.new(@entry) : project.package.version
 
       @slots.each do |slot|
         new_version = new_version.bump(slot)
@@ -110,7 +110,7 @@ module Rock::Commands
         project.package.save! unless $TRIAL
       else
         if new_version < project.package.version
-          $stderr.puts "rock: Going backwards in time?"
+          $stderr.puts "gemdo: Going backwards in time?"
           $stderr.outs "   New version is older than current version."
           $stderr.outs "   Use --force to fly the TARDIS."
         end

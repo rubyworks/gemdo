@@ -1,8 +1,8 @@
-= Rock::Metadata
+= Gemdo::Metadata
 
 Require metadata library.
 
-    require 'rock/metadata'
+    require 'gemdo/metadata'
 
 Given a PROFILE project file containing ...
 
@@ -28,9 +28,9 @@ And given a PACKAGE project file containing ...
     date: 2010-10-10
 
 We can access both sets of information by passing the project
-directory to the Rock::Metadata constructor method.
+directory to the Gemdo::Metadata constructor method.
 
-    metadata = Rock::Metadata.new('tmp/example')
+    metadata = Gemdo::Metadata.new('tmp/example')
 
 Now we can verify metadata is being read from the PROFILE.
 

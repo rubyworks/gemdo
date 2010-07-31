@@ -1,4 +1,4 @@
-module Rock::Commands
+module Gemdo::Commands
 
   class Gemspec
 
@@ -9,8 +9,8 @@ module Rock::Commands
 
     #
     def initialize
-      require 'rock/gemspec'
-      @project = Rock::Project.new(:lookup=>true)
+      require 'gemdo/gemspec'
+      @project = Gemdo::Project.new(:lookup=>true)
     end
 
     #
@@ -25,7 +25,7 @@ module Rock::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "rock gemspec"
+        opt.banner = "gemdo gemspec"
 
         opt.on("--force", "-f", "override safe-guarded operations") do
           $FORCE = true

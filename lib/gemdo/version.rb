@@ -1,4 +1,4 @@
-module Rock
+module Gemdo
 
   # VersionNumber class models a dot-separated sequence
   # of numbers or strings according to the most common

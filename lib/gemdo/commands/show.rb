@@ -1,4 +1,4 @@
-module Rock::Commands
+module Gemdo::Commands
 
   class Show
 
@@ -11,7 +11,7 @@ module Rock::Commands
     attr :entry
 
     def initialize
-      @project = Rock::Project.new(:lookup=>true)
+      @project = Gemdo::Project.new(:lookup=>true)
     end
 
     #
@@ -23,7 +23,7 @@ module Rock::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "rock show [ENTRY]"
+        opt.banner = "gemdo show [ENTRY]"
 
         opt.on("--debug", "run in debug mode") do
           $DEBUG   = true

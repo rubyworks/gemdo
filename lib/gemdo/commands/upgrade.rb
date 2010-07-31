@@ -1,6 +1,6 @@
-module Rock::Commands
-  require 'rock/deprecate/metadir'
-  require 'rock/metadata'
+module Gemdo::Commands
+  require 'gemdo/deprecate/metadir'
+  require 'gemdo/metadata'
 
   #
   class Upgrade
@@ -11,7 +11,7 @@ module Rock::Commands
 
     #
     def initialize
-      #@project = Rock::Project.new(:lookup=>true)
+      #@project = Gemdo::Project.new(:lookup=>true)
     end
 
     #
@@ -23,7 +23,7 @@ module Rock::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "rock upgrade"
+        opt.banner = "gemdo upgrade"
 
         opt.on("--debug", "run in debug mode") do
           $DEBUG   = true
@@ -48,7 +48,7 @@ module Rock::Commands
       if %w{PROFILE PACKAGE REQUIRE}.any?{ |f| File.exist?(f) }
         abort "Use --force to overwrite PACKAGE, PROFILE and/or REQUIRE files." unless $FORCE
       end
-      metadir = Rock::Metadir.new('.')
+      metadir = Gemdo::Metadir.new('.')
       if metadir.store
         profile = metadir.to_profile
         package = metadir.to_package

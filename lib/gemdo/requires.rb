@@ -1,6 +1,6 @@
-require 'rock/version'
+require 'gemdo/version'
 
-module Rock #::Metadata
+module Gemdo #::Metadata
 
   # The Requires class models the list of project requirements.
   # Essentially it is an array of Requirement objects.
@@ -28,12 +28,17 @@ module Rock #::Metadata
     # New requirements class.
     def initialize(reqs)
       reqs.each do |req|
-        case req
-        when Requirement
-          self << req
-        else
-          self << Requirement.new(req)
-        end
+        self << req
+      end
+    end
+
+    #
+    def <<(req)
+      case req
+      when Requirement
+        super req
+      else
+        super Requirement.new(req)
       end
     end
 
@@ -99,7 +104,7 @@ module Rock #::Metadata
 
     # Set version constraint.
     def version=(vers)
-      @version = Rock::VersionConstraint.new(vers)
+      @version = Gemdo::VersionConstraint.new(vers)
     end
 
     # Categorical group(s) to which the requirement belongs.

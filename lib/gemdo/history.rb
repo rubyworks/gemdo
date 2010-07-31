@@ -1,7 +1,7 @@
-require 'rock/core_ext'
-require 'rock/version'
+require 'gemdo/core_ext'
+require 'gemdo/version'
 
-module Rock
+module Gemdo
 
   # = History File
   #
@@ -169,5 +169,5 @@ module Rock
 
   end #class History
 
-end #module Rock
+end #module Gemdo
 

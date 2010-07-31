@@ -1,4 +1,4 @@
-module Rock::Commands
+module Gemdo::Commands
 
   class Dump
 
@@ -9,7 +9,7 @@ module Rock::Commands
     attr :project
 
     def initialize
-      @project = Rock::Project.new(:lookup=>true)
+      @project = Gemdo::Project.new(:lookup=>true)
     end
 
     #
@@ -21,7 +21,7 @@ module Rock::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "rock dump"
+        opt.banner = "gemdo dump"
 
         opt.on("--debug", "run in debug mode") do
           $DEBUG   = true

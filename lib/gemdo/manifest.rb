@@ -1,6 +1,6 @@
-require 'rock/core_ext'
+require 'gemdo/core_ext'
 
-module Rock
+module Gemdo
 
   # Manifest file.
   #

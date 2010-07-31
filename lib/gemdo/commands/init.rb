@@ -1,4 +1,4 @@
-module Rock::Commands
+module Gemdo::Commands
 
   class Init
 
@@ -8,7 +8,7 @@ module Rock::Commands
 
     #
     def initialize
-      #@project = Rock::Project.new(:lookup=>true)
+      #@project = Gemdo::Project.new(:lookup=>true)
       @options = {}
     end
 
@@ -25,7 +25,7 @@ module Rock::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "rock init [RESOURCE ...]"
+        opt.banner = "gemdo init [RESOURCE ...]"
 
         opt.on("--replace", "-r", "replace any pre-existing entries") do
           options[:replace] = true
@@ -61,9 +61,9 @@ module Rock::Commands
     def execute
       require_rubygems
 
-      require 'rock/metadata'
-      require 'rock/readme'
-      require 'rock/gemspec'
+      require 'gemdo/metadata'
+      require 'gemdo/readme'
+      require 'gemdo/gemspec'
 
       root = Dir.pwd
 
@@ -77,16 +77,16 @@ module Rock::Commands
       #  'repository' => "FIX master public repo uri"
       #}
 
-      #has_package = Rock::Package.find(root)
-      #has_profile = Rock::Profile.find(root)
-      #has_rubydir = Rock::RubyDir.find(root)
+      #has_package = Gemdo::Package.find(root)
+      #has_profile = Gemdo::Profile.find(root)
+      #has_rubydir = Gemdo::RubyDir.find(root)
 
-      #if Rock::Package.find(root) and not $FORCE
+      #if Gemdo::Package.find(root) and not $FORCE
       #  $stderr << "PACKAGE file already exists. Use --force option to allow overwrite.\n"
       #  return
       #end
 
-      #if Rock::Profile.find(root) and not $FORCE
+      #if Gemdo::Profile.find(root) and not $FORCE
       #  $stderr << "PROFILE already exists. Use --force option to allow overwrite.\n"
       #  return
       #end
@@ -95,22 +95,22 @@ module Rock::Commands
         File.open('.ruby', 'w'){|f| f << ""}
       end
 
-      has_package = Rock::Package.find(root)
-      has_profile = Rock::Profile.find(root)
+      has_package = Gemdo::Package.find(root)
+      has_profile = Gemdo::Profile.find(root)
 
       if (has_package || has_profile) && !$FORCE
-        $stderr.puts "Looks like your project is already built on a rock."
+        $stderr.puts "Looks like your project is already built on a gemdo."
         $stderr.puts "To re-create the metadata files use the --force option."
         return
       end
 
       #name = File.basename(root)
 
-      project = Rock::Project.new(root)
+      project = Gemdo::Project.new(root)
 
       name = project.name || File.basename(root)
 
-      #profile = Rock::Profile.new(root, name)
+      #profile = Gemdo::Profile.new(root, name)
 
       metadata = project.metadata
 
@@ -144,7 +144,7 @@ module Rock::Commands
           gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
           project.import_gemspec(gemspec)
         when /^README/i
-          readme = Rock::Readme.load(file)
+          readme = Gemdo::Readme.load(file)
           project.import_readme(readme)
         else
           text = File.read(file)
@@ -188,7 +188,7 @@ module Rock::Commands
     #  root  = Dir.pwd
     #  fixes = []
     # pwd = Pathname.new(root)
-    #  files = [Rock::Package.find(root), Rock::Profile.find(root)]
+    #  files = [Gemdo::Package.find(root), Gemdo::Profile.find(root)]
     #  files.each do |file|
     #    File.readlines(file).each{ |l| l.grep(/FIXME/).each{ |r| fixes << file.relative_path_from(pwd) } }
     #  end

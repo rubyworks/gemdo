@@ -1,22 +1,6 @@
-module Rock
+module Gemdo
 
-  # The `.ruby` file acts a junction for access to metadata defined
-  # for the project.
-  #
-  #--
-  # Metadata sources are designated by "protocol://filename#index".
-  #
-  # If a protocol indicator is not given, it will attempt to determine
-  # the file format by extension. Unless otherwise recognized it will
-  # assume the file is a YAML document.
-  #
-  # Currently the DotRuby class understands the following file protocols.
-  #
-  # * file:// - Plain text (striped)
-  # * yaml:// - YAML formatted
-  #
-  # It likely that JSON will ultimately be added to this list.
-  #--
+  # The `.ruby` file.
   class DotRuby
 
     #
@@ -39,7 +23,6 @@ module Rock
 
     #
     def preinitialize_defaults
-      @loadpath = ['lib']
     end
 
     #
@@ -58,47 +41,47 @@ module Rock
     end
 
     # Load name of project.
-    def name
-      @name
-    end
+    #def name
+    #  @name
+    #end
 
     #
-    def name=(name)
-      raise "invalid name" unless /^\w+$/ =~ name
-      @name = name
-    end
+    #def name=(name)
+    #  raise "invalid name" unless /^\w+$/ =~ name
+    #  @name = name
+    #end
 
     # The loadpaths used by the project.
-    def loadpath
-      @loadpath
-    end
+    #def loadpath
+    #  @loadpath
+    #end
 
     #
-    def loadpath=(paths)
-      case paths
-      when NilClass
-        @loadpath = ['lib']
-      when String
-        @loadpath = paths.split(/[,:;\ ]/)
-      else
-        @loadpath = [paths].flatten
-      end
-    end
+    #def loadpath=(paths)
+    #  case paths
+    #  when NilClass
+    #    @loadpath = ['lib']
+    #  when String
+    #    @loadpath = paths.split(/[,:;\ ]/)
+    #  else
+    #    @loadpath = [paths].flatten
+    #  end
+    #end
 
     #
-    def module=(mod)
-      @namespace = mod
-    end
+    #def module=(mod)
+    #  @namespace = mod
+    #end
 
     #
-    def metadata
-      @metadata ||= default_metadata
-    end
+    #def metadata
+    #  @metadata ||= default_metadata
+    #end
 
     #
-    def metadata=(sources)
-      @metadata = [sources].flatten
-    end
+    #def metadata=(sources)
+    #  @metadata = [sources].flatten
+    #end
 
     # D E F A U L T S
 
@@ -110,24 +93,9 @@ module Rock
     #
     # We're using "gem" in a generic sense as meaning a "Ruby Package"
     # regardless of how it was actually installed.
-    def default_metadata
-      Dir[File.join(meta_dir, "*")]
-    end
-
-    #
-    def meta_dir
-      @meta_dir ||= (
-        dir = nil
-        loadpath.each do |lp|
-          path = File.join(@root, lp, "#{name}.rock")
-          if File.directory?(path)
-            dir = path
-            break
-          end
-        end
-        dir || File.join(@root, loadpath.first, "#{name}.rock")
-      )
-    end
+    #def default_metadata
+    #  Dir[File.join(meta_dir, "*")]
+    #end
 
     #
     #def reference(path_index)

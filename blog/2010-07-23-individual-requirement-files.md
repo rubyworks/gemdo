@@ -12,7 +12,7 @@ a special directory, but break requirements out into individual files.
       qed-2.3
       rdoc-2.5
 
-The name of each requires entry is not actually important. They exist simple
+The name of each requires file is not actually important. They exist simple
 for the benefit of the developer to read. The content of the files define the
 actual requirements. Each file being a YAML-formatted hash. For example,
 
@@ -33,6 +33,12 @@ Pretty cool! But, as with most <i>good ideas</i>, it is a bad idea as well.
 As with any multiple file configuration, editing them all in one fell swoop
 is not as easy as editing a single file, though in this case I do not think
 that's a show-stopping issue. A more signifficant downside is the inability
-to quikcly read in a list of requirements. This is especially true for a 
-web agent, which would not have access capabilites of the direct file system.
+to read in a list of requirements in one stream. Moreover, despite being able
+to easily copy requirements between projects, one usually doesn't work
+with requirements in this manner. The requirements of one package has no
+barring on another beyond depending on that package, in which case there 
+is certainly no need to "copy" requirements.
+
+It's an intersting concept, but ultimately it seems to be YAGNI. I went ahead
+and blogged about it just as a future reminder of this line of reasoning.
 

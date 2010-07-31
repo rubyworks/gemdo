@@ -1,4 +1,4 @@
-module Rock
+module Gemdo
 
   # = Validation Error
   #

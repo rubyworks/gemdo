@@ -1,13 +1,13 @@
 require 'time'
 require 'pathname'
-require 'rock/root'
-require 'rock/deprecate/metastore'
+require 'gemdo/root'
+require 'gemdo/deprecate/metastore'
 
 #--
 # TODO: executables is not right ?
 #++
 
-module Rock
+module Gemdo
 
   # = Metadata
   #
@@ -63,7 +63,7 @@ module Rock
     end
 
     # Load per-user config values for a new project.
-    # This is used by the 'rock init' command.
+    # This is used by the 'gemdo init' command.
 
     def self.new_project_config
       new_project_defaults.each do |name, value|
@@ -71,7 +71,7 @@ module Rock
       end
       home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
       store = stores.find{ |s| s[0,1] != '.' }  # not hidden
-      path  = Pathname.new(File.join(home_config, 'rock', store))
+      path  = Pathname.new(File.join(home_config, 'gemdo', store))
       path.exist? ? path : nil
     end
 
@@ -107,7 +107,7 @@ module Rock
       @root
     end
 
-    # Storage locations for metadata. Rock supports
+    # Storage locations for metadata. Gemdo supports
     # the use of +meta+ and the hidden +.meta+.
 
     def store
@@ -314,7 +314,7 @@ module Rock
     attr_accessor :irc
 
     # Resource for central *public* repository, e.g.
-    #   git://github.com/protuils/rock.git
+    #   git://github.com/protuils/gemdo.git
     attr_accessor :repository  #repo
 
 
@@ -423,8 +423,8 @@ module Rock
     # S U P P O R T  M E T H O D S
 
     #private
-    # Default values used when initializing Rock for a project.
-    # Change your initialization values in ~/.config/rock/meta/<name>.
+    # Default values used when initializing Gemdo for a project.
+    # Change your initialization values in ~/.config/gemdo/meta/<name>.
     #def new_project_defaults
     #  { 'name'       => root.basename.to_s,
     #    'version'    => '0.0.0',
@@ -439,14 +439,14 @@ module Rock
     public
 
     ## Load initialization values for a new project.
-    ## This is used by the 'rock init' command.
+    ## This is used by the 'gemdo init' command.
     #def new_project
     #  new_project_defaults.each do |name, value|
     #    self[name] = value
     #  end
     #  home_config = ENV['XDG_CONFIG_HOME'] || '~/.config'
     #  store = stores.find{ |s| s[0,1] != '.' }  # not hidden
-    #  path  = Pathname.new(File.join(home_config, 'rock', store))
+    #  path  = Pathname.new(File.join(home_config, 'gemdo', store))
     #  load!(path) if path.exist?
     #
     #  #default_entries = default_dir.glob('**/*')
@@ -465,10 +465,10 @@ module Rock
     # Backup directory.
 
     def cache
-      root + '.cache/rock'
+      root + '.cache/gemdo'
     end
 
-    # Backup current metadata files to <tt>.cache/rock/</tt>.
+    # Backup current metadata files to <tt>.cache/gemdo/</tt>.
 
     def backup!(chroot=nil)
       self.root = chroot if chroot
@@ -529,5 +529,5 @@ module Rock
 
   end#class Metadata
 
-end#module Rock
+end#module Gemdo
 
