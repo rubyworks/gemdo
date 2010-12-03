@@ -20,12 +20,13 @@ module Gemdo
       if path.directory?
         path = path.first('{README,README.*}', :casefold)
       end
-      new(path.read)
+      new(path.read, path)
     end
 
     #
-    def initialize(text)
+    def initialize(text, file=nil)
       @text  = text
+      @file  = file
       @cache = {}
       parse
     end
@@ -69,6 +70,20 @@ module Gemdo
 
     #
     def issues ; @cache[:issues] ; end
+
+    # Return file extension of README. Even if the file has no extension,
+    # this method will look at the contents and try to determine it.
+    #--
+    # TODO: improve type heuristics
+    #++
+    def extname
+      ext = File.extname(file)
+      if ext.empty?
+        ext = '.rdoc' if /^\=/ =~ text
+        ext = '.md'   if /^\#/ =~ text
+      end
+      return ext
+    end
 
   private
 
@@ -167,6 +182,18 @@ module Gemdo
       
     end
 
+    # TODO: parse readme into sections of [label, text].
+    #def sections
+    #  @sections ||= (
+    #    secs = text.split(/^(==|##)/)
+    #    secs.map do |sec|
+    #      i = sec.index("\n")
+    #      n = sec[0..i].sub(/^[=#]*/, '')
+    #      t = sec[i+1..-1]
+    #      [n, t]
+    #    end
+    #  )
+    #end
   end
 
   class Project
