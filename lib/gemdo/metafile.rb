@@ -5,7 +5,7 @@ require 'yaml'
 module Gemdo
 
   # Where in project to store backups.
-  BACKUP_DIRECTORY = '.cache/pom'
+  BACKUP_DIRECTORY = '.cache/gemdo'
 
   # Metafile serves as a base class for POM's YAML-formatted
   # metadata files.
@@ -26,7 +26,7 @@ module Gemdo
     #
     def self.find(root)
       root = Pathname.new(root)
-      pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
+      pattern = '{' + filename.join(',') + '}{.yml,.yaml,}'
       root.glob(pattern, :casefold).first
     end
 
