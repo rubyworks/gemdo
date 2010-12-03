@@ -26,28 +26,21 @@ module Gemdo
     #
     def self.find(root)
       root = Pathname.new(root)
-      pattern = '{,.}{' + filename.join(',') + '}{.yml,.yaml,}'
+      pattern = '{,meta/}{' + filename.join(',') + '}{.yml,.yaml,}'
       root.glob(pattern, :casefold).first
     end
-
-    #require 'pom/package/simple_style'
-    #require 'pom/package/jeweler_style'
-    #require 'pom/package/pom_style'
-    #require 'pom/package/jpom_style'
-
-    #STYLES = [SimpleStyle, JewelerStyle, POMStyle, JPOMStyle]
 
     #
     #include VersionHelper
 
     # Default file name.
     def self.default_filename
-      'PACKAGE'
+      'meta/package'
     end
 
-    # Possible project file names.
+    # Possible package file names.
     def self.filename
-      ['[Pp]ackage', 'PACAKGE']
+      ['[Pp]ackage', 'PACAKGE', '[Vv]ersion', 'VERSION']
     end
 
     #
@@ -261,23 +254,34 @@ module Gemdo
 
     #
     def to_h
-      @table
+      @table.inject({}) do |h,(k,v)|
+        h[k.to_s] = v; h
+      end
     end
 
     #
     def yaml
       s = []
-      s << "name: #{name}"
-      s << "vers: #{version}"
-      s << "date: #{date.strftime('%Y-%m-%d')}"
+      s << "name    : #{name}"
+      s << "date    : #{date.strftime('%Y-%m-%d')}"
+      s << "version : #{version}"
+      s << "codename: #{codename}" if codename
+      s << "loadpath: #{loadpath}" if loadpath
       s << ""
-      if !requires.empty?
-        s << "requires:"
-        requires.each do |req|
-          s << "- " + req.yaml.tabto(2)
-        end
+      s << yaml_list('requires' , requires)
+      s << yaml_list('replaces' , replaces)
+      s << yaml_list('conflicts', conflicts)
+      s.compact.join("\n")
+    end
+
+    #
+    def yaml_list(name, list)
+      return nil if list.empty?
+      s = "\n#{name}:"
+      list.each do |x|
+        s << "\n- " + x.yaml.tabto(2)
       end
-      s.join("\n")
+      s + "\n"
     end
 
     # Read the package file.
@@ -299,6 +303,22 @@ module Gemdo
       file = @root + file if String === file
       now!  # update date
       File.open(file, 'w'){ |f| f << yaml }
+    end
+
+    # Like #save! but does a simple substitution on version and date
+    # to ensure the layout of rest of the file is not altered.
+    def save_version!(file=nil)
+      file = file || @file || self.class.default_filename
+      file = @root + file if String === file
+      now!  # update date
+      if file.exist?
+        yaml = File.read(file)
+        yaml.sub!(/version(\s*):(\s*)(.*?)$/, 'version\1:\2' + version.to_s)
+        yaml.sub!(/date(\s*):(\s*)(.*?)$/, 'date\1:\2' + date.strftime('%Y-%m-%d'))
+        File.open(file, 'w'){ |f| f << yaml }
+      else
+        save!(file)
+      end
     end
 
     # Backup the package file. This is used when updating the file.
@@ -376,35 +396,6 @@ end
 
 
 =begin
-   #     # If there are .ruby entries, start by picking up those.
-   #   if RubyDir.find(root)
-   #     self.name = rubydir.name
-   #     self.vers = rubydir.version
-   #     self.date = rubydir.date
-   #     self.code = rubydir.codename #nickname
-   #     self.nick = rubydir.namespace
-   #     self.path = rubydir.loadpath
-   #   end
-=end
-
-=begin
-    # TODO: Should rubydir version be a VERSION object?
-    def verify_rubydir(rubydir)
-      s = []
-      s << [rubydir.name, name]           unless rubydir.name      == name
-      s << [rubydir.version, version]     unless rubydir.version   == version
-      s << [rubydir.loadpath, loadpath]   unless rubydir.loadpath  == loadpath
-      s << [rubydir.date, date]           unless rubydir.date      == date
-      s << [rubydir.namespace, namespace] unless rubydir.namespace == namespace
-      s << [rubydir.moniker, moniker]     unless rubydir.moniker   == moniker
-      s.each do |rd, pk|
-        warn ".ruby is out of sync with PACKAGE (#{rd} != #{pk})"
-      end
-      s.empty?
-    end
-=end
-
-=begin
     # Failing to find a name for the project, the last hope
     # is to discern it from the lib files.
     #
@@ -418,17 +409,25 @@ end
     end
 =end
 
-    #
-    #def read!
-    #  if file
-    #    data  = YAML.load(File.new(file.to_s))
-    #    style = STYLES.find{ |s| s.match?(data) }
-    #    extend(style)
-    #    parse(data)
-    #  else
-    #    extend POMStyle
-    #  end
-    #
-    #  self.name = fallback_name unless self['name']
-    #end
+=begin
+    #require 'pom/package/simple_style'
+    #require 'pom/package/jeweler_style'
+    #require 'pom/package/pom_style'
+    #require 'pom/package/jpom_style'
+
+    #STYLES = [SimpleStyle, JewelerStyle, POMStyle, JPOMStyle]
+
+    def read!
+      if file
+        data  = YAML.load(File.new(file.to_s))
+        style = STYLES.find{ |s| s.match?(data) }
+        extend(style)
+        parse(data)
+      else
+        extend POMStyle
+      end
+    
+      self.name = fallback_name unless self['name']
+    end
+=end
 

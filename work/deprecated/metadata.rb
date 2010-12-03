@@ -13,27 +13,27 @@ module Gemdo
     BACKUP_DIRECTORY = '.cache/gemdo/'
 
     #
-    def self.register(type_class)
-      type_class.names.each do |name|
-        registry[name.to_sym] = type_class
-      end
-    end
+    #def self.register(type_class)
+    #  type_class.names.each do |name|
+    #    registry[name.to_sym] = type_class
+    #  end
+    #end
 
     #
-    def self.registry
-      @registry ||= {}
-    end
+    #def self.registry
+    #  @registry ||= {}
+    #end
 
     #
     def initialize(root, *sources)
-      @root    = Pathname.new(root)
+      @root = Pathname.new(root)
       if sources.empty?
         package = Package.new(root)
         profile = Profile.new(root, :name=>package.name)
         sources = [package, profile]
       end
       @sources = sources
-      initialize_defaults
+      #initialize_defaults
     end
 
     #
@@ -69,10 +69,9 @@ module Gemdo
     end
 
     #
-    def []=(key,value)
-      sources.each do |src|
-        keq = "#{key}="
-        return src.__send__(keq, value) if src.respond_to?(keq)
+    def key?(key)
+      sources.any? do |src|
+        src.respond_to?(key)
       end
     end
 
@@ -80,6 +79,14 @@ module Gemdo
     def [](key)
       sources.each do |src|
         return src.__send__(key) if src.respond_to?(key)
+      end
+    end
+
+    #
+    def []=(key,value)
+      sources.each do |src|
+        keq = "#{key}="
+        return src.__send__(keq, value) if src.respond_to?(keq)
       end
     end
 
