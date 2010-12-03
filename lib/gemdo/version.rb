@@ -309,6 +309,11 @@ module Gemdo
       @segments.size
     end
 
+    #
+    def match?(constraint)
+      self.class.constraint_lambda(constraint).call(self)
+    end
+
     ;; private
 
     # Segement incrementor.
@@ -335,26 +340,31 @@ module Gemdo
       @segments.index{ |s| STATES.include?(s) }
     end
 
+    ;; protected
+
+    # Return the undelying segments array.
+    attr :segments
+
     ;; public
 
     # Parses a string constraint returning the operation as a lambda.
-    def self.constraint_lambda( constraint )
-      op, val = *parse_constraint( constraint )
-      lambda { |t| t.send(op, val) }
+    def self.constraint_lambda(constraint)
+      op, val = *parse_constraint(constraint)
+      lambda{ |t| t.send(op, val) }
     end
 
     # Parses a string constraint returning the operator and value.
-    def self.parse_constraint( constraint )
+    def self.parse_constraint(constraint)
       constraint = constraint.strip
       re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}
       if md = re.match( constraint )
         if op = md[1]
           op = '=~' if op == '~>'
           op = '==' if op == '='
-          val = new( *md[2].split(/\W+/) )
+          val = new(md[2].split(/\W+/))
         else
           op = '=='
-          val = new( *constraint.split(/\W+/) )
+          val = new(constraint.split(/\W+/))
         end
       else
         raise ArgumentError, "invalid constraint"
@@ -362,13 +372,12 @@ module Gemdo
       return op, val
     end
 
-    ;; protected
-
-    # Return the undelying segments array.
-    attr :segments
+    def self.cmp(version1, version2)
+    end
 
   end
 
+  # TODO: This should ultimately replace the class methods of Version.
   #
   # TODO: Need to support version "from-to" spans ?
   class VersionConstraint
