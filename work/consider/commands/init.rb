@@ -91,12 +91,20 @@ module Gemdo::Commands
       #  return
       #end
 
-      if !File.exist?('.ruby')
-        File.open('.ruby', 'w'){|f| f << ""}
-      end
+      current = Dir.glob('**/*', File::FNM_DOTMATCH)
 
-      has_package = Gemdo::Package.find(root)
-      has_profile = Gemdo::Profile.find(root)
+      #if !File.exist?('.ruby')
+      #  File.open('.ruby', 'w'){|f| f << `ruby -v`}
+      #end
+
+      has_package = Gemdo::Rubyspec.find(root)
+
+      #has_package = Gemdo::Package.find(root)
+      #has_profile = Gemdo::Profile.find(root)
+
+      if !(has_package || has_profile)
+        FileUtils.mkdir_p('meta') if !File.exist?('meta')
+      end
 
       if (has_package || has_profile) && !$FORCE
         $stderr.puts "Looks like your project is already built on a gemdo."
@@ -178,9 +186,18 @@ module Gemdo::Commands
         #end
       end
 
-      puts "The following files were created or updated and should be edited:\n"
-      puts "  PACKAGE"
-      puts "  PROFILE"
+      diff = Dir.glob('**/*', File::FNM_DOTMATCH) - current
+      diff = diff.select{ |f| File.file?(f) }
+
+      if diff.empty?
+        puts "Nothing has been done."
+      else
+        puts "The following files were created or updated. Please review"
+        puts "these files carefully and edit as needed:\n"
+        diff.each do |f|
+          puts "  #{f}"
+        end
+      end
     end
 
     #
