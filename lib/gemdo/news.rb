@@ -13,7 +13,7 @@ module Gemdo
 
     # Search glob if any files exist in project from which
     # the Release class can gather information.
-    FILE_PATTERN = '{NEWS,RELEASE}{,.*}'
+    FILE_PATTERN = '{NEWS,WHATSNEW}{,.*}'
 
     #
     def self.file_pattern
