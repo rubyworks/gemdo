@@ -4,29 +4,29 @@ module Gemdo #::Metadata
 
   # The Requires class models the list of project requirements.
   # Essentially it is an array of Requirement objects.
-  class Requires < Array
+  class PackageList < Array
 
-    def self.aliases
-      ['requirements']
-    end
+    #def self.aliases
+    #  ['requirements']
+    #end
 
-    # Default file name to use when saving
-    # requirements to file.
-    def self.store
-      "require.yml"
-    end
+    ## Default file name to use when saving
+    ## requirements to file.
+    #def self.store
+    #  "require.yml"
+    #end
 
     #
     def self.default(metadata)
       new([])
     end
 
-    include Enumerable
-
+    #include Enumerable
     #include AbstractField
 
     # New requirements class.
     def initialize(reqs)
+      super()
       reqs.each do |req|
         self << req
       end
@@ -36,9 +36,9 @@ module Gemdo #::Metadata
     def <<(req)
       case req
       when Requirement
-        super req
+        super(req)
       else
-        super Requirement.new(req)
+        super(Requirement.new(req))
       end
     end
 
@@ -76,13 +76,15 @@ module Gemdo #::Metadata
     def initialize(data)
       case data
       when String
-        name, vers, *group = *data.strip.split(/\s+/)
+        nv, grp = *data.strip.split(/\(/)
+        name, vers = nv.split(/\s+/)
+        group = grp.chomp(')').split(/(\/|\s+)/) if grp
         self.name    = name
         self.version = vers
         self.group   = group
       else
         self.name    = data['name']
-        self.version = data.values_at('version', 'vers').first
+        self.version = data.values_at('version', 'vers').compact.first
         self.group   = data.values_at('group', 'groups', 'type', 'types').compact
       end
     end
@@ -114,7 +116,7 @@ module Gemdo #::Metadata
 
     # Set the categorical group(s).
     def group=(groups)
-      groups = [groups].flatten
+      groups = [groups].compact.flatten
       groups = groups.map do |g|
         g = g.gsub(/[,;:\\\)\(\]\[]/, ' ').strip
         g = g.split(/\s+/)
@@ -206,7 +208,7 @@ module Gemdo #::Metadata
     # A dependency is a development dependency if any group
     # starts with +dev+, +test+ or +doc+.
     def development?
-      groups.any?{ |g| /^(dev|test|doc)/ =~ g }
+      groups.any?{ |g| /^(dev|build|test|doc)/ =~ g }
     end
 
     # A dependency is a *test dependecny* if it's groups
@@ -284,7 +286,7 @@ module Gemdo #::Metadata
     # May I just comment that Ruby could really use a real Interval class
     # with proper support for infinity.
     def constraint
-      case version
+      case version.to_s
       when /^(.*?)\~$/
         "~> #{$1}"
       when /^(.*?)\+$/
@@ -292,7 +294,7 @@ module Gemdo #::Metadata
       when /^(.*?)\-$/
         "< #{$1}"
       else
-        version
+        version.to_s
       end
     end
 

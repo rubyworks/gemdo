@@ -1,11 +1,12 @@
 require 'gemdo/core_ext'
 require 'gemdo/root'
-require 'gemdo/metadata'
+#require 'gemdo/metadata'
 require 'gemdo/manifest'
 require 'gemdo/history'
 require 'gemdo/news'
-require 'gemdo/package'
-require 'gemdo/profile'
+require 'gemdo/rubyspec'
+#require 'gemdo/package'
+#require 'gemdo/profile'
 
 module Gemdo
 
@@ -27,16 +28,16 @@ module Gemdo
     #   Project.lookup(local)
     # 
     def self.lookup(*path_opts)
-      path = path_opts.shift unless Hash===options.first
-      opts = path_opts.last
+      path = path_opts.shift unless Hash === path_opts.first
+      opts = path_opts.last || {}
       opts[:lookup] =true
       new(path, opts)
     end
 
     # New project with metadata fully loaded.
     def self.load(*path_opts)
-      path = path_opts.shift unless Hash===options.first
-      opts = path_opts.last
+      path = path_opts.shift unless Hash === path_opts.first
+      opts = path_opts.last || {}
       opts[:load] = true
       new(path, opts)
     end
@@ -92,24 +93,32 @@ module Gemdo
     #  @settings ||= FileStore.new(root, '.config/gemdo')
     #end
 
-    # Provides access to the PACAKGE metadata file.
-    def package
-      @package ||= Package.new(root)
+    #
+    def rubyspec
+      @rubyspec ||= Rubyspec.new(root)
     end
 
-    # Provides access to the PROFILE metadata file.
-    def profile
-      @profile ||= Profile.new(root, :name=>package.name)
-    end
+    #
+    alias_method :metadata, :rubyspec
 
-    # Provides unified access to all metadata.
-    def metadata
-      @metadata ||= Metadata.new(root, package, profile)
-    end
+    ## Provides access to the PACAKGE metadata file.
+    #def package
+    #  @package ||= Package.new(root)
+    #end
+
+    ## Provides access to the PROFILE metadata file.
+    #def profile
+    #  @profile ||= Profile.new(root, :name=>package.name)
+    #end
+
+    ## Provides unified access to all metadata.
+    #def metadata
+    #  @metadata ||= Metadata.new(root, package, profile)
+    #end
 
     # Project name.
     def name
-      package.name
+      metadata.name
     end
 
     # Version number string representation, e.g. "1.0.0".
@@ -162,6 +171,11 @@ module Gemdo
     def news
       @news ||= News.new(root, :history=>history)
     end
+
+    # Access to the general README file
+    #def readme
+    #  @readme ||= Readme.new(root)
+    #end
 
     # S T A N D A R D  D I R E C T O R I E S
 
@@ -332,6 +346,12 @@ module Gemdo
     # Alias for #tmp.
     alias_method :tmpdir, :tmp
 
+    # Does a file exist in the project?
+    # Returns the first match.
+    def exist?(glob)
+      Dir.glob(root + glob).first
+    end
+
     # Returns list of executable files in bin/.
     def executables
       root.glob('bin/*').select{ |bin| bin.executable? }.map{ |bin| File.basename(bin) }
@@ -420,6 +440,11 @@ module Gemdo
         end
       end
       ann.join("\n\n").unfold
+    end
+
+    #
+    def readme_file
+      Dir.glob(root + README, File::FNM_CASEFOLD).first
     end
 
   end#class Project

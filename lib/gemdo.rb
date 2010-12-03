@@ -1,12 +1,10 @@
 module Gemdo
-  DIRECTORY = File.dirname(__FILE__)
-
+  #
   def self.metadata
-    @metadata ||= %w{PROFILE PACKAGE}.inject({}) do |data, name|
-      file = DIRECTORY + "/gemdo.ruby/#{name}"
-      data.merge!(YAML.load(File.new(file)))
-      data
-    end
+    @metadata ||= (
+      file = File.dirname(__FILE__) + "/gemdo/rubyspec.yml"
+      YAML.load(File.new(file))
+    )
   end
 
   # Access to project metadata, e.g. VERSION.
@@ -17,4 +15,3 @@ module Gemdo
 end
 
 require 'gemdo/project'
-

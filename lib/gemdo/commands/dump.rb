@@ -1,5 +1,6 @@
 module Gemdo::Commands
 
+  #
   class Dump
 
     def self.run
@@ -39,7 +40,7 @@ module Gemdo::Commands
 
     #
     def execute
-      puts project.metadata.to_h.to_yaml
+      puts project.rubyspec.yaml
     end
 
   end

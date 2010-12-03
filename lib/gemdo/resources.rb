@@ -24,7 +24,7 @@ module Gemdo #::Metadata
 
     include Enumerable
 
-    @key_aliases = {}
+    @key_aliases = Hash.new{|h,k|h[k]=[]}
 
     #
     def self.key_aliases
@@ -157,6 +157,11 @@ module Gemdo #::Metadata
     # The size of the table, including aliases.
     def size
       @table.size
+    end
+
+    #
+    def inspect
+      @table.inspect
     end
 
     # If a method is missing and it is a setter method

@@ -4,7 +4,7 @@ module Gemdo
 
   # Root directory is indicated by the presence of either a
   # .ruby file or as a fallback a lib/ directory.
-  ROOT_INDICATORS = ['.ruby', '.git', '.hg', '_darcs', 'lib/']
+  ROOT_INDICATORS = ['.rubyspec', '.ruby', '.git', '.hg', '_darcs', 'lib/']
 
   # Locate the project's root directory. This is determined
   # by ascending up the directory tree from the current position

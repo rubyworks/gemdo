@@ -1,15 +1,19 @@
 module Gemdo::Commands
 
+  # Show a given setting of the Rubysepc.
   class Show
 
     def self.run
       new.run
     end
 
+    #
     attr :project
 
+    #
     attr :entry
 
+    #
     def initialize
       @project = Gemdo::Project.new(:lookup=>true)
     end
@@ -51,7 +55,7 @@ module Gemdo::Commands
         #  puts project.profile.__send__(entry)
         #end
       else
-        vars = project.package.to_h.keys + project.profile.to_h.keys
+        vars = project.metadata.to_h.keys
         puts vars.sort.join(' ')
       end
     end

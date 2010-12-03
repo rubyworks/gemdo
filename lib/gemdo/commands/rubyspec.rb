@@ -1,7 +1,7 @@
 module Gemdo::Commands
 
-  # Convert project rubyspec into a gemspec.
-  class Gemspec
+  # Generate a Rubyspec YAML file from a Rubyfile script.
+  class Rubyspec
 
     #
     def self.run
@@ -10,8 +10,10 @@ module Gemdo::Commands
 
     #
     def initialize
-      require 'gemdo/gemspec'
-      @project = Gemdo::Project.new(:lookup=>true)
+      require 'gemdo/project'
+      require 'gemdo/rubyfile'
+      @project  = Gemdo::Project.new(:lookup=>true)
+      @rubyfile = Gemdo::Rubyfile.new(@project.root)
     end
 
     #
@@ -44,33 +46,30 @@ module Gemdo::Commands
       end
 
       parser.parse!
-
-      @file = ARGV.first
     end
 
     #
     def execute
-      if File.exist?(file) and not $FORCE
-        $stderr << "Gemspec already exists. Use --force to overwrite.\n"
+      if File.exist?(@rubyfile.file)
+      #if File.exist?(file) and not $FORCE
+      #  $stderr << "Rubyspec already exists. Use --force to overwrite.\n"
+      #else
+        spec = @rubyfile.to_rubyspec
+        spec.save!
+        puts "#{spec.file.relative_path_from(Pathname.new(Dir.pwd))} updated."
+        #yaml = project.to_gemspec.to_yaml
+        #File.open(file, 'w') do |f|
+        #  f << yaml
+        #end
       else
-        yaml = project.to_gemspec.to_yaml
-        File.open(file, 'w') do |f|
-          f << yaml
-        end
+        puts "No Rubyfile found."
       end
     end
 
     #
-    def file
-      @file ||= (
-        dot_gemspec = (project.root + '.gemspec').to_s
-        if File.exist?(dot_gemspec)
-          dot_gemspec.to_s
-        else
-          project.metadata.name + '.gemspec'
-        end
-      )
-    end
+    #def file
+    #  project.rubyspec.file
+    #end
 
   end
 
