@@ -107,7 +107,7 @@ module Gemdo::Commands
 
       if new_version > project.package.version or @force
         project.package.version = new_version
-        project.package.save! unless $TRIAL
+        project.package.save_version! unless $TRIAL
       else
         if new_version < project.package.version
           $stderr.puts "gemdo: Going backwards in time?"

@@ -43,7 +43,7 @@ module Gemdo
     def run_command
       job = parse_command
       begin
-        job = 'dotruby' if job == '.ruby'
+        #job = 'dotruby' if job == '.ruby'
         cmd = Gemdo::Commands.const_get(job.capitalize)
       rescue NameError
         puts "Unrecognized command -- #{job}"
