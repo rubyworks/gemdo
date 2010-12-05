@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'time'
 require 'gemdo/metafile'
 require 'gemdo/resources'
 require 'gemdo/version'
@@ -131,10 +132,10 @@ module Gemdo
     # Set release date.
     def date=(val)
       case val
-      when Date #, Time, DateTime
+      when Time, Date, DateTime
         self['date'] = val
       else
-        self['date'] = Date.parse(val) if val
+        self['date'] = Time.parse(val) if val
       end
     end
 
@@ -147,7 +148,7 @@ module Gemdo
 
     # Set the date to the present moment.
     def now!
-      self[:date] = Date.today
+      self['date'] = Date.today
     end
 
     # Colorful nick name for the particular version, e.g. "Lucid Lynx".
@@ -325,13 +326,6 @@ module Gemdo
       authors.first
     end
 
-    # Convert to hash.
-    def to_h
-      data = @data.dup
-      data['resources'] = data['resources'].to_h
-      data
-    end
-
     # Profile is extensible. If a setting is assigned
     # that is not already defined an attribute accessor
     # will be created for it.
@@ -363,7 +357,14 @@ module Gemdo
       s
     end
 
-    #
+    # Convert to hash.
+    def to_h
+      data = @data.dup
+      data['resources'] = data['resources'].to_h
+      data
+    end
+
+    # TODO: reconcile with above
     def to_h
       @data.inject({}) do |h,(k,v)|
         h[k.to_s] = v; h
@@ -426,7 +427,7 @@ module Gemdo
     def save!(file=nil)
       file = file || @file || self.class.default_filename
       file = @root + file if String === file
-      now!  # update date
+#      now!  # update date
       File.open(file, 'w'){ |f| f << yaml }
     end
 
