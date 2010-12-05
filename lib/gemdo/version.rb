@@ -63,6 +63,11 @@ module Gemdo
       end
     end
 
+    #
+    def to_a
+      @segments.dup
+    end
+
     # Convert version to a dot-separated string.
     #
     #   VersionNumber[1,2,0].to_s
@@ -114,7 +119,15 @@ module Gemdo
     def <=>( other )
       #other = other.to_t
       [@segments.size, other.size].max.times do |i|
-        c = @segments[i] <=> other[i]
+        if String === @segments[i] && String == other[i]
+          c = @segments[i] <=> other[i]
+        elsif String === @segments[i]
+          c = 1
+        elsif String === other[i]
+          c = -1
+        else
+          c = (@segments[i] || 0) <=> (other[i] || 0)
+        end
         return c if c != 0
       end
       0
@@ -122,12 +135,11 @@ module Gemdo
 
     # For pessimistic constraint (like '~>' in gems).
     #
-    # FIXME: Ensure it can handle state.
-    def =~( other )
-      #other = other.to_t
-      upver = other.dup
-      upver[0] += 1
-      @segments >= other and @segments < upver
+    # FIXME: Ensure it can handle trailing state.
+    def =~(other)
+      upver = other.bump(:last)
+      #@segments >= other and @segments < upver
+      self >= other and self < upver
     end
 
     # Major is the first number in the version series.
@@ -309,9 +321,15 @@ module Gemdo
       @segments.size
     end
 
-    #
+    # Does this version match a given constraint? The constraint is a String
+    # in the form of "{operator} {version number}". Multiple constraints
+    # can be given in the same string by separating them with a comma or 
+    # semi-colon.
     def match?(constraint)
-      self.class.constraint_lambda(constraint).call(self)
+      cons = constraint.split(/[,;]/)
+      cons.all? do |con|
+        self.class.constraint_lambda(con).call(self)
+      end
     end
 
     ;; private
@@ -356,8 +374,9 @@ module Gemdo
     # Parses a string constraint returning the operator and value.
     def self.parse_constraint(constraint)
       constraint = constraint.strip
-      re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}
-      if md = re.match( constraint )
+      #re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\d+)*)$}
+      re = %r{^(=~|~>|<=|>=|==|=|<|>)?\s*(\d+(:?[-.]\w+)*)$}
+      if md = re.match(constraint)
         if op = md[1]
           op = '=~' if op == '~>'
           op = '==' if op == '='
@@ -367,11 +386,12 @@ module Gemdo
           val = new(constraint.split(/\W+/))
         end
       else
-        raise ArgumentError, "invalid constraint"
+        raise ArgumentError, "invalid constraint '#{constraint}'"
       end
       return op, val
     end
 
+    # TODO: Could use a class level compare?
     def self.cmp(version1, version2)
     end
 
