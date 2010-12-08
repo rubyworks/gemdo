@@ -1,6 +1,5 @@
 ---
 title:   Gemdo
-suite:   proutils
 summary: Ruby Project Object Model
 license: Apache 2.0
 contact: Thomas Sawyer <transfire@gmail.com>
@@ -23,6 +22,6 @@ resources:
   mail  : http://groups.google.com/group/proutils
   forum : http://groups.google.com/group/proutils
 
-copyright:
-  Copyright (c) 2009 Thomas Sawyer
+organization : RubyWorks
+copyright    : Copyright (c) 2009 Thomas Sawyer
 

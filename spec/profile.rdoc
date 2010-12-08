@@ -51,13 +51,14 @@ Here is the same example in Ruby:
   authors ['Thomas Sawyer']
 
   resources(
-    'home' => 'http://rubyworks.github.com/gemdo'
-    'code' => 'http://github.com/rubyworks/gemdo'
-    'repo' => 'git://github.com/rubyworks/gemdo.git'
-    'docs' => 'http://wiki.github.com/rubyworks/gemdo'
-    'wiki' => 'http://wiki.github.com/rubyworks/gemdo'
-    'api'  => 'http://rubyworks.github.com/gemdo/rdoc'
+    'home' => 'http://rubyworks.github.com/gemdo',
+    'code' => 'http://github.com/rubyworks/gemdo',
+    'repo' => 'git://github.com/rubyworks/gemdo.git',
+    'docs' => 'http://wiki.github.com/rubyworks/gemdo',
+    'wiki' => 'http://wiki.github.com/rubyworks/gemdo',
+    'api'  => 'http://rubyworks.github.com/gemdo/rdoc',
     'mail' => 'http://groups.google.com/group/rubyworks-mailinglist'
+  )
 
   organization 'RubyWorks'
 
