@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-require 'gemdo/command'
-Gemdo::Command.run
+require 'pom/command'
+POM::Command.run
 
