@@ -1,6 +1,7 @@
 .cache
 log
-pkg
+pkg/*.gem
+pkg/*.tar.gz
 ri
 tmp
 site/docs
