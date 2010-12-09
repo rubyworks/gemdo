@@ -15,16 +15,16 @@ Given a PACKAGE project file containing ...
 First, the `pom bump` command, when given no other arguments will
 display the current version.
 
-  `cd tmp/example; gemdo bump`.assert == "1.0.0\n"
+  `cd tmp/example; pom bump`.assert == "1.0.0\n"
 
 This is the same as using `pom show version`.
 
-  `cd tmp/example; gemdo show version`.assert == "1.0.0\n"
+  `cd tmp/example; pom show version`.assert == "1.0.0\n"
 
 We can use the `pom bump` command to bump the `patch` version
 using the `--patch` flag.
 
-  `cd tmp/example; gemdo bump --patch`
+  `cd tmp/example; pom bump --patch`
 
 We can see that the `patch` number has been incremented.
 
@@ -33,16 +33,16 @@ We can see that the `patch` number has been incremented.
 Again, we can use the `pom bump` command to bump the `minor` version
 with the `--minor` flag.
 
-  `cd tmp/example; gemdo bump --minor`
+  `cd tmp/example; pom bump --minor`
 
 And we can see that the `minor` number has been incremented.
 
   package['vers'].assert = '1.1.0'
 
-We can use the `gemdo bump` command to bump the `major` version by
+We can use the `pom bump` command to bump the `major` version by
 using the `--major` flag.
 
-  `cd tmp/example; gemdo bump --major`
+  `cd tmp/example; pom bump --major`
 
 We can see that the `major` number has been incremented.
 

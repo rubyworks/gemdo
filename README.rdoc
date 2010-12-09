@@ -1,15 +1,15 @@
-= Gemdo
+= POM
 
-* home: http://proutils.github.com/gemdo
-* code: http://github.com/protuils/gemdo
+* home: http://proutils.github.com/pom
+* code: http://github.com/protuils/pom
 
 
 == DESCRIPTION
 
-Gemdo defines a standard Ruby Project Object Model (POM), encompassing a 
+POM defines a standard Ruby Project Object Model (POM), encompassing a 
 standard project layout, project files and thier formats. The standard is
 specified via an implementation in Ruby, suited for use by Ruby projects
-tools. Gemdo supports the most common practices of the Ruby community at large.
+tools. POM supports the most common practices of the Ruby community at large.
 But also defines some new practices to shore up weaker points or altogether
 missing features.
 
@@ -32,20 +32,20 @@ of this just for one piece of metadata and a small smatter of available tools!
 
 == SYNOPSIS
 
-Primarily Gemdo defines a standard set of project layout and design patterns.
+Primarily POM defines a standard set of project layout and design patterns.
 Most of these derive for setup.rb, the original Ruby project installer,
 as well as common patterns widely used among the Ruby community.
 
 The specification designates particular files and their uses, most fo which
 are obvious, such as a `README` or a `MANIFEST`. Others are new introduced
-by Gemdo such as the `.ruby` and `PROFILE` files.
+by POM such as the `.ruby` and `PROFILE` files.
 
 This entire specification is implemeted in Ruby code, known as the "POM"
 (Project Object Model). Primary usage of this model relies on the
 Project class, instantiated by passing the constructor the root directory
 of the project.
 
-  project = Gemdo::Project.new(root_directory)
+  project = POM::Project.new(root_directory)
 
 The project object then ties into all the available metadata, e.g.
 
@@ -55,29 +55,29 @@ The project object then ties into all the available metadata, e.g.
 
   etc...
 
-Gemdo also provides a command line tool with some useful project utilities.
+POM also provides a command line tool with some useful project utilities.
 For example, it can be used to easily bump a project's version number.
 
-  $ gemdo bump --patch
+  $ pom bump --patch
 
-See the Wiki[http://wiki.github.com/proutils/gemdo] and
-API[http://proutils.github.com/gemdo/rdoc] documentation for further
+See the Wiki[http://wiki.github.com/proutils/pom] and
+API[http://proutils.github.com/pom/rdoc] documentation for further
 details.
 
 
 == Upgrading from POM
 
-Earlier versions of Gemdo were called "POM" and used a directory-based
+Earlier versions of POM were called "POM" and used a directory-based
 configuration store with each piece of information in a separate file under
 the meta/ or .meta/ directory. While this design has some useful advantages,
 it also suffers for some distinct disadvantages, not the least of which is it's
-lack of familiarity to developers. The latest versions of Gemdo therefore
+lack of familiarity to developers. The latest versions of POM therefore
 replaces this design with a set of YAML-base configuration files. 
 
 If you were using an old version of POM with a project and need to updgrade,
-the gemdo command provides a helpful subcommand:
+the pom command provides a helpful subcommand:
 
-  $ gemdo upgrade
+  $ pom upgrade
 
 This will create the PROFILE and PACKAGE files containing the entries
 in the meta/ or .meta/ directory. It will not be prefect, so be sure to edit
@@ -95,13 +95,13 @@ visit http://groups.google.com/group/proutils.
 
 To install with RubyGems simply open a console and type:
 
-  $ sudo gem install gemdo
+  $ sudo gem install pom
 
 Site installation requires Setup.rb (gem install setup),
 then download the tarball package and type:
 
-  $ tar -xvzf gemdo-1.0.0.tar.gz
-  $ cd gemdo-1.0.0.tar.gz
+  $ tar -xvzf pom-1.0.0.tar.gz
+  $ cd pom-1.0.0.tar.gz
   $ sudo setup.rb all
 
 Windows users use 'ruby setup.rb all'.
@@ -109,7 +109,7 @@ Windows users use 'ruby setup.rb all'.
 
 == LICENSE/COPYRIGHT
 
-Gemdo Copyright (c) 2009 Thomas Sawyer
+POM Copyright (c) 2009 Thomas Sawyer
 
 Gem is distributed under the terms of the Apache License, version 2.0.
 

@@ -23,13 +23,13 @@ Given a README project file containing ...
 
     Copyright 2009 Thomas Sawyer
 
-Load the Gemdo::Readme library.
+Load the POM::Readme library.
 
-    require 'gemdo/readme'
+    require 'pom/readme'
 
 Create a new Readme object from file.
 
-    rm = Gemdo::Readme.load("tmp/example/README")
+    rm = POM::Readme.load("tmp/example/README")
 
 It should be able to parse out a title and project name.
 

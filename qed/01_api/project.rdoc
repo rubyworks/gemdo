@@ -1,9 +1,9 @@
 = Project Class
 
-Almost all use of Gemdo will be via the Project class. This class encapsulates
+Almost all use of POM will be via the Project class. This class encapsulates
 all the other aspects of the system from metdata to standard project paths.
 
-  require 'gemdo/project'
+  require 'pom/project'
 
-  Gemdo::Project.new('tmp/example')
+  POM::Project.new('tmp/example')
 

@@ -18,13 +18,13 @@ Given a NEWS project file containing ...
 
 The News class provides an interface to this information.
 
-    require 'gemdo/news'
+    require 'pom/news'
 
 The initializer takes the root directory for the project
 and looks for a file called +NEWS+, optionally ending
 in an extension such as +.txt+ or +.rdoc+, etc.
 
-    news = Gemdo::News.new('tmp/example')
+    news = POM::News.new('tmp/example')
 
 Now we have access to the latest release notes as given in the
 the NEWS file.
@@ -68,7 +68,7 @@ Given a HISTORY project file containing ...
 Since the NEWS file is not present, we will get the top entry of the
 HISOTRY file above from the News object.
 
-    news = Gemdo::News.new('tmp/example')
+    news = POM::News.new('tmp/example')
     news.header.assert == '== 1.2.1 / 2010-10-18'
     news.version.assert == '1.2.1'
     news.date.assert == '2010-10-18'

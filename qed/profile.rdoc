@@ -1,66 +1,96 @@
-= Profile
+= Profile/Gemfile
 
-The `Profile` is used to define general information about a project.
-It has specifically defined fields, but also allows fro arbitrary
+The +Profile+/+Gemfile+ is used to define information about a project.
+It has specifically defined fields, but also allows for arbitrary
 entries to meet custom project metadata usecases.
 
-Teh `Profile` file can either be YAML or Ruby-based.
+The +Profile+/+Gemfile+ file can either be YAML or Ruby-based.
 
-An example YAML Profile:
+An example YAML Profile/Gemfile:
 
   ---
-  title:   Gemdo
+  title:   POM
+  version: 1.0.1
+ 
+  requirements:
+  - facets 2.8+
+  - syckle (build)
+  - ko (test)
+  - qed 2.2+ (test)
+  
   summary: Ruby Project Object Model
   license: Apache 2.0
   contact: Thomas Sawyer <transfire@gmail.com>
   created: 2009-07-22
 
   description:
-    Gemdo provides a complete project layout standard
+    POM provides a complete project layout standard
     and metadata system for Ruby developers.
 
   authors:
     - Thomas Sawyer
 
   resources:
-    home  : http://rubyworks.github.com/gemdo
-    work  : http://github.com/rubyworks/gemdo
-    repo  : git://github.com/rubyworks/gemdo.git
-    docs  : http://wiki.github.com/rubyworks/gemdo
-    wiki  : http://wiki.github.com/rubyworks/gemdo
-    api   : http://rubyworks.github.com/gemdo/rdoc
+    home  : http://rubyworks.github.com/pom
+    work  : http://github.com/rubyworks/pom
+    repo  : git://github.com/rubyworks/pom.git
+    docs  : http://wiki.github.com/rubyworks/pom
+    wiki  : http://wiki.github.com/rubyworks/pom
+    api   : http://rubyworks.github.com/pom/rdoc
     mail  : http://groups.google.com/group/rubyworks-mailinglist
 
   organization: RubyWorks
 
   copyright: Copyright (c) 2009 Thomas Sawyer
 
+  manifest: 'MANIFEST'
+
 Here is the same example in Ruby:
 
-  title   'Gemdo'
+  title   'POM'
+  version '1.0.0'
+
+  gem 'facets', '>=2.8'
+
+  group :test do
+    gem 'ko'
+    gem 'qed', '>=2.2'
+  end
+
+  group :build do
+    gem 'syckle'
+  end
+
   summary 'Ruby Project Object Model'
   license 'Apache 2.0'
   contact 'Thomas Sawyer <transfire@gmail.com>'
   created '2009-07-22'
 
   description %{
-    Gemdo provides a complete project layout standard
+    POM provides a complete project layout standard
     and metadata system for Ruby developers.
   }.strip
 
   authors ['Thomas Sawyer']
 
   resources(
-    'home' => 'http://rubyworks.github.com/gemdo',
-    'code' => 'http://github.com/rubyworks/gemdo',
-    'repo' => 'git://github.com/rubyworks/gemdo.git',
-    'docs' => 'http://wiki.github.com/rubyworks/gemdo',
-    'wiki' => 'http://wiki.github.com/rubyworks/gemdo',
-    'api'  => 'http://rubyworks.github.com/gemdo/rdoc',
+    'home' => 'http://rubyworks.github.com/pom',
+    'code' => 'http://github.com/rubyworks/pom',
+    'repo' => 'git://github.com/rubyworks/pom.git',
+    'docs' => 'http://wiki.github.com/rubyworks/pom',
+    'wiki' => 'http://wiki.github.com/rubyworks/pom',
+    'api'  => 'http://rubyworks.github.com/pom/rdoc',
     'mail' => 'http://groups.google.com/group/rubyworks-mailinglist'
   )
 
   organization 'RubyWorks'
 
   copyright 'Copyright (c) 2009 Thomas Sawyer'
+
+  manifest 'MANIFEST'
+
+The +Profile+/+Gemfile+ is parsed, normalized and saved to another YAML file,
+called +.prospect+. This file is then used by all tools to access the projects
+metadata. In other words, the +Profile+/+Gemfile+ is a convenience form.
+
 

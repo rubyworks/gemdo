@@ -1,8 +1,8 @@
-= Gemdo::Metadata
+= POM::Metadata
 
 Require metadata library.
 
-    require 'gemdo/metadata'
+    require 'pom/metadata'
 
 Given a PROFILE project file containing ...
 
@@ -28,9 +28,9 @@ And given a PACKAGE project file containing ...
     date: 2010-10-10
 
 We can access both sets of information by passing the project
-directory to the Gemdo::Metadata constructor method.
+directory to the POM::Metadata constructor method.
 
-    metadata = Gemdo::Metadata.new('tmp/example')
+    metadata = POM::Metadata.new('tmp/example')
 
 Now we can verify metadata is being read from the PROFILE.
 

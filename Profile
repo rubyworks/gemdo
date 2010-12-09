@@ -1,5 +1,5 @@
 ---
-title:   Gemdo
+title:   POM
 version: 1.0.0
 
 requirements:
@@ -14,21 +14,23 @@ contact: Thomas Sawyer <transfire@gmail.com>
 created: 2009-07-22
 
 description:
-  Gemdo provides a complete project layout standard
+  POM provides a complete project layout standard
   and metadata system for Ruby developers.
 
 authors:
   - Thomas Sawyer
 
 resources:
-  home  : http://proutils.github.com/gemdo
-  work  : http://github.com/proutils/gemdo
-  repo  : git://github.com/proutils/gemdo.git
-  docs  : http://wiki.github.com/proutils/gemdo
-  wiki  : http://wiki.github.com/proutils/gemdo
-  api   : http://proutils.github.com/gemdo/rdoc
-  mail  : http://groups.google.com/group/proutils
-  forum : http://groups.google.com/group/proutils
+  home  : http://rubyworks.github.com/pom
+  work  : http://github.com/rubyworks/pom
+  docs  : http://wiki.github.com/rubyworks/pom
+  wiki  : http://wiki.github.com/rubyworks/pom
+  api   : http://rubyworks.github.com/pom/rdoc
+  mail  : http://groups.google.com/group/rubyworks-mailinglist
+  forum : http://groups.google.com/group/rubyworks-mailinglist
+
+repositories:
+  public: git://github.com/rubyworks/pom.git
 
 organization : RubyWorks
 copyright    : Copyright (c) 2009 Thomas Sawyer
