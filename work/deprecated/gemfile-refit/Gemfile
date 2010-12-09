@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+title   'Gemdo'
+version '1.0.0'
+
+gem 'facets', '2.8+'
+
+group :build do
+  gem 'syckle'
+end
+
+group :test do
+  gem 'ko'
+  gem 'qed', '2.2+'
+end
+
+summary 'Ruby Project Object Model'
+license 'Apache 2.0'
+contact 'Thomas Sawyer <transfire@gmail.com>'
+created '2009-07-22'
+
+description %{
+  Gemdo provides a complete project layout standard
+  and metadata system for Ruby developers.
+}
+
+authors ['Thomas Sawyer']
+
+resources(
+  'home' => http://rubyworks.github.com/gemdo
+  'code' => http://github.com/rubyworks/gemdo
+  'repo' => git://github.com/rubyworks/gemdo.git
+  'docs' => http://wiki.github.com/rubyworks/gemdo
+  'wiki' => http://wiki.github.com/rubyworks/gemdo
+  'api'  => http://rubyworks.github.com/gemdo/rdoc
+  'mail' => http://groups.google.com/group/rubyworks
+)
+
+organization 'RubyWorks'
+copyright    'Copyright (c) 2009 Thomas Sawyer'
+
+manifest 'MANIFEST'
+

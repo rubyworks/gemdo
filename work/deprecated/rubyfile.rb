@@ -1,4 +1,4 @@
-require 'gemdo/rubyspec'
+require 'gemdo/spec'
 
 module Gemdo
 
@@ -27,7 +27,7 @@ module Gemdo
     # Standard file names for a Rubyfile. Notice that the file
     # can be visible or hidden.
     def self.filename
-      ['Rubyfile', '.rubyfile']
+      ['Rubyfile', '.rubyfile', 'Gemfile']
     end
 
     #
@@ -40,7 +40,26 @@ module Gemdo
 
       @data = data
 
+      # for compatibility with Bundler
+      @_source   = nil
+      @_group    = []
+      @_platform = []
+
       load!
+    end
+
+    #
+    def load!
+      if files.each do |file|
+        if file.exist?
+          script = File.read(file)
+          if /^A---/ =~ script
+            import YAML.load(script)
+          else
+            instance_eval(script, file)
+          end
+        end
+      end
     end
 
     #
@@ -90,16 +109,97 @@ module Gemdo
       end
     end
 
+    #
+    def requires(list)
+      list.each{ |entry| gem entry }
+    end
+    alias_method :dependencies, :requires
+
     # Designate a requirement.
-    def gem(name, version=nil, options={})
-      @data['requires'] ||= []
-      if version
-        options['name']    = name
-        options['version'] = version
-        @data['requires'] << options
-      else
-        @data['requires'] << name
+    def gem(name, *args)
+      opts = Hash == args.last ? args.pop : {}
+
+      name, *cons = name.split(/\s+/)
+
+      if md = /\((.*?)\)/.match(cons.last)
+        cons.pop
+        group = md[1].split(/\s+/)
+        opts['group']   = group
       end
+
+      opts['name']    = name
+      opts['version'] = cons.join(' ') unless cons.empty?
+
+      opts['source'] ||= @_source if @_source
+
+      unless @_group.empty?
+        opts['group'] ||= []
+        opts['group'] += @_group
+      end
+
+      unless @_platform.empty?
+        opts['platform'] ||= []
+        opts['plarform'] += @_platform
+      end
+
+      @data['requires'] ||= []
+      @data['requires'] << opts
+    end
+
+    # --- Bundler Compatibility ??? ---
+
+    def source(source) #:yield:
+      @_source = source
+      yield
+    ensure
+      @_source = nil
+    end
+
+    # For use with defining dependencies with the +gem+ method.
+    # This allows for compatibility with Bundler Gemfile.
+    def group(*names) #:yield:
+      @_group.concat names
+      yield
+    ensure
+      names.each{@_group.pop}
+    end
+
+    # This allows for compatibility with Bundler Gemfile.
+    def platform(*names) #:yield:
+      @_platform.concat names
+      yield
+    ensure
+      names.each{@_platform.pop}
+    end
+    alias_method :platforms, :platform
+
+    # ???
+    def path(path, options={}, source_options={}, &blk)
+    end
+
+    # This one sucks. Talk about favoring one SCM over another!
+    # Handle submodules yourself like a real developer!
+    def git(*)
+      msg = "The `git` method is incompatible with Gemdo.\n" /
+            "Consider using submodules or an alternate tool\n" /
+            "to manager vendored sources, and use the `path`\n" \
+            "option instead."
+      raise msg
+    end
+
+    # This one can blow!
+    def gemspec(*)
+      msg = "The `gemspec` method is incompatible with Gemdo/.\n" /
+            "Gemdo will generate a gemspec from the Gemfile."
+      raise msg
+    end
+
+    # --- End Bundler Compatibility ---
+
+    #
+    def resource(label, url)
+      @data['resources'] ||= {}
+      @data['resources'][label.to_s] = url
     end
 
     #
@@ -117,13 +217,6 @@ module Gemdo
       Rubyspec.new(@root, @data)
     end
 
-    #
-    def load!
-      if file && file.exist?
-        script = File.read(file)
-        instance_eval(script, file)
-      end
-    end
   end
 
 end

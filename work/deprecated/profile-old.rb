@@ -4,7 +4,7 @@ require 'gemdo/resources'
 
 module Gemdo
 
-  # Profile stores ancillary project metadata such as title, summary,
+  # Profile stores project metadata such as title, summary,
   # list of authors, etc. Profile is the "mother load" of end-user
   # information about a project. It is also arbitraily extensible
   # so fields not strictly defined by this class can also be provided.
@@ -13,12 +13,12 @@ module Gemdo
 
     # The default file name to use for saving a new PROFILE.
     def self.default_filename
-      'meta/profile'
+      'Profile'
     end
 
     # Possible profile file names.
     def self.filename
-      ['[Pp]rofile', 'PROFILE']
+      ['[Pp]rofile', 'PROFILE', 'Gemfile']
     end
 
     # New Profile object. To create a new Profile
