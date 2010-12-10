@@ -35,7 +35,7 @@ repositories:
 organization : RubyWorks
 copyright    : Copyright (c) 2009 Thomas Sawyer
 
-manifest: MANIFEST.txt
+manifest: Manifest.txt
 
 # engines_tested: !file meta/engines_tested
 

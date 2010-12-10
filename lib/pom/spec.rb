@@ -1,16 +1,11 @@
-require 'fileutils'
-require 'time'
-require 'pom/metafile'
-require 'pom/resources'
-require 'pom/version'
-require 'pom/requires'
+require 'pom/profile'
 
 module POM
 
   #BACKUP_DIRECTORY = '.cache/pom'
 
   #
-  class Rubyspec < Metafile  #Profile < Metafile
+  class Rubyspec < Profile #Metafile  #Profile < Metafile
 
     #
     def self.find(root)
@@ -42,7 +37,6 @@ module POM
       initialize_defaults
       data.each{ |k,v| __send__("#{k}=", v) }
     end
-=end
 
     #
     def initialize(root, data={})
@@ -413,7 +407,6 @@ module POM
       end
       s + "\n"
     end
-=end
 
     # Read the package file.
     def read!
@@ -461,6 +454,7 @@ module POM
         save!(dir + self.class.filename.first)
       end
     end
+=end
 
   end
 

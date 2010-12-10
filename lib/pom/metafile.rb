@@ -26,36 +26,38 @@ module POM
     #
     def self.find(root)
       root = Pathname.new(root)
-      pattern = '{' + filename.join(',') + '}{.yml,.yaml,}'
+      pattern = '{' + filename.join(',') + '}{,.yml,.yaml}'
       root.glob(pattern, :casefold).first
     end
 
     #
     def self.defaults
-      @defaults ||= {}
+      @@defaults ||= {}
     end
 
     # Attributes are stored in a hash instead of instance variables.
-    def self.attr_reader(name, &default)
+    def self.property(name, &default)
       module_eval %{
-        def #{name}; self['#{name}'] ; end
+        def #{name}(val=nil)
+          self['#{name}'] = val if val
+          self['#{name}']
+        end
+        def #{name}=(val)
+          self['#{name}'] = val
+        end
       }
-      defaults[name] = default if default
-    end
-
-    # Attributes are stored in a hash instead of instance variables.
-    def self.attr_accessor(name, &default)
-      module_eval %{
-        def #{name}(val=nil); self.#{name} = val if val; self['#{name}']; end
-        def #{name}=(val); self['#{name}'] = val; end
-      }
-      defaults[name] = default if default
+      defaults[name.to_s] = default if default
     end
 
     # Alias an accessor.
-    def self.alias_accessor(name, original)
+    def self.property_alias(name, original)
       alias_method name, original
       alias_method "#{name}=", "#{original}="
+    end
+
+    #
+    def defaults
+      @@defaults
     end
 
     #
@@ -65,35 +67,46 @@ module POM
     #  super(name)
     #end
 
-    ;; private
+    class << self
+      alias create new
 
-    # FIXME: what if you don't want it top read!!!!!!!!
-    def initialize(root, data={})
-      @root = Pathname.new(root)
-      @file = data.delete(:file)    ||
-              self.class.find(root) ||
-              root + self.class.default_filename
-      @data = data.inject({}){|h,(k,v)| h[k.to_s] = v; h}
-
-      read!
-
-      initialize_defaults
-    end
-
-    #
-    def initialize_defaults
-      self.class.defaults.each do |k,v|
-        next if __send__("#{k}")
-        case v
-        when Proc
-          __send__("#{k}=", instance_eval(&v))
-        else
-          __send__("#{k}=", v)
-        end
+      def new(root, data={})
+        create(root, data).read!
       end
     end
 
-    ;; public
+    private
+
+    #
+    def initialize(root, data={})
+      @root = Pathname.new(root)
+
+      @file = data.delete(:file)    ||
+              self.class.find(root) ||
+              root + self.class.default_filename
+
+      @data = {}
+
+      data.each do |k,v|
+        self[k] = v
+      end
+
+      #initialize_defaults
+    end
+
+    #
+    #def initialize_defaults
+    #  self.class.defaults.each do |k,v|
+    #    case v
+    #    when Proc
+    #      __send__("#{k}=", instance_eval(&v))
+    #    else
+    #      __send__("#{k}=", v)
+    #    end
+    #  end
+    #end
+
+    public
 
     # Project's root pathname.
     attr :root
@@ -103,11 +116,20 @@ module POM
 
     #
     def [](name)
-      @data[name.to_s]
+      name  = name.to_s
+      value = @data[name]
+      if !value and defaults[name]
+        value = instance_eval(&defaults[name])
+        @data[name] = value
+      end
+      value
     end
 
     #
     def []=(name, value)
+      if respond_to?("parse_#{name}") 
+        value = __send__("parse_#{name}", value)
+      end
       @data[name.to_s] = value
     end
 
@@ -121,9 +143,9 @@ module POM
       hash.each do |k,v|
         case v
         when Proc
-          __send__("#{k}=", instance_eval(&v))
+          self[k] = instance_eval(&v)
         else
-          __send__("#{k}=", v)
+          self[k] = v
         end
       end
     end
@@ -134,20 +156,47 @@ module POM
     end
 
     #
+    def to_h
+      h = {}
+      @data.each{ |k,v| h[k.to_s] = v }
+      h
+    end
+
+    # Iterate over each attribute.
     def each(&block)
       @data.each(&block)
     end
 
+    # Returns +self+.
+    #def read!
+    #  if file && file.exist?
+    #    text = File.read(file)
+    #    text = ERB.new(text).result(Object.new.instance_eval{binding})
+    #    data = YAML.load(text)
+    #    data.each do |k,v|
+    #      __send__("#{k}=", v)
+    #    end
+    #  end
+    #  return self
+    #end
+
+    # Read the file.
     #
+    # Returns +self+.
     def read!
       if file && file.exist?
         text = File.read(file)
-        text = ERB.new(text).result(Object.new.instance_eval{binding})
-        data = YAML.load(text)
-        data.each do |k,v|
-          __send__("#{k}=", v)
+        if /\A---/ =~ text
+          #text = ERB.new(text).result(Object.new.instance_eval{binding})
+          data = YAML.load(text)
+          data.each do |k,v|
+            __send__("#{k}=", v)
+          end
+        else
+          instance_eval(text, file, 0)
         end
       end
+      return self
     end
 
     #

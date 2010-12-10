@@ -1,6 +1,7 @@
 #require 'pom/version_file'
 #require 'pom/version_helper'
 require 'fileutils'
+require 'time'
 require 'pom/version'
 require 'pom/metafile'
 require 'pom/requires'
@@ -30,14 +31,12 @@ module POM
 
   class Profile < Metafile
 
-    BACKUP_DIRECTORY = '.cache/pom'
+    require 'pom/profile/infer'
 
-    #
-    #def self.attr_setter(name)
-    #  define_method(name) do |value|
-    #    @table[name.to_s] = value
-    #  end
-    #end
+    include Infer
+    #include VersionHelper
+
+    BACKUP_DIRECTORY = '.cache/pom'
 
     #
     def self.find(root)
@@ -46,9 +45,6 @@ module POM
       root.glob(pattern, :casefold).first
     end
 
-    #
-    #include VersionHelper
-
     # The default file name to use for saving a new PROFILE.
     def self.default_filename
       'Profile'
@@ -56,83 +52,31 @@ module POM
 
     # Possible profile file names.
     def self.filename
-      ['[Pp]rofile', 'PROFILE', 'Gemfile']
+      ['[Pp]rofile', 'PROFILE'] #, 'Gemfile']
     end
 
     # New Profile object. To create a new Profile
     # the +root+ directory of the project and the +name+
     # of the project are required.
     def initialize(root, data={})
-      #super(root, data)
+      super(root, data)
 
-      @root  = Pathname.new(root)
-
-      @file = data.delete(:file)    ||
-              self.class.find(root) ||
-              root + self.class.default_filename
-
-      @table = {}
-
-      initialize_defaults
-
-      data.each{ |k,v| __send__("#{k}=", v) }
+      @data['loadpath']  = ['lib']
+      @data['requires']  = []
+      @data['conflicts'] = []
+      @data['replaces']  = []
 
       # for compatibility with Bundler
       @_source   = nil
       @_group    = []
       @_platform = []
-
-      load!
-    end
-
-    # Read the package file.
-    def load!
-      if file && file.exist?
-        text = File.read(file)
-        #text = ERB.new(text).result(Object.new.instance_eval{binding})
-        if /\A---/ =~ text
-          data = YAML.load(text)
-          data.each do |k,v|
-            __send__("#{k}=", v)
-          end
-        else
-          instance_eval(text, file, 0)
-        end
-      end
-    end
-
-    #
-    def initialize_defaults
-      #@file = self.class.find(root) || root + self.class.default_filename
-      @table[:loadpath]  = ['lib']
-      @table[:requires]  = []
-      @table[:conflicts] = []
-      @table[:replaces]  = []
     end
 
     # Project root.
     attr :root
 
     # Get PACKAGE file path (if available).
-    def file
-      @file
-    end
-
-    # Set PACKAGE filepath.
-    def file=(file)
-      @file = file
-    end
-
-    #
-    def [](key)
-      @table[key.to_sym]
-    end
-
-    #
-    def []=(key, value)
-      @table[key.to_sym] = value
-    end
-    private :[]=
+    attr_accessor :file
 
     #
     def import(file)
@@ -149,114 +93,196 @@ module POM
       end
     end
 
-    # Project's <i>package name</i>. This actually comes from package,
-    # but if provided here, can set the default for title.
-    def name
-      @name
-    end
 
-    # Name of package.
-    attr_accessor :name
+    # Project's <i>packaging name</i>. It can default to title downcased,
+    # if not supplied.
+    property :name do
+      title.downcase if title
+    end
 
     # Version number.
-    attr_accessor :version
-
-    #
-    def version=(number)
-      self[:version] = VersionNumber.new(number)
-    end
-
-    # Short name for #version. (DEPRECATE?)
-    alias_method :vers,  :version
-    alias_method :vers=, :version=
+    property :version
 
     # Date this version was released.
-    attr_accessor :date
-
-    # Set release date.
-    def date=(val)
-      case val
-      when Time, Date, DateTime
-        self[:date] = val
-      else
-        self[:date] = Time.parse(val) if val
-      end
-    end
-
-    #
-    alias_method :released,  :date
-    alias_method :released=, :date=
-
-    #
-    alias_method :release_date, :date
+    property :date
 
     # Colorful nick name for the particular version, e.g. "Lucid Lynx".
-    attr_accessor :codename
+    property :codename
 
-    #
-    alias_method :code,  :codename
-    alias_method :code=, :codename=
-
-    #alias_method :moniker,  :nick
-    #alias_method :monicker, :nick # because clowns are funny
+    #property_alias :moniker,  :nick
+    #property_alias :monicker, :nick # because clowns are funny
 
     # Namespace for this program. This is only needed if it is not the default
     # of the +name+ capitalized and/or the toplevel namespace is not a module.
     # For example, +activerecord+  uses +ActiveRecord+ for it's namespace,
     # not Activerecord.
-    attr_accessor :namespace
-
-    # Set namespace.
-    def namespace=(ns)
-      case ns
-      when /^class/, /^module/
-        self[:namespace] = ns.strip
-      else
-        self[:namespace] = "module #{ns.strip}"
-      end
-    end
+    property :namespace
 
     # TODO: Integer-esque build number.
-    #attr_accessor :no
+    #property :no
 
     # TODO: Integer-esque revison id from SCM.
-    #attr_accessor :id
+    #property :id
 
     # Internal load paths.
-    attr_accessor :loadpath
+    property :loadpath
+
+    # Access to manifest list or file name.
+    property :manifest
+
+
+    # List of requirements.
+    property :requires
 
     #
-    def loadpath=(path)
-      case path
-      when NilClass
-        self[:loadpath] = ['lib']
-      when String
-        self[:loadpath] = path.split(/[,:;\ ]/)
+    property :conflicts
+
+    #
+    property :replaces
+
+
+    # Title of package (this defaults to project name capitalized).
+    property :title do
+      name.to_s.capitalize
+    end
+
+    # A one-line brief description.
+    property :summary do
+      d = description.to_s.strip
+      i = d.index(/(\.|$)/)
+      i = 69 if i > 69
+      d[0..i]
+    end
+
+    # Detailed description.
+    property :description
+
+    # Name of the user-account or master-project to which this project
+    # belongs. The suite name defaults to the project name if no entry
+    # is given. This is also aliased as #collection.
+    property :suite
+
+    # Organization.
+    property :organization do
+      suite
+    end
+
+    # Official contact for this project. This is typically
+    # a name and email address.
+    property :contact
+
+    # The date the project was started.
+    property :created
+
+    # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
+    property :copyright
+
+    # License.
+    property :license
+
+    # List of authors.
+    property :authors do
+      []
+    end
+
+    # Table of project URIs encapsulated in a Resources object.
+    property :resources do
+      Resources.new
+    end
+
+
+    # Short name for #version. (TODO: DEPRECATE?)
+    property_alias :vers,  :version
+
+    #
+    property_alias :released,  :date
+
+    #
+    property_alias :release_date, :date
+
+    #
+    property_alias :code,  :codename
+
+    #
+    property_alias :path, :loadpath
+
+    #
+    property_alias :requirements, :requires
+    property_alias :dependencies, :requires
+    property_alias :gems        , :requires
+
+
+    #
+    def parse_version(number)
+      VersionNumber.new(number)
+    end
+
+    # Returns a Time instance representing the release date.
+    def parse_date(val)
+      case val
+      when Time, Date, DateTime
+        val
       else
-        self[:loadpath] = path.to_a
+        Time.parse(val) if val
       end
     end
 
-    #
-    alias_method :path, :loadpath
-    alias_method :path=, :loadpath=
+    # Returns a Ruby formatted namespace.
+    def parse_namespace(ns)
+      case ns
+      when /^class/, /^module/
+        ns.strip
+      else
+        "module #{ns.strip}"
+      end
+    end
 
-    # Access to manifest list or file name.
-    attr_accessor :manifest
+    # 
+    def parse_loadpath(path)
+      case path
+      when NilClass
+        ['lib']
+      when String
+        path.split(/[,:;\ ]/)
+      else
+        path.to_a
+      end
+    end
 
     # Set manifest list or file name.
-    def manifest=(file_or_array)
+    def parese_manifest(file_or_array)
       case file_or_array
       when Array
-        @table['manifest'] = file_or_array
+        file_or_array
       else
         list = File.readlines(file_or_array).to_a
         list = list.map{ |f| f.strip }
         list = list.reject{ |f| /^\#/ =~ f }
         list = list.reject{ |f| /^\s*$/ =~ f }
-        @table['manifest'] = list
+        list
       end
     end
+
+    #
+    def parse_requires(list)
+      PackageList.new(list)
+    end
+
+    #
+    def parse_conflicts(list)
+      PackageList.new(list)
+    end
+
+    #
+    def parse_replaces(list)
+      PackageList.new(list)
+    end
+
+    # Set project resources table with a Hash or another Resources object.
+    def parse_resources(resources)
+      Resources.new(resources)
+    end
+
 
     # Designate a requirement.
     def gem(name, *args)
@@ -314,6 +340,7 @@ module POM
     ensure
       names.each{@_platform.pop}
     end
+
     alias_method :platforms, :platform
 
     # ???
@@ -339,98 +366,11 @@ module POM
 
     # --- End Bundler Compatibility ---
 
+
     #
     def resource(label, url)
-      @data['resources'] ||= {}
-      @data['resources'][label.to_s] = url
-    end
-
-    # List of requirements.
-    attr_accessor :requires
-
-    #
-    alias_method :requirements, :requires
-    alias_method :dependencies, :requires
-    alias_method :gems        , :requires
-
-    #
-    def requires=(list)
-      self[:requires] = PackageList.new(list)
-    end
-
-    #
-    alias_method :requirements=, :requires=
-    alias_method :dependencies=, :requires=
-    alias_method :gems=        , :requires=
-
-    #
-    attr_accessor :conflicts
-
-    #
-    def conflicts=(list)
-      self[:conflicts] = PackageList.new(list)
-    end
-
-    #
-    attr_accessor :replaces
-
-    #
-    def replaces=(list)
-      self[:replaces] = PackageList.new(list)
-    end
-
-    # Title of package (this defaults to project name capitalized).
-    attr_accessor :title do
-      name.to_s.capitalize
-    end
-
-    # A one-line brief description.
-    attr_accessor :summary do
-      d = description.to_s.strip
-      i = d.index(/(\.|$)/)
-      i = 69 if i > 69
-      d[0..i]
-    end
-
-    # Detailed description.
-    attr_accessor :description
-
-    # Name of the user-account or master-project to which this project
-    # belongs. The suite name defaults to the project name if no entry
-    # is given. This is also aliased as #collection.
-    attr_accessor :suite
-
-    # Organization.
-    attr_accessor :organization do
-      suite
-    end
-
-    # Official contact for this project. This is typically
-    # a name and email address.
-    attr_accessor :contact
-
-    # The date the project was started.
-    attr_accessor :created
-
-    # Copyright notice. Eg. "Copyright (c) 2009 Thomas Sawyer"
-    attr_accessor :copyright
-
-    # License.
-    attr_accessor :license
-
-    # List of authors.
-    attr_accessor :authors do
-      []
-    end
-
-    # Table of project URIs encapsulated in a Resources object.
-    attr_accessor :resources do
-      Resources.new
-    end
-
-    # Set project resources table with a Hash or another Resources object.
-    def resources=(resources)
-      self['resources'] = Resources.new(resources)
+      #self['resources'] ||= {}
+      self['resources'][label.to_s] = url
     end
 
     # Project's homepage as listed in the resources.
@@ -438,11 +378,16 @@ module POM
       resources.homepage
     end
 
+    # Project's homepage as listed in the resources.
+    def homepage=(url)
+      resources.homepage = url
+    end
+
     # Project's public repository as listed in the resources.
     # TODO: cahnge this to a list of repos. ?
-    def repository
-      resources.repository
-    end
+    #def repository
+    #  resources.repository
+    #end
 
     # Regular expression for matching valid email addresses.
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
@@ -459,13 +404,6 @@ module POM
     # Returns the first entry in the authors list.
     def author
       authors.first
-    end
-
-    # Convert to hash.
-    def to_h
-      data = @data.dup
-      data['resources'] = data['resources'].to_h
-      data
     end
 
     #
@@ -492,6 +430,13 @@ module POM
       self[:date] = Date.today
     end
 
+    # Convert to hash.
+    def to_h
+      data = super
+      data['resources'] = data['resources'].to_h
+      data
+    end
+
     #
     def to_s
       s = "#{name} #{version}"
@@ -500,13 +445,7 @@ module POM
       s
     end
 
-    #
-    def to_h
-      @table.inject({}) do |h,(k,v)|
-        h[k.to_s] = v; h
-      end
-    end
-
+=begin
     #
     def yaml
       s = []
@@ -540,6 +479,7 @@ module POM
       now!  # update date
       File.open(file, 'w'){ |f| f << yaml }
     end
+=end
 
     # Like #save! but does a simple substitution on version and date
     # to ensure the layout of rest of the file is not altered.
@@ -559,46 +499,12 @@ module POM
 
     # Backup the package file. This is used when updating the file.
     def backup!
-      if @file
-        dir = @root + BACKUP_DIRECTORY
+      if file
+        dir = root + BACKUP_DIRECTORY
         FileUtils.mkdir(dir.dirname) unless dir.dirname.directory?
         FileUtils.mkdir(dir) unless dir.directory?
         save!(dir + self.class.filename.first)
       end
-    end
-
-    # Save package information as Ruby source code.
-    #
-    #   module Foo
-    #     VERSION  = "1.0.0"
-    #     RELEASED = "2010-10-01"
-    #     CODENAME = "Fussy Foo"
-    #   end
-    #
-    # NOTE: This is not actually needed, as I exmplain in a recent
-    # blog post. But we will leave it here for the time being.
-    def save_as_ruby(file)
-      if File.exist?(file)
-        text = File.read(file)
-        save_as_ruby_sub!(text, :version, 'VERSION')
-        save_as_ruby_sub!(text, :released, 'RELEASED', 'DATE')
-        save_as_ruby_sub!(text, :codename, 'CODENAME')
-      else
-        t = []
-        t << %[module #{codename}]
-        t << %[  VERSION  = "#{version}"]
-        t << %[  RELEASE  = "#{release}"]
-        t << %[  CODENAME = "#{codename}"]
-        t << %[end]
-        text = t.join("\n")
-      end
-      File.open(file, 'w'){ |f| f << text }
-    end
-
-    #
-    def save_as_ruby_sub!(text, field, *patterns)
-      patterns = patterns.join('|')
-      text.sub!(/(#{patterns}\s*)=\s*(.*?)(?!\s*\#?|$)/, '\1=' + __send__(field))
     end
 
     # Profile is extensible. If a setting is assigned
@@ -612,7 +518,7 @@ module POM
         self[name] = args.first
       else
         super(sym, *args) if block_given? or args.size > 0
-        nil
+        self[name] #nil
       end
     end
 
@@ -620,7 +526,7 @@ module POM
     # method_missing lookup into account.
     def respond_to?(name)
       return true if super(name)
-      return true if self[name]
+      return true if key?(name)
       return false
     end
 
@@ -690,41 +596,4 @@ module POM
   end
 
 end
-
-
-=begin
-    # Failing to find a name for the project, the last hope
-    # is to discern it from the lib files.
-    #
-    # TODO: Is this really a good idea?
-    def fallback_name
-      if file = root.glob('lib/*.rb').first
-        file.basename.to_s.chomp('.rb')
-      else
-        nil
-      end
-    end
-=end
-
-=begin
-    #require 'pom/package/simple_style'
-    #require 'pom/package/jeweler_style'
-    #require 'pom/package/pom_style'
-    #require 'pom/package/jpom_style'
-
-    #STYLES = [SimpleStyle, JewelerStyle, POMStyle, JPOMStyle]
-
-    def read!
-      if file
-        data  = YAML.load(File.new(file.to_s))
-        style = STYLES.find{ |s| s.match?(data) }
-        extend(style)
-        parse(data)
-      else
-        extend POMStyle
-      end
-    
-      self.name = fallback_name unless self['name']
-    end
-=end
 
