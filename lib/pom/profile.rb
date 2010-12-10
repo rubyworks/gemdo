@@ -249,8 +249,8 @@ module POM
       end
     end
 
-    # Set manifest list or file name.
-    def parese_manifest(file_or_array)
+    # Returns a list of file paths.
+    def parse_manifest(file_or_array)
       case file_or_array
       when Array
         file_or_array
