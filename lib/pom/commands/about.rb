@@ -11,7 +11,7 @@ module POM::Commands
     attr :project
 
     def initialize
-      @project = POM::Project.new(:lookup=>true)
+      @project = POM::Project.find
     end
 
     #

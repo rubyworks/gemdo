@@ -8,7 +8,7 @@ module POM::Commands
     #
     def initialize
       super
-      @project = POM::Project.new(:lookup=>true)
+      @project = POM::Project.find
     end
 
     #

@@ -15,7 +15,7 @@ module POM::Commands
 
     #
     def initialize
-      @project = POM::Project.new(:lookup=>true)
+      @project = POM::Project.find
     end
 
     #

@@ -10,7 +10,6 @@ module POM::Commands
 
     #
     def initialize
-      #@project = Gemdo::Project.new(:lookup=>true)
       @options = {}
     end
 

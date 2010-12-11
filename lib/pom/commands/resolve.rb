@@ -8,6 +8,11 @@ module POM::Commands
     end
 
     #
+    def initialize
+      super
+    end
+
+    #
     def run
       require 'pom/resolver'
       @options = {}

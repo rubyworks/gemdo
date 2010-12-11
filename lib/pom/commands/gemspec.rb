@@ -11,7 +11,7 @@ module POM::Commands
     #
     def initialize
       require 'pom/gemspec'
-      @project = POM::Project.new(:lookup=>true)
+      @project = POM::Project.find
     end
 
     #

@@ -1,4 +1,5 @@
 require 'pom/core_ext'
+require 'pom/errors'
 require 'pom/profile'
 require 'pom/manifest'
 require 'pom/history'
@@ -21,7 +22,7 @@ module POM
     # Instantiate a new Project object.
     #
     # If a root directory is not given, it will be looked-up starting from
-    # the current working directory until a <tt>.ruby/</tt> file is found.
+    # the current working directory until a root indicator is found.
     #
     # The +:lookup+ option can be used to induce a lookup from a given location.
     #
@@ -30,26 +31,14 @@ module POM
     #   new(root)
     #   new(local, :lookup=>true)
     #
-    def initialize(*args)
-      root = args.shift unless Hash===args.first
-      opts = args.last || {}
+    def initialize(root=nil)
+      @root = Pathname.new(root || Dir.pwd).expand_path
 
-      if root and !opts[:lookup]
-        @root = Pathname.new(root)
-      else
-        find(root || Dir.pwd)
+      unless @root.directory?
+        raise(ProjectNotFound,"#{@root} is not a directory")
       end
-
-      raise("cannot locate project root") unless @root
-
-      #@root = Pathname.new(root)
-      @opts = opts
-
+      
       #metadata.load #if opts[:load]
-
-      #if options[:lookup]
-      #  @root = locate_root(local) || raise("can't locate project root -- #{local}")
-      #end
     end
 
     # Find project root.
@@ -149,16 +138,14 @@ module POM
       end
     end
 
-
-    # Instantiate a new Project looking up the root directory form a given local.
-    #
-    #   Project.lookup(local)
-    # 
-    def self.lookup(*path_opts)
-      path = path_opts.shift unless Hash === path_opts.first
-      opts = path_opts.last || {}
-      opts[:lookup] =true
-      new(path, opts)
+    # Instantiate a new Project looking up the root directory form a given
+    # local directory.
+    def self.find(dir=Dir.pwd)
+      if root_dir = root(dir)
+        new(root_dir)
+      else
+        raise(ProjectNotFound, "could not find #{ROOT_INDICATOR}")
+      end
     end
 
     ## New project with metadata fully loaded.
@@ -171,7 +158,7 @@ module POM
 
     # Root directory is indicated by the presence of either a
     # .ruby file or as a fallback a lib/ directory.
-    ROOT_INDICATORS = ['.project', '.rubyspec', '.ruby', '.git', '.hg', '_darcs', 'lib/']
+    ROOT_INDICATOR = '.prospec' #, '.rubyspec', '.ruby', 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position
@@ -179,20 +166,11 @@ module POM
     # found.
 
     def self.root(dir=Dir.pwd)
-      dir  = File.expand_path(dir)
-      home = File.expand_path('~')  # Better way?
-      root = nil
-      ROOT_INDICATORS.find do |marker|
-        path = dir
-        while path != home && path != '/'
-          if File.exist?(File.join(path, marker))
-            break (root = path)
-          else
-            path = File.dirname(path)
-          end
-        end
+      home = Pathname.new('~').expand_path  # Better way?
+      Pathname.new(dir).ascend do |root|
+        return nil  if root == home
+        return root if root.join(ROOT_INDICATOR).file?
       end
-      root ? Pathname.new(root) : nil
     end
 
   end#class Project
