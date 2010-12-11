@@ -32,6 +32,30 @@ module POM
 
 =begin
     #
+    def parse_release_stamp(text)
+      release = {}
+      # version
+      if md = /\b(\d+\.\d.*?)\s/.match(text)
+        release[:vers] = md[1]
+      end
+      # date
+      if md = /\b(\d+\-\d.*?)\s/.match(text)
+        release[:date] = md[1]
+      end
+      # nickname
+      if md = /\"(.*?)\"/.match(text)
+        release[:nick] = md[1]
+      end
+      # loadpath
+      test.scan(/\s(\S+)\/\s/) do |m|
+        release[:path] ||= []
+        release[:path] << m
+      end
+      release
+    end
+=end
+=begin
+    #
     def parse_version_file
       file = root.glob('VERSION{,.txt,.yml,.yaml').first
       if file
