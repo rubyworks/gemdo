@@ -1,5 +1,3 @@
-raise "sorry, bump is not yet implemented"
-
 require 'pom/version'
 
 module POM::Commands
@@ -15,7 +13,7 @@ module POM::Commands
 
     #
     def initialize
-      @project = POM::Project.new(:lookup=>true)
+      @project = POM::Project.find
       @slots   = []
       @state   = nil
       @force   = false
@@ -97,7 +95,7 @@ module POM::Commands
 
       raise "Why bump if you know what you want, silly?" if @entry && !@slots.empty?
 
-      new_version = @entry ? POM::VersionNumber.new(@entry) : project.package.version
+      new_version = @entry ? POM::VersionNumber.new(@entry) : project.version
 
       @slots.each do |slot|
         new_version = new_version.bump(slot)
@@ -107,57 +105,19 @@ module POM::Commands
         new_version = new_version.restate(@state)
       end
 
-      if new_version > project.package.version or @force
-        project.package.version = new_version
-        project.package.save_version! unless $TRIAL
+      if new_version > project.version or @force
+        project.version = new_version
+        #project.save_version! unless $TRIAL
       else
-        if new_version < project.package.version
+        if new_version < project.version
           $stderr.puts "pom: Going backwards in time?"
           $stderr.outs "   New version is older than current version."
-          $stderr.outs "   Use --force to fly the TARDIS."
+          #$stderr.outs "   Use --force to fly the TARDIS."
         end
       end
 
       puts(project.version) 
     end
-
-=begin
-    # Bump given version index.
-    def bump(index)
-      tuple[index] = bump_entry(tuple[index])
-      (index+1...tuple.size).each do |i|
-        tuple[i] = null_entry(tuple[i])
-      end
-    end
-
-    #
-    def bump_entry(entry)
-      case entry
-      when /^\d+$/
-        entry.to_i.succ.to_s
-      when /^(\D)*(\d)(\D)*$/
-        $1 + $2.to_i.succ.to_s + $3
-      when nil
-        "1"
-      else
-        entry
-      end
-    end
-
-    #
-    def null_entry(entry)
-      case entry
-      when /^\d+$/
-        "0"
-      when /^(\D)*(\d)(\D)*$/
-        $1 + "0" + $3
-      when nil
-        "0"
-      else
-        entry
-      end
-    end
-=end
 
   end
 
