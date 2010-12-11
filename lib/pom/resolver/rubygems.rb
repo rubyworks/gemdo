@@ -1,3 +1,5 @@
+# TODO: rename to Gempath.
+
 module POM
 
   class Resolver

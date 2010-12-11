@@ -157,7 +157,7 @@ module POM
 
     #
     def parse_copyright
-      md = /Copyright.*?\d(.*?)$/.match(text)
+      md = /Copyright.*?\d+(.*?)$/.match(text)
       if md
         @cache[:copyright] = md[0]
         @cache[:authors]   = md[1].split(/(and|\&|\,)/).map{|a|a.strip}
@@ -215,7 +215,7 @@ module POM
     def import_readme(readme=nil)
       readme = readme || self.readme
 
-      package.name        = readme.name         if readme.name
+      profile.name        = readme.name         if readme.name
 
       profile.title       = readme.title        if readme.title
       profile.description = readme.description  if readme.description

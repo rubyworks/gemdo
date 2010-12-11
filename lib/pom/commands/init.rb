@@ -1,7 +1,9 @@
-module Gemdo::Commands
+module POM::Commands
 
+  # Create a Profile file if missing.
   class Init
 
+    #
     def self.run
       new.run
     end
@@ -14,7 +16,6 @@ module Gemdo::Commands
 
     #
     attr :resources
-    attr :options
 
     #
     def run
@@ -25,7 +26,7 @@ module Gemdo::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "gemdo init [RESOURCE ...]"
+        opt.banner = "pom init [<resources> ...]"
 
         opt.on("--replace", "-r", "replace any pre-existing entries") do
           options[:replace] = true
@@ -35,7 +36,7 @@ module Gemdo::Commands
           $FORCE = true
         end
 
-        opt.on("--trial", "run in trial mode, skips disk writes") do
+        opt.on("--trial", "-n", "run in trial mode, skips disk writes") do
           $TRIAL = true
         end
 
@@ -59,13 +60,22 @@ module Gemdo::Commands
     # TODO: How to handle options[:replace] ?
     #++
     def execute
-      require_rubygems
-
-      require 'gemdo/metadata'
-      require 'gemdo/readme'
-      require 'gemdo/gemspec'
+      #require 'erb'
 
       root = Dir.pwd
+
+      #has_profile = POM::Profile.find(root)
+      has_profile = Dir.glob('profile{,.yml,.yaml,.rb}', File::FNM_CASEFOLD).first
+
+      if has_profile and not $FORCE       #if POM::Profile.find(root) and not $FORCE
+        $stderr << "PROFILE already exists. Use --force option to allow overwrite.\n"
+        exit -1
+      end
+
+      require_rubygems
+
+      require 'pom/readme'
+      require 'pom/gemspec'
 
       #prime = { 
       #  'name'       => File.basename(root),
@@ -77,82 +87,55 @@ module Gemdo::Commands
       #  'repository' => "FIX master public repo uri"
       #}
 
-      #has_package = Gemdo::Package.find(root)
-      #has_profile = Gemdo::Profile.find(root)
-      #has_rubydir = Gemdo::RubyDir.find(root)
-
-      #if Gemdo::Package.find(root) and not $FORCE
-      #  $stderr << "PACKAGE file already exists. Use --force option to allow overwrite.\n"
-      #  return
-      #end
-
-      #if Gemdo::Profile.find(root) and not $FORCE
-      #  $stderr << "PROFILE already exists. Use --force option to allow overwrite.\n"
-      #  return
-      #end
-
-      current = Dir.glob('**/*', File::FNM_DOTMATCH)
+      #current = Dir.glob('**/*', File::FNM_DOTMATCH)
 
       #if !File.exist?('.ruby')
       #  File.open('.ruby', 'w'){|f| f << `ruby -v`}
       #end
 
-      has_package = Gemdo::Rubyspec.find(root)
+      #has_package = Gemdo::Rubyspec.find(root)
 
-      #has_package = Gemdo::Package.find(root)
-      #has_profile = Gemdo::Profile.find(root)
-
-      if !(has_package || has_profile)
-        FileUtils.mkdir_p('meta') if !File.exist?('meta')
-      end
-
-      if (has_package || has_profile) && !$FORCE
-        $stderr.puts "Looks like your project is already built on a gemdo."
-        $stderr.puts "To re-create the metadata files use the --force option."
-        return
-      end
+      #if has_profile && !$FORCE
+      #  $stderr.puts "Looks like your project is already built on a gemdo."
+      #  $stderr.puts "To re-create the metadata files use the --force option."
+      #  return
+      #end
 
       #name = File.basename(root)
 
-      project = Gemdo::Project.new(root)
+      project = POM::Project.new(root)
 
-      name = project.name || File.basename(root)
+      #name    = project.name || File.basename(root)
+#      profile = project.profile
 
-      #profile = Gemdo::Profile.new(root, name)
+      #if !has_package
+      #  #metadata.new_project
+      #  metadata.name     = File.basename(root)
+      #  metadata.version  = '0.0.0'
+      #  metadata.codename = 'FIXME A version codename is optional'
+      #end
 
-      metadata = project.metadata
+#      profile.summary  = "FIXME brief one line description here"
+#      profile.contact  = "FIXME name <#{ENV['EMAIL']}>"
+#      profile.authors << "FIXME list of author's names here"
+#      profile.homepage = "FIXME: http://your_website.org"
+      #profile.resources.repository = "FIXME: master public repo uri"
 
-      if !has_package
-        #metadata.new_project
-        metadata.name     = File.basename(root)
-        metadata.version  = '0.0.0'
-        metadata.codename = 'FIXME A version codename is optional'
+      if resources.empty?
+        resources << Dir.glob('*.gemspec').first
+        resources << Dir.glob('README{,.*}').first
       end
 
-      if !has_profile
-        metadata.summary  = "FIXME brief one line description here"
-        metadata.contact  = "FIXME name <#{ENV['EMAIL']}>"
-        metadata.authors << "FIXME list of author's names here"
-        metadata.resources.homepage   = "FIXME: http://your_website.org"
-        metadata.resources.repository = "FIXME: master public repo uri"
-      end
+      resources.compact!
 
-      files = resources
-
-      if files.empty?
-        files << Dir.glob('*.gemspec').first
-        files << Dir.glob('README{,.*}').first
-      end
-      files.compact!
-
-      files.each do |file|
+      resources.each do |file|
         case file
         when /\.gemspec$/
           text = File.read(file)
           gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
           project.import_gemspec(gemspec)
         when /^README/i
-          readme = Gemdo::Readme.load(file)
+          readme = POM::Readme.load(file)
           project.import_readme(readme)
         else
           text = File.read(file)
@@ -175,30 +158,45 @@ module Gemdo::Commands
       # load any meta entries that may already exist
       #project.reload unless options[:replace]
 
-      #package_file = package.file ? package.file : File.join(root,'PACKAGE')
       #profile_file = profile.file ? profile.file : File.join(root,'PROFILE')
 
+      #if $TRIAL
+      #else
+      #  #if $FORCE or !(has_package or has_profile)
+      #    metadata.backup!
+      #    metadata.save! #(package_file)
+      #  #end
+      #end
+
+      text = project.profile.render
+    
       if $TRIAL
+        puts text
       else
-        #if $FORCE or !(has_package or has_profile)
-          metadata.backup!
-          metadata.save! #(package_file)
-        #end
+        File.open('Profile', 'w'){ |f| f << text }
+
+        puts "'Profile' has been created or updated. Please review"
+        puts "this file carefully and edit as needed.\n"
       end
 
-      diff = Dir.glob('**/*', File::FNM_DOTMATCH) - current
-      diff = diff.select{ |f| File.file?(f) }
 
-      if diff.empty?
-        puts "Nothing has been done."
-      else
-        puts "The following files were created or updated. Please review"
-        puts "these files carefully and edit as needed:\n"
-        diff.each do |f|
-          puts "  #{f}"
-        end
-      end
+      #diff = Dir.glob('**/*', File::FNM_DOTMATCH) - current
+      #diff = diff.select{ |f| File.file?(f) }
+
+      #if diff.empty?
+      #  puts "Nothing has been done."
+      #else
+      #  diff.each do |f|
+      #    puts "  #{f}"
+      #  end
+      #end
     end
+
+    #
+    #def render_templates(project)
+    #  profile = project.profile
+    #  ERB.new(template).result(binding)
+    #end
 
     #
     #def print_fixes

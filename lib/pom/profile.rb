@@ -1,8 +1,6 @@
 require 'fileutils'
 require 'time'
 require 'pom/metadata'
-#require 'pom/version_file'
-#require 'pom/version_helper'
 
 module POM
 
@@ -27,16 +25,13 @@ module POM
   # them as well, but use of #property makes the code more explict
   # in intent and alos provides a minor improvement in effciency.
   #
-  class Profile #< Metafile
-
-    require 'pom/profile/infer'
-
-    include Infer
-    #include VersionHelper
+  class Profile
 
     class << self
+      # Initialize, but do not load form file.
       alias create new
 
+      # Initialize and load file (if found).
       def new(root, data={})
         create(root, data).load!
       end
@@ -427,8 +422,9 @@ module POM
         end
       end
 
-      self.name    = infer_name    unless name
-      self.version = infer_version unless version
+      # TODO: apply inference engine
+      #self.name    = infer_name    unless name
+      #self.version = infer_version unless version
 
       return self
     end
@@ -437,6 +433,16 @@ module POM
     def save!
       metadata.save!
     end
+
+    # Render "pretty" Profile. This uses an internal ERB template.
+    # As such, it does not currently cover all properties, only the
+    # most common.
+    def render
+      require 'erb'
+      template_file = File.dirname(__FILE__) + '/profile/template.erb'
+      template      = File.read(template_file)
+      ERB.new(template,nil,'-').result(binding)
+    end 
 
 =begin
     # Like #save! but does a simple substitution on version and date

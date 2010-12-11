@@ -147,10 +147,10 @@ module POM
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
-      package.name          = gemspec.name
-      package.version       = gemspec.version.to_s
-      package.path          = gemspec.require_paths
-      #metadata.arch        = gemspec.platform
+      profile.name          = gemspec.name
+      profile.version       = gemspec.version.to_s
+      profile.path          = gemspec.require_paths
+      #metadata.engines     = gemspec.platform
 
       profile.title        = gemspec.name.capitalize
       profile.summary      = gemspec.summary

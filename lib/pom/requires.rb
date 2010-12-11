@@ -25,7 +25,7 @@ module POM #::Metadata
     #include AbstractField
 
     # New PackageList class.
-    def initialize(reqs)
+    def initialize(reqs=[])
       super()
       reqs.each do |req|
         self << req

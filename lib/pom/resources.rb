@@ -149,6 +149,11 @@ module POM #::Metadata
       to_h
     end
 
+    #
+    def empty?
+      @table.empty?
+    end
+
     # Iterate over each enty, including aliases.
     def each(&block)
       @table.each(&block)

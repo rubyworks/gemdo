@@ -163,14 +163,14 @@ module POM
     # D E F A U L T S
 
     #
-    def default_name
-      @title.downcase
-    end
+    #def default_name
+    #  @title ? @title.downcase : nil
+    #end
 
     #
-    def default_title
-      name.capitalize
-    end
+    #def default_title
+    #  name.capitalize
+    #end
 
     #
     def default_loadpath
@@ -247,6 +247,20 @@ module POM
 
     # P A R S E R S
 
+    #
+    def parse_name(name)
+      name = name.to_s
+      @title = name.capitalize unless @title
+      name
+    end
+
+    #
+    def parse_title(title)
+      title = title.to_s
+      @name = title.downcase unless @name
+      title
+    end
+
     # Convert version entry into a VersionNumber.
     def parse_version(number)
       VersionNumber.new(number)
@@ -297,6 +311,16 @@ module POM
         list = list.reject{ |f| /^\s*$/ =~ f }
         list
       end
+    end
+
+    #
+    def parse_authors(list)
+      [list].flatten
+    end
+
+    #
+    def parse_maintainers(list)
+      [list].flatten
     end
 
     #

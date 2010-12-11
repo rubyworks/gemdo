@@ -1,0 +1,34 @@
+---
+title:   <%= title %>
+version: <%= version %>
+
+requirements:
+- <%= requirements.join("\n- ") %>
+
+summary: <%= summary %>
+contact: <%= contact %>
+created: <%= Time.now.strftime('%Y-%d-%m') %>
+
+description:
+<%= description.tabto(2) %>
+
+authors:
+- <%= authors.join("\n- ") %>
+
+<% unless resources.empty? -%>
+resources:
+- <%= resources.map{|*a| "%8s: %s" % a}.join("\n- ") %>
+<% end -%>
+
+<% unless repositories.empty? -%>
+repositories:
+- <%= repositories.map{|*a| "%8s: %s" % a}.join("\n- ") %>
+<% end -%>
+
+organization : <%= organization %>
+copyright    : Copyright (c) <%= Time.now.year %> Thomas Sawyer
+
+<% unless licenses.empty? %>
+licenses: 
+- <%= licenses.join("\n- ") %>
+<% end %>
