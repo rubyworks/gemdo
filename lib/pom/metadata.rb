@@ -1,3 +1,4 @@
+require 'pom/core_ext'
 require 'pom/version'
 require 'pom/requires'
 require 'pom/resources'
@@ -160,6 +161,11 @@ module POM
     end
 
     # D E F A U L T S
+
+    #
+    def default_name
+      @title.downcase
+    end
 
     #
     def default_title
@@ -352,9 +358,9 @@ module POM
 
     # H A S H - L I K E  A C C E S S
  
-    #
+    # TODO: set instance variable from default if used
     def [](name)
-      instance_variable_get("@#{name}")
+      instance_variable_get("@#{name}") || default(name)
     end
 
     #

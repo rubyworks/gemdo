@@ -105,7 +105,6 @@ module POM
 
     # The Profile class delegates to the Metadata class.
     def method_missing(sym, *args)
-p sym
       meth = sym.to_s
       name = meth.chomp('=').chomp('?')
       case meth
@@ -329,8 +328,8 @@ p sym
     # --- End Bundler Gemfile Compatibility ---
 
     #
-    def license(*names)
-      metadata.licenses = names
+    def license(name)
+      metadata.licenses << name.to_s
     end
 
     #

@@ -1,0 +1,46 @@
+= POM::Profile
+
+Given a PROFILE project file containing ...
+
+    --- 
+    title  : DemoApp
+    version: 1.0.0
+    summary: Demo summary
+    license: MIT
+    contact: trans <transfire@gmail.com>
+    copyright: Copyright (c) 2010 Thomas Sawyer
+    created: 2010-10-10
+
+    authors: 
+      - Thomas Sawyer
+
+    description:
+      This is the description for the example.
+
+We can access this file by passing the project directory to the POM::Profile
+constructor method.
+
+    profile = POM::Profile.new('tmp/example')
+
+Now we can verify profile is being read from the PROFILE.
+
+    profile.name.assert        == "demoapp"
+    profile.title.assert       == "DemoApp"
+    profile.summary.assert     == "Demo summary"
+    profile.licenses.assert    == ["MIT"]
+    profile.contact.assert     == "trans <transfire@gmail.com>"
+    profile.authors.assert     == ["Thomas Sawyer"]
+    profile.copyright.assert   == "Copyright (c) 2010 Thomas Sawyer"
+    profile.created.assert     == Date.parse("2010-10-10")
+    profile.description.assert == "This is the description for the example."
+
+And verify version profile is being read from the VERSION file.
+
+    profile.version.to_s.assert == "1.0.0"
+
+We can also verify that certain settings are picking up their defaults.
+
+    profile.loadpath.assert == ['lib']
+
+And so forth.
+

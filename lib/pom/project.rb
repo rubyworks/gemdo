@@ -1,11 +1,8 @@
-$DEBUG = true
-
 require 'pom/core_ext'
-#require 'pom/metadata'
+require 'pom/profile'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/news'
-require 'pom/profile'
 
 require 'pom/project/paths'
 require 'pom/project/files'

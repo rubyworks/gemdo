@@ -8,9 +8,7 @@ and 'mailinglist'. And two entries are typically expected to avaialble if
 applicable, namely 'homepage', which is the project main website, and
 'repository', which is the project's public SCM repository address. 
 
-  require 'pom/resources'
-
-Resources are a subentry in the prokect's PROFILE, so the initializer simply
+Resources are a subentry in the project's PROFILE, so the initializer simply
 take a hash of initial entires.
 
   resources = POM::Resources.new(

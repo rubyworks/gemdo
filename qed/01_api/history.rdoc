@@ -57,9 +57,6 @@ Given a HISTORY project file containing ...
     first and are numerically enumerated.
 
 The History class provides an interface to this information.
-
-    require 'pom/history'
-
 The initializer takes the root directory for the project
 and looks for a file called +HISTORY+, optionally ending
 in an extension such as +.txt+ or +.rdoc+, etc.
