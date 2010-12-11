@@ -1,3 +1,5 @@
+raise "sorry, bump is not yet implemented"
+
 require 'pom/version'
 
 module POM::Commands
