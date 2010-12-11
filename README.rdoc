@@ -1,7 +1,7 @@
 = POM
 
-* home: http://proutils.github.com/pom
-* code: http://github.com/protuils/pom
+* home: http://rubyworks.github.com/pom
+* code: http://github.com/rubyworks/pom
 
 
 == DESCRIPTION
@@ -38,7 +38,7 @@ as well as common patterns widely used among the Ruby community.
 
 The specification designates particular files and their uses, most fo which
 are obvious, such as a `README` or a `MANIFEST`. Others are new introduced
-by POM such as the `.ruby` and `PROFILE` files.
+by POM such as the `.ruby` and `Profile` files.
 
 This entire specification is implemeted in Ruby code, known as the "POM"
 (Project Object Model). Primary usage of this model relies on the
@@ -51,7 +51,7 @@ The project object then ties into all the available metadata, e.g.
 
   project.name
   project.version
-  project.profile
+  project.homepage
 
   etc...
 
@@ -60,35 +60,24 @@ For example, it can be used to easily bump a project's version number.
 
   $ pom bump --patch
 
-See the Wiki[http://wiki.github.com/proutils/pom] and
-API[http://proutils.github.com/pom/rdoc] documentation for further
+See the Wiki[http://wiki.github.com/rubyworks/pom] and
+API[http://rubyworks.github.com/pom/rdoc] documentation for further
 details.
-
-
-== Upgrading from POM
-
-Earlier versions of POM were called "POM" and used a directory-based
-configuration store with each piece of information in a separate file under
-the meta/ or .meta/ directory. While this design has some useful advantages,
-it also suffers for some distinct disadvantages, not the least of which is it's
-lack of familiarity to developers. The latest versions of POM therefore
-replaces this design with a set of YAML-base configuration files. 
-
-If you were using an old version of POM with a project and need to updgrade,
-the pom command provides a helpful subcommand:
-
-  $ pom upgrade
-
-This will create the PROFILE and PACKAGE files containing the entries
-in the meta/ or .meta/ directory. It will not be prefect, so be sure to edit
-the newly created files, but it will at least make the process much easier.
 
 
 == DEVELOPMENT
 
-You can subscribe to the ProUtils mailing list by sending a message to
-this mailing address[mailto:proutils+subscribe@googlegroups.com], or
-visit http://groups.google.com/group/proutils.
+== Source Code Management
+
+POM uses git and hosts it's project repositories with GitHub at
+http://github.com/rubyworks/pom.
+
+
+=== Mailing List
+
+You can subscribe to the RubyWorks mailing list by sending a message to
+this mailing address[mailto:rubyworks-mailinglist+subscribe@googlegroups.com],
+or visit http://groups.google.com/group/rubyworks-mailinglist.
 
 
 == HOW TO INSTALL
@@ -107,11 +96,20 @@ then download the tarball package and type:
 Windows users use 'ruby setup.rb all'.
 
 
-== LICENSE/COPYRIGHT
+== COPYRIGHT & LICENSE
 
 POM Copyright (c) 2009 Thomas Sawyer
 
-Gem is distributed under the terms of the Apache License, version 2.0.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 See LICENSE file for more details.
-
