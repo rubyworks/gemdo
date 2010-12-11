@@ -5,7 +5,6 @@ require 'pom/core_ext'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/news'
-require 'pom/spec'
 require 'pom/profile'
 
 require 'pom/project/paths'

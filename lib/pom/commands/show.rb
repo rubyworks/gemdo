@@ -1,6 +1,6 @@
 module POM::Commands
 
-  # Show a given setting of the Rubysepc.
+  # Show a given setting of the project's metadata.
   class Show
 
     def self.run
@@ -48,14 +48,9 @@ module POM::Commands
     #
     def execute
       if entry
-        puts project.metadata.__send__(entry)
-        #if project.package.respond_to?(entry)
-        #  puts project.package.__send__(entry)
-        #else
-        #  puts project.profile.__send__(entry)
-        #end
+        puts project.profile[entry]
       else
-        vars = project.metadata.to_h.keys
+        vars = project.profile.attributes
         puts vars.sort.join(' ')
       end
     end

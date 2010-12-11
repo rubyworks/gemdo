@@ -202,6 +202,13 @@ module POM
       end
     end
 
+    # TODO: Is this the same as #state?
+    def status
+      if md = /(\w+)/.match(build.to_s)
+        md[1].to_sym
+      end
+    end
+
     # Return the state revision count. This is the
     # number that occurs after the state.
     #

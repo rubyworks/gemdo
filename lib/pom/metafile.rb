@@ -4,9 +4,6 @@ require 'yaml'
 
 module POM
 
-  # Where in project to store backups.
-  BACKUP_DIRECTORY = '.cache/pom'
-
   # Metafile serves as a base class for POM's YAML-formatted
   # metadata files.
   #
@@ -21,13 +18,6 @@ module POM
     #
     def self.default_filename
       name.split('::').last.upcase + '.yml'
-    end
-
-    #
-    def self.find(root)
-      root = Pathname.new(root)
-      pattern = '{' + filename.join(',') + '}{,.yml,.yaml}'
-      root.glob(pattern, :casefold).first
     end
 
     #
@@ -79,11 +69,9 @@ module POM
 
     #
     def initialize(root, data={})
-      @root = Pathname.new(root)
+      @root = Pathname.new(root).expand_path
 
-      @file = data.delete(:file)    ||
-              self.class.find(root) ||
-              root + self.class.default_filename
+      @file = data.delete(:file) || find || default_file
 
       @data = {}
 
@@ -95,16 +83,15 @@ module POM
     end
 
     #
-    #def initialize_defaults
-    #  self.class.defaults.each do |k,v|
-    #    case v
-    #    when Proc
-    #      __send__("#{k}=", instance_eval(&v))
-    #    else
-    #      __send__("#{k}=", v)
-    #    end
-    #  end
-    #end
+    def find
+      pattern = '{' + self.class.filename.join(',') + '}'
+      root.glob(pattern, :casefold).first
+    end
+
+    #
+    def default_file
+      root + self.class.default_filename
+    end
 
     public
 

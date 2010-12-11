@@ -1,7 +1,7 @@
 module POM::Commands
 
   #
-  class Dump
+  class Spec
 
     def self.run
       new.run
@@ -11,6 +11,7 @@ module POM::Commands
 
     def initialize
       @project = POM::Project.new(:lookup=>true)
+      @update  = false
     end
 
     #
@@ -22,11 +23,14 @@ module POM::Commands
     #
     def parse
       parser = OptionParser.new do |opt|
-        opt.banner = "pom dump"
+        opt.banner = "pom spec"
+
+        opt.on("--update", "-u", "update .prospec file") do
+          @update = true
+        end
 
         opt.on("--debug", "run in debug mode") do
-          $DEBUG   = true
-          $VERBOSE = true
+          $DEBUG = true
         end
 
         opt.on_tail("--help", "-h", "display this help message") do
@@ -40,7 +44,12 @@ module POM::Commands
 
     #
     def execute
-      puts project.rubyspec.yaml
+      if @update
+        project.profile.save!
+        puts "Project .prospec file updated."
+      else
+        puts project.metadata.to_h.to_yaml
+      end
     end
 
   end

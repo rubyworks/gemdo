@@ -1,8 +1,12 @@
-module Gemdo
+module POM
+
+  # Where in project to store backups.
+  BACKUP_DIRECTORY = '.cache/pom'
+
   #
   def self.metadata
     @metadata ||= (
-      file = File.dirname(__FILE__) + "/gemdo/rubyspec.yml"
+      file = File.dirname(__FILE__) + "/pom.yml"
       YAML.load(File.new(file))
     )
   end
@@ -12,6 +16,8 @@ module Gemdo
     name = name.to_s.downcase
     metadata[name]
   end
+
 end
 
-require 'gemdo/project'
+require 'pom/project'
+

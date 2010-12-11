@@ -1,5 +1,7 @@
 module POM::Commands
 
+  # The +about+ command produces a simply console
+  # printout of general information about a project.
   class About
 
     def self.run

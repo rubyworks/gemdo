@@ -59,6 +59,7 @@ module POM #::Metadata
       map{ |r| r.to_h }.to_yaml
     end
 
+    # Convert requirements list into plain hash.
     def to_data
       map{ |r| r.to_h }
     end
