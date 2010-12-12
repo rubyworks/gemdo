@@ -76,7 +76,7 @@ module POM
 
       @file = data.delete(:file) || find || default_file
 
-      ## only read .prospec if we have no Profile file to use
+      ## only read .ruby if we have no Profile file to use
       if file && file.exist?
         @metadata = Metadata.create(root, data)
       else
