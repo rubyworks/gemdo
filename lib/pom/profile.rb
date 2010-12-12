@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'time'
 require 'pom/metadata'
+require 'pom/profile/infer'
 
 module POM
 
@@ -26,6 +27,8 @@ module POM
   # in intent and alos provides a minor improvement in effciency.
   #
   class Profile
+
+    include Infer
 
     class << self
       # Initialize, but do not load form file.
@@ -73,7 +76,12 @@ module POM
 
       @file = data.delete(:file) || find || default_file
 
-      @metadata = Metadata.new(root, data)
+      ## only read .prospec if we have no Profile file to use
+      if file && file.exist?
+        @metadata = Metadata.create(root, data)
+      else
+        @metadata = Metadata.new(root, data)
+      end
 
       # for compatibility with Bundler
       @_source   = nil
@@ -422,9 +430,11 @@ module POM
         end
       end
 
-      # TODO: apply inference engine
-      #self.name    = infer_name    unless name
-      #self.version = infer_version unless version
+      self.name    = infer_name    unless name
+      self.version = infer_version unless version
+
+      # TODO: validate
+      #raise unless valid?
 
       return self
     end

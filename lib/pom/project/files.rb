@@ -5,9 +5,13 @@ module POM
     #
     module Files
 
-      # Access to the +.prospec+ file. # TODO name of this?
+      # Access to the +.prospec+ file.
+      #--
+      # TODO: Is this really needed, since we have access to it
+      # via profile.metadata?
+      #++
       def prospec
-        @prospec ||= Rubyspec.new(root)
+        @prospec ||= Metadata.new(root)
       end
 
       # Access to the +Profile+ file.

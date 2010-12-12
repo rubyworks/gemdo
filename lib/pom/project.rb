@@ -52,7 +52,7 @@ module POM
 
     #
     def metadata
-      @metadata ||= profile #Rubyspec.new(root)
+      @metadata ||= profile
     end
 
     # Project name.
@@ -144,7 +144,7 @@ module POM
       if root_dir = root(dir)
         new(root_dir)
       else
-        raise(ProjectNotFound, "could not find #{ROOT_INDICATOR}")
+        raise(ProjectNotFound, "Could not find #{ROOT_INDICATORS.join(' or ')}.")
       end
     end
 
@@ -158,18 +158,23 @@ module POM
 
     # Root directory is indicated by the presence of either a
     # .ruby file or as a fallback a lib/ directory.
-    ROOT_INDICATOR = '.prospec' #, '.rubyspec', '.ruby', 'lib/']
+    ROOT_INDICATORS = ['.prospec', '.ruby', 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position
-    # until a root indicator is matched. Returns +nil+ if not
-    # found.
+    # until a root indicator is matched. It tries one indicator
+    # at a time to reduce the chance of a false positive, and will
+    # not search past the current home directory.
+    #
+    # Returns +nil+ if not found.
 
     def self.root(dir=Dir.pwd)
-      home = Pathname.new('~').expand_path  # Better way?
-      Pathname.new(dir).ascend do |root|
-        return nil  if root == home
-        return root if root.join(ROOT_INDICATOR).file?
+      home = Pathname.new('~').expand_path
+      ROOT_INDICATORS.each do |root_indicator|
+        Pathname.new(dir).ascend do |root|
+          return nil  if root == home
+          return root if root.join(root_indicator).file?
+        end
       end
     end
 

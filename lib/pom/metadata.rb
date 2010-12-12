@@ -15,7 +15,16 @@ module POM
     # Regular expression for matching valid email addresses.
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
+    #
     FILENAME = '.prospec'
+
+    #
+    class << self
+      alias create new
+      def new(root, data={})
+        create(root, data).read!
+      end
+    end
 
     #
     def self.attr_accessor(name)
@@ -40,6 +49,17 @@ module POM
       end
     end
 
+    # Create new Metdata instance from metdata file.
+    def read!
+      file = root + FILENAME
+      if file.exist?
+        data = YAML.load(File.new(file))
+        data.each do |name, value|
+          self[name] = value
+        end
+      end
+      return self
+    end
 
     # A T T R I B U T E S
 

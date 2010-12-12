@@ -71,10 +71,12 @@ pom <COMMAND> [OPTIONS ...]
 COMMANDS:
   about                            show a summary of project
   show [name]                      show specific metadata entry
-  init                             make starter metadata files
+  init                             make a starter Profile file
+  spec                             make the .prospec file
   gemspec                          make a gemspec file
+  resolve                          resolve dependencies
+  news                             show the last release history entry
   bump                             bump version number
-  dump                             show all metadata in YAML format
   help                             show this help message
 
 COMMON OPTIONS:

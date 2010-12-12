@@ -67,7 +67,7 @@ details.
 
 == DEVELOPMENT
 
-== Source Code Management
+=== Source Code Management
 
 POM uses git and hosts it's project repositories with GitHub at
 http://github.com/rubyworks/pom.

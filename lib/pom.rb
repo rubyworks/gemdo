@@ -1,5 +1,4 @@
 module POM
-
   # Where in project to store backups.
   BACKUP_DIRECTORY = '.cache/pom'
 
@@ -16,7 +15,6 @@ module POM
     name = name.to_s.downcase
     metadata[name]
   end
-
 end
 
 require 'pom/project'
