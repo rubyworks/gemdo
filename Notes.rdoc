@@ -1,5 +1,22 @@
 = Development Notes
 
+== 2011-04-22 | Post Analysis
+
+Since I last wrote here I moved to an imporved design whereby a single
+metadata file called `PROFILE`, and an optional `VERSION` file,
+have taken the role of human editable project metadata, which are then
+used to generate a canonical `.ruby` file. This has proven the right
+approach, even though it requires an additional step of updating the
+canonical file. This approach successfully focuses the design around
+the canonical file and the others simply are a means for the developer
+to "input" the necessay information. In other words, using PROFILE and
+VERSION files are just one possible means of filling out the canoncial
+file.
+
+Why do I keep calling it the canonical file? B/c I am not sure `.ruby` is
+the best name for it.
+
+
 == 2010-07-23 | Seeking Perfection
 
 I realize my biggest problem it working out the various details of design for
