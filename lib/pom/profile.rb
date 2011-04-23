@@ -7,9 +7,9 @@ require 'yaml'
 
 require 'pom/core_ext'
 require 'pom/version'
-require 'pom/requires'
-require 'pom/resources'
 
+require 'pom/profile/requires'
+require 'pom/profile/resources'
 require 'pom/profile/properties'
 require 'pom/profile/inference'
 

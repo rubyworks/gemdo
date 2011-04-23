@@ -26,27 +26,34 @@ module POM
       end
 
       #
+      attr :project
+
+      #
+      attr :root
+
+      #
       attr :table
 
       #
       def initialize(project)
         @project = project
+        @root    = project.root
         @table   = {}
+
+        infer!
+      end
+
+      #
+      def infer!
+        self.class.inference_methods.each do |meth|
+          send(meth)
+        end
       end
 
       #
       def apply(profile)
         table.each do |key, value|
           profile[key] = value unless profile[key]
-        end
-      end
-
-      # Failing to find a name for the project, the last hope
-      # is to discern it from the lib files.
-      def infer_name_from_lib
-        if file = root.glob('lib/*.rb').first
-          name = file.basename.to_s.chomp('.rb')
-          set :name, name
         end
       end
 
@@ -99,6 +106,15 @@ module POM
         set :description, readme.description
         set :copyright, readme.copyright
         set :authors, readme.authors
+      end
+
+      # Failing to find a name for the project, the last hope
+      # is to discern it from the lib files.
+      def infer_name_from_lib
+        if file = root.glob('lib/*.rb').first
+          name = file.basename.to_s.chomp('.rb')
+          set :name, name
+        end
       end
 
       private

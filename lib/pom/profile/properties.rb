@@ -1,4 +1,4 @@
-require 'pom/property'
+require 'pom/profile/property'
 
 module POM
 
