@@ -10,9 +10,9 @@ module POM
       # TODO: Is this really needed, since we have access to it
       # via profile.metadata?
       #++
-      def prospec
-        @prospec ||= Metadata.new(root)
-      end
+      #def prospec
+      #  @prospec ||= Metadata.new(root)
+      #end
 
       # Access to the +Profile+ file.
       def profile
