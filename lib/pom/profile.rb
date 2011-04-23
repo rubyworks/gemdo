@@ -10,7 +10,7 @@ require 'pom/version'
 require 'pom/requires'
 require 'pom/resources'
 
-require 'pom/properties/main'
+require 'pom/profile/properties'
 require 'pom/profile/infer'
 
 module POM
