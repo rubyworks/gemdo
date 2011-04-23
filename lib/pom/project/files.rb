@@ -14,11 +14,6 @@ module POM
       #  @prospec ||= Metadata.new(root)
       #end
 
-      # Access to the +Profile+ file.
-      def profile
-        @profile ||= Profile.new(root)
-      end
-
       # Access to the general +README+ file
       def readme
         @readme ||= Readme.new(root)

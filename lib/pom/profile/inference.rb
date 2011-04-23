@@ -10,15 +10,43 @@ module POM
     # Inference is limited to required metadata fields. Using inference
     # to gather additonal information would discourage proper use of POM
     # metadata file.
+    #
+    class Inference
 
-    module Infer
+      #
+      def self.inference_methods
+        @inference_methods ||= []
+      end
+
+      #
+      def self.method_added(name)
+        if name.to_s =~ /^infer_/
+          inference_methods << name
+        end
+      end
+
+      #
+      attr :table
+
+      #
+      def initialize(project)
+        @project = project
+        @table   = {}
+      end
+
+      #
+      def apply(profile)
+        table.each do |key, value|
+          profile[key] = value unless profile[key]
+        end
+      end
 
       # Failing to find a name for the project, the last hope
       # is to discern it from the lib files.
-      def infer_name
+      def infer_name_from_lib
         if file = root.glob('lib/*.rb').first
           name = file.basename.to_s.chomp('.rb')
-          name
+          set :name, name
         end
       end
 
@@ -29,7 +57,7 @@ module POM
       #
       # TODO: Support for codename?
       #++
-      def infer_version
+      def infer_version_from_version_file
         vfile = root.glob('VERSION{,.txt,.yml,.yaml}', File::FNM_CASEFOLD).first
         if vfile && vfile.exist?
           text = vfile.read.strip
@@ -49,16 +77,37 @@ module POM
             data = YAML.load(text)
             data = data.inject({}){|h,(k,v)| h[k.to_sym]=v; h}
             text = data.values_at(:major,:minor,:patch,:build).compact.join('.')
-            text
+            set :version, text
           when :text
-            text
+            set :version, text
           end
         end
       end
 
       #
       def infer_manifest
-        root.glob('manifest{,.txt}', :casefold).first
+        if file = root.glob('manifest{,.txt}', :casefold).first
+          set :manifest, file
+        end
+      end
+
+      #
+      def infer_from_readme
+        readme = project.readme
+        set :name, readme.name
+        set :title, readme.title
+        set :description, readme.description
+        set :copyright, readme.copyright
+        set :authors, readme.authors
+      end
+
+      private
+
+      #
+      def set(name, value)
+        if value && @table[name.to_sym].nil?
+          @table[name.to_sym] = value 
+        end
       end
 
     end

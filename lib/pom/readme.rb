@@ -51,7 +51,7 @@ module POM
     def name ; @cache[:name] ; end
 
     # DEPRECATE
-    alias_method :project, :name
+    #alias_method :project, :name
 
     #
     def title ; @cache[:title] ; end

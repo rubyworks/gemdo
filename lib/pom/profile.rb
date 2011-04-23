@@ -11,7 +11,7 @@ require 'pom/requires'
 require 'pom/resources'
 
 require 'pom/profile/properties'
-require 'pom/profile/infer'
+require 'pom/profile/inference'
 
 module POM
 
@@ -33,8 +33,6 @@ module POM
   # in intent and alos provides a minor improvement in effciency.
   #
   class Profile
-
-    include Infer
 
     # TODO: probably change name of this
     CANONICAL_FILENAME = '.ruby'
@@ -97,6 +95,8 @@ module POM
 
       #@file = data.delete(:file) || find || default_file
 
+      @project = data.delete(:project)
+
       data.each do |k,v|
         self[k] = v
       end
@@ -126,10 +126,14 @@ module POM
     end
 
     # Project root.
-    attr :root
+    attr_reader :root
 
     # Returns Pathname to (read) file.
+    # TODO: change to sources and as an array
     attr :file
+
+    # Referecene to Project object, if provided.
+    attr_accessor :project
 
     # POM Metadatais extensible. If an attribute is assigned that is not
     # already defined by an attribute reader then an entry will be created
@@ -455,10 +459,11 @@ module POM
       self.date = Date.today
     end
 
-
     # Render "pretty" Profile. This uses an internal ERB template.
     # As such, it does not currently cover all properties, only the
     # most common.
+    #
+    # TODO: rename to #to_pretty_yaml or something like that.
     def render
       require 'erb'
       template_file = File.dirname(__FILE__) + '/profile/template.erb'
@@ -505,7 +510,7 @@ module POM
 
     #
     def key?(name)
-      @data.key(name)
+      @data.key?(name)
     end
 
     # Returns a list of metadata attributes.
@@ -565,9 +570,12 @@ module POM
         end
       end
 
-      self.name     = infer_name     unless name
-      self.version  = infer_version  unless version
-      self.manifest = infer_manifest unless manifest
+      inference = Inference.new(project || Project.new(root))
+      inference.apply(self)
+
+      #self.name     = infer_name     unless name
+      #self.version  = infer_version  unless version
+      #self.manifest = infer_manifest unless manifest
 
       # TODO: validate
       #raise unless valid?

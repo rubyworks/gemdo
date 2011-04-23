@@ -4,6 +4,7 @@ require 'pom/profile'
 require 'pom/manifest'
 require 'pom/history'
 require 'pom/news'
+require 'pom/readme'
 
 require 'pom/project/paths'
 require 'pom/project/files'
@@ -49,6 +50,11 @@ module POM
     # Project's root location. By default this is determined by scanning
     # up from the current working directory in search of the ROOT_INDICATOR.
     attr :root
+
+    # Access to the +Profile+ file.
+    def profile
+      @profile ||= Profile.new(root, :project=>self)
+    end
 
     #
     def metadata

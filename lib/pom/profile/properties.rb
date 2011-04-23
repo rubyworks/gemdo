@@ -6,7 +6,7 @@ module POM
   # if not supplied.
   property :name do
     parse do |value|
-      value.to_s.downcase.sub(/\W/, '')
+      value.to_s.downcase.sub(/[^A-Za-z0-9_-]+/, '-')
     end
   end
 
@@ -35,11 +35,11 @@ module POM
   # Title of package (this defaults to project name capitalized).
   property :title do
     parse do |value|
-      value.to_s.capitalize #titlecase
+      value.to_s #.capitalize #titlecase
     end
-    default do
-      name.to_s.capitalize #titlecase
-    end
+    #default do
+    #  name.to_s.capitalize #titlecase
+    #end
   end
 
   # A one-line brief description.
