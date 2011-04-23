@@ -1,14 +1,20 @@
 require 'fileutils'
 require 'time'
-require 'pom/metadata'
+require 'yaml'
+
+#
+#require 'pom/metadata'
+
+require 'pom/core_ext'
+require 'pom/version'
+require 'pom/requires'
+require 'pom/resources'
+
+require 'pom/properties/main'
 require 'pom/profile/infer'
 
 module POM
 
-  # The Profile class provides a fron-end over the Metadata class. While
-  # the Metadata class has a strict canonical design, Profile is designed
-  # for ease of use.
-  #
   # Profile information cne be written in either pure YAML or a Ruby script.
   # A typical example of a YAML-based file might start out like:
   #
@@ -30,6 +36,12 @@ module POM
 
     include Infer
 
+    # TODO: probably change name of this
+    CANONICAL_FILENAME = '.ruby'
+
+    # Regular expression for matching valid email addresses.
+    RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
+
     class << self
       # Initialize, but do not load form file.
       alias create new
@@ -42,7 +54,7 @@ module POM
 
     # Possible profile file names.
     def self.filename
-      ['[Pp]rofile', 'PROFILE'] #, 'Gemfile']
+      ['[Pp]rofile', 'PROFILE']
     end
 
     # The default file name.
@@ -50,14 +62,20 @@ module POM
       'Profile'
     end
 
+    #
+    def self.default_sources
+      ['[Pp]rofile', 'PROFILE', 'meta']
+    end
+
     # Define a metadata property.
     def self.property(name)
       module_eval %{
         def #{name}(value=nil)
-          metadata.value('#{name}', value)
+          self["#{name}"] = parse("#{name}", value) if value
+          self["#{name}"] ||= default("#{name}")
         end
         def #{name}=(value)
-          metadata.#{name} = value
+          self["#{name}"] = parse("#{name}", value)
         end
       }
     end
@@ -74,14 +92,21 @@ module POM
     def initialize(root, data={})
       @root = Pathname.new(root).expand_path
 
-      @file = data.delete(:file) || find || default_file
+      @data = {}
+      @data['spec_version'] = POM::VERSION
+
+      #@file = data.delete(:file) || find || default_file
+
+      data.each do |k,v|
+        self[k] = v
+      end
 
       ## only read .ruby if we have no Profile file to use
-      if file && file.exist?
-        @metadata = Metadata.create(root, data)
-      else
-        @metadata = Metadata.new(root, data)
-      end
+      #if file && file.exist?
+      #  @metadata = Metadata.create(root, data)
+      #else
+      #  @metadata = Metadata.new(root, data)
+      #end
 
       # for compatibility with Bundler
       @_source   = nil
@@ -91,7 +116,7 @@ module POM
 
     #
     def find
-      pattern = '{' + self.class.filename.join(',') + '}'
+      pattern = '{' + self.class.filename.join(',') + '}{,.yml,.yaml}'
       root.glob(pattern, :casefold).first
     end
 
@@ -106,35 +131,66 @@ module POM
     # Returns Pathname to (read) file.
     attr :file
 
-    # The Profile class delegates to the Metadata class.
+    # POM Metadatais extensible. If an attribute is assigned that is not
+    # already defined by an attribute reader then an entry will be created
+    # for it.
     def method_missing(sym, *args)
       meth = sym.to_s
-      name = meth.chomp('=').chomp('?')
+      name = meth.chomp('=')
       case meth
+      when /\=$/
+        self[name] = args.first
       when /\!$/
         super(sym, *args)
       else
-        metadata.value(name, *args)
+        if block_given? or args.size > 0
+          super(sym, *args)
+        else
+          self[name]
+        end
       end
     end
+
+    ## The Profile class delegates to the Metadata class.
+    #def method_missing(sym, *args)
+    #  meth = sym.to_s
+    #  name = meth.chomp('=').chomp('?')
+    #  case meth
+    #  when /\!$/
+    #    super(sym, *args)
+    #  else
+    #    metadata.value(name, *args)
+    #  end
+    #end
 
     # Override standard #respond_to? method to take
     # method_missing lookup into account.
     def respond_to?(name)
       return true if super(name)
-      return true if metadata.key?(name)
+      return true if key?(name)
       return false
     end
 
+    #
+    Property.list.each do |prop|
+      property prop.name
+      prop.aliases do |a|
+        property_alias a, prop.name
+      end
+    end
+
+=begin
     # Project's <i>packaging name</i>. It can default to title downcased,
     # if not supplied.
     property :name
 
+
     # Version number.
     property :version
 
-    ## Date this version was released.
+    # Date this version was released.
     property :date
+
 
     # Colorful nick name for the particular version, e.g. "Lucid Lynx".
     property :codename
@@ -144,6 +200,7 @@ module POM
     # For example, +activerecord+  uses +ActiveRecord+ for it's namespace,
     # not Activerecord.
     property :namespace
+=end
 
     # TODO: Integer-esque build number.
     #property :build_number
@@ -151,6 +208,7 @@ module POM
     # TODO: Integer-esque revison id from SCM.
     #property :scm_revision_id
 
+=begin
     # Internal load paths.
     property :loadpath
 
@@ -217,13 +275,6 @@ module POM
     # Returns a Hash of +Type+ => +URI+ for SCM repository.
     property :repositories
 
-
-    #
-    property_alias :released,  :date
-
-    #
-    property_alias :release_date, :date
-
     # (TODO: DEPRECATE?)
     property_alias :code,  :codename
     #property_alias :nick,     :codename
@@ -242,11 +293,11 @@ module POM
     property_alias :gems        , :requires
 
     # The files of the project.
-    property_alias :files, :manifest
+    #property_alias :files, :manifest
 
     # Alias for #message. This is the term used in gemspecs.
     property_alias :post_install_message, :message
-
+=end
 
     # Designate a requirement.
     def gem(name, *args)
@@ -275,7 +326,7 @@ module POM
         opts['plarform'] += @_platform
       end
 
-      metadata.requires << opts
+      requires << opts
     end
 
     # --- Bundler Gemfile Compatibility ---
@@ -332,27 +383,27 @@ module POM
 
     #
     def license(name)
-      metadata.licenses << name.to_s
+      licenses << name.to_s
     end
 
     #
-    def license=(name)
-      metadata.licenses = name
-    end
+    #def license=(name)
+    #  licenses = name
+    #end
 
     #
     def resource(label, url)
-      metadata.resources[label] = url
+      resources[label] = url
     end
 
     # Project's homepage as listed in the resources.
     def homepage
-      metadata.resources.homepage
+      resources.homepage
     end
 
     # Project's homepage as listed in the resources.
     def homepage=(url)
-      metadata.resources.homepage = url
+      resources.homepage = url
     end
 
     # Project's public repository as listed in the resources.
@@ -360,9 +411,13 @@ module POM
     #  repositories['public']
     #end
 
-    #
+    # Contact's email address.
     def email
-      metadata.email
+      if md = RE_EMAIL.match(contact.to_s)
+        md[0]
+      else
+        nil
+      end
     end
 
     # Returns the first entry in the authors list.
@@ -395,54 +450,11 @@ module POM
       version.status
     end
 
-    # Import settings from another file.
-    def import(file)
-      case File.extname(file)
-      when '.yaml', '.yml'
-        @data.merge!(YAML.load(File.new(file)))
-      else
-        text = File.read(file).strip
-        if /\A---/ =~ text
-          @data.merge!(YAML.load(text))
-        else
-          self[file] = text.strip
-        end
-      end
-    end
-
     # Set the date to the present moment.
     def now!
-      metadata.date = Date.today
+      self.date = Date.today
     end
 
-    # Load the +Profile+ file from the project, if it exists.
-    def load!
-      if file && file.exist?
-        text = File.read(file)
-        if /\A---/ =~ text
-          #text = ERB.new(text).result(Object.new.instance_eval{binding})
-          data = YAML.load(text)
-          data.each do |k,v|
-            __send__("#{k}=", v)
-          end
-        else
-          instance_eval(text, file, 0)
-        end
-      end
-
-      self.name    = infer_name    unless name
-      self.version = infer_version unless version
-
-      # TODO: validate
-      #raise unless valid?
-
-      return self
-    end
-
-    # Save canoncial metadata file.
-    def save!
-      metadata.save!
-    end
 
     # Render "pretty" Profile. This uses an internal ERB template.
     # As such, it does not currently cover all properties, only the
@@ -473,24 +485,58 @@ module POM
 =end
 
     # Access metadate by +name+.
+    # TODO: set instance variable from default if used
     def [](name)
-      metadata[name]
+      if prop = Property.find(name)
+        @data[prop.name.to_s] || default(name)
+      else
+        @data[name.to_s] || default(name)
+      end
+    end
+
+    #
+    def []=(name, value)
+      if prop = Property.find(name)
+        @data[prop.name.to_s] = parse(name, value)
+      else
+        @data[name.to_s] = parse(name, value)
+      end
+    end
+
+    #
+    def key?(name)
+      @data.key(name)
     end
 
     # Returns a list of metadata attributes.
     def attributes
-      metadata.attributes
+      @data.keys
     end
 
     # Return the underlying Metadata object.
-    def to_metadata
-      metadata
+    #def to_metadata
+    #  metadata
+    #end
+
+    # Convert to hash.
+    # TODO: Use properties instead?
+    def to_h
+      h = {}
+      @data.each do |k, v|
+        h[k] = self[k]
+      end
+      h
     end
 
-    # Convert to hash. Technically this simply return the metadata
-    # converted to a hash.
-    def to_h
-      metadata.to_h
+    #
+    def to_data
+      h = to_h
+      h['version']   = h['version'].to_s
+      h['requires']  = h['requires'].to_data  if h['requires']
+      h['conflicts'] = h['conflicts'].to_data if h['conflicts']
+      h['replaces']  = h['replaces'].to_data  if h['replaces']
+      h['resources'] = h['resources'].to_data if h['resources']
+      h
     end
 
     #
@@ -501,11 +547,180 @@ module POM
       s
     end
 
+    # F I L E  H A N D L I N G
+
+    # Load the +Profile+ data from sources.
+    def load!(*sources)
+      if sources.empty?
+        sources = self.class.default_sources.map{ |src| File.join(root, src) }
+      end
+
+      sources.each do |src|
+        if src = Dir[src].first
+          if File.directory?(src)
+            load_dir!(src)
+          else
+            load_file!(src)
+          end
+        end
+      end
+
+      self.name     = infer_name     unless name
+      self.version  = infer_version  unless version
+      self.manifest = infer_manifest unless manifest
+
+      # TODO: validate
+      #raise unless valid?
+
+      return self
+    end
+
+    #
+    def load_file!(file)
+      if File.file?(file)
+        text = File.read(file)
+        if /\A---/ =~ text
+          #text = ERB.new(text).result(Object.new.instance_eval{binding})
+          data = YAML.load(text)
+          data.each do |k,v|
+            __send__("#{k}=", v)
+          end
+        else
+          instance_eval(text, file, 0)  # TODO: Should we really do this here?
+        end
+      end
+    end
+
+    #
+    def load_dir!(folder)
+      # load meta directory.
+      if File.directory?(folder)
+        Dir[File.join(folder, '*')].each do |file|
+          import!(file)
+        end
+      end
+    end
+
+    # Create new Metdata instance from metdata file.
+    def load_canonical!
+      file = root + CANONICAL_FILENAME
+      if file.exist?
+        data = YAML.load(File.new(file))
+        data.each do |name, value|
+          self[name] = value
+        end
+      end
+      return self
+    end
+
+    # Import settings from another file.
+    def import!(file)
+      case File.extname(file)
+      when '.yaml', '.yml'
+        merge!(YAML.load(File.new(file)))
+      else
+        text = File.read(file).strip
+        if /\A---/ =~ text
+          merge!(YAML.load(text))
+        else
+          name = File.basename(file)
+          self[name] = text.strip
+        end
+      end
+    end
+
+    # Import settings from another file.
+    def import(file)
+      case File.extname(file)
+      when '.yaml', '.yml'
+        merge!(YAML.load(File.new(file)))
+      else
+        text = File.read(file).strip
+        if /\A---/ =~ text
+          merge!(YAML.load(text))
+        else
+          name = File.basename(file)
+          self[name] = text.strip
+        end
+      end
+    end
+
+    # Returns Pathname of Canonical file.
+    def canonical_file
+      root + CANONICAL_FILENAME
+    end
+
+    # Update the canonical file.
+    def update!
+      if canonical_file.exist?
+        if file.mtime > canonical_file.mtime
+          save!
+        end
+      else
+        save!
+      end
+    end
+
+    # Notice that +file+ does not default to +@file+.
+    # The developers +Profile+ file is not saved, rather
+    # the hidden cannonical format is.
+    def save!(file=nil)
+      file = file || canonical_file
+      file = root + file if String === file
+      File.open(file, 'w') do |f|
+        f << to_data.to_yaml
+      end
+    end
+
+    # Backup the cannonical file.
+    def backup!(file=nil)
+      file = file || FILENAME
+      dir = root + BACKUP_DIRECTORY
+      FileUtils.mkdir(dir.dirname) unless dir.dirname.directory?
+      FileUtils.mkdir(dir) unless dir.directory?
+      save!(dir + CANONICAL_FILENAME)
+    end
+
     private
-    
-    attr :metadata
+
+    #
+    def default(name)
+      if prop = Property.find(name)
+        case default = prop.default
+        when Proc
+          instance_eval(&default)
+        else
+          default
+        end
+      else
+        nil
+      end
+      #if respond_to?("default_#{name}")
+      #  __send__("default_#{name}")
+      #else
+      #  nil
+      #end
+    end
+
+    #
+    def parse(name, value)
+      if prop = Property.find(name)
+        case parser = prop.parser
+        when Proc
+          #instance_exec(value, &parse)
+          parser.call(value)
+        else
+          value
+        end
+      else
+        value
+      end
+      #if respond_to?("parse_#{name}")
+      #  value = __send__("parse_#{name}", value)
+      #end
+      #value
+    end
 
   end
 
 end
-
