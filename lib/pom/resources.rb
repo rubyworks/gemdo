@@ -1,4 +1,4 @@
-module POM #::Metadata
+module POM
 
   # The Resource class models a table of project
   # releated URIs. Each entry has a name and URI.
@@ -9,22 +9,17 @@ module POM #::Metadata
   # and aliases, which can be accessed via method
   # calls.
   # 
-  # How aliases work in this class is unique. When
-  # a recognized name is assigned an URI, all it's
-  # aliases are assigned the URI as well. Therefore
-  # when iterating over the entries there will be
-  # duplicate URIs under the various names.
-  #
-  #   Resources.new(:home=>'http://foo.com').to_h
-  #   #=> {:home=>'http://foo.com', :homepage=>'http://foo.com'}
-  #
+  # TODO: Consider if this should instead be an
+  # associative array or [type, url]. Could there
+  # not be more than one url for a given type?
+
   class Resources
-
-    #include AbstractField
-
     include Enumerable
 
-    @key_aliases = Hash.new{|h,k|h[k]=[]}
+    # Valid URL regular expression.
+    URL = /^(\w+)\:\/\/\S+$/
+
+    @key_aliases = {}
 
     #
     def self.key_aliases
@@ -32,64 +27,45 @@ module POM #::Metadata
     end
 
     #
-    def self.attr_accessor *names
+    def self.attr_accessor name, *aliases
       code = []
-      names.each do |name|
-        key_aliases[name.to_sym] = names
-        code << "def #{name}"
+      ([name] + aliases).each do |method|
+        key_aliases[method.to_sym] = name.to_sym
+        code << "def #{method}"
         code << "  self['#{name}']"
         code << "end"
-        code << "def #{name}=(val)"
+        code << "def #{method}=(val)"
         code << "  self['#{name}'] = val"
         code << "end"
       end
       module_eval code.join("\n") 
     end
 
-    # Special accessors disperse access over multiple hash entries.
-    #def self.attr_accessor(*names)
-    #  code = []
-    #  names.each do |name|
-    #    code << "def #{name}"
-    #    code << "  @table['#{name}']"
-    #    code << "end"
-    #    code << "def #{name}=(val)"
-    #    names.each do |n|
-    #      code << "  @table['#{n}'] = val"
-    #    end
-    #    code << "end"
-    #  end
-    #  module_eval code.join("\n")
-    #end
-
     # New Resources object. The initializer can
-    # take a hash of name to URI settings.
+    # take a hash of name to URL.
     def initialize(data={})
       @table = {}
-      @index = {}
-      data.each do |key, value|
-        @table[key.to_s] = value
-        self.class.key_aliases[key.to_sym].each do |name|
-          @index[name.to_s] = key.to_s
-        end
+
+      data.each do |key, url|
+        self[key] = url
       end
+    end
+
+    #
+    def key_index(key)
+      key = key.to_sym
+      self.class.key_aliases[key] || key
     end
 
     #
     def [](key)
-      @table[@index[key.to_s]]
+      @table[key_index(key)]
     end
 
     #
-    def []=(key, value)
-      if alt = @index[key.to_s]
-        @table[alt] = value
-      else
-        @table[key.to_s] = value
-        self.class.key_aliases[key.to_sym].each do |name|
-          @index[name.to_s] = key.to_s
-        end
-      end
+    def []=(key, url)
+      raise ArgumentError, "Not a valid URL - #{url}" unless URL =~ url
+      @table[key_index(key)] = url
     end
 
     # Offical project website.
@@ -105,7 +81,7 @@ module POM #::Metadata
     attr_accessor :download
 
     # Browse source code.
-    attr_accessor :code, :source
+    attr_accessor :code, :source, :source_code
 
     # User discussion forum.
     attr_accessor :forum
@@ -114,13 +90,13 @@ module POM #::Metadata
     attr_accessor :mail, :email, :mailinglist
 
     # Location of issue tracker.
-    attr_accessor :issues, :bugs
+    attr_accessor :bugs, :issues
 
     # Location of support forum.
     attr_accessor :support
 
     # Location of documentation.
-    attr_accessor :doc, :docs, :documentation
+    attr_accessor :docs, :documentation, :doc
 
     # Location of API reference documentation.
     attr_accessor :api, :reference, :system_guide
@@ -134,10 +110,6 @@ module POM #::Metadata
     # IRC channel
     attr_accessor :irc, :chat
 
-    # Resource for central *public* repository, e.g.
-    # `git://github.com/protuils/pom.git`.
-    attr_accessor :repo, :repository
-
     # Convert to Hash by duplicating the underlying
     # hash table.
     def to_h
@@ -146,7 +118,11 @@ module POM #::Metadata
 
     #
     def to_data
-      to_h
+      h = {}
+      to_h.each do |k,v|
+        h[k.to_s] = v
+      end
+      return h
     end
 
     #
@@ -178,10 +154,10 @@ module POM #::Metadata
       name = meth.chomp('=')
       case meth
       when /=$/
-        @table[name] = args.first
+        self[name] = args.first
       else
         super(sym, *args) if block_given? or args.size > 0
-        nil
+        self[name]
       end
     end
 
