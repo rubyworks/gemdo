@@ -28,7 +28,8 @@ box:
 
 rdoc:
   service  : RDoc
-  template : newfish
+  format   : newfish
+  output   : site/docs/api
   include  : ~
   exclude  : ~
   main     : ~
@@ -39,6 +40,7 @@ ridoc:
   service: RIDoc
   include: ~
   exclude: ~
+  output : .ri
   active : true
 
 testrb:
