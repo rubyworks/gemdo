@@ -30,8 +30,8 @@ module POM
       # TODO: Support for codename?
       #++
       def infer_version
-        vfile = root.glob('VERSION{,.txt,.yml,.yaml}', File::FNM_CASEFOLD)
-        if vfile.exist?
+        vfile = root.glob('VERSION{,.txt,.yml,.yaml}', File::FNM_CASEFOLD).first
+        if vfile && vfile.exist?
           text = vfile.read.strip
           case text
           when /\A---/
@@ -54,6 +54,11 @@ module POM
             text
           end
         end
+      end
+
+      #
+      def infer_manifest
+        root.glob('manifest{,.txt}', :casefold).first
       end
 
     end
