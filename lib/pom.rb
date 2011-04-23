@@ -5,6 +5,7 @@ module POM
   #
   def self.metadata
     @metadata ||= (
+      require 'yaml'
       file = File.dirname(__FILE__) + "/pom.yml"
       YAML.load(File.new(file))
     )
@@ -12,8 +13,7 @@ module POM
 
   # Access to project metadata, e.g. VERSION.
   def self.const_missing(name)
-    name = name.to_s.downcase
-    metadata[name]
+    metadata[name.to_s.downcase] || super(name)
   end
 end
 
