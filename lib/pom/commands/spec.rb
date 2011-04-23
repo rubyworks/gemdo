@@ -20,12 +20,12 @@ module POM::Commands
       execute
     end
 
-    #
+    # TODO: reference constant for .ruby file
     def parse
       parser = OptionParser.new do |opt|
         opt.banner = "pom spec"
 
-        opt.on("--update", "-u", "update .prospec file") do
+        opt.on("--update", "-u", "update .ruby file") do
           @update = true
         end
 
@@ -42,13 +42,13 @@ module POM::Commands
       parser.parse!
     end
 
-    #
+    # TODO: Maybe make file name printout relative to current directory.
     def execute
       if @update
-        project.profile.save!
-        puts "Project .prospec file updated."
+        file = project.profile.save!
+        $stdout.puts "#{File.basename(file)} updated."
       else
-        puts project.metadata.to_data.to_yaml
+        $stdout.puts project.metadata.to_data.to_yaml
       end
     end
 

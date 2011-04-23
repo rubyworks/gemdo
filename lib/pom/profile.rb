@@ -678,6 +678,7 @@ module POM
       File.open(file, 'w') do |f|
         f << to_data.to_yaml
       end
+      file
     end
 
     # Backup the cannonical file.
