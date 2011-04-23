@@ -158,7 +158,7 @@ module POM
 
     # Root directory is indicated by the presence of either a
     # .ruby file or as a fallback a lib/ directory.
-    ROOT_INDICATORS = [Metadata::FILENAME, 'lib/']
+    ROOT_INDICATORS = [Profile::CANONICAL_FILENAME, 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position
@@ -172,8 +172,8 @@ module POM
       home = Pathname.new('~').expand_path
       ROOT_INDICATORS.each do |root_indicator|
         Pathname.new(dir).ascend do |root|
-          return nil  if root == home
-          return root if root.join(root_indicator).file?
+          break if root == home
+          return root if root.join(root_indicator).exist?
         end
       end
     end
