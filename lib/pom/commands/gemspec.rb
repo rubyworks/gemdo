@@ -1,6 +1,9 @@
 module POM::Commands
 
-  # Convert project rubyspec into a gemspec.
+  # Convert pom spec into a gemspec.
+  #
+  # TODO: Use canonical by default and add option to update canoncial first.
+  # Or something along those lines.
   class Gemspec
 
     #
@@ -18,6 +21,11 @@ module POM::Commands
     attr :project
 
     #
+    def update?
+      @update
+    end
+
+    #
     def run
       parse
       execute
@@ -28,11 +36,15 @@ module POM::Commands
       parser = OptionParser.new do |opt|
         opt.banner = "pom gemspec"
 
-        opt.on("--force", "-f", "override safe-guarded operations") do
+        opt.on("--update", "-u", "update gemspec file") do
+          @update = true
+        end
+
+        opt.on("--force", "-f", "override any safe-guarded operations") do
           $FORCE = true
         end
 
-        opt.on("--debug", "run in debug mode, raises exceptions") do
+        opt.on("--debug", "run in debug mode and raise exceptions") do
           $DEBUG   = true
           $VERBOSE = true
         end
@@ -50,13 +62,18 @@ module POM::Commands
 
     #
     def execute
-      if File.exist?(file) and not $FORCE
-        $stderr << "Gemspec already exists. Use --force to overwrite.\n"
+      yaml = project.to_gemspec.to_yaml
+      if update?
+        #if File.exist?(file) and not $FORCE
+        #  $stderr << "Gemspec already exists. Use --force/-f to overwrite.\n"
+        #else
+          File.open(file, 'w') do |f|
+            f << yaml
+          end
+          $stderr.puts "#{File.basename(file)} updated."
+        #end
       else
-        yaml = project.to_gemspec.to_yaml
-        File.open(file, 'w') do |f|
-          f << yaml
-        end
+        $stdout.puts yaml
       end
     end
 
