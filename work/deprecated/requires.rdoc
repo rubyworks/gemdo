@@ -54,10 +54,7 @@ Given a REQUIRE project file containing ...
 
     alternate/conflict: []
 
-The Requre class provides an interface to this information.
-
-    require 'pom/requires'
-
+The PackageList class provides an interface to this information.
 The initializer takes the root directory for the project
 and looks for a file called +REQUIRE+ or +.require+,
 optionally ending in +.yml+ or +.yaml+.

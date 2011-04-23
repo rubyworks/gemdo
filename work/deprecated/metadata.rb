@@ -3,10 +3,12 @@ require 'pom/version'
 require 'pom/requires'
 require 'pom/resources'
 
+require 'pom/properties/main'
+
 module POM
 
-  # The Metadata class encapsultes all the project information
-  # in a canonical form.
+  # The Metadata class encapsultes all the project information in it's canonical
+  # form.
   #--
   # TODO: Signing/Certification featuers
   #++
@@ -42,7 +44,7 @@ module POM
     def initialize(root, data={})
       @root = Pathname.new(root).expand_path
 
-      @pom_verison = POM::VERSION
+      @spec_version = POM::VERSION
 
       data.each do |name, value|
         self[name] = value
@@ -63,6 +65,14 @@ module POM
 
     # A T T R I B U T E S
 
+    Property.list.each do |prop|
+      attr_accessor prop.name
+      #prop.aliases do |a|
+      #  property_alias a, prop.name
+      #end
+    end
+
+=begin
     # Name of project/package. Should be all lowercase and one word.
     attr_accessor :name
 
@@ -150,7 +160,7 @@ module POM
 
     #
     attr_accessor :repositories
-
+=end
 
     # D E R I V A T I V E S
 
@@ -281,6 +291,7 @@ module POM
       title
     end
 
+=begin
     # Convert version entry into a VersionNumber.
     def parse_version(number)
       VersionNumber.new(number)
@@ -317,11 +328,14 @@ module POM
         path.to_a
       end
     end
+=end
 
     # Returns a list of file paths.
     # TODO: Use Manifest class?
     def parse_manifest(file_or_array)
       case file_or_array
+      when nil
+        []
       when Array
         file_or_array
       else
@@ -333,6 +347,7 @@ module POM
       end
     end
 
+=begin
     #
     def parse_authors(list)
       [list].flatten
@@ -367,6 +382,7 @@ module POM
     def parse_resources(resources)
       Resources.new(resources)
     end
+=end
 
     # POM Metadatais extensible. If an attribute is assigned that is not
     # already defined by an attribute reader then an entry will be created
@@ -430,11 +446,17 @@ module POM
         name = iv.sub('@','')
         h[name] = self[name]
       end
+      h
+    end
+
+    #
+    def to_data
+      h = to_h
       h['version']   = h['version'].to_s
       h['requires']  = h['requires'].to_data  if h['requires']
       h['conflicts'] = h['conflicts'].to_data if h['conflicts']
       h['replaces']  = h['replaces'].to_data  if h['replaces']
-      h['resources'] = h['resources'].to_h    if h['resources']
+      h['resources'] = h['resources'].to_data if h['resources']
       h
     end
 
@@ -463,7 +485,7 @@ module POM
       file = file || canonical_file
       file = root + file if String === file
       File.open(file, 'w') do |f|
-        f << to_h.to_yaml
+        f << to_data.to_yaml
       end
     end
 
@@ -481,40 +503,43 @@ module POM
 
     #
     def default(name)
-      if respond_to?("default_#{name}")
-        __send__("default_#{name}")
+      default = Property.find(name).default
+      case default
+      when Proc
+        instance_eval(&default)
       else
-        nil
+        default
       end
+      #if respond_to?("default_#{name}")
+      #  __send__("default_#{name}")
+      #else
+      #  nil
+      #end
     end
 
     #
     def parse(name, value)
-      if respond_to?("parse_#{name}")
-        value = __send__("parse_#{name}", value)
+      parse = Property.find(name).parse
+      case parse
+      when Proc
+        #instance_exec(value, &parse)
+        parse.call(value)
+      else
+        value
       end
+      #if respond_to?("parse_#{name}")
+      #  value = __send__("parse_#{name}", value)
+      #end
       value
     end
 
     # TODO: Pretty print YAML output ?
+
 =begin
     # Set PACKAGE filepath.
     def file=(file)
       @file = file
     end
-
-    # The date the project was started.
-    attr_accessor :created
-
-
-    # Set project resources table with a Hash or another Resources object.
-    def resources=(resources)
-      self['resources'] = Resources.new(resources)
-    end
-
-    # Profile is extensible. If a setting is assigned
-    # that is not already defined an attribute accessor
-    # will be created for it.
 
     #
     def yaml
