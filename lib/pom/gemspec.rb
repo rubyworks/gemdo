@@ -30,7 +30,8 @@ module POM
       if homepage && md = /(\w+).rubyforge.org/.match(homepage)
         rubyforge_project = md[1]
       else
-        rubyforge_project = metadata.name.to_s  # b/c it has to be something according to Eric Hodel.
+        # b/c it has to be something according to Eric Hodel.
+        rubyforge_project = metadata.name.to_s
       end
 
       #TODO: may be able to get this from project method
@@ -47,7 +48,7 @@ module POM
         spec.description   = metadata.description.to_s
         spec.authors       = metadata.authors.to_a
         spec.email         = metadata.email.to_s
-        spec.licenses      = [metadata.license.to_s]
+        spec.licenses      = metadata.licenses.to_a
 
         spec.homepage      = metadata.homepage.to_s
 
@@ -115,7 +116,6 @@ module POM
         rdoc_options.concat ["--title", "#{metadata.title} API"] #if metadata.title
         rdoc_options.concat ["--main", readme.to_s] if readme
 
-        spec.has_rdoc         = true  # always true
         spec.extra_rdoc_files = rdocfiles
         spec.rdoc_options     = rdoc_options
 
