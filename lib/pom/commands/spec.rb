@@ -48,7 +48,7 @@ module POM::Commands
         project.profile.save!
         puts "Project .prospec file updated."
       else
-        puts project.metadata.to_h.to_yaml
+        puts project.metadata.to_data.to_yaml
       end
     end
 
