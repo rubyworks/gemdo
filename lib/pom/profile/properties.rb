@@ -92,7 +92,11 @@ module POM
   end
 
   # Access to manifest list or file name.
-  property :manifest
+  property :manifest do
+    parse do |file|
+      file.to_s
+    end
+  end
 
   # The SCM which the project is currently utilizing.
   property :scm
@@ -186,9 +190,11 @@ module POM
   # Table of project URLs encapsulated in a Resources object.
   property :resources do
     parse do |value|
-      Resources.new(value)
+      Resources.new(value || {})
     end
-    default { Resources.new }
+    default do
+      Resources.new
+    end
   end
 
   # Returns a Hash of +Type+ => +URI+ for SCM repository.
