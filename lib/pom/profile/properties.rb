@@ -102,6 +102,9 @@ module POM
   property :scm
 
   # List of requirements.
+  #
+  # Rather have a separate property to restrict the Ruby
+  # engines that can be used, use the `engine` group.
   property :requires do
     aliases :requirements, :dependencies, :gems
     parse do |list|
@@ -126,12 +129,19 @@ module POM
     default { PackageList.new }
   end
 
-  # The Ruby engine and versions required by the project.
-  property :engines do
+  # The runtime engines and versions tested for the project. An entry
+  # in the field does not indicate an particluar engine/platform 
+  # will not work, but only indicates which have been verified.
+  #
+  # A valid entry of +engine_check+ comes fomr `ruby -v`, e.g.
+  #
+  #   ruby 1.8.7 (2010-08-16 patchlevel 302) [x86_64-linux]
+  #
+  property :engine_check do
     parse do |list|
-      PackageList.new(list)
+      list.to_list
     end
-    default { PackageList.new }
+    default []
   end
 
   # The post-installation message.
