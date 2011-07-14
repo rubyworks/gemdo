@@ -1,5 +1,6 @@
 --- 
 spec_version: 1.0.0
+name: pom
 repositories: 
   public: git://github.com/rubyworks/pom.git
 title: POM
