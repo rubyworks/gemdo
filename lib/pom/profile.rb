@@ -40,25 +40,20 @@ module POM
     # Regular expression for matching valid email addresses.
     RE_EMAIL = /\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i  #/<.*?>/
 
-    class << self
-      # Initialize, but do not load form file.
-      alias create new
-
-      # Initialize and load file (if found).
-      def new(root, data={})
-        create(root, data).load!
-      end
+    #
+    def self.load(root, *sources, &block)
+      new(root, :defaults, *sources, &block)
     end
 
     # Possible profile file names.
-    def self.filename
-      ['[Pp]rofile', 'PROFILE']
-    end
+    #def self.filename
+    #  ['[Pp]rofile', 'PROFILE']
+    #end
 
     # The default file name.
-    def self.default_filename
-      'Profile'
-    end
+    #def self.default_filename
+    #  'Profile'
+    #end
 
     #
     def self.default_sources
@@ -69,7 +64,9 @@ module POM
     def self.property(name)
       module_eval %{
         def #{name}(value=nil)
-          self["#{name}"] = parse("#{name}", value) if value
+          if value
+            self["#{name}"] = parse("#{name}", value)
+          end
           self["#{name}"] ||= default("#{name}")
         end
         def #{name}=(value)
@@ -84,46 +81,58 @@ module POM
       alias_method "#{name}=", "#{original}="
     end
 
-    # New Profile object. To create a new Profile
-    # the +root+ directory of the project and the +name+
-    # of the project are required.
-    def initialize(root, data={})
+    # Construct a new Profile object.
+    # 
+    # root    - root directory of the project
+    # sources - list of sources to find project metadata
+    # block   - block to be evaluated on Profile object
+    #
+    # If a block is given but the sources list is empty, than default file 
+    # sources will not be loaded.
+    #
+    # Besides files, there are three special sources that can be
+    # used -- :default, :gemspec and :canonical.
+    #
+    def initialize(root, *sources, &block)
       @root = Pathname.new(root).expand_path
+
+      options = sources.inject({}){ |h,s| h.merge!(s) if Hash === s; h }
+      sources.reject!{ |s| Hash === s }
 
       @data = {}
       @data['spec_version'] = POM::VERSION
+      #@data['date'] = Time.now.strftime("%Y-%m-%d")
 
       #@file = data.delete(:file) || find || default_file
 
-      @project = data.delete(:project)
-
-      data.each do |k,v|
-        self[k] = v
-      end
-
-      ## only read .ruby if we have no Profile file to use
-      #if file && file.exist?
-      #  @metadata = Metadata.create(root, data)
-      #else
-      #  @metadata = Metadata.new(root, data)
-      #end
+      @project = options[:project]
+      @sources = sources      
 
       # for compatibility with Bundler
       @_source   = nil
       @_group    = []
       @_platform = []
+
+      if block
+        block.call(self)
+        if !sources.empty?
+          load!(*sources)
+        end
+      else
+        load!(*sources)
+      end
     end
 
     #
-    def find
-      pattern = '{' + self.class.filename.join(',') + '}{,.yml,.yaml}'
-      root.glob(pattern, :casefold).first
-    end
+    #def find
+    #  pattern = '{' + self.class.filename.join(',') + '}{,.yml,.yaml}'
+    #  root.glob(pattern, :casefold).first
+    #end
 
     #
-    def default_file
-      root + self.class.default_filename
-    end
+    #def default_file
+    #  root + self.class.default_filename
+    #end
 
     # Project root.
     attr_reader :root
@@ -132,8 +141,10 @@ module POM
     # TODO: change to sources and as an array
     attr :file
 
-    # Referecene to Project object, if provided.
-    attr_accessor :project
+    # Access to Project object.
+    def project
+      @project ||= Project.new(root)
+    end
 
     # POM Metadatais extensible. If an attribute is assigned that is not
     # already defined by an attribute reader then an entry will be created
@@ -391,9 +402,9 @@ module POM
     end
 
     #
-    #def license=(name)
-    #  licenses = name
-    #end
+    def license=(name)
+      licenses << name.to_s
+    end
 
     #
     def resource(label, url)
@@ -510,7 +521,23 @@ module POM
 
     #
     def key?(name)
-      @data.key?(name)
+      @data.key?(name.to_s)
+    end
+
+    # Does an entry have a value set?
+    def value?(name)
+      name = name.to_s
+      return false unless @data.key?(name)
+      return false if @data[name].nil?
+      return true
+    end
+
+    # Validate profile. It must at least have a name and a version.
+    # TODO: Loop through data and validate via Property.
+    def valid?
+      return false if name.nil?
+      return false if version.nil?
+      return true
     end
 
     # Returns a list of metadata attributes.
@@ -518,17 +545,25 @@ module POM
       @data.keys
     end
 
-    # Return the underlying Metadata object.
-    #def to_metadata
-    #  metadata
-    #end
+    # Merge Hash (or Hash-like) data into profile.
+    def merge!(data)
+      data.each do |k,v|
+        self[k] = v
+      end
+    end
+
+    # C O N V E R S I O N
 
     # Convert to hash.
-    # TODO: Use properties instead?
+    #--
+    # TODO: Should empty defaults be in the hash?
+    #++
     def to_h
       h = {}
-      @data.each do |k, v|
-        h[k] = self[k]
+      props = Property.list.map{|prop| prop.name.to_s} | @data.keys
+      props.each do |k|
+        v = self[k]
+        h[k] = v if v
       end
       h
     end
@@ -554,28 +589,46 @@ module POM
 
     # F I L E  H A N D L I N G
 
+    # Returns Array of the default file-based sources of project metadata.
+    # These sources may be a file glob (mainly to handle variant capitalizations).
+    def default_sources
+      self.class.default_sources.map{ |src| File.join(root, src) }
+    end
+
+    # Returns Pathname for the canonical file.
+    def canonical_file
+      root + CANONICAL_FILENAME
+    end
+
     # Load the +Profile+ data from sources.
     def load!(*sources)
-      if sources.empty?
-        sources = self.class.default_sources.map{ |src| File.join(root, src) }
+      default = sources.delete(:default) || sources.delete(:defaults)
+
+      if default || sources.empty?
+        sources = default_sources + [:inference]
       end
 
       sources.each do |src|
-        if src = Dir[src].first
-          if File.directory?(src)
-            load_dir!(src)
-          else
-            load_file!(src)
+        case src
+        when :canonical
+          load_canonical!
+        when :gemspec
+          load_gemspec!
+        when :inference
+          inference = Inference.new(project)
+          inference.apply(self)
+        when String
+          if src = Dir[src].first
+            if File.directory?(src)
+              load_dir!(src)
+            else
+              load_file!(src)
+            end
           end
+        else
+          # ignore
         end
       end
-
-      inference = Inference.new(project || Project.new(root))
-      inference.apply(self)
-
-      #self.name     = infer_name     unless name
-      #self.version  = infer_version  unless version
-      #self.manifest = infer_manifest unless manifest
 
       # TODO: validate
       #raise unless valid?
@@ -599,19 +652,22 @@ module POM
       end
     end
 
+    # Import every file in a given directory.
     #
+    # TODO: For now we simply skip subdirectories, maybe do otherwise in future.
     def load_dir!(folder)
       # load meta directory.
       if File.directory?(folder)
         Dir[File.join(folder, '*')].each do |file|
+          next if File.directory?(file)
           import!(file)
         end
       end
     end
 
-    # Create new Metdata instance from metdata file.
+    #
     def load_canonical!
-      file = root + CANONICAL_FILENAME
+      file = canonical_file
       if file.exist?
         data = YAML.load(File.new(file))
         data.each do |name, value|
@@ -621,53 +677,79 @@ module POM
       return self
     end
 
+    # Import a Gem::Specification.
+    #
+    # TODO: Ensure all data possible is gathered from the gemspec.
+    def load_gemspec!(gemspec=nil)
+      begin
+        require 'rubygems'
+      rescue LoadError
+        return 
+      end
+
+      case gemspec
+      when ::Gem::Specification
+        spec = gemspec
+      else
+        file = Dir[root + "{*,}.gemspec"].first
+        return unless file
+
+        text = File.read(file)
+        if text =~ /\A---/
+          spec = ::Gem::Specification.from_yaml(text)
+        else
+          spec = ::Gem::Specification.load(file)
+        end
+      end
+            name = File.basename(file)
+      self.name         = spec.name
+      self.version      = spec.version.to_s
+      self.path         = spec.require_paths
+      #self.engines     = spec.platform
+
+      self.title        = spec.name.capitalize
+      self.summary      = spec.summary
+      self.description  = spec.description
+      self.authors      = spec.authors
+      self.contact      = spec.email
+
+      self.resources.homepage = spec.homepage
+
+      #metadata.extensions   = spec.extensions
+
+      spec.runtime_dependencies.each do |d|
+        requires << "#{d.name} #{d.version_requirements}"
+      end
+
+      # TODO
+      #spec.development_dependencies.each do |d|
+      #  requires << "#{d.name} #{d.version_requirements} (development)"
+      #end
+    end
+
     # Import settings from another file.
     def import!(file)
-      case File.extname(file)
-      when '.yaml', '.yml'
-        merge!(YAML.load(File.new(file)))
+      if File.directory?(file)
+        # ...
       else
-        text = File.read(file).strip
-        if /\A---/ =~ text
-          merge!(YAML.load(text))
+        case File.extname(file)
+        when '.yaml', '.yml'
+          merge!(YAML.load(File.new(file)))
         else
-          name = File.basename(file)
-          self[name] = text.strip
+          text = File.read(file).strip
+          if /\A---/ =~ text
+            name = File.basename(file)
+            self[name] = YAML.load(text)
+          else
+            name = File.basename(file)
+            self[name] = text.strip
+          end
         end
       end
     end
 
     # Import settings from another file.
-    def import(file)
-      case File.extname(file)
-      when '.yaml', '.yml'
-        merge!(YAML.load(File.new(file)))
-      else
-        text = File.read(file).strip
-        if /\A---/ =~ text
-          merge!(YAML.load(text))
-        else
-          name = File.basename(file)
-          self[name] = text.strip
-        end
-      end
-    end
-
-    # Returns Pathname of Canonical file.
-    def canonical_file
-      root + CANONICAL_FILENAME
-    end
-
-    # Update the canonical file.
-    def update!
-      if canonical_file.exist?
-        if file.mtime > canonical_file.mtime
-          save!
-        end
-      else
-        save!
-      end
-    end
+    alias_method :import, :import!
 
     # Notice that +file+ does not default to +@file+.
     # The developers +Profile+ file is not saved, rather
@@ -679,6 +761,17 @@ module POM
         f << to_data.to_yaml
       end
       file
+    end
+
+    # Update the canonical file.
+    def update!
+      if canonical_file.exist?
+        if file.mtime > canonical_file.mtime
+          save!
+        end
+      else
+        save!
+      end
     end
 
     # Backup the cannonical file.
@@ -695,11 +788,12 @@ module POM
     #
     def default(name)
       if prop = Property.find(name)
-        case default = prop.default
+        value = prop.default
+        case value
         when Proc
-          instance_eval(&default)
+          instance_eval(&value)
         else
-          default
+          value
         end
       else
         nil
@@ -731,5 +825,8 @@ module POM
     end
 
   end
+
+  # For backwards compatibility.
+  Metadata = Profile
 
 end
