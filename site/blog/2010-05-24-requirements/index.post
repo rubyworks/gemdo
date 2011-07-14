@@ -1,0 +1,79 @@
+title  : Requirements Specification
+author : Trans
+date   : 2010-05-24
+tags   : rubygems, bundler, metadata, configuration, pom
+layout : post
+
+--- markdown
+
+Recently, on my personal programming [blog](http://trans.github.com), I expounded on some concerns I have with [Bundler](http://gembundler.com/). These concerns have their origin in my work on [POM](http://github.com/proutils/pom) and related ProUtils projects such as [Syckle](http://github.com/proutils/syckle) and [Box](http://github.com/proutils/box). These projects utilize requirements information. If Bundler becomes widely used outside of Rails development, and it seems it might, then it is imporatan that I figure out how to best fit Bundler into the POM's design.
+
+Of course, as with any new technologies, my initial take on Bundler held some false assumptions, and thus some over-blown concerns. However, I still see some issues with the design. Nonetheless I figure most issues will be worked out in time --and if not, and the project is fundamentally flawed in some fahsion, then it will eventually wither, and be replaced by something better.
+
+--- markdown
+
+So rather than jumping head first into Gemfile support, which at first I thought would be necessary (and so a source of some of my initial fears), I have simply built in conditional support. If a Gemfile is present, than POM will take advantage of it (unless otherwise instructed). If not, then it will fallback to its own metadate designs. Speaking of which, the process of working through the Gemfile specification, considering all it's nuanced effects and reviewing alternate solutions in the ecosystem, has led me to create a more robust requirements specification for POM itself.
+
+Here is an example of this sepcification. The file is conventually named `REQUIRE`. It is purely YAML and only includes the MRI requirements. JRuby requirements, for example, would be kept in a separate file `REQUIRE.jruby`. For realism I have translated Rails' Gemfile. Of course, that file keeps changing as Rails evolves, so here is a [copy](gemfile.html) of the file I used.
+
+--- html
+
+<pre>
+  runtime:
+    - rake 0.8.7+
+    - mocha 0.9.8+
+    - nokogiri 1.4.0+
+    - system_timer
+    - ruby-debug 0.10.3+
+    - json
+    - yajl-ruby
+    # AP
+    - rack-test 0.5.3
+    - RedCloth 4.2.2+
+    # AR
+    - sqlite3-ruby 1.3.0.beta.2
+
+  runtime/recommend:
+    - pg 0.9.0+
+    - mysql 2.8.1+
+
+  runtime/optional:
+    - fcgi 0.8.7+  # does not compile on mri 1.9+
+
+  runtime/vendor:
+    - arel
+
+  development/document:
+    - rdoc 2.1
+
+  development/test:
+    - rspec
+</pre>
+
+--- markdown
+
+The most important feature of POM's `REQUIRE` file in contrast to Bundler's `GemFile` is that it is 100% declarative. It is not Ruby code. So it cannot include if-then clauses and the like. Rather it provides only the criteria that such a specification must. This is important. Because it is fully declarative, any tool, on any system, can make complete use of the information it provides, irregardless of the state of the system at the time the file is parsed. It also does not support arbitraty groups. I understand how they can be useful, but they add a great deal of complexity to the specification. For POM the simpilicty is sufficiant. You can always use a Gemfile if you need it's capabilities. Of course this example doesn't show all possible section type. One in particular is `production` which might be used by Rails application in place of `runtime`.
+
+For the `arel` package, notice that it is listed under `runtime/vendor`. I get the impression that a git repo was being referenced because arel is still under heavy development, and therefore the actual intent is to bundle it with the rails gem until it is ready to stand on it's own. The REQUIRE specification doesn't need to know any of this other than the fact that exists as such. The originals `path` option is not needed becuase `vendor/arel` will be added to the `LOAD_PATH` in the `VERSION` file. And we do not need the `git` option becuase it doesn't matter to POM how the code got there (read: "Use git submodules!"). For the same reason, basically, we don't need an entry for `rails` itself either.
+
+You will also not see in this alternative design, anything about the original's <code>:require =></code> option. This is something `Bundler.require` uses to automate requires. First of all, it is perhaps not the best idea in the world because many libraries can be used in piecemeal fashion --they do not necessarily have a canonical file to be required. But more importantly, we should be concerned with using `Bundler.require` in our code, because it ties us down to RubyGems, making our programs unusable by other installation systems. While we might all be fans of RubyGems, it is still important not to box ourselves in and remain open to innovations in the field (not to mention traditional techniques). Perhaps the best approach to dealing with this with Bundler is simply to isolate it's use via a conditional `if defined?('RubyGems')` to make sure it is *already* loaded. E.g.
+
+--- coderay.ruby
+
+  if defined?('RubyGems')
+    require 'bundler'
+    Bundler.setup
+  end
+
+--- markdown
+
+There are a few special pieces of information that might also be useful but are not shown here.
+
+* `alternate/provides`: What other packages does this package provide the same dependency fulfillment. For example, a package 'bar-plus' might fulfill the same dependency criteria as package 'bar', so 'bar-plus' is said to provide 'bar'.
+* `alternate/replaces`: What other packages does this package replace. This is very much like #provides but expresses a overriding relation. For instance "libXML" has been replaced by "libXML2".
+* `alternate/conflicts`: With what other packages does this package conflict. This information would be used to ensure two conflicting gems are not being used together.
+
+Another potential concern not covered by this design is the question of *external* dependencies. For example, sqlite3-ruby requires that sqlite3 be present on the system. In other words, is there any way to specify, or should we even be concerned about, dependencies on packages in other packaging systems? At the very least I suppose we could provide an `external` section to list them, even if they have no actual effect.
+
+Of course, the main purpose of this post is not to consider every possible field entry that may be useful, but rather to demonstrate POM alternate format. By using this clean, static format, we are able to get most of the configurablity of a Gemfile while ensuring a fully accessible configuration. In doing so, it opens requirements configuration up to wider use.
+
