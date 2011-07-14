@@ -1,5 +1,5 @@
 require 'pom/core_ext'
-require 'pom/errors'
+require 'pom/error'
 require 'pom/profile'
 require 'pom/manifest'
 require 'pom/history'
