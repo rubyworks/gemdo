@@ -26,7 +26,11 @@ module POM
       if path.directory?
         path = path.first(FILE_PATTERN, :casefold)
       end
-      new(path.read, path)
+      if path
+        new(path.read, path)
+      else
+        new("")
+      end
     end
 
     #
@@ -54,28 +58,49 @@ module POM
     #alias_method :project, :name
 
     #
-    def title ; @cache[:title] ; end
+    def title
+      @cache[:title]
+    end
 
     #
-    def description ; @cache[:description] ; end
+    def description
+      @cache[:description]
+    end
 
     #
-    def license ; @cache[:license] ; end
+    def license
+      @cache[:license]
+    end
 
     #
-    def copyright ; @cache[:copyright] ; end
+    def copyright
+      @cache[:copyright]
+    end
 
     #
-    def authors ; @cache[:authors] ; end
+    def authors
+      @cache[:authors]
+    end
 
     #
-    def homepage ; @cache[:homepage] ; end
+    def resources
+      @cache[:resources] ||= {}
+    end
 
     #
-    def wiki ; @cache[:wiki] ; end
+    def homepage
+      resources[:home]
+    end
 
     #
-    def issues ; @cache[:issues] ; end
+    def wiki
+      resources[:wiki]
+    end
+
+    #
+    def issues
+      resources[:issues]
+    end
 
     # Return file extension of README. Even if the file has no extension,
     # this method will look at the contents and try to determine it.
@@ -166,19 +191,30 @@ module POM
 
     #
     def parse_resources
+      @cache[:resources] = {}
+
       scan_for_github
+
+      text.scan(/(\w+)\:\s*(http:.*?[\w\/])$/) do |m|
+        @cache[:resources][$1] = $2
+      end
     end
 
-    # TODO: Imporve URL Regexp matching.
+    #
+    # TODO: Improve on github matching.
     def scan_for_github
-      text.scan(/http:.*?github\.com.*?[">\s]/) do |m|
+      text.scan(/http\:.*?github\.com.*?[">\s]/) do |m|
         case m
         when /wiki/
-          @cache[:wiki] = m[0...-1]
+          @cache[:resources]['wiki'] = m[0...-1]
         when /issues/
-          @cache[:issues] = m[0...-1]
+          @cache[:resources]['issues'] = m[0...-1]
         else
-          @cache[:homepage] = m[0...-1]
+          if m[0] =~ /:\/\/github/
+            @cache[:resources]['code'] = m[0...-1]
+          else
+            @cache[:resources]['home'] = m[0...-1]
+          end
         end
       end
     end
