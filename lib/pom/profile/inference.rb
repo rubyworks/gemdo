@@ -7,10 +7,6 @@ module POM
     # For example, the project's name may be able to be infered from
     # a ruby file in the lib/ directory.
     #
-    # Inference is limited to required metadata fields. Using inference
-    # to gather additonal information would discourage proper use of POM
-    # metadata file.
-    #
     class Inference
 
       #
@@ -53,7 +49,7 @@ module POM
       #
       def apply(profile)
         table.each do |key, value|
-          profile[key] = value unless profile[key]
+          profile[key] = value if !profile.value?(key)
         end
       end
 
@@ -92,9 +88,12 @@ module POM
       end
 
       #
+      #--
+      # TODO: maybe in meta/ too?
+      #++
       def infer_manifest
         if file = root.glob('manifest{,.txt}', :casefold).first
-          set :manifest, file
+          set :manifest, File.basename(file)
         end
       end
 
@@ -106,6 +105,7 @@ module POM
         set :description, readme.description
         set :copyright, readme.copyright
         set :authors, readme.authors
+        set :resources, readme.resources
       end
 
       # Failing to find a name for the project, the last hope
