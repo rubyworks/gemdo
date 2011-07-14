@@ -5,6 +5,11 @@ module POM
     #
     module Files
 
+      #
+      def gemspec_file
+        Dir.glob(root + "{*,}.gemspec").first        
+      end
+
       # Access to the +.prospec+ file.
       #--
       # TODO: Is this really needed, since we have access to it
