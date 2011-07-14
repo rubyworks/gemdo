@@ -1,9 +1,14 @@
+require 'facets/string/unfold'
+
 module POM
 
   class Project
 
     # Project utility methods.
     module Utils
+
+      # TODO: Get this from project?
+      README = "README{,.*}"
 
       # Project release announcement built on README.
       def announcement(*parts)
