@@ -1,6 +1,6 @@
 = Development Notes
 
-== 2011-04-22 | Post Analysis
+== 2011-04-22 | Canonical File
 
 Since I last wrote here I moved to an imporved design whereby a single
 metadata file called `PROFILE`, and an optional `VERSION` file,
@@ -13,8 +13,12 @@ to "input" the necessay information. In other words, using PROFILE and
 VERSION files are just one possible means of filling out the canoncial
 file.
 
-Why do I keep calling it the canonical file? B/c I am not sure `.ruby` is
-the best name for it.
+Both Bundler and RubyGems use the same basic approach. In the case of RubyGems
+the canonical file is never seen, as it only exits in gem pakages. Bundler's
+Gemfile on the other hand becomes Gemfile.lock. So in lies my current debate:
+Should the Profile file be programmable like Gemfile? Or just another possible
+YAML source that another file can optionally use (.e.g. `.pomrc`) to create
+the canonical file? And what should this canoncical file be called?
 
 
 == 2010-07-23 | Seeking Perfection
@@ -317,6 +321,44 @@ differs from the usual norms, this information can be specifically specified
 in the .meta/ directory.
 
 
+== 2010-05-17 | POM's PROFILE and VERSION Files
+
+A big change is coming to the next release of POM, and in turn
+all the tools that utilize it, including Syckle, Roll, Box and WebMe.
+So big is the change, in fact, that it requires a mojor verison bump.
+So expect the next release ov POM to be 2.0. In itself the change
+is straight forward... Instead of the previous use of a <code>meta/</code>
+directory for storing project metadata, POM will now use two
+YAML files: PROFILE and VERSION.
+
+I believe that in most ways the <code>meta/</code> directory design
+is a superior solution. However, I also realize that it is an idea that
+is not quite ready for prime time. And I think trying to use POM
+to promote it as such ultimately hurts POM. No, today developer's
+are quite used to and comfortable with using configuration <i>files</i>,
+especially YAML files among Rubyists, and it only makes sense
+that it should be the choice for POM as well.
+
+So what is the actual net effect of this change? Basically it is
+this. All previous <code>meta/</code> directory fields related to versioning
+and library managment go in the VERSION file. Examples include
+`name`, the loadpath, now called `paths`, and of course the version number.
+The version number howerver is now broken up into five
+fields: `major`, `minor`, `patch`, `state` and `build`.
+If you have ever used Jeweler you will be probably familiar with all
+of these except `state`, which is simply the optional "status" of the
+current build, e.g. `pre`, `beta` or `rc`. (In addition, dependency
+information may go in the file as well. But that hasn't been decided
+upon for sure yet).
+
+All other project metadata goes into PROFILE, such as `title`, `description`,
+`authors` list, and so forth. 
+
+The PROFILE and VERSION files have been kept separate because the VERSION
+file will be updated regularly , where as the PROFILE will tend to remain
+unchanged.
+
+
 == 2010-05-12 | Directory Store
 
 One of the more "controversial" design decisions made by POM was to store all
@@ -424,4 +466,71 @@ by specific build tools, so it's just as well that each tool handle it's
 own configuration needs. The only exception I've thought of is the "build
 requirements". So, I've decided to add that field to Metadata itself,
 and forego supporting any other build data, at least for the time being.
+
+
+== A Note or Two on Version Numbers
+
+(OLD NOTE THAT CAME FROM ROLLS)
+
+Though the taguri standard suggests using a dating scheme to
+differentiate library versions in the directory hierarchy, Roll
+fully supports both date and dot-series versioning. How to utilize either
+of these is a matter to be decided by the project's maintainer.
+But we'll touch on them briefly to help understand the two useful methods.
+
+Series-versioning is the most common form versioning in use today. If you take
+a close look at the versions put out by a plethora of projects you will also
+notice that it is more akin to an art-form than a science[<a href="#foot1">1</a>].
+Nonetheless, if you follow a strict Rational Versioning Policy
+of "major.minor.tiny" with regards to project changes, it can be helpful
+in conveying <i>compatibility</i>, which can in turn provide the end-user
+some means of insurance that their programs will remain functional even
+after updates.
+
+Date-versioning, OTOH, is not as common mainly because it is not
+typically thought to have any semantic value beyond a release timestamp.
+But by creatively utilizing the taguri standard, date-versioning can in
+fact lend itself to greater version consistency with regard to release
+<i>stability</i>. Just follow these four simple rules:
+<pre>
+  1) Unstable/development releases provide the day (YYYY-MM-DD)
+  2) Official/stable releases remove the day (YYYY-MM)
+  3) Ultrastable releases provide only the year (YYYY)
+  4) For daily builds add a "build moment" by adding the time.
+</pre>
+With this Rational Versioning Policy, the intent is clear and meaningful and
+has a natural way of forcing one to comply to the meaning, which is nice.
+
+
+<!--
+To support versioning and to encourage clean divisions between projects,
+Roll has taken a <i>inspiration</i> from the <b>taguri</b>
+standard as a basis for library file and directory names.
+You can learn more about taguri <a href="http://taguri.org">here</a>.
+The taguri standard is not suitable in itself to designate file and
+directory names, but with some basic transformations and additions it is
+admirably useful. Here is an example of what a projects taguri would be and
+how that translates into a directory structure and a tar package file name.
+
+<pre>
+  (1) tag:fruitbasket.rubyforge.org,2005-10-31:tryme.rb
+  (2) fruitbasket.rubyforge.org/2005-10-31/tryme.rb
+  (3) fruitbasket.rubyforge.org-2005.10.31.tgz (contains tryme.rb)
+</pre>
+
+The first is the standard taguri. The second is how it is
+represented in file system. And the third is, of course,
+the directory packed in a tar file. While we would have liked the
+packaged file name to more closely resemble the original taguri,
+many source host services do not allow file names to have commas.
+But also notice how the the date becomes a sub-directory of the uri.
+This represents the version, and as such it need not be a date
+--it could just as well be a series like '1.0.0'.
+
+For clarity here's the above as it translates into a project's directory
+layout.
+-->
+
+Footnotes:<br/>
+[1] <a href="http://www.newsforge.com/article.pl?sid=05/06/08/136214&from=rss">Decline and fall of the version number</a>
 
