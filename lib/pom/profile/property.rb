@@ -67,12 +67,12 @@ module POM
 
     #
     def default(value=NA, &block)
-      return @default if value == NA
       if block
         @default = block
       else
-        @default = value
+        @default = value if value != NA
       end
+      @default
     end
 
     #
