@@ -1,8 +1,8 @@
 --- !ruby/object:Gem::Specification 
-name: ""
+name: pom
 version: !ruby/object:Gem::Version 
   hash: 23
-  prerelease: 
+  prerelease: false
   segments: 
   - 1
   - 0
@@ -15,7 +15,8 @@ autorequire:
 bindir: bin
 cert_chain: []
 
-date: 2011-04-23 00:00:00 Z
+date: 2011-04-28 00:00:00 -04:00
+default_executable: 
 dependencies: 
 - !ruby/object:Gem::Dependency 
   name: facets
@@ -111,14 +112,11 @@ files:
 - lib/pom/project/paths.rb
 - lib/pom/project/utils.rb
 - lib/pom/project.rb
-- lib/pom/property.rb
 - lib/pom/readme.rb
-- lib/pom/requires.rb
 - lib/pom/resolver/gemcutter.rb
 - lib/pom/resolver/rubygems.rb
 - lib/pom/resolver/source.rb
 - lib/pom/resolver.rb
-- lib/pom/resources.rb
 - lib/pom/version.rb
 - lib/pom.rb
 - lib/pom.yml
@@ -138,12 +136,12 @@ files:
 - test/version.rb
 - Rakefile
 - README.rdoc
-- Notes.rdoc
 - History.rdoc
 - License.txt
+has_rdoc: true
 homepage: http://rubyworks.github.com/pom
-licenses: []
-
+licenses: 
+- Apache 2.0
 post_install_message: 
 rdoc_options: 
 - --title
@@ -172,8 +170,8 @@ required_rubygems_version: !ruby/object:Gem::Requirement
       version: "0"
 requirements: []
 
-rubyforge_project: ""
-rubygems_version: 1.7.2
+rubyforge_project: pom
+rubygems_version: 1.3.7
 signing_key: 
 specification_version: 3
 summary: Ruby Project Object Model

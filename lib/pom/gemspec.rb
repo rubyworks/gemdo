@@ -128,15 +128,13 @@ module POM
           spec.files = root.glob_relative("**/*").map{ |f| f.to_s } # metadata.distribute ?
         end
 
-        # -- test files --
-
-        # TODO: Improve. Make test_files configurable (?)
-        spec.test_files = manifest.select do |f|
-          File.basename(f) =~ /test/ && File.extname(f) == '.rb'
-        end
+        # DEPRECATED: -- test files --
+        #spec.test_files = manifest.select do |f|
+        #  File.basename(f) =~ /test\// && File.extname(f) == '.rb'
+        #end
 
         if install_message
-          sepc.post_install_message = install_message
+          spec.post_install_message = install_message
         end
       end
 
@@ -147,10 +145,10 @@ module POM
     def import_gemspec(gemspec=nil)
       gemspec = gemspec || self.gemspec
 
-      profile.name          = gemspec.name
-      profile.version       = gemspec.version.to_s
-      profile.path          = gemspec.require_paths
-      #metadata.engines     = gemspec.platform
+      profile.name         = gemspec.name
+      profile.version      = gemspec.version.to_s
+      profile.path         = gemspec.require_paths
+      #metadata.engines    = gemspec.platform
 
       profile.title        = gemspec.name.capitalize
       profile.summary      = gemspec.summary
