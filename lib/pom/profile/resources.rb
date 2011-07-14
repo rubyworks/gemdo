@@ -46,6 +46,8 @@ module POM
     def initialize(data={})
       @table = {}
 
+      data = {} if data.nil?
+
       data.each do |key, url|
         self[key] = url
       end
@@ -64,7 +66,7 @@ module POM
 
     #
     def []=(key, url)
-      raise ArgumentError, "Not a valid URL - #{url}" unless URL =~ url
+      raise ArgumentError, "Not a valid URL - `#{url}' for `#{key}'" unless URL =~ url
       @table[key_index(key)] = url
     end
 
@@ -143,6 +145,13 @@ module POM
     #
     def inspect
       @table.inspect
+    end
+
+    #
+    def merge!(res)
+      res.each do |key, url|
+        self[key] = url
+      end
     end
 
     # If a method is missing and it is a setter method
