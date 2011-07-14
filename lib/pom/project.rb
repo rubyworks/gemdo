@@ -164,7 +164,7 @@ module POM
 
     # Root directory is indicated by the presence of either a
     # .ruby file or as a fallback a lib/ directory.
-    ROOT_INDICATORS = [Profile::CANONICAL_FILENAME, 'lib/']
+    ROOT_INDICATORS = [Profile::DOTRUBY_FILENAME, 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position

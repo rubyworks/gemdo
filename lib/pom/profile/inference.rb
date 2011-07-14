@@ -27,7 +27,7 @@ module POM
       #
       attr :root
 
-      #
+      # Table of inferable metadata.
       attr :table
 
       #
@@ -49,7 +49,7 @@ module POM
       #
       def apply(profile)
         table.each do |key, value|
-          profile[key] = value if !profile.value?(key)
+          profile[key] = value unless profile.value?(key)
         end
       end
 
