@@ -10,12 +10,9 @@ conflicts: []
 requirements:
 - name: facets
   version: 2.8+
-- name: syckle
+- name: detroit
   groups:
   - build
-- name: ko
-  groups:
-  - test
 - name: qed
   version: 2.2+
   groups:

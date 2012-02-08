@@ -21,9 +21,9 @@ module POM
             ann << "#{metadata.description}"
           when :resources
             list = ''
-            list << "* home: #{metadata.resources.home}\n" if metadata.resources.home
-            list << "* work: #{metadata.resources.work}\n" if metadata.resources.work
-            list << "* docs: #{metadata.resources.docs}\n" if metadata.resources.docs
+            metadata.resources.each do |k,v|
+              list << "* #{k}: #{v}\n"
+            end
             ann << list
           when :release
             ann << "= #{title} #{history.release}"
