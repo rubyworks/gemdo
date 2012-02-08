@@ -103,7 +103,7 @@ module POM
         set :name, readme.name
         set :title, readme.title
         set :description, readme.description
-        set :copyright, readme.copyright
+        set :copyrights, readme.copyright
         set :authors, readme.authors
         set :resources, readme.resources
       end

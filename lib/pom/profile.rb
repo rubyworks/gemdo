@@ -114,7 +114,7 @@ module POM
       @project ||= Project.new(root)
     end
 
-    # Metadatais is easily extensible. If an attribute is assigned that is not
+    # Metadata is easily extensible. If an attribute is assigned that is not
     # explicitly defined by DotRuby Spec then it is stored in the extra store.
     def method_missing(sym, *args, &blk)
       meth = sym.to_s
