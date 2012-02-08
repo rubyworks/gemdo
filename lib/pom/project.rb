@@ -1,3 +1,5 @@
+require 'dotruby'
+
 require 'pom/core_ext'
 require 'pom/error'
 require 'pom/profile'
@@ -51,14 +53,14 @@ module POM
     # up from the current working directory in search of the ROOT_INDICATOR.
     attr :root
 
-    # Access to the +Profile+ file.
+    # Access to the +PROFILE+ file.
     def profile
       @profile ||= Profile.new(root, :project=>self)
     end
 
-    #
+    # Metadata from .ruby file.
     def metadata
-      @metadata ||= profile
+      @metadata ||= DotRuby::Spec.find
     end
 
     # Project name.
@@ -163,8 +165,8 @@ module POM
     ##end
 
     # Root directory is indicated by the presence of either a
-    # .ruby file or as a fallback a lib/ directory.
-    ROOT_INDICATORS = [Profile::DOTRUBY_FILENAME, 'lib/']
+    # .ruby file, scm directory like .git, or as a fallback a lib/ directory.
+    ROOT_INDICATORS = [Profile::DOTRUBY_FILENAME, '.git', '.hg', '_darcs', 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position
@@ -182,6 +184,7 @@ module POM
           return root if root.join(root_indicator).exist?
         end
       end
+      return nil
     end
 
   end#class Project
