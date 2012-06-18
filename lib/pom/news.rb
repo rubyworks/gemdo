@@ -1,5 +1,6 @@
 require 'pom/core_ext'
-require 'pom/history'
+#require 'pom/history'
+require 'history'
 
 module POM
 
@@ -66,8 +67,8 @@ module POM
     def history
       return @history unless @history.nil?
       @history = (
-        if History.find(root)
-          History.new(root)
+        if History.exist?(root)
+          History.read(root)
         else
           false
         end

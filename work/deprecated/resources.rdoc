@@ -11,6 +11,8 @@ applicable, namely 'homepage', which is the project main website, and
 Resources are a subentry in the project's PROFILE, so the initializer simply
 take a hash of initial entires.
 
+  p POM::Resources
+
   resources = POM::Resources.new(
     :home=>'http://rubyworks.github.com/pom',
     :repo=>'git://github.com/rubyworks/pom.git'

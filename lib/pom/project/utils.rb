@@ -21,8 +21,13 @@ module POM
             ann << "#{metadata.description}"
           when :resources
             list = ''
-            metadata.resources.each do |k,v|
-              list << "* #{k}: #{v}\n"
+            metadata.resources.each do |r|
+              name = r.label || r.type.to_s.capitialize
+              if name
+                list << "* #{name}: #{r.uri}\n"
+              else
+                list << "* #{r.uri}\n"
+              end
             end
             ann << list
           when :release

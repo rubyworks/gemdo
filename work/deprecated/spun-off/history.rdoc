@@ -4,7 +4,7 @@ The history class encapsulates this list of release
 made by a project. It parses a text file by the
 name of HISTORY into it indivdual relase entries.
 
-Given a HISTORY project file containing ...
+Given a HISTORY project file containing:
 
     = RELEASE HISTORY
 

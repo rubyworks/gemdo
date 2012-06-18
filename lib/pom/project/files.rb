@@ -29,14 +29,18 @@ module POM
         Dir.glob(root + Readme::FILE_PATTERN, File::FNM_CASEFOLD).first
       end
 
-      # Project manifest. For manifest file use <tt>manifest.file</tt>.
+      # Project manifest.
+      #
+      # For manifest file use `manifest.file`.
       def manifest
         @manifest ||= Manifest.new(root)
       end
 
       # Access to project history.
+      #
+      # For history file use `history.file`.
       def history
-        @history ||= History.new(root)
+        @history ||= History.at(root)
       end
 
       # Access latest release notes.

@@ -73,7 +73,7 @@ module POM::Commands
 
       require_rubygems
 
-      require 'pom/readme'
+      require 'readme'
       require 'pom/gemspec'
 
       #prime = { 
@@ -134,7 +134,7 @@ module POM::Commands
           gemspec = /^---/.match(text) ? YAML.load(text) : Gem::Specification.load(file)
           project.import_gemspec(gemspec)
         when /^README/i
-          readme = POM::Readme.load(file)
+          readme = Readme.load(file)
           project.import_readme(readme)
         else
           text = File.read(file)
