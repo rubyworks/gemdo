@@ -71,10 +71,7 @@ pom <COMMAND> [OPTIONS ...]
 COMMANDS:
   about                            show a summary of project
   show [name]                      show specific metadata entry
-  init                             make a starter Profile file
-  spec                             make the .prospec file
-  gemspec                          make a gemspec file
-  resolve                          resolve dependencies
+  init                             make a starter Ruby project
   news                             show the last release history entry
   bump                             bump version number
   help                             show this help message
@@ -84,6 +81,10 @@ COMMON OPTIONS:
 
 Use 'pom <COMMAND> --help' for command options.
 END
+
+    # TODO:
+    #resolve                          resolve dependencies
+    #gemspec                          make a gemspec file
 
   end#class Command
 

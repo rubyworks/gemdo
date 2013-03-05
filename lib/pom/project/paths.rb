@@ -2,33 +2,59 @@ module POM
 
   class Project
 
-    # Standard Project Directories
-    module Paths
+    ##
+    # Locations of typical project directories.
+    #
+    # This is handled via delegation in order to provide a 
+    # cleaner interface.
+    #
+    class Paths
+
+      # Initialize Paths instance.
+      def initialize(project)
+        @project = project
+      end
 
       # Location of project source code. Currently, this is always
       # the same as the root.
-      #--
-      # TODO: Support alternate source location in the future verison?
-      #++
-      def src
-        root
+      #
+      # @return [Pathname]
+      def root
+        @project.root
       end
 
-      # Alias for +src+.
-      alias_method :source, :src
-
-      # The <tt>log/</tt> directory stores log output created by 
-      # build tools. If you want to publish your logs as part
-      # of your website (which might be a very nice thing to do)
-      # symlink it into you site location.
+      # Alias for +root+.
       #
-      # Get pathname of given log +path+. Or without +path+
-      # returns the pathname for the log directory.
-      def log(path=nil)
+      # @todo Support alternate source location in the future verison?
+      alias_method :src, :root
+      alias_method :source, :root
+
+      # The bin directory is the place to keep executables.
+      #
+      # Get pathname of given bin `path`. Or without `path`
+      # returns the pathname for the bin directory.
+      #
+      # @return [Pathname]
+      def bin(path=nil)
         if path
-          log + path
+          doc + path
         else
-          @log ||= root + 'log'
+          @doc ||= root + 'bin'
+        end
+      end
+
+      # The ext directory is the place to keep extensions, typically
+      # written in C.
+      #
+      # Get pathname of given doc `path`. Or without `path`
+      # returns the pathname for the doc directory.
+      #
+      # @return [Pathname]
+      def ext(path=nil)
+        if path
+          doc + path
+        else
+          @doc ||= root + 'ext'
         end
       end
 
@@ -37,8 +63,10 @@ module POM
       # done these days since RubyGems generates RDocs on demand, and
       # documentation is often found online.
       #
-      # Get pathname of given doc +path+. Or without +path+
+      # Get pathname of given doc `path`. Or without `path`
       # returns the pathname for the doc directory.
+      #
+      # @return [Pathname]
       def doc(path=nil)
         if path
           doc + path
@@ -47,25 +75,39 @@ module POM
         end
       end
 
+      # The <tt>log/</tt> directory stores log output created by 
+      # build tools. If you want to publish your logs as part
+      # of your website (which might be a very nice thing to do)
+      # symlink it into you site location.
+      #
+      # Get pathname of given log +path+. Or without +path+
+      # returns the pathname for the log directory.
+      #
+      # @return [Pathname]
+      def log(path=nil)
+        if path
+          log + path
+        else
+          @log ||= root + 'log'
+        end
+      end
+
       # Returns the pathname for the package directory.
       # With +path+ returns the pathname within the pacakge path.
+      #
+      # @return [Pathname]
       def pkg(path=nil)
         if path
           pkg + path
         else
           @pkg ||= root.first('{pkg,pack,package}{,s}') || root + 'pkg'
         end
-        #@pkg ||=(
-        #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
-        #  dir.mkdir_p unless dir.exist?
-        #  dir
-        #)
       end
 
       # Alias for #pkg.
       alias_method :pack, :pkg
 
-      # The <tt>.cache/</tt> directory is used by build tools to
+      # The `tmp/` or `.cache/` directory is used by build tools to
       # store temporary files. For instance, the +pom+ command uses
       # it to store backups of metadata entries when overwriting
       # old entries. <tt>.cache/</tt> should be in your SCM's
@@ -73,28 +115,39 @@ module POM
       #
       # Get pathname of given cache +path+. Or without +path+
       # returns the pathname for the cache directory.
+      #
+      # @return [Pathname]
       def cache(path=nil)
         if path
           cache + path
         else
-          @cache ||= root + '.cache'
+          @cache ||= root.first('tmp,.cache') || root + 'tmp'
         end
       end
 
-      # The <tt>.config/</tt> or <tt>config</tt> directory is a place
-      # for build tools to place their configration files.
+      # Alias for #cache.
+      alias :tmp, :cache
+
+      # The directory for for build tools to place their configration
+      # files. It is either `.config/`, `.etc/`, `config/` or `etc/`,
+      # matched in that order of precednece.
       #
-      # Pathname of given config +path+. Or without +path+
-      # Returns the path to the config directory (either +.config+
-      # or +config+).
+      # Pathname of given config +path+. Or without `path`
+      # Returns the path to the config directory (either `.etc`
+      # or `etc`).
+      #
+      # @return [Pathname]
       def config(path=nil)
         if path
-          config + path #root.glob_first('{.,}config' / path)
+          config + path
         else
-          @config ||= root.first('{.,}config') || root + '.config'
+          @config ||= root.first('{.config,.etc,config,etc}') || root + 'etc'
         end
       end
 
+      alias :etc, :config
+
+=begin
       # The <tt>plug/</tt> directory serves the same purpose as 
       # the <tt>lib/</tt> directory. It simply provides a place
       # to put plugins separate from the main <tt>lib/</tt> files.
@@ -119,13 +172,16 @@ module POM
 
       #
       alias_method :plugins, :plugin
+=end
 
-      # The <tt>script/</tt> directory is like the <tt>task/</tt> 
+      # The `script/` directory is like the <tt>task/</tt> 
       # directory but usually holds executables that are made
       # available to the end-installers.
       #
       # Get pathname of given script +path+. Or without +path+
       # returns the pathname for the script directory.
+      #
+      # @return [Pathname]
       def script(path=nil)
         if path
           script + path
@@ -139,6 +195,10 @@ module POM
       #
       # Get pathname of given task +path+. Or without +path+
       # returns the pathname for the task directory.
+      #
+      # @deprecated Using tasks/ has become rather passe.
+      #
+      # @return [Pathname]
       def task(path=nil)
         if path
           task + path
@@ -147,60 +207,57 @@ module POM
         end
       end
 
-      # The <tt>site/</tt> directory (also web/ or website/) is
-      # where a project's website is stored.
+      # The `site/`, `web/` or `website/` directory is
+      # where a project's website files are stored.
       #
-      # Get pathname of given site +path+. Or without +path+
+      # Get pathname of given site `path`. Or without +path+
       # returns the pathname for the site directory.
-      def site(path=nil)
+      #
+      # @return [Pathname]
+      def website(path=nil)
         if path
           site + path
         else
-          @site ||= root.first('{site,web,website}') || root+'site'
+          @site ||= root.first('{site,web,website}') || root + 'web'
         end
-        #@pkg ||=(
-        #  dir = root.glob_first('{pack,pkg}{,s}') || 'pack'
-        #  dir.mkdir_p unless dir.exist?
-        #  dir
-        #)
       end
 
-      # Alias for #site.
-      alias_method :website, :site
+      # Alias for #website.
+      alias_method :web, :website
+      alias_method :site, :website
 
-      # Not strickly a project directory. THis provides a temporary
-      # system location outside the project directory.
+      # This provides a temporary system location outside the
+      # project directory.
       # 
-      # Get pathname of given temporary +path+. Or without +path+
+      # Get pathname of given temporary `path`. Or without `path`
       # returns the pathname to the temporary directory.
-      #--
-      # TODO: Add name to end of path ?
-      #++
-      def tmp(path=nil)
+      #
+      # @todo Add project name to end of path?
+      #
+      # @return [Pathname]
+      def systmp(path=nil)
         if path
-          tmp + path
+          systmp + path
         else
-          @tmp ||= Pathname.new(Dir.tmpdir) #cache+'tmp'
+          @systmp ||= Pathname.new(Dir.tmpdir)
         end
       end
 
-      # Alias for #tmp.
-      alias_method :tmpdir, :tmp
+    private
 
       # Does a file exist in the project?
       # Returns the first match.
       def file?(glob)
-        Dir.glob(root + glob).first
+        Pathname.glob(root + glob).first
       end
 
       # Determines if a directory exists within the project.
       #
       # @param [String] path
-      # The path of the directory, relative to the project.
+      #   The path of the directory, relative to the project.
       #
       # @return [Boolean]
-      # Specifies whether the directory exists in the project.
-      #
+      #   true if directory exists, otherwise false.
       def directory?(path)
         root.join(path).directory?
       end

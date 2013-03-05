@@ -1,0 +1,74 @@
+---
+revision: 2013
+type: ruby
+sources:
+- var
+authors:
+- name: Trans
+  email: transfire@gmail.com
+organizations:
+- name: Rubyworks
+requirements:
+- name: indexer
+- name: versus
+- name: readme
+- name: history
+- name: mast
+- version: 2.8+
+  name: facets
+- groups:
+  - build
+  development: true
+  name: detroit
+- groups:
+  - test
+  development: true
+  name: citron
+- groups:
+  - test
+  version: 2.2+
+  development: true
+  name: qed
+conflicts: []
+alternatives: []
+resources:
+- type: home
+  uri: http://rubyworks.github.com/pom
+  label: Homepage
+- type: work
+  uri: http://github.com/rubyworks/pom
+  label: Development
+- type: docs
+  uri: http://wiki.github.com/rubyworks/pom
+  label: Documentation
+- type: wiki
+  uri: http://wiki.github.com/rubyworks/pom
+  label: User Guide
+- type: api
+  uri: http://rubdoc.info/gems/pom/frames
+  label: API Guide
+- type: mail
+  uri: http://groups.google.com/group/rubyworks-mailinglist
+  label: Mailing List
+- type: forum
+  uri: http://groups.google.com/group/rubyworks-mailinglist
+  label: Support Forum
+repositories:
+- name: upstream
+  scm: git
+  uri: git://github.com/rubyworks/pom.git
+categories: []
+copyrights:
+- holder: Rubyworks
+  year: '2009'
+  license: BSD-2-Clause
+customs: []
+paths:
+  lib:
+  - lib
+created: '2009-07-22'
+summary: Ruby Project Object Model
+title: POM
+version: 2.2.0
+description: POM provides an API for the typical Ruby project.
+date: '2013-03-05'

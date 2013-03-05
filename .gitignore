@@ -1,8 +1,10 @@
-.cache
-.ri
-log
-pkg
-ri
-tmp
+.ergo
+.rdoc
+.yardoc
+/log
+/pkg
+/tmp
+/web
 site/docs
 work/sandbox
+*.lock

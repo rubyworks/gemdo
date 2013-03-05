@@ -1,26 +1,23 @@
-require 'dotruby'
+require 'indexer'
+require 'readme'
+require 'history'
+require 'mast'
+
+require 'facets/string/unfold'
 
 require 'pom/core_ext'
 require 'pom/error'
-#require 'pom/profile'   # COMMIT: deprecated in favor of dotruby
-require 'pom/manifest'
-require 'pom/history'
-require 'pom/news'
-require 'pom/readme'
 
+require 'pom/project/news'
+require 'pom/project/manifest'  # TODO: Use mast instead
 require 'pom/project/paths'
-require 'pom/project/files'
-require 'pom/project/utils'
+
 
 module POM
 
   # The Project class provides the location of specific directories
   # and files in the project, plus access to the projects metadata, etc.
   class Project
-
-    include Paths
-    include Files
-    include Utils
 
     # Instantiate a new Project object.
     #
@@ -53,14 +50,9 @@ module POM
     # up from the current working directory in search of the ROOT_INDICATOR.
     attr :root
 
-    # Access to the +PROFILE+ file.
-    #def profile
-    #  @profile ||= Profile.new(root, :project=>self)
-    #end
-
     # Metadata from .ruby file.
     def metadata
-      @metadata ||= DotRuby::Spec.find
+      @metadata ||= Indexer::Metadata.find
     end
 
     # Project name.
@@ -146,6 +138,165 @@ module POM
       end
     end
 
+    # Does a file exist in the project?
+    # Returns the first match.
+    def file?(glob)
+      Pathname.glob(root + glob).first
+    end
+
+    # Determines if a directory exists within the project.
+    #
+    # @param [String] path
+    #   The path of the directory, relative to the project.
+    #
+    # @return [Pathname]
+    #   The path if it exists, otherwise `nil`.
+    def directory?(path)
+      dir = root.join(path)
+      dir.directory? ? dir : nil
+    end
+
+    # Lookup project paths using a fluent notation.
+    #
+    # @example
+    #   project.path.doc  #=> 'foo/doc'
+    #
+    def path
+      @path ||= Paths.new(self)
+    end
+
+    # Returns list of executable files in bin/.
+    def executables
+      Pathname.glob(path.bin + '*').select{ |b| b.executable? }.map{ |b| b.basename }
+    end
+
+    # List of extension configuration scripts.
+    # These are used to compile the extensions.
+    def extensions
+      Pathname.glob(path.ext + '**/extconf.rb')
+    end
+
+    # Returns +true+ if the project have native extensions.
+    def compiles?
+      !extensions.empty?
+    end
+
+
+    # M A N I F E S T
+
+    # Project manifest.
+    #
+    # For manifest file use `manifest.file`.
+    def manifest
+      @manifest ||= Manifest.new(root)
+    end
+
+
+    # R U B Y G E M S
+
+    #
+    def gemspec
+      @gemspec ||= Gem::Specification.load(gemspec_file)
+    end
+
+    #
+    def gemspec_file
+      @gemspec_file ||= (
+        require_rubygems
+        Pathname.glob(root + "{*,}.gemspec").first
+      )
+    end
+
+    # Require RubyGems library.
+    def require_rubygems
+      begin
+        require 'rubygems' #/specification'
+        #::Gem::manage_gems
+      rescue LoadError
+        raise LoadError, "RubyGems is not installed."
+      end
+    end
+    private :require_rubygems
+
+
+    # R E A D M E
+
+    # Access to the general +README+ file
+    def readme
+      @readme ||= Readme.new(root)
+    end
+
+    # TODO: Isn't readme.file good enough?
+    def readme_path
+      Pathname.glob(root + Readme::FILE_PATTERN, File::FNM_CASEFOLD).first
+    end
+
+
+    # H I S T O R Y
+
+    # Access to project history.
+    #
+    # For history file use `history.file`.
+    def history
+      @history ||= History.at(root)
+    end
+
+    # Access latest release notes.
+    def news
+      @news ||= News.new(root, :history=>history)
+    end
+
+
+    # M I S C E L L A N E O U S
+
+    # Project release announcement built on README.
+    def announcement(*parts)
+      ann = []
+      parts.each do |part|
+        case part.to_sym
+        when :message
+          ann << "#{metadata.title} #{self.version} has been released."
+        when :description
+          ann << "#{metadata.description}"
+        when :resources
+          list = ''
+          metadata.resources.each do |r|
+            name = r.label || r.type.to_s.capitalize
+            if name
+              list << "* #{name}: #{r.uri}\n"
+            else
+              list << "* #{r.uri}\n"
+            end
+          end
+          ann << list
+        when :release
+          ann << "= #{title} #{history.release}"
+        when :version
+          ann << "= #{history.release.header}"
+        when :notes
+          ann << "#{history.release.notes}"
+        when :changes
+          ann << "#{history.release.changes}"
+        #when :line
+        #  ann << ("-" * 4) + "\n"
+        when :readme
+          release = history.release.to_s
+          if readme_file
+            readme  = File.read(readme_file).strip
+            readme  = readme.gsub("Please see HISTORY file.", '= ' + release)
+            ann << readme
+          end
+        when String
+          ann << part
+        when File
+          ann << part.read
+          part.close
+        end
+      end
+      ann.join("\n\n").unfold
+    end
+
+
     # Instantiate a new Project looking up the root directory form a given
     # local directory.
     def self.find(dir=Dir.pwd)
@@ -166,7 +317,7 @@ module POM
 
     # Root directory is indicated by the presence of either a `.ruby` file,
     # scm directory like `.git`, or, as a fallback, a `lib/` directory.
-    ROOT_INDICATORS = ['.ruby', '.git', '.hg', '_darcs', 'lib/']
+    ROOT_INDICATORS = ['.ruby', '.git', '.hg', '_darcs', '.gemspec', '*.gemspec', 'Gemfile', 'lib/']
 
     # Locate the project's root directory. This is determined
     # by ascending up the directory tree from the current position
@@ -181,7 +332,7 @@ module POM
       ROOT_INDICATORS.each do |root_indicator|
         Pathname.new(dir).ascend do |root|
           break if root == home
-          return root if root.join(root_indicator).exist?
+          return root if Dir.glob(root.join(root_indicator).to_s).first
         end
       end
       return nil
