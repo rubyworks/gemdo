@@ -1,25 +1,35 @@
 require 'fileutils'
 
-FIXTURE_DIR = 'tmp/example/'
+FIXTURE_DIR = File.join(File.dirname(__FILE__), '..', 'fixtures')
+PROJECT_DIR = 'example'
 
 # Remove the example project if it exists.
-Before :all do
-  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
-  File.open(FIXTURE_DIR + '/.ruby', 'w'){ |f| f << "" }
+Before :demo do
+  FileUtils.rm_r(PROJECT_DIR) if File.exist?(PROJECT_DIR)
+  FileUtils.cp_r(File.join(FIXTURE_DIR, 'empty'), PROJECT_DIR)
 end
 
-When 'Given an empty project directory' do
-  FileUtils.rm_r(FIXTURE_DIR) if File.exist?(FIXTURE_DIR)
+When 'iven a new project' do
+  FileUtils.rm_r(PROJECT_DIR) if File.exist?(PROJECT_DIR)
+  FileUtils.cp_r(File.join(FIXTURE_DIR, 'empty'), PROJECT_DIR)
+  @_current = :empty
+end
+
+When 'iven a complete project example' do |name|
+  if @_current != :complete
+    FileUtils.rm_r(PROJECT_DIR) if File.exist?(PROJECT_DIR)
+    FileUtils.cp_r(File.join(FIXTURE_DIR, 'complete'), PROJECT_DIR)
+    @_current = :complete
+  end
 end
 
 When 'iven a ((([\.\w]+))) project file' do |name, text|
-  FileUtils.mkdir_p(FIXTURE_DIR)
-  File.open(FIXTURE_DIR + name, 'w') do |f|
+  File.open(File.join(PROJECT_DIR, name), 'w') do |f|
     f << text
   end
 end
 
 When 'no ((([\.\w]+))) file in a project' do |name|
-  FileUtils.rm(FIXTURE_DIR + name)
+  FileUtils.rm(File.join(PROJECT_DIR, name))
 end
 

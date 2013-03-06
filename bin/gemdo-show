@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'gemdo/cli/show'
+GemDo::CLI::Show.run

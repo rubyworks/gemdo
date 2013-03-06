@@ -1,0 +1,47 @@
+ruby-pom(1) - ruby project model tool
+=====================================
+
+## SYNOPSIS
+
+`ruby-pom [<command>] [<options>...]`
+
+
+## DESCRIPTION
+
+Ruby Project Model tool provides a set of utility methods for Ruby
+projects based on the Ruby Project Object Model.
+
+
+## COMMANDS
+
+  * `about`
+    Output an overview of the project.
+
+  * `show [name]`:
+    Show specific information about project.
+
+  * `news`:
+     How the news or latest release history entry.
+
+  * `bump`:
+    Bump version number and output.
+
+  * `init`:
+    Create a simply starter Ruby project.
+
+  * `help`
+    Display this help message.
+
+
+## OPTIONS
+
+  * `-h`, `--help`:
+    Same as using `help` command.
+
+  * `--debug`:
+    Run command with Ruby's $DEBUG flag set to `true`.
+
+
+## SEE ALSO
+
+ruby-pom-about(1), ruby-pom-show(1), ruby-pom-news(1), ruby-pom-bump(1), ruby-pom-init(1)

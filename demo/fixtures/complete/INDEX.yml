@@ -1,0 +1,33 @@
+--- 
+name: demoapp
+version: 1.0.0
+
+title: DemoApp
+summary: Demo summary
+
+description:
+  This is the description for the example.
+
+requirements:
+  - rake 0.8.7+
+  - mocha 0.9.8+
+  - nokogiri 1.4.0+
+  - system_timer
+  - ruby-debug 0.10.3+
+  - json
+  - yajl-ruby
+  - rack-test 0.5.3 (ap)
+  - RedCloth 4.2.2+ (ap)
+  - sqlite3-ruby 1.3.0.beta.2 (ar)
+  - fcgi 0.8.7+ (optional)  # does not compile on mri 1.9+
+  - rake (build development)
+  - rdoc 2.1 (doc development)
+  - rspec (test development)
+
+authors: 
+  - trans <transfire@gmail.com>
+
+copyrights:
+  - 2012 Copyright (c) 2010 Thomas Sawyer (MIT)
+
+created: 2010-10-10
